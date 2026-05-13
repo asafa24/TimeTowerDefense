@@ -11,7 +11,7 @@ public class TerrainVue {
 
     private Pane backgroundPane;
 
-    private static final int TILE_SIZE = 32;
+    private static final int TILE_SIZE = 64;
 
 
     public TerrainVue(Pane backgroundPane){
@@ -24,18 +24,11 @@ public class TerrainVue {
             for(int x = 0; x < map[y].length; x++){
                 int tileId = map[y][x];
 
-                Rectangle tile = new Rectangle(TILE_SIZE, TILE_SIZE);
                 ImageView imageView = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/" + tileId + ".png")));
 
                 imageView.setFitWidth(TILE_SIZE);
                 imageView.setFitHeight(TILE_SIZE);
 
-                if(tileId == 0){
-//                    tile.setFill(Color.GREEN);
-                }
-
-//                tile.setX(x * TILE_SIZE);
-//                tile.setY(y * TILE_SIZE);
                 imageView.setX(x * TILE_SIZE);
                 imageView.setY(y * TILE_SIZE);
 
