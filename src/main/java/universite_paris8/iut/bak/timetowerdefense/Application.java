@@ -11,7 +11,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 608);
-        stage.setTitle("Time Tower Defense");
+        stage.setTitle("Time Tower Defenses");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
