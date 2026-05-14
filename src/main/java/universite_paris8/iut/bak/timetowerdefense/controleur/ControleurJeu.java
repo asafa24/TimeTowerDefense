@@ -2,9 +2,14 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import universite_paris8.iut.bak.timetowerdefense.modele.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.Level;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
@@ -16,6 +21,9 @@ public class ControleurJeu implements Initializable {
 
     @FXML
     private Pane backgroundPane;
+    @FXML
+    private Pane entityPane;
+
 
     private Timeline gameLoop;
     private int temps;
@@ -41,9 +49,19 @@ public class ControleurJeu implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+        Ennemi e = new Ennemi(64, 64, 50, 4, 10);
+
+        Rectangle r = new Rectangle(32, 32, Color.DARKRED);
+        r.translateXProperty().bind(e.xProperty());
+        r.translateYProperty().bind(e.yProperty());
+
+        r.setOpacity(0.80);
+        entityPane.getChildren().add(r);
+
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
+                    e.avancer();
                     temps++;
                 })
         );

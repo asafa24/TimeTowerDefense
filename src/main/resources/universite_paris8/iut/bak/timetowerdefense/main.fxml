@@ -11,8 +11,8 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
    <children>
-      <Pane fx:id="effectPane" prefHeight="200.0" prefWidth="200.0" />
-      <Pane fx:id="entityPane" prefHeight="200.0" prefWidth="200.0" />
       <Pane fx:id="backgroundPane" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="entityPane" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="effectPane" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </StackPane>
