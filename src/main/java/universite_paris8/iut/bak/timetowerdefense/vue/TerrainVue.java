@@ -24,16 +24,27 @@ public class TerrainVue {
             for(int x = 0; x < map[y].length; x++){
                 int tileId = map[y][x];
 
-                ImageView imageView = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/" + tileId + ".png")));
 
-                imageView.setFitWidth(TILE_SIZE);
-                imageView.setFitHeight(TILE_SIZE);
+                if (tileId == 7){
+                    afficherTile("images/tiles/prehistoire/" + 0 + ".png", x , y );
+                }
+                else {
+                    afficherTile("images/tiles/prehistoire/" + tileId + ".png",x ,y );
+                }
 
-                imageView.setX(x * TILE_SIZE);
-                imageView.setY(y * TILE_SIZE);
+                if (tileId == 7){
+                    afficherTile("images/tiles/7.png",x,y);
 
-                backgroundPane.getChildren().add(imageView);
+                }
             }
         }
+    }
+    public void afficherTile(String source, int x, int y){
+        ImageView machine =  new ImageView(String.valueOf(Application.class.getResource(source)));
+        machine.setFitWidth(TILE_SIZE);
+        machine.setFitHeight(TILE_SIZE);
+        machine.setX(x * TILE_SIZE);
+        machine.setY(y * TILE_SIZE);
+        backgroundPane.getChildren().add(machine);
     }
 }
