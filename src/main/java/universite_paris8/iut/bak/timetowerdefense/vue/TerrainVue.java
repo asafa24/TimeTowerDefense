@@ -28,15 +28,13 @@ public class TerrainVue {
 
                 if (tileId == 7){
                     afficherTile("prehistoire/", 0 , x , y );
+                    afficherTile("",7,x,y);
                 }
                 else {
                     afficherTile("prehistoire/",tileId, x , y);
                 }
 
-                if (tileId == 7){
-                    afficherTile("",7,x,y);
 
-                }
             }
         }
     }
