@@ -19,6 +19,7 @@ public class TerrainVue {
     }
 
     public void drawMap(int[][] map){
+
         backgroundPane.getChildren().clear();
         for(int y = 0; y < map.length; y++){
             for(int x = 0; x < map[y].length; x++){
@@ -26,21 +27,21 @@ public class TerrainVue {
 
 
                 if (tileId == 7){
-                    afficherTile("images/tiles/prehistoire/" + 0 + ".png", x , y );
+                    afficherTile("prehistoire/", 0 , x , y );
                 }
                 else {
-                    afficherTile("images/tiles/prehistoire/" + tileId + ".png",x ,y );
+                    afficherTile("prehistoire/",tileId, x , y);
                 }
 
                 if (tileId == 7){
-                    afficherTile("images/tiles/7.png",x,y);
+                    afficherTile("",7,x,y);
 
                 }
             }
         }
     }
-    public void afficherTile(String source, int x, int y){
-        ImageView machine =  new ImageView(String.valueOf(Application.class.getResource(source)));
+    public void afficherTile(String epoque,int id, int x, int y){
+        ImageView machine =  new ImageView(String.valueOf(Application.class.getResource("images/tiles/"+epoque+ id + ".png" )));
         machine.setFitWidth(TILE_SIZE);
         machine.setFitHeight(TILE_SIZE);
         machine.setX(x * TILE_SIZE);
