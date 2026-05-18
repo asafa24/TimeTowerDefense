@@ -6,6 +6,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -43,6 +44,26 @@ public class ControleurJeu implements Initializable {
         int[][] donneesMap = level.loadLevel(0);
         vueTerrain.drawMap(donneesMap);
     }
+    @FXML
+    public void handleMouseClick(MouseEvent event) {
+
+        int x = (int) Math.floor(event.getX() / 64);
+        int y = (int) Math.floor(event.getY() / 64);
+
+
+        System.out.println(x + ":" + y);
+        System.out.println("Tour : " + peuxPoserTour(0,x,y));
+        System.out.println("Piege : " + peuxPoserPiege(0, x, y));
+    }
+    public boolean peuxPoserTour (int epoque, int x ,int y){
+        int [][] test = level.loadLevel(epoque);
+        return test[y][x] == 0;
+    }
+    public boolean peuxPoserPiege (int epoque, int x ,int y){
+        int [][] test = level.loadLevel(epoque);
+        return test[y][x] > 0 && test[y][x] <= 6;
+    }
+
 
     private void initAnimation() {
         gameLoop = new Timeline();
