@@ -49,7 +49,7 @@ public class ControleurJeu implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        Ennemi e = new Ennemi(64, 64, 50, 4, 10);
+        Ennemi e = new Ennemi(64, 64, 50, 2, 10);
 
         Rectangle r = new Rectangle(32, 32, Color.DARKRED);
         r.translateXProperty().bind(e.xProperty());
