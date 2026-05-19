@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Level {
     private int[][][] tileMap;
+    private int[][] debutlevel;
 
     public Level() {
 //        tileMap = new int[5][19][25];
@@ -70,7 +71,17 @@ public class Level {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         }};
+
+        debutlevel = new int[][] {
+                {608,32},
+                {0,0},
+                {0,0},
+                {0,0},
+                {0,0}
+
+        };
     }
+
 
     public int[][] loadLevel(int epoque) {
         return tileMap[epoque];
