@@ -69,8 +69,8 @@ public class ControleurJeu implements Initializable {
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
-                    if (temps%80 == 0) {
-                        jeu.addEnnemi(creerEnnemi(route));
+                    if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
+                        jeu.addEnnemi(creerEnnemi(route, couleur(vague.defiler())));
                     }
                     jeu.tick();
                     temps++;
@@ -79,9 +79,9 @@ public class ControleurJeu implements Initializable {
         gameLoop.getKeyFrames().add(kf);
     }
 
-    private Ennemi creerEnnemi(List<Point2D> route) {
+    private Ennemi creerEnnemi(List<Point2D> route, Color couleur) {
         Ennemi e = new Ennemi(0, 64 * 9, 50, 2, 10, route);
-        Rectangle r = new Rectangle(32, 32, Color.DARKRED);
+        Rectangle r = new Rectangle(32, 32, couleur);
         r.translateXProperty().bind(e.xProperty().add(16));
         r.translateYProperty().bind(e.yProperty().add(16));
 
@@ -89,6 +89,18 @@ public class ControleurJeu implements Initializable {
         entityPane.getChildren().add(r);
 
         return e;
+    }
+    private Color couleur(int nb ) {
+        switch (nb) {
+            case 0:
+                return Color.RED;
+            case 1:
+                return Color.YELLOW;
+            case 2:
+                return Color.GREY;
+            default:
+                return Color.BLACK;
+        }
     }
 
 }
