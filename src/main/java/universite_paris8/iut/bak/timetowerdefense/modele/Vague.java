@@ -1,5 +1,8 @@
 package universite_paris8.iut.bak.timetowerdefense.modele;
 
+import java.util.Queue;
+import java.util.PriorityQueue;
+
 public class Vague {
     public int[][] level1 ;
 
@@ -17,5 +20,26 @@ public class Vague {
                 {75,12,8,1} // vague 10 avec le boss ( nn c'est toi tié le boss )
 
         };
+
+
+
     }
+    public int somme(int[] tab){
+        int somme = 0;
+        for (int nb : tab){
+            somme += nb;
+        }
+        return somme;
+    }
+
+    public Queue<Integer> laQueue(int[] tab){
+        Queue<Integer> queue = new PriorityQueue<>();
+
+        for (int i = 0; i < somme(tab) - 1 ; i++){
+
+        }
+
+        return queue;
+    }
+
 }
