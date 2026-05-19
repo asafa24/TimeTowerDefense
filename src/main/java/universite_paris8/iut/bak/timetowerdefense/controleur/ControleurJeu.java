@@ -11,12 +11,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.modele.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.Level;
+import universite_paris8.iut.bak.timetowerdefense.modele.Vague;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
 import java.net.URL;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,14 +35,18 @@ public class ControleurJeu implements Initializable {
     private int temps;
 
     private Level level;
+    private Vague vague;
     private TerrainVue vueTerrain;
+    private Jeu jeu;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.level = new Level();
         this.vueTerrain = new TerrainVue(backgroundPane);
-
+        this.vague = new Vague();
+        this.jeu = new Jeu();
+        vague.test();
         initAnimation();
         gameLoop.play();
 
@@ -55,8 +62,25 @@ public class ControleurJeu implements Initializable {
         List<Point2D> route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         System.out.println("Chemin trouvé : " + route);
 
-        Ennemi e = new Ennemi(0, 64 * 9, 50, 2, 10, route);
 
+
+
+
+        KeyFrame kf = new KeyFrame(
+                Duration.seconds(0.017),
+                (ev -> {
+                    if (temps%80 == 0) {
+                        jeu.addEnnemi(creerEnnemi(route));
+                    }
+                    jeu.tick();
+                    temps++;
+                })
+        );
+        gameLoop.getKeyFrames().add(kf);
+    }
+
+    private Ennemi creerEnnemi(List<Point2D> route) {
+        Ennemi e = new Ennemi(0, 64 * 9, 50, 2, 10, route);
         Rectangle r = new Rectangle(32, 32, Color.DARKRED);
         r.translateXProperty().bind(e.xProperty().add(16));
         r.translateYProperty().bind(e.yProperty().add(16));
@@ -64,13 +88,7 @@ public class ControleurJeu implements Initializable {
         r.setOpacity(0.80);
         entityPane.getChildren().add(r);
 
-        KeyFrame kf = new KeyFrame(
-                Duration.seconds(0.017),
-                (ev -> {
-                    e.avancer();
-                    temps++;
-                })
-        );
-        gameLoop.getKeyFrames().add(kf);
+        return e;
     }
+
 }
