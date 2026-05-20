@@ -27,8 +27,11 @@ public class TerrainVue {
 
 
                 if (tileId == 7){
-                    afficherTile("prehistoire/", 0 , x , y );
+                    afficherSol("prehistoire/",x,y);
                     afficherTile("",7,x,y);
+                }
+                else if (tileId == 0){
+                    afficherSol("prehistoire/",x,y);
                 }
                 else {
                     afficherTile("prehistoire/",tileId, x , y);
@@ -44,6 +47,25 @@ public class TerrainVue {
         machine.setFitHeight(TILE_SIZE);
         machine.setX(x * TILE_SIZE);
         machine.setY(y * TILE_SIZE);
+
         backgroundPane.getChildren().add(machine);
+    }
+    public void afficherSol(String epoque, int x,int y){
+        ImageView machine =  new ImageView(String.valueOf(Application.class.getResource("images/tiles/"+epoque+"0"+randomInRange(1,5)+".png" )));
+        machine.setFitWidth(TILE_SIZE);
+        machine.setFitHeight(TILE_SIZE);
+        machine.setX(x * TILE_SIZE);
+        machine.setY(y * TILE_SIZE);
+
+        machine.setRotate(rotationAlea(4));
+        backgroundPane.getChildren().add(machine);
+    }
+
+    public int rotationAlea(int n){
+        int randomNum = (int)(Math.random() * (n+1));
+        return 90*randomNum;
+    }
+    public int randomInRange(int min, int max){
+        return (int)(Math.random() * (max - min) + min);
     }
 }
