@@ -22,20 +22,22 @@ public class TerrainVue {
 
         backgroundPane.getChildren().clear();
         for(int y = 0; y < map.length; y++){
+            for(int x = 0; x < map[y].length; x++) {
+                afficherSol("prehistoire/", x, y);
+            }
+        }
+        for(int y = 0; y < map.length; y++){
             for(int x = 0; x < map[y].length; x++){
                 int tileId = map[y][x];
 
 
                 if (tileId == 7){
-                    afficherSol("prehistoire/",x,y);
                     afficherTile("",7,x,y);
                 }
-                else if (tileId == 0){
-                    afficherSol("prehistoire/",x,y);
-                }
-                else {
+                else if (tileId != 0){
                     afficherTile("prehistoire/",tileId, x , y);
                 }
+
 
 
             }
