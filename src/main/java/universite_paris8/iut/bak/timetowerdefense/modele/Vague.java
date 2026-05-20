@@ -27,12 +27,20 @@ public class Vague {
             queue[i] = laQueue(level1[i]);
         }
     }
+    public void vagueSuivante(){
+        vague++;
+
+    }
 
     public void test() {
+        for (int i = 0; i < queue.length; i++) {
 
-        System.out.println("Test de la vague 10 : " + queue.toString());
+
+            System.out.println("Test vague : " + i +  queue[i].toString() );
+        }
     }
     public int defiler(){
+        System.out.println(queue[vague].toString());
         return queue[vague].remove();
     }
 
