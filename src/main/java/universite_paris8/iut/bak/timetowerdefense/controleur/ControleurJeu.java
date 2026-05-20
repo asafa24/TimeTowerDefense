@@ -21,6 +21,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.ResourceBundle;
 
 public class ControleurJeu implements Initializable {
@@ -32,7 +33,8 @@ public class ControleurJeu implements Initializable {
 
 
     private Timeline gameLoop;
-    private int temps;
+    private int temps,delay;
+
 
     private Level level;
     private Vague vague;
@@ -57,10 +59,12 @@ public class ControleurJeu implements Initializable {
     private void initAnimation() {
         gameLoop = new Timeline();
         temps = 0;
+        delay = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         List<Point2D> route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         System.out.println("Chemin trouvé : " + route);
+        vague.test();
 
 
 
@@ -71,6 +75,18 @@ public class ControleurJeu implements Initializable {
                 (ev -> {
                     if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
                         jeu.addEnnemi(creerEnnemi(route, couleur(vague.defiler())));
+                    }
+                    else{
+                        if (delay > 600 ){
+                            delay = 0;
+                            vague.vagueSuivante();
+                        }
+                        else {
+                            if (vague.getQueue().isEmpty()){
+                                delay++;
+                            }
+
+                        }
                     }
                     jeu.tick();
                     temps++;
@@ -102,5 +118,7 @@ public class ControleurJeu implements Initializable {
                 return Color.BLACK;
         }
     }
+
+
 
 }
