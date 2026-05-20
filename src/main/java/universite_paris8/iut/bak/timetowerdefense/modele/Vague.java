@@ -5,7 +5,8 @@ import java.util.LinkedList;
 
 public class Vague {
     public int[][] level1;
-    Queue<Integer> queue;
+    public int vague;
+    Queue<Integer>[] queue;
 
     public Vague() {
         level1 = new int[][]{
@@ -20,7 +21,11 @@ public class Vague {
                 {60,10,6,0}, // vague 9
                 {75,12,8,1}  // vague 10 avec le boss (nn c'est toi tié le boss)
         };
-        queue  = laQueue(level1[6]);
+        vague = 0;
+        queue = new Queue[level1.length];
+        for (int i = 0; i < level1.length; i++) {
+            queue[i] = laQueue(level1[i]);
+        }
     }
 
     public void test() {
@@ -28,11 +33,11 @@ public class Vague {
         System.out.println("Test de la vague 10 : " + queue.toString());
     }
     public int defiler(){
-        return queue.remove();
+        return queue[vague].remove();
     }
 
     public Queue<Integer> getQueue(){
-        return queue;
+        return queue[vague];
     }
 
     public int somme(int[] tab) {
