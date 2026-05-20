@@ -56,10 +56,17 @@ public class Jeu {
             }
         }
     }
-    public void poserTour(Tour tour){
-        addDefense(tour);
-        System.out.println("pose : x : "+ tour.getX() +"  y : " + tour.getY() );
+    public void poserTour(Tour tour) {
 
+        int caseX = (int) tour.getX();
+        int caseY = (int) tour.getY();
+
+        if (peuxPoserTour(this.epoqueActuel, caseX, caseY)) {
+            addDefense(tour);
+            System.out.println("Tour posée : " + caseX + ", " + caseY);
+        } else {
+            System.out.println("Désolé, la case " + caseX + ", " + caseY + " est occupée ou invalide !");
+        }
     }
     public void poserPiege(Defense piege ){
         addDefense(piege);
@@ -70,23 +77,24 @@ public class Jeu {
 
 
 
-    public boolean peuxPoserTour(int epoque, int x, int y){
+    public boolean peuxPoserTour(int epoque, int caseX, int caseY) {
+        int[][] grille = level.loadLevel(epoque);
 
-        int[][] test = level.loadLevel(epoque);
-
-        // si en dehors du terrain
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
+        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) {
             return false;
         }
 
-        // si les coordonnes x et y coresponde au coordonnes d'un enemi deja present retourne faux
-        for (int i = 0; i < defenses.size(); i++) {
-               if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){return false ;} ;
+        if (grille[caseY][caseX] != 0) {
+            return false;
         }
-        // si different de herbe vide retourne faux
-        return test[y][x] == 0 ;
 
-    } // ok
+        for (Defense d : defenses) {
+            if ((int)d.getX() == caseX && (int)d.getY() == caseY) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public boolean peuxPoserPiege(int epoque, int x, int y){
         int[][] test = level.loadLevel(epoque);
