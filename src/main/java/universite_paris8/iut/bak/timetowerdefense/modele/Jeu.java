@@ -10,6 +10,7 @@ public class Jeu {
     private Level level;
     private int epoqueActuel;
 
+
     private int solde;
     private int pvBase;
 
@@ -48,14 +49,53 @@ public class Jeu {
             }
         }
     }
+    public void poserTour(Tour tour){
+        addDefense(tour);
+        System.out.println("pose : x : "+ tour.getX() +"  y : " + tour.getY() );
+
+    }
+    public void poserPiege(Defense piege ){
+        addDefense(piege);
+        System.out.println("pose : x :"+ piege.getX() +"  y : " + piege.getY() );
+
+    }
+
+
+
 
     public boolean peuxPoserTour(int epoque, int x, int y){
-        return true;
-    }
+
+        int[][] test = level.loadLevel(epoque);
+
+        // si en dehors du terrain
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
+            return false;
+        }
+
+        // si les coordonnes x et y coresponde au coordonnes d'un enemi deja present retourne faux
+        for (int i = 0; i < defenses.size(); i++) {
+               if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){return false ;} ;
+        }
+        // si different de herbe vide retourne faux
+        return test[y][x] == 0 ;
+
+    } // ok
 
     public boolean peuxPoserPiege(int epoque, int x, int y){
-        return true;
-    }
+        int[][] test = level.loadLevel(epoque);
+
+        // si en dehors du terrain
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
+            return false;
+        }
+
+        // si les coordonnes x et y coresponde au coordonnes d'un enemi deja present retourne faux
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){return false ;} ;
+        }
+        // si different de herbe vide retourne faux
+        return test[y][x] >= 0 && test[y][x] <= 6 ;
+    } // ok
 
     public void ajouterArgent(int somme) {
         this.solde += somme;

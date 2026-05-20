@@ -111,13 +111,6 @@ public class ControleurJeu implements Initializable {
     }
 
 
-    public boolean peuxPoserTour(int epoque, int x, int y) {
-        int[][] test = level.loadLevel(epoque);
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
-            return false;
-        }
-        return test[y][x] == 0 && emplacementTour[y][x] == 0;
-    }
 
     @FXML
     public void handleMouseClick(MouseEvent mouseEvent) {
@@ -129,46 +122,22 @@ public class ControleurJeu implements Initializable {
             System.out.println("Veuillez sélectionner une tour d'abord.");
             return;
         }
+        switch(typeTourSelectionnee){
+            case 1 -> {
+                this.tourSelectionne = new Tour(500 , xGrille,yGrille ) ;
+                jeu.poserTour( tourSelectionne );
+            }
 
-        creerEtPlacerTour(xGrille, yGrille);
+            case 2, 3 -> {
+                this.tourSelectionne = new Tour(50, xGrille, yGrille);
+                jeu.poserTour(tourSelectionne);
+
+            }
+        }
 
         this.typeTourSelectionnee = 0;
     }
 
-    private void creerEtPlacerTour(int x, int y) {
-        if (peuxPoserTour(0, x, y)) {
-
-            int xPixel = x * 64;
-            int yPixel = y * 64;
-
-            switch(typeTourSelectionnee){
-                case 1 -> {
-                    this.tourSelectionne = new Tour(50, xPixel, yPixel);
-                    ImageView arbre = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png" )));
-                    arbre.translateXProperty().bind(this.tourSelectionne.xProperty());
-                    arbre.translateYProperty().bind(this.tourSelectionne.yProperty());
-                    entityPane.getChildren().add(arbre);
-                    this.emplacementTour[y][x] = 1 ;
-                }
-                case 2, 3 ->{
-                    this.tourSelectionne = new Tour(50, xPixel, yPixel);
-                    ImageView tour = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/tour.png" )));
-                    tour.translateXProperty().bind(this.tourSelectionne.xProperty());
-                    tour.translateYProperty().bind(this.tourSelectionne.yProperty());
-                    entityPane.getChildren().add(tour);
-                    this.emplacementTour[y][x] = 1 ;
-                }
-
-
-            }
-
-
-
-            System.out.println("Tour posée avec succès en x:" + x + " y:" + y);
-        } else {
-            System.out.println("Pas poser ici ");
-        }
-    }
 
     @FXML
     public void poseDeTourUn() {
@@ -189,3 +158,5 @@ public class ControleurJeu implements Initializable {
     }
 
 }
+
+
