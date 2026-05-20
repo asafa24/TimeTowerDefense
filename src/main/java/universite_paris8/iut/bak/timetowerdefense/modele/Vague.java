@@ -4,8 +4,8 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 public class Vague {
-    public int[][] level1;
-    public int vague;
+    private int[][] level1;
+    private int vague;
     Queue<Integer>[] queue;
 
     public Vague() {
