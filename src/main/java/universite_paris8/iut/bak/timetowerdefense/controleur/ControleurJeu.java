@@ -50,10 +50,13 @@ public class ControleurJeu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.level = new Level();
         this.vueTerrain = new TerrainVue(backgroundPane);
+
+        this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
+        vueEntite.creerBindings(jeu.getEnnemi());
+        vueEntite.creerBindings(jeu.getDefenses());
 
         this.vague = new Vague();
-        this.jeu = new Jeu();
         this.emplacementTour = new int[11][13];
         vague.test();
         initAnimation();

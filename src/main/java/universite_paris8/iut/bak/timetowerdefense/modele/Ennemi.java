@@ -61,4 +61,11 @@ public class Ennemi extends Entite {
         return this.pv <= 0;
     }
 
+    public boolean aAtteintLaBase(){
+        return chemin != null && etapeActuelle >= chemin.size();
+    }
+
+    public int getPv() {
+        return pv;
+    }
 }

@@ -45,6 +45,13 @@ public class Jeu {
                     ennemis.remove(i);
                     continue;
                 }
+
+                if (e.aAtteintLaBase()){
+                    ennemis.remove(i);
+                    pvBase -= e.getPv();
+                    continue;
+                }
+
                 e.avancer();
             }
         }
