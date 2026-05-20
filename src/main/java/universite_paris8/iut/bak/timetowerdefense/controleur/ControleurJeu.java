@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.*;
+import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
 import java.net.URL;
@@ -38,16 +39,19 @@ public class ControleurJeu implements Initializable {
     private Level level;
     private Vague vague;
     private TerrainVue vueTerrain;
+    private EntiteVue vueEntite;
     private Jeu jeu;
     private Tour tourSelectionne;
     private int typeTourSelectionnee = 0;
-    int[][] emplacementTour ;
+    int[][] emplacementTour;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.level = new Level();
         this.vueTerrain = new TerrainVue(backgroundPane);
+        this.vueEntite = new EntiteVue(entityPane);
+
         this.vague = new Vague();
         this.jeu = new Jeu();
         this.emplacementTour = new int[11][13];
@@ -67,18 +71,16 @@ public class ControleurJeu implements Initializable {
         List<Point2D> route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         System.out.println("Chemin trouvé : " + route);
 
-
-
-
-
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
-                    if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
-                        jeu.addEnnemi(creerEnnemi(route, couleur(vague.defiler())));
+                    if(!jeu.perdu()) {
+                        if (temps % 80 == 0 && !vague.getQueue().isEmpty()) {
+                            jeu.addEnnemi(creerEnnemi(route, couleur(vague.defiler())));
+                        }
+                        jeu.tick();
+                        temps++;
                     }
-                    jeu.tick();
-                    temps++;
                 })
         );
         gameLoop.getKeyFrames().add(kf);
