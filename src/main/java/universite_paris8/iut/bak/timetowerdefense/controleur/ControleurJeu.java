@@ -4,16 +4,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.bak.timetowerdefense.modele.Ennemi;
-import universite_paris8.iut.bak.timetowerdefense.modele.Jeu;
-import universite_paris8.iut.bak.timetowerdefense.modele.Level;
-import universite_paris8.iut.bak.timetowerdefense.modele.Vague;
+import universite_paris8.iut.bak.timetowerdefense.Application;
+import universite_paris8.iut.bak.timetowerdefense.modele.*;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
 import java.net.URL;
@@ -38,6 +39,8 @@ public class ControleurJeu implements Initializable {
     private Vague vague;
     private TerrainVue vueTerrain;
     private Jeu jeu;
+    private Tour tourSelectionne;
+    private int typeTourSelectionnee = 0;
 
 
     @Override
@@ -101,6 +104,78 @@ public class ControleurJeu implements Initializable {
             default:
                 return Color.BLACK;
         }
+    }
+
+
+    public boolean peuxPoserTour(int epoque, int x, int y) {
+        int[][] test = level.loadLevel(epoque);
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
+            return false;
+        }
+        return test[y][x] == 0;
+    }
+
+    @FXML
+    public void handleMouseClick(MouseEvent mouseEvent) {
+
+        int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
+        int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
+
+        if (this.typeTourSelectionnee == 0) {
+            System.out.println("Veuillez sélectionner une tour d'abord.");
+            return;
+        }
+
+        Color couleurTour = null;
+        switch (this.typeTourSelectionnee) {
+            case 1 -> couleurTour = Color.BLACK;
+            case 2 -> couleurTour = Color.YELLOW;
+            case 3 -> couleurTour = Color.BLUE;
+            default -> { return; }
+        }
+
+        creerEtPlacerTour(xGrille, yGrille, couleurTour);
+
+        this.typeTourSelectionnee = 0;
+    }
+
+    private void creerEtPlacerTour(int x, int y, Color couleur) {
+        if (peuxPoserTour(0, x, y)) {
+
+            int xPixel = x * 64;
+            int yPixel = y * 64;
+            // faire en sorte que on puisse creer des tours differentes tour tourarchere etc..
+            this.tourSelectionne = new Tour(50, xPixel, yPixel);
+
+            // les associer a des images
+            Rectangle rect = new Rectangle(32, 32, couleur);
+            rect.translateXProperty().bind(this.tourSelectionne.xProperty());
+            rect.translateYProperty().bind(this.tourSelectionne.yProperty());
+            entityPane.getChildren().add(rect);
+
+
+            System.out.println("Tour posée avec succès en x:" + x + " y:" + y);
+        } else {
+            System.out.println("Pas poser ici ");
+        }
+    }
+
+    @FXML
+    public void poseDeTourUn(ActionEvent actionEvent) {
+        this.typeTourSelectionnee = 1;
+        System.out.println("Tour numéro un sélectionnée.");
+    }
+
+    @FXML
+    public void poseDeTourDeux(ActionEvent actionEvent) {
+        this.typeTourSelectionnee = 2;
+        System.out.println("Tour numéro deux sélectionnée.");
+    }
+
+    @FXML
+    public void poseDeTourTrois(ActionEvent actionEvent) {
+        this.typeTourSelectionnee = 3;
+        System.out.println("Tour numéro trois sélectionnée.");
     }
 
 }
