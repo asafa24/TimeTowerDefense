@@ -169,19 +169,19 @@ public class ControleurJeu implements Initializable {
     }
 
     @FXML
-    public void poseDeTourUn(ActionEvent actionEvent) {
+    public void poseDeTourUn() {
         this.typeTourSelectionnee = 1;
         System.out.println("Tour numéro un sélectionnée.");
     }
 
     @FXML
-    public void poseDeTourDeux(ActionEvent actionEvent) {
+    public void poseDeTourDeux() {
         this.typeTourSelectionnee = 2;
         System.out.println("Tour numéro deux sélectionnée.");
     }
 
     @FXML
-    public void poseDeTourTrois(ActionEvent actionEvent) {
+    public void poseDeTourTrois() {
         this.typeTourSelectionnee = 3;
         System.out.println("Tour numéro trois sélectionnée.");
     }
