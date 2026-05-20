@@ -9,7 +9,7 @@ public class Level {
     private int[][] debutlevel;
 
     public Level() {
-//        tileMap = new int[5][19][25];
+//        tileMap = new int[5][11][13];
         tileMap = new int[][][]{{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0},

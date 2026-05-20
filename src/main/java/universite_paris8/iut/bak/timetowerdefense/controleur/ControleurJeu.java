@@ -41,6 +41,7 @@ public class ControleurJeu implements Initializable {
     private Jeu jeu;
     private Tour tourSelectionne;
     private int typeTourSelectionnee = 0;
+    int[][] emplacementTour ;
 
 
     @Override
@@ -49,6 +50,7 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.vague = new Vague();
         this.jeu = new Jeu();
+        this.emplacementTour = new int[11][13];
         vague.test();
         initAnimation();
         gameLoop.play();
@@ -112,7 +114,7 @@ public class ControleurJeu implements Initializable {
         if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
             return false;
         }
-        return test[y][x] == 0;
+        return test[y][x] == 0 && emplacementTour[y][x] == 0;
     }
 
     @FXML
@@ -126,32 +128,38 @@ public class ControleurJeu implements Initializable {
             return;
         }
 
-        Color couleurTour = null;
-        switch (this.typeTourSelectionnee) {
-            case 1 -> couleurTour = Color.BLACK;
-            case 2 -> couleurTour = Color.YELLOW;
-            case 3 -> couleurTour = Color.BLUE;
-            default -> { return; }
-        }
-
-        creerEtPlacerTour(xGrille, yGrille, couleurTour);
+        creerEtPlacerTour(xGrille, yGrille);
 
         this.typeTourSelectionnee = 0;
     }
 
-    private void creerEtPlacerTour(int x, int y, Color couleur) {
+    private void creerEtPlacerTour(int x, int y) {
         if (peuxPoserTour(0, x, y)) {
 
             int xPixel = x * 64;
             int yPixel = y * 64;
-            // faire en sorte que on puisse creer des tours differentes tour tourarchere etc..
-            this.tourSelectionne = new Tour(50, xPixel, yPixel);
 
-            // les associer a des images
-            Rectangle rect = new Rectangle(32, 32, couleur);
-            rect.translateXProperty().bind(this.tourSelectionne.xProperty());
-            rect.translateYProperty().bind(this.tourSelectionne.yProperty());
-            entityPane.getChildren().add(rect);
+            switch(typeTourSelectionnee){
+                case 1 -> {
+                    this.tourSelectionne = new Tour(50, xPixel, yPixel);
+                    ImageView arbre = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png" )));
+                    arbre.translateXProperty().bind(this.tourSelectionne.xProperty());
+                    arbre.translateYProperty().bind(this.tourSelectionne.yProperty());
+                    entityPane.getChildren().add(arbre);
+                    this.emplacementTour[y][x] = 1 ;
+                }
+                case 2, 3 ->{
+                    this.tourSelectionne = new Tour(50, xPixel, yPixel);
+                    ImageView tour = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/tour.png" )));
+                    tour.translateXProperty().bind(this.tourSelectionne.xProperty());
+                    tour.translateYProperty().bind(this.tourSelectionne.yProperty());
+                    entityPane.getChildren().add(tour);
+                    this.emplacementTour[y][x] = 1 ;
+                }
+
+
+            }
+
 
 
             System.out.println("Tour posée avec succès en x:" + x + " y:" + y);
