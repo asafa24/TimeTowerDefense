@@ -192,12 +192,12 @@ public class ControleurJeu implements Initializable {
         }
         switch(typeTourSelectionnee){
             case 1 -> {
-                this.tourSelectionne = new Tour(25, xGrille, yGrille ,10 ,64  ,60);
+                this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
                 jeu.poserTour( tourSelectionne);
             }
 
             case 2, 3 -> {
-                this.tourSelectionne = new TourCercle(50, xGrille, yGrille,20,128, 150,64);
+                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,20,128, 150,64);
                 jeu.poserTour(tourSelectionne);
 
             }

@@ -51,10 +51,11 @@ public class EntiteVue {
         }
 
         if(e instanceof Projectile){
-            Circle c = new Circle(8, Color.DARKGREY);
-            c.centerXProperty().bind(e.xProperty().add(8));
-            c.centerYProperty().bind(e.yProperty().add(8));
-            sprite = c;
+            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            img.setScaleX(-1);
+            sprite = img;
         }
 
         if (sprite != null){

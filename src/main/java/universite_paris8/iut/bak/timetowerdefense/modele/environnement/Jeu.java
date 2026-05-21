@@ -97,6 +97,7 @@ public class Jeu {
                     Ennemi e = ennemis.get(i);
                     if (e.estMort()) {
                         solde += e.getRecompense();
+                        System.out.println("+" + e.getRecompense() + "$");
                         ennemis.remove(i);
                         continue;
                     }
@@ -120,11 +121,13 @@ public class Jeu {
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
 
-        if (peuxPoserTour(this.epoqueActuel, caseX, caseY)) {
+        if (peuxPoserTour(this.epoqueActuel, tour)) {
             addDefense(tour);
-            System.out.println("Tour posée : " + caseX + ", " + caseY);
+            this.solde -= tour.getCout();
+            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
+            System.out.println("Solde actuelle : " + this.solde);
         } else {
-            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ");
+            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
     }
     public void poserPiege(Defense piege ){
@@ -143,8 +146,11 @@ public class Jeu {
 
 
 
-    public boolean peuxPoserTour(int epoque, int caseX, int caseY) {
+    public boolean peuxPoserTour(int epoque, Tour tour ) {
         int[][] grille = level.loadLevel(epoque);
+
+        int caseX = (int) tour.getX();
+        int caseY = (int) tour.getY();
 
         if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) {
             return false;
@@ -159,7 +165,7 @@ public class Jeu {
                 return false;
             }
         }
-        return true;
+        return this.solde >= tour.getCout();
     }
 
     public boolean peuxPoserPiege(int epoque, int x, int y){
@@ -174,7 +180,6 @@ public class Jeu {
         for (int i = 0; i < defenses.size(); i++) {
             if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){return false ;} ;
         }
-        // si different de herbe vide retourne faux
         return test[y][x] >= 0 && test[y][x] <= 6 ;
     } // ok
 
