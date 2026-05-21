@@ -62,4 +62,23 @@ public class Tour extends Defense {
 
         return ciblePlusAvancee;
     }
+    public int getCadence() {
+        return cadence;
+    }
+
+    public int getCompteurTir() {
+        return compteurTir;
+    }
+
+    public int getDegats() {
+        return degats;
+    }
+
+    public int getPortee() {
+        return portee;
+    }
+
+    public void setCompteurTir(int compteurTir) {
+        this.compteurTir = compteurTir;
+    }
 }
