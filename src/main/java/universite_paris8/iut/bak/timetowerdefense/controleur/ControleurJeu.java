@@ -74,13 +74,9 @@ public class ControleurJeu implements Initializable {
 
         this.vague = new Vague();
 
-        IntegerProperty argent = new SimpleIntegerProperty(jeu.getSolde());
-        IntegerProperty vagueActuelle = new SimpleIntegerProperty(vague.getVague());
-        IntegerProperty vie = new SimpleIntegerProperty(jeu.getPvBase());
-
-        labelArgent.textProperty().bind(argent.asString());
-        labelVague.textProperty().bind(vagueActuelle.asString());
-        labelPvBase.textProperty().bind(vie.asString());
+        labelArgent.textProperty().bind(jeu.getSoldeProperty().asString("Solde : %d"));
+        labelVague.textProperty().bind(vague.getVagueProperty().asString("Vague : %d"));
+        labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
 
         this.emplacementTour = new int[11][13];
         vague.test();

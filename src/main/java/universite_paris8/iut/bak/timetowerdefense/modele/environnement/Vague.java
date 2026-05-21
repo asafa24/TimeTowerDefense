@@ -1,11 +1,14 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.Queue;
 import java.util.LinkedList;
 
 public class Vague {
     private int[][] level1;
-    private int vague;
+    private IntegerProperty vague;
     Queue<Integer>[] queue;
 
     public Vague() {
@@ -21,15 +24,14 @@ public class Vague {
                 {60,10,6,0}, // vague 9
                 {75,12,8,1}  // vague 10 avec le boss (nn c'est toi tié le boss)
         };
-        vague = 0;
+        vague = new SimpleIntegerProperty(0);
         queue = new Queue[level1.length];
         for (int i = 0; i < level1.length; i++) {
             queue[i] = laQueue(level1[i]);
         }
     }
     public void vagueSuivante(){
-        vague++;
-
+        vague.set(vague.get() + 1);
     }
 
     public void test() {
@@ -40,12 +42,12 @@ public class Vague {
         }
     }
     public int defiler(){
-        System.out.println(queue[vague].toString());
-        return queue[vague].remove();
+        System.out.println(queue[vague.get()].toString());
+        return queue[vague.get()].remove();
     }
 
     public Queue<Integer> getQueue(){
-        return queue[vague];
+        return queue[vague.get()];
     }
 
     public int somme(int[] tab) {
@@ -110,6 +112,9 @@ public class Vague {
     }
 
     public int getVague() {
+        return vague.get();
+    }
+    public IntegerProperty getVagueProperty(){
         return vague;
     }
 }

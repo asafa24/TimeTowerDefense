@@ -1,5 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
@@ -17,8 +19,9 @@ public class Jeu {
     private int epoqueActuel;
 
 
-    private int solde;
-    private int pvBase;
+    private IntegerProperty solde;
+    private IntegerProperty pvBase;
+
     private int typeTourSelectionne ;
 
 
@@ -27,10 +30,11 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = 150;
-        this.pvBase = 3;
+        this.solde = new SimpleIntegerProperty(150);
+        this.pvBase = new SimpleIntegerProperty(3);
         this.epoqueActuel = 0;
         typeTourSelectionne = 0 ;
+
     }
 
 
@@ -96,16 +100,16 @@ public class Jeu {
                 for (int i = ennemis.size() - 1; i >= 0; i--) {
                     Ennemi e = ennemis.get(i);
                     if (e.estMort()) {
-                        solde += e.getRecompense();
+                        ajouterArgent(e.getRecompense());
                         System.out.println("+" + e.getRecompense() + "$");
                         ennemis.remove(i);
                         continue;
                     }
 
                     if (e.aAtteintLaBase()) {
-                        solde += e.getRecompense();
+                        ajouterArgent(e.getRecompense());
                         ennemis.remove(i);
-                        pvBase -= e.getPv();
+                        pvBase.subtract(e.getPv());
                         continue;
                     }
 
@@ -122,10 +126,11 @@ public class Jeu {
         int caseY = (int) tour.getY();
 
         if (peuxPoserTour(this.epoqueActuel, tour)) {
+            depenserArgent(tour.getCout());
             addDefense(tour);
-            this.solde -= tour.getCout();
+
             System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
-            System.out.println("Solde actuelle : " + this.solde);
+            System.out.println("Solde actuelle : " + this.solde.get());
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
@@ -165,7 +170,7 @@ public class Jeu {
                 return false;
             }
         }
-        return this.solde >= tour.getCout();
+        return this.solde.get() >= tour.getCout();
     }
 
     public boolean peuxPoserPiege(int epoque, int x, int y){
@@ -184,22 +189,28 @@ public class Jeu {
     } // ok
 
     public void ajouterArgent(int somme) {
-        this.solde += somme;
+        this.solde.set(this.solde.get() + somme);
     }
 
     public void depenserArgent(int somme){
-        if(solde >= somme) solde -= somme;
+        if(solde.get() >= somme) solde.set(solde.get() - somme);
     }
 
     public boolean perdu(){
-        return pvBase <= 0;
+        return pvBase.get() <= 0;
     }
 
     public int getSolde() {
+        return solde.get();
+    }
+    public IntegerProperty getSoldeProperty(){
         return solde;
     }
 
     public int getPvBase() {
+        return pvBase.get();
+    }
+    public IntegerProperty getPvBaseProperty(){
         return pvBase;
     }
 }
