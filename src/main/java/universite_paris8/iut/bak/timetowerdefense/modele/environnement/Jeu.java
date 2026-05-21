@@ -3,6 +3,7 @@ package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
@@ -68,7 +69,19 @@ public class Jeu {
                 for (int i = projectiles.size() - 1; i >= 0; i--) {
                     Projectile p = projectiles.get(i);
                     if (p.aAtteintCible()) {
-                        if (p.getCible() != null && !p.getCible().estMort()) {
+                        if (p instanceof ProjectileCercle){
+                            ProjectileCercle pCercle = (ProjectileCercle) p ;
+                            double epicentreX = pCercle.getX();
+                            double epicentreY = pCercle.getY();
+                            for (Ennemi e : ennemis){
+                                double distanceExplosion = Math.hypot(epicentreX - e.getCentreX(), epicentreY - e.getCentreY());
+                                if (distanceExplosion <= pCercle.getRayonExplosion()){
+                                    e.recevoirDegats(pCercle.getDegats());
+                                }
+                            }
+
+
+                        } else if (p.getCible() != null && !p.getCible().estMort()) {
                             p.getCible().recevoirDegats(p.getDegats());
                         }
                         projectiles.remove(i);
@@ -98,6 +111,8 @@ public class Jeu {
             }
         }
     }
+
+
     public void poserTour(Tour tour) {
 
         int caseX = (int) tour.getX();
@@ -107,7 +122,7 @@ public class Jeu {
             addDefense(tour);
             System.out.println("Tour posée : " + caseX + ", " + caseY);
         } else {
-            System.out.println("Désolé, la case " + caseX + ", " + caseY + " est occupée ou invalide !");
+            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ");
         }
     }
     public void poserPiege(Defense piege ){
