@@ -19,6 +19,7 @@ public class Jeu {
 
     private int solde;
     private int pvBase;
+    private int typeTourSelectionne ;
 
 
     public Jeu() {
@@ -27,8 +28,9 @@ public class Jeu {
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
         this.solde = 1000;
-        this.pvBase = 100;
+        this.pvBase = 3;
         this.epoqueActuel = 0;
+        typeTourSelectionne = 0 ;
     }
 
 
@@ -130,6 +132,13 @@ public class Jeu {
         System.out.println("pose : x :"+ piege.getX() +"  y : " + piege.getY() );
 
     }
+    private void selectionTour(){
+        this.typeTourSelectionne = 1;
+    }
+    private void selectionTourCercle(){
+        this.typeTourSelectionne = 1;
+    }
+
 
 
 

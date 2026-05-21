@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Vague;
@@ -167,12 +168,12 @@ public class ControleurJeu implements Initializable {
         }
         switch(typeTourSelectionnee){
             case 1 -> {
-                this.tourSelectionne = new Tour(25, xGrille, yGrille) ;
-                jeu.poserTour( tourSelectionne );
+                this.tourSelectionne = new Tour(25, xGrille, yGrille ,10 ,64  ,60);
+                jeu.poserTour( tourSelectionne);
             }
 
             case 2, 3 -> {
-                this.tourSelectionne = new Tour(50, xGrille, yGrille);
+                this.tourSelectionne = new TourCercle(50, xGrille, yGrille,20,128, 150,64);
                 jeu.poserTour(tourSelectionne);
 
             }
