@@ -98,7 +98,10 @@ public class ControleurJeu implements Initializable {
                 Duration.seconds(0.017),
                 (ev -> {
                     if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
-                        jeu.addEnnemi(creerEnnemi(route, couleur(vague.defiler())));
+
+                        jeu.addEnnemi(creerEnnemi(route, vague.defiler() ));
+
+
                     }
                     else{
                         if (delay > 600 ){
@@ -138,8 +141,19 @@ public class ControleurJeu implements Initializable {
         }
     }
 
-    private Ennemi creerEnnemi(List<Point2D> route, Color couleur) {
-        return new Ennemi(0, 64 * 9, 1, 2, 10, route);
+    private Ennemi creerEnnemi(List<Point2D> route, int id ) {
+        switch (id) {
+            case 0 :
+                return new Ennemi(0, 64 * 9, 1, 2, 10, route);
+            case 1 :
+                return new Ennemi(0, 64 * 9, 5, 4, 10, route);
+            case 2 :
+                return new Ennemi(0, 64 * 9, 15, 1, 10, route);
+            default :
+                return new Ennemi(0, 64 * 9, 20, 1, 10, route);
+
+        }
+
     }
 
     private Color couleur(int nb ) {
