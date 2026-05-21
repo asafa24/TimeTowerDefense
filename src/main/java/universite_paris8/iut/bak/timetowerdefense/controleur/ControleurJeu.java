@@ -7,14 +7,19 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.bak.timetowerdefense.modele.Ennemi;
-import universite_paris8.iut.bak.timetowerdefense.modele.Jeu;
-import universite_paris8.iut.bak.timetowerdefense.modele.Level;
-import universite_paris8.iut.bak.timetowerdefense.modele.Vague;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Vague;
+import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
+
 
 import java.net.URL;
 import javafx.util.Duration;
@@ -31,6 +36,14 @@ public class ControleurJeu implements Initializable {
     @FXML
     private Pane entityPane;
 
+    @FXML
+    private Label labelPvBase;
+
+    @FXML
+    private Label labelArgent;
+
+    @FXML
+    private Label labelVague;
 
     private Timeline gameLoop;
     private int temps,delay;
@@ -39,15 +52,26 @@ public class ControleurJeu implements Initializable {
     private Level level;
     private Vague vague;
     private TerrainVue vueTerrain;
+    private EntiteVue vueEntite;
     private Jeu jeu;
+    private Tour tourSelectionne;
+    private int typeTourSelectionnee = 0;
+    int[][] emplacementTour;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.level = new Level();
         this.vueTerrain = new TerrainVue(backgroundPane);
-        this.vague = new Vague();
         this.jeu = new Jeu();
+        this.vueEntite = new EntiteVue(entityPane);
+        vueEntite.creerBindings(jeu.getEnnemi());
+        vueEntite.creerBindings(jeu.getDefenses());
+        vueEntite.creerBindings(jeu.getProjectiles());
+
+
+        this.vague = new Vague();
+        this.emplacementTour = new int[11][13];
         vague.test();
         initAnimation();
         gameLoop.play();
@@ -59,7 +83,6 @@ public class ControleurJeu implements Initializable {
     private void initAnimation() {
         gameLoop = new Timeline();
         temps = 0;
-        delay = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         List<Point2D> route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
@@ -95,17 +118,29 @@ public class ControleurJeu implements Initializable {
         gameLoop.getKeyFrames().add(kf);
     }
 
-    private Ennemi creerEnnemi(List<Point2D> route, Color couleur) {
-        Ennemi e = new Ennemi(0, 64 * 9, 50, 2, 10, route);
-        Rectangle r = new Rectangle(32, 32, couleur);
-        r.translateXProperty().bind(e.xProperty().add(16));
-        r.translateYProperty().bind(e.yProperty().add(16));
-
-        r.setOpacity(0.80);
-        entityPane.getChildren().add(r);
-
-        return e;
+    @FXML
+    public void gererTouches(KeyEvent event) {
+        switch (event.getCode()) {
+            case DIGIT1, NUMPAD1 -> {
+                poseDeTourUn();
+            }
+            case DIGIT2, NUMPAD2 -> {
+                poseDeTourDeux();
+            }
+            case DIGIT3, NUMPAD3 -> {
+                poseDeTourTrois();
+            }
+            case ESCAPE -> {
+                this.typeTourSelectionnee = 0;
+                System.out.println("Selection annulée");
+            }
+        }
     }
+
+    private Ennemi creerEnnemi(List<Point2D> route, Color couleur) {
+        return new Ennemi(0, 64 * 9, 1, 2, 10, route);
+    }
+
     private Color couleur(int nb ) {
         switch (nb) {
             case 0:
@@ -120,5 +155,48 @@ public class ControleurJeu implements Initializable {
     }
 
 
+    @FXML
+    public void handleMouseClick(MouseEvent mouseEvent) {
 
+        int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
+        int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
+
+        if (this.typeTourSelectionnee == 0) {
+            System.out.println("Veuillez sélectionner une tour d'abord.");
+            return;
+        }
+        switch(typeTourSelectionnee){
+            case 1 -> {
+                this.tourSelectionne = new Tour(25, xGrille, yGrille) ;
+                jeu.poserTour( tourSelectionne );
+            }
+
+            case 2, 3 -> {
+                this.tourSelectionne = new Tour(50, xGrille, yGrille);
+                jeu.poserTour(tourSelectionne);
+
+            }
+        }
+
+        this.typeTourSelectionnee = 0;
+    }
+
+
+    @FXML
+    public void poseDeTourUn() {
+        this.typeTourSelectionnee = 1;
+        System.out.println("Tour numéro un sélectionnée.");
+    }
+
+    @FXML
+    public void poseDeTourDeux() {
+        this.typeTourSelectionnee = 2;
+        System.out.println("Tour numéro deux sélectionnée.");
+    }
+
+    @FXML
+    public void poseDeTourTrois() {
+        this.typeTourSelectionnee = 3;
+        System.out.println("Tour numéro trois sélectionnée.");
+    }
 }
