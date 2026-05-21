@@ -36,6 +36,7 @@ public class ControleurJeu implements Initializable {
 
     @FXML
     private Pane backgroundPane;
+
     @FXML
     private Pane entityPane;
 
@@ -49,7 +50,7 @@ public class ControleurJeu implements Initializable {
     private Label labelVague;
 
     private Timeline gameLoop;
-    private int temps,delay;
+    private int temps, delay;
 
 
     private Level level;
@@ -59,7 +60,6 @@ public class ControleurJeu implements Initializable {
     private Jeu jeu;
     private Tour tourSelectionne;
     private int typeTourSelectionnee = 0;
-    int[][] emplacementTour;
 
 
     @Override
@@ -78,7 +78,6 @@ public class ControleurJeu implements Initializable {
         labelVague.textProperty().bind(vague.getVagueProperty().asString("Vague : %d"));
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
 
-        this.emplacementTour = new int[11][13];
         vague.test();
         initAnimation();
         gameLoop.play();
@@ -97,17 +96,11 @@ public class ControleurJeu implements Initializable {
         vague.test();
 
 
-
-
-
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
                     if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
-
                         jeu.addEnnemi(creerEnnemi(route, vague.defiler() ));
-
-
                     }
                     else{
                         if (delay > 600 ){
@@ -118,7 +111,6 @@ public class ControleurJeu implements Initializable {
                             if (vague.getQueue().isEmpty()){
                                 delay++;
                             }
-
                         }
                     }
                     jeu.tick();
@@ -150,13 +142,13 @@ public class ControleurJeu implements Initializable {
     private Ennemi creerEnnemi(List<Point2D> route, int id ) {
         switch (id) {
             case 0 :
-                return new Ennemi(0, 64 * 9, 1, 2, 10, route);
+                return new Ennemi(0, 64 * 9, 25, 2, 10, route);
             case 1 :
-                return new Ennemi(0, 64 * 9, 5, 4, 10, route);
+                return new Ennemi(0, 64 * 9, 50, 4, 10, route);
             case 2 :
-                return new Ennemi(0, 64 * 9, 15, 1, 10, route);
+                return new Ennemi(0, 64 * 9, 150, 1, 10, route);
             default :
-                return new Ennemi(0, 64 * 9, 20, 1, 10, route);
+                return new Ennemi(0, 64 * 9, 200, 1, 10, route);
 
         }
 
@@ -193,7 +185,7 @@ public class ControleurJeu implements Initializable {
             }
 
             case 2, 3 -> {
-                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,20,128, 150,64);
+                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
                 jeu.poserTour(tourSelectionne);
 
             }

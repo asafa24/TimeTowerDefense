@@ -31,7 +31,7 @@ public class Jeu {
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
         this.solde = new SimpleIntegerProperty(150);
-        this.pvBase = new SimpleIntegerProperty(3);
+        this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         typeTourSelectionne = 0 ;
 
@@ -109,7 +109,7 @@ public class Jeu {
                     if (e.aAtteintLaBase()) {
                         ajouterArgent(e.getRecompense());
                         ennemis.remove(i);
-                        pvBase.subtract(e.getPv());
+                        pvBase.set(pvBase.get() - e.getPv());
                         continue;
                     }
 
@@ -183,7 +183,9 @@ public class Jeu {
 
         // si les coordonnes x et y coresponde au coordonnes d'un enemi deja present retourne faux
         for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){return false ;} ;
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){
+                return false;
+            }
         }
         return test[y][x] >= 0 && test[y][x] <= 6 ;
     } // ok

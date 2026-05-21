@@ -13,7 +13,7 @@ public class Tour extends Defense {
 
     public Tour(int cout ,double x, double y){
         super(cout,x,y);
-        this.degats = 100;
+        this.degats = 25;
         this.portee = 100;
         this.cadence = 120;
         this.compteurTir = cadence/2;
