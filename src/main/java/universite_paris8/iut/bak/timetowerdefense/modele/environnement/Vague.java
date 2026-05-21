@@ -108,4 +108,8 @@ public class Vague {
 
         return queue;
     }
+
+    public int getVague() {
+        return vague;
+    }
 }

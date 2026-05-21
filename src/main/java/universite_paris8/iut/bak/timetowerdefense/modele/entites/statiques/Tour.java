@@ -16,7 +16,7 @@ public class Tour extends Defense {
         this.degats = 100;
         this.portee = 100;
         this.cadence = 120;
-        this.compteurTir = 0;
+        this.compteurTir = cadence/2;
     }
 
     public Tour(int cout ,double x, double y, int degats, int portee, int cadence){

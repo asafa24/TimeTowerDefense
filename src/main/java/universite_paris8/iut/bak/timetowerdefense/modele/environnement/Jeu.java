@@ -27,7 +27,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = 1000;
+        this.solde = 150;
         this.pvBase = 3;
         this.epoqueActuel = 0;
         typeTourSelectionne = 0 ;
@@ -190,5 +190,11 @@ public class Jeu {
         return pvBase <= 0;
     }
 
+    public int getSolde() {
+        return solde;
+    }
 
+    public int getPvBase() {
+        return pvBase;
+    }
 }

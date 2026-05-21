@@ -3,7 +3,9 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -70,8 +72,16 @@ public class ControleurJeu implements Initializable {
         vueEntite.creerBindings(jeu.getDefenses());
         vueEntite.creerBindings(jeu.getProjectiles());
 
-
         this.vague = new Vague();
+
+        IntegerProperty argent = new SimpleIntegerProperty(jeu.getSolde());
+        IntegerProperty vagueActuelle = new SimpleIntegerProperty(vague.getVague());
+        IntegerProperty vie = new SimpleIntegerProperty(jeu.getPvBase());
+
+        labelArgent.textProperty().bind(argent.asString());
+        labelVague.textProperty().bind(vagueActuelle.asString());
+        labelPvBase.textProperty().bind(vie.asString());
+
         this.emplacementTour = new int[11][13];
         vague.test();
         initAnimation();
