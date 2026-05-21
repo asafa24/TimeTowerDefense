@@ -1,11 +1,16 @@
-package universite_paris8.iut.bak.timetowerdefense.modele;
+package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 public class Jeu {
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Defense> defenses;
+    private ObservableList<Projectile> projectiles;
 
     private Level level;
     private int epoqueActuel;
@@ -18,6 +23,7 @@ public class Jeu {
     public Jeu() {
         this.ennemis =FXCollections.observableArrayList();
         this.defenses = FXCollections.observableArrayList();
+        this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
         this.solde = 1000;
         this.pvBase = 100;
@@ -31,28 +37,64 @@ public class Jeu {
     public void addEnnemi(Ennemi ennemi) {
         ennemis.add(ennemi);
     }
-    public void removeEnnemi(Ennemi ennemi) {ennemis.remove(ennemi);}
+    public void removeEnnemi(Ennemi ennemi) {
+        ennemis.remove(ennemi);
+    }
 
-    public ObservableList<Defense> getDefenses() {return defenses;}
-    public void addDefense(Defense defense) {defenses.add(defense);}
-    public void removeDefense(Defense defense) {defenses.remove(defense);}
+    public ObservableList<Defense> getDefenses() {
+        return defenses;
+    }
+    public void addDefense(Defense defense) {
+        defenses.add(defense);
+    }
+    public void removeDefense(Defense defense) {
+        defenses.remove(defense);
+    }
+
+    public ObservableList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+
 
     public void tick() {
-        if (!ennemis.isEmpty()) {
-            for (int i = ennemis.size()-1; i >= 0; i--) {
-                Ennemi e = ennemis.get(i);
-                if(e.estMort()){
-                    ennemis.remove(i);
-                    continue;
+        if (!perdu()) {
+            for (Defense d : defenses) {
+                if (d instanceof Tour) {
+                    ((Tour) d).attaquer(ennemis, projectiles);
                 }
-
-                if (e.aAtteintLaBase()){
-                    ennemis.remove(i);
-                    pvBase -= e.getPv();
-                    continue;
+            }
+            if (!projectiles.isEmpty()) {
+                for (int i = projectiles.size() - 1; i >= 0; i--) {
+                    Projectile p = projectiles.get(i);
+                    if (p.aAtteintCible()) {
+                        if (p.getCible() != null && !p.getCible().estMort()) {
+                            p.getCible().recevoirDegats(p.getDegats());
+                        }
+                        projectiles.remove(i);
+                    }
+                    p.deplacer();
                 }
+            }
 
-                e.avancer();
+            if (!ennemis.isEmpty()) {
+                for (int i = ennemis.size() - 1; i >= 0; i--) {
+                    Ennemi e = ennemis.get(i);
+                    if (e.estMort()) {
+                        solde += e.getRecompense();
+                        ennemis.remove(i);
+                        continue;
+                    }
+
+                    if (e.aAtteintLaBase()) {
+                        solde += e.getRecompense();
+                        ennemis.remove(i);
+                        pvBase -= e.getPv();
+                        continue;
+                    }
+
+                    e.avancer();
+                }
             }
         }
     }
@@ -123,5 +165,6 @@ public class Jeu {
     public boolean perdu(){
         return pvBase <= 0;
     }
+
 
 }

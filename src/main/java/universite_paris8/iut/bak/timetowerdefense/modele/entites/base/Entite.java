@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

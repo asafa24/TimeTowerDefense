@@ -1,4 +1,6 @@
-package universite_paris8.iut.bak.timetowerdefense.modele;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
+
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 
 public abstract class Defense extends Entite {
     private int cout;

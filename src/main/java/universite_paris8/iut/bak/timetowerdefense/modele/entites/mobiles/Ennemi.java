@@ -1,6 +1,7 @@
-package universite_paris8.iut.bak.timetowerdefense.modele;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class Ennemi extends Entite {
         }
     }
 
+    public void recevoirDegats(int dgt){
+        this.pv -= dgt;
+    }
+
     public boolean estMort(){
         return this.pv <= 0;
     }
@@ -67,5 +72,20 @@ public class Ennemi extends Entite {
 
     public int getPv() {
         return pv;
+    }
+
+    public int getRecompense() {
+        return recompense;
+    }
+
+    public int getEtapeActuelle() {
+        return etapeActuelle;
+    }
+
+    public double getCentreX(){
+        return this.getX() + TILE_SIZE / 2;
+    }
+    public double getCentreY(){
+        return this.getY() + TILE_SIZE / 2;
     }
 }

@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele;
+package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 
 import java.util.Queue;
 import java.util.LinkedList;

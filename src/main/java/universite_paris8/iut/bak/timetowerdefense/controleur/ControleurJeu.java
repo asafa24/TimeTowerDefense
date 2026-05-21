@@ -2,26 +2,25 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.bak.timetowerdefense.Application;
-import universite_paris8.iut.bak.timetowerdefense.modele.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Vague;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
 import java.net.URL;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +31,14 @@ public class ControleurJeu implements Initializable {
     @FXML
     private Pane entityPane;
 
+    @FXML
+    private Label labelPvBase;
+
+    @FXML
+    private Label labelArgent;
+
+    @FXML
+    private Label labelVague;
 
     private Timeline gameLoop;
     private int temps;
@@ -55,6 +62,8 @@ public class ControleurJeu implements Initializable {
         this.vueEntite = new EntiteVue(entityPane);
         vueEntite.creerBindings(jeu.getEnnemi());
         vueEntite.creerBindings(jeu.getDefenses());
+        vueEntite.creerBindings(jeu.getProjectiles());
+
 
         this.vague = new Vague();
         this.emplacementTour = new int[11][13];
@@ -89,16 +98,27 @@ public class ControleurJeu implements Initializable {
         gameLoop.getKeyFrames().add(kf);
     }
 
+    @FXML
+    public void gererTouches(KeyEvent event) {
+        switch (event.getCode()) {
+            case DIGIT1, NUMPAD1 -> {
+                poseDeTourUn();
+            }
+            case DIGIT2, NUMPAD2 -> {
+                poseDeTourDeux();
+            }
+            case DIGIT3, NUMPAD3 -> {
+                poseDeTourTrois();
+            }
+            case ESCAPE -> {
+                this.typeTourSelectionnee = 0;
+                System.out.println("Selection annulée");
+            }
+        }
+    }
+
     private Ennemi creerEnnemi(List<Point2D> route, Color couleur) {
-        Ennemi e = new Ennemi(0, 64 * 9, 50, 2, 10, route);
-        Rectangle r = new Rectangle(32, 32, couleur);
-        r.translateXProperty().bind(e.xProperty().add(16));
-        r.translateYProperty().bind(e.yProperty().add(16));
-
-        r.setOpacity(0.80);
-        entityPane.getChildren().add(r);
-
-        return e;
+        return new Ennemi(0, 64 * 9, 1, 2, 10, route);
     }
     private Color couleur(int nb ) {
         switch (nb) {
@@ -127,7 +147,7 @@ public class ControleurJeu implements Initializable {
         }
         switch(typeTourSelectionnee){
             case 1 -> {
-                this.tourSelectionne = new Tour(500 , xGrille,yGrille ) ;
+                this.tourSelectionne = new Tour(25, xGrille, yGrille) ;
                 jeu.poserTour( tourSelectionne );
             }
 

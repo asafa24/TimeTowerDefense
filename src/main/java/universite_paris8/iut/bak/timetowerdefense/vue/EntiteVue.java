@@ -6,11 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
-import universite_paris8.iut.bak.timetowerdefense.modele.Ennemi;
-import universite_paris8.iut.bak.timetowerdefense.modele.Entite;
-import universite_paris8.iut.bak.timetowerdefense.modele.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 
 import java.util.HashMap;
 
@@ -36,9 +38,16 @@ public class EntiteVue {
 
         if (e instanceof Tour){
             ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
-            img.translateXProperty().bind(e.xProperty().multiply(64));
-            img.translateYProperty().bind(e.yProperty().multiply(64));
+            img.setTranslateX(e.getX()*64);
+            img.setTranslateY(e.getY()*64);
             sprite = img;
+        }
+
+        if(e instanceof Projectile){
+            Circle c = new Circle(8, Color.DARKGREY);
+            c.centerXProperty().bind(e.xProperty().add(8));
+            c.centerYProperty().bind(e.yProperty().add(8));
+            sprite = c;
         }
 
         if (sprite != null){
