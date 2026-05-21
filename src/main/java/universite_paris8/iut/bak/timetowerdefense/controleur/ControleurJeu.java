@@ -138,16 +138,9 @@ public class ControleurJeu implements Initializable {
     }
 
     private Ennemi creerEnnemi(List<Point2D> route, Color couleur) {
-        Ennemi e = new Ennemi(0, 64 * 9, 50, 2, 10, route);
-        Rectangle r = new Rectangle(32, 32, couleur);
-        r.translateXProperty().bind(e.xProperty().add(16));
-        r.translateYProperty().bind(e.yProperty().add(16));
-
-        r.setOpacity(0.80);
-        entityPane.getChildren().add(r);
-
-        return e;
+        return new Ennemi(0, 64 * 9, 1, 2, 10, route);
     }
+
     private Color couleur(int nb ) {
         switch (nb) {
             case 0:
