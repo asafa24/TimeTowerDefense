@@ -4,16 +4,21 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
+import java.util.List;
+
 public class Jeu {
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Defense> defenses;
     private ObservableList<Projectile> projectiles;
+    private int frame;
+    private List<Point2D> route ;
 
     private Level level;
     private int epoqueActuel;
@@ -24,6 +29,9 @@ public class Jeu {
 
     private int typeTourSelectionne ;
 
+    private Vague vague;
+    private int delay;
+
 
     public Jeu() {
         this.ennemis =FXCollections.observableArrayList();
@@ -33,10 +41,16 @@ public class Jeu {
         this.solde = new SimpleIntegerProperty(150);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
+        this.frame = 0;
         typeTourSelectionne = 0 ;
-
+        this.route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
+        this.vague = new Vague();
+        this.delay = 0;
     }
 
+    public Vague getVague() {
+        return vague;
+    }
 
     public ObservableList<Ennemi> getEnnemi() {
         return ennemis ;
@@ -66,6 +80,17 @@ public class Jeu {
 
     public void tick() {
         if (!perdu()) {
+
+
+
+
+
+
+
+
+
+
+
             for (Defense d : defenses) {
                 if (d instanceof Tour) {
                     ((Tour) d).attaquer(ennemis, projectiles);
@@ -117,6 +142,25 @@ public class Jeu {
                 }
             }
         }
+        if (frame%80 == 0 && !vague.getQueue().isEmpty()) {
+
+            addEnnemi(creerEnnemi(vague.defiler() ));
+
+
+        }
+        else{
+            if (delay > 600 ){
+                delay = 0;
+                vague.vagueSuivante();
+            }
+            else {
+                if (vague.getQueue().isEmpty()){
+                    delay++;
+                }
+
+            }
+        }
+        frame++;
     }
 
 
@@ -214,5 +258,20 @@ public class Jeu {
     }
     public IntegerProperty getPvBaseProperty(){
         return pvBase;
+    }
+
+    private Ennemi creerEnnemi( int id ) {
+        switch (id) {
+            case 0 :
+                return new Ennemi(0, 64 * 9, 1, 2, 10, route);
+            case 1 :
+                return new Ennemi(0, 64 * 9, 5, 4, 10, route);
+            case 2 :
+                return new Ennemi(0, 64 * 9, 15, 1, 10, route);
+            default :
+                return new Ennemi(0, 64 * 9, 20, 1, 10, route);
+
+        }
+
     }
 }

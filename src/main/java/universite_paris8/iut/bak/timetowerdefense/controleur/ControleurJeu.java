@@ -54,7 +54,6 @@ public class ControleurJeu implements Initializable {
 
 
     private Level level;
-    private Vague vague;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
     private Jeu jeu;
@@ -72,13 +71,12 @@ public class ControleurJeu implements Initializable {
         vueEntite.creerBindings(jeu.getDefenses());
         vueEntite.creerBindings(jeu.getProjectiles());
 
-        this.vague = new Vague();
 
         labelArgent.textProperty().bind(jeu.getSoldeProperty().asString("Solde : %d"));
-        labelVague.textProperty().bind(vague.getVagueProperty().asString("Vague : %d"));
+        labelVague.textProperty().bind(jeu.getVague().getVagueProperty().asString("Vague : %d"));
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
 
-        vague.test();
+
         initAnimation();
         gameLoop.play();
 
@@ -91,28 +89,14 @@ public class ControleurJeu implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        List<Point2D> route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
-        System.out.println("Chemin trouvé : " + route);
-        vague.test();
+
+
+
 
 
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
-                    if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
-                        jeu.addEnnemi(creerEnnemi(route, vague.defiler() ));
-                    }
-                    else{
-                        if (delay > 600 ){
-                            delay = 0;
-                            vague.vagueSuivante();
-                        }
-                        else {
-                            if (vague.getQueue().isEmpty()){
-                                delay++;
-                            }
-                        }
-                    }
                     jeu.tick();
                     temps++;
                 })
@@ -139,33 +123,9 @@ public class ControleurJeu implements Initializable {
         }
     }
 
-    private Ennemi creerEnnemi(List<Point2D> route, int id ) {
-        switch (id) {
-            case 0 :
-                return new Ennemi(0, 64 * 9, 25, 2, 10, route);
-            case 1 :
-                return new Ennemi(0, 64 * 9, 50, 4, 10, route);
-            case 2 :
-                return new Ennemi(0, 64 * 9, 150, 1, 10, route);
-            default :
-                return new Ennemi(0, 64 * 9, 200, 1, 10, route);
 
-        }
 
-    }
 
-    private Color couleur(int nb ) {
-        switch (nb) {
-            case 0:
-                return Color.RED;
-            case 1:
-                return Color.YELLOW;
-            case 2:
-                return Color.GREY;
-            default:
-                return Color.BLACK;
-        }
-    }
 
 
     @FXML

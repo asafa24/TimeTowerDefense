@@ -67,7 +67,7 @@ public class TerrainVue {
              machine =  new ImageView(String.valueOf(Application.class.getResource("images/tiles/"+epoque+"0"+randomInRange(1,5)+".png" )));
         }
         else {
-            machine =  new ImageView(String.valueOf(Application.class.getResource("images/tiles/"+epoque+"000"+randomInRange(1,2)+".png" )));
+            machine =  new ImageView(String.valueOf(Application.class.getResource("images/tiles/"+epoque+"000"+randomInRange(1,3)+".png" )));
         }
 
         machine.setFitWidth(TILE_SIZE);
