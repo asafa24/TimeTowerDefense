@@ -32,6 +32,8 @@ public class Jeu {
     private Vague vague;
     private int delay;
 
+    private int delay_entreVague;
+
 
     public Jeu() {
         this.ennemis =FXCollections.observableArrayList();
@@ -46,9 +48,10 @@ public class Jeu {
         this.route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         this.vague = new Vague();
         this.delay = 0;
+        this.delay_entreVague = 80;
     }
 
-    public Vague getVague() {
+     public Vague getVague() {
         return vague;
     }
 
@@ -142,7 +145,7 @@ public class Jeu {
                 }
             }
         }
-        if (frame%80 == 0 && !vague.getQueue().isEmpty()) {
+        if (frame%delay_entreVague == 0 && !vague.getQueue().isEmpty()) {
 
             addEnnemi(creerEnnemi(vague.defiler() ));
 
@@ -152,6 +155,7 @@ public class Jeu {
             if (delay > 600 ){
                 delay = 0;
                 vague.vagueSuivante();
+                delay_entreVague -= 8;
             }
             else {
                 if (vague.getQueue().isEmpty()){
@@ -263,13 +267,13 @@ public class Jeu {
     private Ennemi creerEnnemi( int id ) {
         switch (id) {
             case 0 :
-                return new Ennemi(0, 64 * 9, 1, 2, 10, route);
+                return new Ennemi(0, 64 * 9, 25, 2, 5, route);
             case 1 :
-                return new Ennemi(0, 64 * 9, 5, 4, 10, route);
+                return new Ennemi(0, 64 * 9, 50, 4, 20, route);
             case 2 :
-                return new Ennemi(0, 64 * 9, 15, 1, 10, route);
+                return new Ennemi(0, 64 * 9, 150, 1, 30, route);
             default :
-                return new Ennemi(0, 64 * 9, 20, 1, 10, route);
+                return new Ennemi(0, 64 * 9, 500, 1, 400, route);
 
         }
 
