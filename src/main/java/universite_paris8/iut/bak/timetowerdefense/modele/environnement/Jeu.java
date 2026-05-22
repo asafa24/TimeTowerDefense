@@ -31,7 +31,7 @@ public class Jeu {
 
     private Vague vague;
     private int delay;
-
+    private final int TEMPS_VAGUE_1 = 220 ;
     private int delay_entreVague;
 
 
@@ -145,7 +145,7 @@ public class Jeu {
                 }
             }
         }
-        if (frame%delay_entreVague == 0 && !vague.getQueue().isEmpty()) {
+        if (frame%delay_entreVague == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_VAGUE_1 ) {
 
             addEnnemi(creerEnnemi(vague.defiler() ));
 
@@ -269,7 +269,7 @@ public class Jeu {
             case 0 :
                 return new Ennemi(0, 64 * 9, 25, 2, 5, route);
             case 1 :
-                return new Ennemi(0, 64 * 9, 50, 4, 20, route);
+                return new Ennemi(0, 64 * 9, 40, 4, 20, route);
             case 2 :
                 return new Ennemi(0, 64 * 9, 150, 1, 30, route);
             default :
