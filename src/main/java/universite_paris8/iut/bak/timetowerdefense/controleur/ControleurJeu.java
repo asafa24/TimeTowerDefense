@@ -53,7 +53,6 @@ public class ControleurJeu implements Initializable {
 
 
     private Level level;
-    private Vague vague;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
     private Jeu jeu;
@@ -72,10 +71,9 @@ public class ControleurJeu implements Initializable {
         vueEntite.creerBindings(jeu.getDefenses());
         vueEntite.creerBindings(jeu.getProjectiles());
 
-        this.vague = new Vague();
 
         IntegerProperty argent = new SimpleIntegerProperty(jeu.getSolde());
-        IntegerProperty vagueActuelle = new SimpleIntegerProperty(vague.getVague());
+        IntegerProperty vagueActuelle = new SimpleIntegerProperty(jeu.getVague().getVague());
         IntegerProperty vie = new SimpleIntegerProperty(jeu.getPvBase());
 
         labelArgent.textProperty().bind(argent.asString());
@@ -83,7 +81,6 @@ public class ControleurJeu implements Initializable {
         labelPvBase.textProperty().bind(vie.asString());
 
         this.emplacementTour = new int[11][13];
-        vague.test();
         initAnimation();
         gameLoop.play();
 
@@ -96,9 +93,6 @@ public class ControleurJeu implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        List<Point2D> route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
-        System.out.println("Chemin trouvé : " + route);
-        vague.test();
 
 
 
@@ -107,24 +101,6 @@ public class ControleurJeu implements Initializable {
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
-                    if (temps%80 == 0 && !vague.getQueue().isEmpty()) {
-
-                        jeu.addEnnemi(creerEnnemi(route, vague.defiler() ));
-
-
-                    }
-                    else{
-                        if (delay > 600 ){
-                            delay = 0;
-                            vague.vagueSuivante();
-                        }
-                        else {
-                            if (vague.getQueue().isEmpty()){
-                                delay++;
-                            }
-
-                        }
-                    }
                     jeu.tick();
                     temps++;
                 })
@@ -151,20 +127,7 @@ public class ControleurJeu implements Initializable {
         }
     }
 
-    private Ennemi creerEnnemi(List<Point2D> route, int id ) {
-        switch (id) {
-            case 0 :
-                return new Ennemi(0, 64 * 9, 1, 2, 10, route);
-            case 1 :
-                return new Ennemi(0, 64 * 9, 5, 4, 10, route);
-            case 2 :
-                return new Ennemi(0, 64 * 9, 15, 1, 10, route);
-            default :
-                return new Ennemi(0, 64 * 9, 20, 1, 10, route);
 
-        }
-
-    }
 
     private Color couleur(int nb ) {
         switch (nb) {
