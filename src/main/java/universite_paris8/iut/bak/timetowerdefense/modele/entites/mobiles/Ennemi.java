@@ -1,12 +1,15 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 
 import java.util.List;
 
 public class Ennemi extends Entite {
-    private int pv;
+    private int pv, pvMax;
+    private DoubleProperty pvProp;
     private int vitesseBase;
     private int vitesseActuelle;
     private int recompense;
@@ -15,13 +18,6 @@ public class Ennemi extends Entite {
     private int etapeActuelle;
     private final int TILE_SIZE = 64;
 
-    public Ennemi(double x, double y, int pv, int vitesseBase, int recompense) {
-        super(x, y);
-        this.pv = pv;
-        this.vitesseBase = vitesseBase;
-        this.vitesseActuelle = vitesseBase;
-        this.recompense = recompense;
-    }
 
     public Ennemi(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y);
@@ -32,6 +28,8 @@ public class Ennemi extends Entite {
 
         this.chemin = chemin;
         etapeActuelle = 0;
+        this.pvMax = pv;
+        this.pvProp = new SimpleDoubleProperty(pv);
     }
 
 
@@ -60,6 +58,7 @@ public class Ennemi extends Entite {
 
     public void recevoirDegats(int dgt){
         this.pv -= dgt;
+        this.pvProp.set(pv);
     }
 
     public boolean estMort(){
@@ -72,6 +71,15 @@ public class Ennemi extends Entite {
 
     public int getPv() {
         return pv;
+    }
+
+    public int getPvMax() {
+        return pvMax;
+    }
+
+
+    public DoubleProperty getPvPropProperty() {
+        return pvProp;
     }
 
     public int getRecompense() {
