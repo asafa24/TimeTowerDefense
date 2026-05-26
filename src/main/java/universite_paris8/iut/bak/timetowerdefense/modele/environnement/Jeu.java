@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
@@ -117,8 +118,7 @@ public class Jeu {
 
                         } else if (p.getCible() != null && !p.getCible().estMort()) {
                             if (p instanceof ProjectileStun){
-                                ProjectileStun pS = (ProjectileStun) p ;
-                                pS.getCible().modifStun(pS.getDureeStun());
+                                p.getCible().appliqueEffet(Effet.STUN);
                             }
                             p.getCible().recevoirDegats(p.getDegats());
                         }

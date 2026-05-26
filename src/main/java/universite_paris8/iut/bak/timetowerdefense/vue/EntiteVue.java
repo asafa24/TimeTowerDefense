@@ -12,9 +12,11 @@ import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
 
 import java.util.HashMap;
 
@@ -52,6 +54,12 @@ public class EntiteVue {
             img.setTranslateY(e.getY() * 64);
             sprite = img;
         }
+        if (e instanceof TourStun) {
+            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
+            img.setTranslateX(e.getX() * 64);
+            img.setTranslateY(e.getY() * 64);
+            sprite = img;
+        }
 
         if(e instanceof Projectile){
             ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
@@ -60,7 +68,7 @@ public class EntiteVue {
             img.setScaleX(-1);
             sprite = img;
         }
-        if(e instanceof Projectile){
+        if(e instanceof ProjectileCercle){
             ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());

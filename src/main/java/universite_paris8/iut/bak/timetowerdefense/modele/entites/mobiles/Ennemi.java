@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 
 import java.util.List;
@@ -39,8 +40,9 @@ public class Ennemi extends Entite {
 
     public void avancer(){
         if (this.dureeStunRestante > 0) {
-            this.vitesseActuelle = 0;
             this.dureeStunRestante--;
+            this.vitesseActuelle = 0;
+            return;
         } else {
             this.vitesseActuelle = this.vitesseBase;
         }
@@ -62,10 +64,7 @@ public class Ennemi extends Entite {
             this.setX(cibleX);
             this.setY(cibleY);
             etapeActuelle++;
-        }
-    }
-    public void modifStun(int frame){
-        this.dureeStunRestante = Math.max(this.dureeStunRestante ,frame);
+        }else dureeStunRestante-- ;
     }
 
     public void recevoirDegats(int dgt){
@@ -98,4 +97,15 @@ public class Ennemi extends Entite {
     public double getCentreY(){
         return this.getY() + TILE_SIZE / 2;
     }
+    public void appliqueEffet(Effet effet) {
+        switch (effet) {
+            case STUN -> {
+                this.dureeStunRestante = Math.max(this.dureeStunRestante, 120);
+                this.vitesseActuelle = 0;
+            }
+        }
+    }
 }
+
+
+
