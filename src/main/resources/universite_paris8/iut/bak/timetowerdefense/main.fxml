@@ -31,7 +31,7 @@
                <children>
                   <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseDeTourUn" text="Tour 1 : Normale (50$)" />
                   <Button fx:id="tourDeux" mnemonicParsing="false" onAction="#poseDeTourDeux" text="Tour 2 : Cercle (150$)" />
-                  <Button fx:id="tour3" mnemonicParsing="false" onAction="#poseDeTourTrois" text="Tour 3 (250$)" />
+                  <Button fx:id="tour3" mnemonicParsing="false" onAction="#poseDeTourTrois" text="Tour 3 : Stun (250$)" />
                </children>
                <padding>
                   <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
