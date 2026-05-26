@@ -31,9 +31,10 @@ public class EntiteVue {
     public EntiteVue(Pane entityPane){
         this.entityPane = entityPane;
         this.affichageEntite = new HashMap<>();
-    }
         this.affichageBarre = new HashMap<>();
         this.affichageRectangle = new HashMap<>();
+    }
+
 
     public void creerSprite(Entite e){
         Node sprite = null;
