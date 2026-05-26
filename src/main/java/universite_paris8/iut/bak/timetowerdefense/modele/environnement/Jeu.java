@@ -31,8 +31,8 @@ public class Jeu {
 
     private Vague vague;
     private int delay;
-    private final int TEMPS_VAGUE_1 = 220 ;
-    private int delay_entreVague;
+    private final int TEMPS_ENTRE_VAGUE = 220 ;
+    private int delaySpawnMob = 80;
 
 
     public Jeu() {
@@ -48,7 +48,6 @@ public class Jeu {
         this.route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         this.vague = new Vague();
         this.delay = 0;
-        this.delay_entreVague = 80;
     }
 
      public Vague getVague() {
@@ -145,7 +144,7 @@ public class Jeu {
                 }
             }
         }
-        if (frame%delay_entreVague == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_VAGUE_1 ) {
+        if (frame% delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
 
             addEnnemi(creerEnnemi(vague.defiler() ));
 
@@ -155,7 +154,7 @@ public class Jeu {
             if (delay > 600 ){
                 delay = 0;
                 vague.vagueSuivante();
-                delay_entreVague -= 8;
+                delaySpawnMob -= 8;
             }
             else {
                 if (vague.getQueue().isEmpty()){
