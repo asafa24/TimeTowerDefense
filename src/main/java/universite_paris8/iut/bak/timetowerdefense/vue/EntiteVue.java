@@ -21,21 +21,28 @@ public class EntiteVue {
     private Pane entityPane;
     private static int TILE_SIZE = 64;
     private HashMap<Entite, Node> affichageEntite;
+    private HashMap<Ennemi, Node> affichageBarre;
 
     public EntiteVue(Pane entityPane){
         this.entityPane = entityPane;
         this.affichageEntite = new HashMap<>();
+        this.affichageBarre = new HashMap<>();
     }
 
     public void creerSprite(Entite e){
         Node sprite = null;
+        Node barre_vie = null;
 
         if (e instanceof Ennemi){
+            ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
             ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi1.png")));
+            vie.translateXProperty().bind(e.xProperty());
+            vie.translateYProperty().bind(e.yProperty().add(-20));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.setScaleX(-1);
             sprite = img;
+            barre_vie = vie;
         }
         if (e instanceof Tour){
             ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
@@ -62,13 +69,24 @@ public class EntiteVue {
             entityPane.getChildren().add(sprite);
             affichageEntite.put(e, sprite);
         }
+        if (barre_vie != null){
+            entityPane.getChildren().add(barre_vie);
+            affichageBarre.put((Ennemi) e, barre_vie);
+
+
+        }
     }
 
     public void supprimerSprite(Entite e){
         Node sprite = affichageEntite.get(e);
+        Node barre_vie = affichageBarre.get(e);
         if(sprite != null){
             entityPane.getChildren().remove(sprite);
         }
+        if (barre_vie != null){
+            entityPane.getChildren().remove(barre_vie);
+        }
+
     }
 
     public void creerBindings(ObservableList<? extends Entite> liste){
