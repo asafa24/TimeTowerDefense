@@ -84,17 +84,6 @@ public class Jeu {
 
     public void tick() {
         if (!perdu()) {
-
-
-
-
-
-
-
-
-
-
-
             for (Defense d : defenses) {
                 if (d instanceof Tour) {
                     ((Tour) d).attaquer(ennemis, projectiles);
@@ -122,6 +111,7 @@ public class Jeu {
                             p.getCible().recevoirDegats(p.getDegats());
                         }
                         projectiles.remove(i);
+                        continue;
                     }
                     p.deplacer();
                 }
