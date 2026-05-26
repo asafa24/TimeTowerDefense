@@ -12,6 +12,7 @@ import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
 
@@ -21,10 +22,12 @@ public class EntiteVue {
     private Pane entityPane;
     private static int TILE_SIZE = 64;
     private HashMap<Entite, Node> affichageEntite;
+    private int cptAnnim;
 
     public EntiteVue(Pane entityPane){
         this.entityPane = entityPane;
         this.affichageEntite = new HashMap<>();
+        this.cptAnnim = 0 ;
     }
 
     public void creerSprite(Entite e){
@@ -44,7 +47,7 @@ public class EntiteVue {
             sprite = img;
         }
         if (e instanceof TourCercle) {
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/tour.png")));
+            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;
@@ -52,6 +55,20 @@ public class EntiteVue {
 
         if(e instanceof Projectile){
             ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            img.setScaleX(-1);
+            sprite = img;
+        }
+        if(e instanceof Projectile){
+            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            img.setScaleX(-1);
+            sprite = img;
+        }
+        if(e instanceof ProjectileStun){
+            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.setScaleX(-1);

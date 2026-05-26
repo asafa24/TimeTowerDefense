@@ -10,6 +10,7 @@ public class Ennemi extends Entite {
     private int vitesseBase;
     private int vitesseActuelle;
     private int recompense;
+    private int dureeStunRestante = 0;
 
     private List<Point2D> chemin;
     private int etapeActuelle;
@@ -37,6 +38,12 @@ public class Ennemi extends Entite {
 
 
     public void avancer(){
+        if (this.dureeStunRestante > 0) {
+            this.vitesseActuelle = 0;
+            this.dureeStunRestante--;
+        } else {
+            this.vitesseActuelle = this.vitesseBase;
+        }
         if(chemin == null || etapeActuelle >= chemin.size()) return;
 
         Point2D caseCible = chemin.get(etapeActuelle);
@@ -51,11 +58,14 @@ public class Ennemi extends Entite {
         if(distanceY > 0) this.setY(this.getY() + vitesseActuelle);
         else if(distanceY < 0) this.setY(this.getY() - vitesseActuelle);
 
-        if(Math.abs(distanceX) <= vitesseActuelle && Math.abs(distanceY) <= vitesseActuelle){
+        if(vitesseActuelle > 0 && Math.abs(distanceX) <= vitesseActuelle && Math.abs(distanceY) <= vitesseActuelle){
             this.setX(cibleX);
             this.setY(cibleY);
             etapeActuelle++;
         }
+    }
+    public void modifStun(int frame){
+        this.dureeStunRestante = Math.max(this.dureeStunRestante ,frame);
     }
 
     public void recevoirDegats(int dgt){

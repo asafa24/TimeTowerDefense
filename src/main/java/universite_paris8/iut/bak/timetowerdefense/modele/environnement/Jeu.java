@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
@@ -114,8 +115,11 @@ public class Jeu {
                                 }
                             }
 
-
                         } else if (p.getCible() != null && !p.getCible().estMort()) {
+                            if (p instanceof ProjectileStun){
+                                ProjectileStun pS = (ProjectileStun) p ;
+                                pS.getCible().modifStun(pS.getDureeStun());
+                            }
                             p.getCible().recevoirDegats(p.getDegats());
                         }
                         projectiles.remove(i);
