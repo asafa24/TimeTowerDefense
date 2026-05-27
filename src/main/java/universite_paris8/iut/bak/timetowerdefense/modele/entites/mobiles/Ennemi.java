@@ -1,7 +1,9 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
@@ -11,6 +13,7 @@ import java.util.List;
 public class Ennemi extends Entite {
     private int pv, pvMax;
     private DoubleProperty pvProp;
+    private IntegerProperty direction;
     private int vitesseBase;
     private int vitesseActuelle;
     private int recompense;
@@ -32,6 +35,7 @@ public class Ennemi extends Entite {
         etapeActuelle = 0;
         this.pvMax = pv;
         this.pvProp = new SimpleDoubleProperty(pv);
+        this.direction = new SimpleIntegerProperty(-1);
     }
 
 
@@ -52,8 +56,13 @@ public class Ennemi extends Entite {
         double distanceX = cibleX - this.getX();
         double distanceY = cibleY - this.getY();
 
-        if(distanceX > 0) this.setX(this.getX() + vitesseActuelle);
-        else if(distanceX < 0) this.setX(this.getX() - vitesseActuelle);
+        if(distanceX > 0) {
+            this.setX(this.getX() + vitesseActuelle);
+            this.direction.set(-1);
+        }
+        else if(distanceX < 0) {
+            this.setX(this.getX() - vitesseActuelle);
+        this.direction.set(1);}
 
         if(distanceY > 0) this.setY(this.getY() + vitesseActuelle);
         else if(distanceY < 0) this.setY(this.getY() - vitesseActuelle);
@@ -86,6 +95,10 @@ public class Ennemi extends Entite {
         return pvMax;
     }
 
+
+    public IntegerProperty getDirectionProperty() {
+        return direction;
+    }
 
     public DoubleProperty getPvPropProperty() {
         return pvProp;

@@ -11,11 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
@@ -40,11 +37,21 @@ public class EntiteVue {
         Node sprite = null;
         Node barre_vie = null;
         Node rectangle_vie = null;
+        ImageView img;
 
         if (e instanceof Ennemi){
             DoubleProperty taille = new SimpleDoubleProperty(56);
             ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi1.png")));
+            if (e instanceof Velociraptor){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d01.png")));
+            }
+            else if (e instanceof Triceratops){
+                img = img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d02.png")));
+            }
+            else {
+                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi1.png")));
+            }
+
 
             Rectangle rec = new Rectangle();
             rec.setWidth(56);
@@ -63,47 +70,47 @@ public class EntiteVue {
 
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
-            img.setScaleX(-1);
+            img.scaleXProperty().bind(((Ennemi) e).getDirectionProperty());
 
             rectangle_vie = rec;
             sprite = img;
             barre_vie = vie;
         }
         if (e instanceof Tour){
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
+             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
             img.setTranslateX(e.getX()*64);
             img.setTranslateY(e.getY()*64);
             sprite = img;
         }
         if (e instanceof TourCercle) {
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
+             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;
         }
         if (e instanceof TourStun) {
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
+             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;
         }
 
         if(e instanceof Projectile){
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
+             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.setScaleX(-1);
             sprite = img;
         }
         if(e instanceof ProjectileCercle){
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
+             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.setScaleX(-1);
             sprite = img;
         }
         if(e instanceof ProjectileStun){
-            ImageView img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
+             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.setScaleX(-1);
