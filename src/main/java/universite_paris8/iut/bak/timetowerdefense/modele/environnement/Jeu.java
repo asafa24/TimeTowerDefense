@@ -6,11 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
@@ -42,7 +39,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(150);
+        this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         this.frame = 0;
@@ -262,9 +259,9 @@ public class Jeu {
             case 0 :
                 return new Ennemi(0, 64 * 9, 25, 2, 5, route);
             case 1 :
-                return new Ennemi(0, 64 * 9, 40, 4, 20, route);
+                return new Velociraptor(0, 64 * 9, 40, 4, 20, route);
             case 2 :
-                return new Ennemi(0, 64 * 9, 150, 1, 30, route);
+                return new Triceratops(0, 64 * 9, 150, 1, 30, route);
             default :
                 return new Ennemi(0, 64 * 9, 500, 1, 400, route);
 
