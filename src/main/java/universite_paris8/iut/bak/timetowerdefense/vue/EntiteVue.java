@@ -13,9 +13,7 @@ import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 
 import java.util.HashMap;
 
@@ -110,11 +108,18 @@ public class EntiteVue {
             sprite = img;
         }
         if(e instanceof ProjectileStun){
-             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.setScaleX(-1);
             sprite = img;
+        }
+        if (e instanceof MiniVolcan){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
+            img.setTranslateX(e.getX() * 64);
+            img.setTranslateY(e.getY() * 64);
+            sprite = img;
+
         }
 
         if (sprite != null){

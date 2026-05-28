@@ -6,8 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
@@ -84,6 +90,15 @@ public class Jeu {
             for (Defense d : defenses) {
                 if (d instanceof Tour) {
                     ((Tour) d).attaquer(ennemis, projectiles);
+                }else if ( d instanceof MiniVolcan) {
+                    for (int i = ennemis.size() - 1; i >= 0; i--) {
+                        Ennemi e = ennemis.get(i);
+                        if (((Piege) d).aAtteintPiege(e)){
+                            if (d instanceof MiniVolcan){
+                                e.appliqueEffet(Effet.BURN);
+                            }
+                        }
+                    }
                 }
             }
             if (!projectiles.isEmpty()) {
@@ -173,9 +188,19 @@ public class Jeu {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
     }
-    public void poserPiege(Defense piege ){
-        addDefense(piege);
-        System.out.println("pose : x :"+ piege.getX() +"  y : " + piege.getY() );
+    public void poserPiege(Piege piege ){
+        int caseX = (int) (piege.getX() ) ;
+        int caseY = (int) (piege.getY() )  ;
+
+        if (peuxPoserPiege(this.epoqueActuel, piege)) {
+            depenserArgent(piege.getCout());
+            addDefense(piege);
+
+            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + piege.getCout());
+            System.out.println("Solde actuelle : " + this.solde.get());
+        } else {
+            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
+        }
 
     }
     private void selectionTour(){
@@ -184,11 +209,6 @@ public class Jeu {
     private void selectionTourCercle(){
         this.typeTourSelectionne = 1;
     }
-
-
-
-
-
     public boolean peuxPoserTour(int epoque, Tour tour ) {
         int[][] grille = level.loadLevel(epoque);
 
@@ -211,21 +231,21 @@ public class Jeu {
         return this.solde.get() >= tour.getCout();
     }
 
-    public boolean peuxPoserPiege(int epoque, int x, int y){
+    public boolean peuxPoserPiege(int epoque, Piege piege){
         int[][] test = level.loadLevel(epoque);
+        int x = (int) piege.getX();
+        int y = (int) piege.getY();
 
-        // si en dehors du terrain
         if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
             return false;
         }
 
-        // si les coordonnes x et y coresponde au coordonnes d'un enemi deja present retourne faux
         for (int i = 0; i < defenses.size(); i++) {
             if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){
                 return false;
             }
         }
-        return test[y][x] >= 0 && test[y][x] <= 6 ;
+        return test[y][x] > 0 && test[y][x] <= 6 ;
     } // ok
 
     public void ajouterArgent(int somme) {

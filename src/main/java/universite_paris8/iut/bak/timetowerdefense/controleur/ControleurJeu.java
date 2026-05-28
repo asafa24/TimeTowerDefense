@@ -6,6 +6,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -16,9 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Vague;
@@ -65,7 +64,9 @@ public class ControleurJeu implements Initializable {
     private UIVue uiVue;
     private Jeu jeu;
     private Tour tourSelectionne;
-    private int typeTourSelectionnee = 0;
+    private Piege piegeSelectione;
+
+    private int typeDefenseSelectionnee = 0;
 
 
     @Override
@@ -124,7 +125,7 @@ public class ControleurJeu implements Initializable {
                 poseDeTourTrois();
             }
             case ESCAPE -> {
-                this.typeTourSelectionnee = 0;
+                this.typeDefenseSelectionnee = 0;
                 System.out.println("Selection annulée");
             }
             default -> System.out.println(event.getCode().getName());
@@ -138,11 +139,11 @@ public class ControleurJeu implements Initializable {
         int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
         int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
 
-        if (this.typeTourSelectionnee == 0) {
+        if (this.typeDefenseSelectionnee == 0) {
             System.out.println("Veuillez sélectionner une tour d'abord.");
             return;
         }
-        switch(typeTourSelectionnee){
+        switch(typeDefenseSelectionnee){
             case 1 -> {
                 this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
                 jeu.poserTour(tourSelectionne);
@@ -156,29 +157,37 @@ public class ControleurJeu implements Initializable {
             case 3 -> {
                 this.tourSelectionne = new TourStun(150, xGrille, yGrille,10,128, 200,180);
                 jeu.poserTour(tourSelectionne);
-
+            }
+            case 4 -> {
+                this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5);
+                jeu.poserPiege(piegeSelectione);
             }
         }
 
-        this.typeTourSelectionnee = 0;
+        this.typeDefenseSelectionnee= 0;
     }
 
 
     @FXML
     public void poseDeTourUn() {
-        this.typeTourSelectionnee = 1;
+        this.typeDefenseSelectionnee = 1;
         System.out.println("Tour numéro un sélectionnée.");
     }
 
     @FXML
     public void poseDeTourDeux() {
-        this.typeTourSelectionnee = 2;
+        this.typeDefenseSelectionnee = 2;
         System.out.println("Tour numéro deux sélectionnée.");
     }
 
     @FXML
     public void poseDeTourTrois() {
-        this.typeTourSelectionnee = 3;
+        this.typeDefenseSelectionnee = 3;
+        System.out.println("Tour numéro trois sélectionnée.");
+    }
+
+    public void poseDeTourQuatre( ) {
+        this.typeDefenseSelectionnee = 4;
         System.out.println("Tour numéro trois sélectionnée.");
     }
 }

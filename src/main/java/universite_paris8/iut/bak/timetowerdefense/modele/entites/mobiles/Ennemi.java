@@ -5,12 +5,13 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Destructible;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 
 import java.util.List;
 
-public class Ennemi extends Entite {
+public class Ennemi extends Entite implements Destructible {
     private int pv, pvMax;
     private DoubleProperty pvProp;
     private IntegerProperty direction;
@@ -123,6 +124,10 @@ public class Ennemi extends Entite {
             case STUN -> {
                 this.dureeStunRestante = Math.max(this.dureeStunRestante, 120);
                 this.vitesseActuelle = 0;
+            }
+            case BURN -> {
+                System.out.println("hhehehee tu brules");
+
             }
         }
     }
