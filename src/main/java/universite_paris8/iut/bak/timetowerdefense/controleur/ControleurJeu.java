@@ -53,6 +53,10 @@ public class ControleurJeu implements Initializable {
 
     @FXML
     private Button tourUn;
+    @FXML
+    private Button tourDeux;
+    @FXML
+    private Button tourTrois;
 
     private Timeline gameLoop;
     private int temps, delay;
@@ -76,7 +80,8 @@ public class ControleurJeu implements Initializable {
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
         this.uiVue = new UIVue();
-        tourUn.setGraphic(uiVue.setImageT1());
+        afficherButton(0);
+
 
         vueEntite.creerBindings(jeu.getEnnemi());
         vueEntite.creerBindings(jeu.getDefenses());
@@ -110,6 +115,14 @@ public class ControleurJeu implements Initializable {
                 })
         );
         gameLoop.getKeyFrames().add(kf);
+    }
+    public void afficherButton(int epoque){
+
+        tourUn.setGraphic(uiVue.setImageT1(epoque,1));
+        tourDeux.setGraphic(uiVue.setImageT1(epoque,2));
+        tourTrois.setGraphic(uiVue.setImageT1(epoque,3));
+
+
     }
 
     @FXML
