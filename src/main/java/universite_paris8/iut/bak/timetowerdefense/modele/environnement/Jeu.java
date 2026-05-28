@@ -96,7 +96,7 @@ public class Jeu {
                         Ennemi e = ennemis.get(i);
                         if (((Piege) volcan).aAtteintPiege(e)) {
                             e.appliqueEffet(Effet.SLOW);
-                            e.appliqueEffet(Effet.BRULAGE);
+                            e.appliqueEffet(Effet.BURN);
 
                             if (!volcanBlesseCeTick && volcan.getPv() > 0) {
                                 volcan.prendreDegats(1);
@@ -233,9 +233,6 @@ public class Jeu {
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
 
-    public void ajouterArgent(int somme) {
-        this.solde.set(this.solde.get() + somme);
-    }
 
     public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }
     public void depenserArgent(int somme){ if(solde.get() >= somme) solde.set(solde.get() - somme); }
