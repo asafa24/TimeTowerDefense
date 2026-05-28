@@ -101,10 +101,6 @@ public class ControleurJeu implements Initializable {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
 
-
-
-
-
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
@@ -118,25 +114,22 @@ public class ControleurJeu implements Initializable {
     @FXML
     public void gererTouches(KeyEvent event) {
         switch (event.getCode()) {
-            case DIGIT1, NUMPAD1 -> {
+            case DIGIT1, NUMPAD1, AMPERSAND -> {
                 poseDeTourUn();
             }
-            case DIGIT2, NUMPAD2 -> {
+            case DIGIT2, NUMPAD2, UNDEFINED -> {
                 poseDeTourDeux();
             }
-            case DIGIT3, NUMPAD3 -> {
+            case DIGIT3, NUMPAD3, QUOTEDBL-> {
                 poseDeTourTrois();
             }
             case ESCAPE -> {
                 this.typeTourSelectionnee = 0;
                 System.out.println("Selection annulée");
             }
+            default -> System.out.println(event.getCode().getName());
         }
     }
-
-
-
-
 
 
     @FXML
