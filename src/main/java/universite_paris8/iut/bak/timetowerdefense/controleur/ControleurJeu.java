@@ -132,16 +132,16 @@ public class ControleurJeu implements Initializable {
     public void gererTouches(KeyEvent event) {
         switch (event.getCode()) {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
-                poseDeTourUn();
+                poseDeTourQuatre();
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
-                poseDeTourDeux();
+                poseDeTourUn();
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
-                poseDeTourTrois();
+                poseDeTourDeux();
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
-                poseDeTourQuatre();
+                poseDeTourTrois();
             }
             case ESCAPE -> {
                 this.typeDefenseSelectionnee = 0;
@@ -204,6 +204,7 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 3;
         System.out.println("Défense numéro trois sélectionnée.");
     }
+    // et houi c
 
     public void poseDeTourQuatre( ) {
         this.typeDefenseSelectionnee = 4;
