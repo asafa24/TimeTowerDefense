@@ -10,6 +10,8 @@ public class Tour extends Defense {
     private int portee;
     private int cadence;
     private int compteurTir;
+    
+    private boolean isStun = false;
 
     public Tour(int cout ,double x, double y){
         super(cout,x,y);
@@ -29,7 +31,9 @@ public class Tour extends Defense {
 
     public void attaquer(List<Ennemi> ennemis, List<Projectile> projectiles){
         if(compteurTir < cadence){
-            compteurTir++;
+            if(this.isStun == false){
+                compteurTir++;    
+            }
             return;
         }
 
@@ -80,5 +84,9 @@ public class Tour extends Defense {
 
     public void setCompteurTir(int compteurTir) {
         this.compteurTir = compteurTir;
+    }
+    
+    public void setStun(boolean stun){
+        isStun = stun;
     }
 }

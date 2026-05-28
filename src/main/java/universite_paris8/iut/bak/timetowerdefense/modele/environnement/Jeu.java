@@ -283,7 +283,7 @@ public class Jeu {
             case 2 :
                 return new Triceratops(0, 64 * 9, 150, 1, 30, route);
             default :
-                return new Ennemi(0, 64 * 9, 500, 1, 400, route);
+                return new Tyrannosaurus(0, 64 * 9, 500, 1, 400, 15, route);
 
         }
 
