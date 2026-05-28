@@ -94,9 +94,8 @@ public class Jeu {
                     for (int i = ennemis.size() - 1; i >= 0; i--) {
                         Ennemi e = ennemis.get(i);
                         if (((Piege) d).aAtteintPiege(e)){
-
                                 e.appliqueEffet(Effet.SLOW);
-                                e.appliqueEffet(Effet.BRULAGE);
+                                e.appliqueEffet(Effet.BURN);
                         }
                     }
                 }
@@ -151,10 +150,7 @@ public class Jeu {
             }
         }
         if (frame% delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
-
             addEnnemi(creerEnnemi(vague.defiler() ));
-
-
         }
         else{
             if (delay > 600 ){
@@ -245,7 +241,7 @@ public class Jeu {
                 return false;
             }
         }
-        return test[y][x] > 0 && test[y][x] <= 6 ;
+        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     } // ok
 
     public void ajouterArgent(int somme) {
