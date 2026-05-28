@@ -15,7 +15,7 @@ public class Piege extends Defense implements Destructible {
         double centreY = ((getY()*64));
         double distance = Math.hypot(centreX - e.getCentreX() , centreY - e.getCentreY());
 
-        return distance <= 64;
+        return distance <= 32;
     }
 
 
