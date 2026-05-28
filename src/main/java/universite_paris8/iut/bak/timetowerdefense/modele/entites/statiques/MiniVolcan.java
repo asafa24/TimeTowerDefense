@@ -7,4 +7,5 @@ public class MiniVolcan extends Piege {
         super(cout, x, y, pv);
         this.degats = degats;
     }
+
 }

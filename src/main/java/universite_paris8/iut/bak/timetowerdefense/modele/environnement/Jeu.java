@@ -162,6 +162,8 @@ public class Jeu {
         }
         if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
             addEnnemi(creerEnnemi(vague.defiler() ));
+
+
         }
         else{
             if (delay > 600 ){
@@ -229,6 +231,10 @@ public class Jeu {
             if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
         }
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
+    }
+
+    public void ajouterArgent(int somme) {
+        this.solde.set(this.solde.get() + somme);
     }
 
     public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }

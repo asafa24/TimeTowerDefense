@@ -145,7 +145,7 @@ public class Ennemi extends Entite implements Destructible {
                 this.dureeSlowRestante = Math.max(this.dureeSlowRestante, 120);
                 this.vitesseActuelle = this.vitesseBase / 2.0;
             }
-            case BRULAGE -> {
+            case BURN -> {
                 this.dureeBrulageRestante = Math.max(this.dureeBrulageRestante, 60);
             }
         }
