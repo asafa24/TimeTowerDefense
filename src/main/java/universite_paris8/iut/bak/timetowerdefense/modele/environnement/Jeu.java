@@ -28,7 +28,6 @@ public class Jeu {
     private Level level;
     private int epoqueActuel;
 
-
     private IntegerProperty solde;
     private IntegerProperty pvBase;
 
@@ -39,9 +38,8 @@ public class Jeu {
     private final int TEMPS_ENTRE_VAGUE = 220 ;
     private int delaySpawnMob = 80;
 
-
     public Jeu() {
-        this.ennemis =FXCollections.observableArrayList();
+        this.ennemis = FXCollections.observableArrayList();
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
@@ -55,7 +53,7 @@ public class Jeu {
         this.delay = 0;
     }
 
-     public Vague getVague() {
+    public Vague getVague() {
         return vague;
     }
 
@@ -83,24 +81,36 @@ public class Jeu {
         return projectiles;
     }
 
-
-
     public void tick() {
         if (!perdu()) {
-            for (Defense d : defenses) {
+            for (int j = defenses.size() - 1; j >= 0; j--) {
+                Defense d = defenses.get(j);
+
                 if (d instanceof Tour) {
                     ((Tour) d).attaquer(ennemis, projectiles);
-                }else if ( d instanceof MiniVolcan) {
+                } else if (d instanceof MiniVolcan) {
+                    MiniVolcan volcan = (MiniVolcan) d;
+                    boolean volcanBlesseCeTick = false;
+
                     for (int i = ennemis.size() - 1; i >= 0; i--) {
                         Ennemi e = ennemis.get(i);
-                        if (((Piege) d).aAtteintPiege(e)){
+                        if (((Piege) volcan).aAtteintPiege(e)) {
+                            e.appliqueEffet(Effet.SLOW);
+                            e.appliqueEffet(Effet.BRULAGE);
 
-                                e.appliqueEffet(Effet.SLOW);
-                                e.appliqueEffet(Effet.BRULAGE);
+                            if (!volcanBlesseCeTick && volcan.getPv() > 0) {
+                                volcan.prendreDegats(1);
+                                volcanBlesseCeTick = true;
+                            }
                         }
+                        System.out.println(volcan.getPv());
+                    }
+                    if (volcan.getPv() <= 0) {
+                        defenses.remove(j);
                     }
                 }
             }
+
             if (!projectiles.isEmpty()) {
                 for (int i = projectiles.size() - 1; i >= 0; i--) {
                     Projectile p = projectiles.get(i);
@@ -150,11 +160,8 @@ public class Jeu {
                 }
             }
         }
-        if (frame% delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
-
+        if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
             addEnnemi(creerEnnemi(vague.defiler() ));
-
-
         }
         else{
             if (delay > 600 ){
@@ -172,61 +179,41 @@ public class Jeu {
         frame++;
     }
 
-
     public void poserTour(Tour tour) {
-
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
 
         if (peuxPoserTour(this.epoqueActuel, tour)) {
             depenserArgent(tour.getCout());
             addDefense(tour);
-
             System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
-            System.out.println("Solde actuelle : " + this.solde.get());
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
     }
+
     public void poserPiege(Piege piege ){
-        int caseX = (int) (piege.getX() ) ;
-        int caseY = (int) (piege.getY() )  ;
+        int caseX = (int) (piege.getX()) ;
+        int caseY = (int) (piege.getY())  ;
 
         if (peuxPoserPiege(this.epoqueActuel, piege)) {
             depenserArgent(piege.getCout());
             addDefense(piege);
-
-            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + piege.getCout());
-            System.out.println("Solde actuelle : " + this.solde.get());
+            System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
-
-    }
-    private void selectionTour(){
-        this.typeTourSelectionne = 1;
-    }
-    private void selectionTourCercle(){
-        this.typeTourSelectionne = 1;
     }
     public boolean peuxPoserTour(int epoque, Tour tour ) {
         int[][] grille = level.loadLevel(epoque);
-
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
 
-        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) {
-            return false;
-        }
-
-        if (grille[caseY][caseX] != 0) {
-            return false;
-        }
+        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
+        if (grille[caseY][caseX] != 0) return false;
 
         for (Defense d : defenses) {
-            if ((int)d.getX() == caseX && (int)d.getY() == caseY) {
-                return false;
-            }
+            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
         }
         return this.solde.get() >= tour.getCout();
     }
@@ -236,56 +223,28 @@ public class Jeu {
         int x = (int) piege.getX();
         int y = (int) piege.getY();
 
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) {
-            return false;
-        }
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
 
         for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y){
-                return false;
-            }
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
         }
-        return test[y][x] > 0 && test[y][x] <= 6 ;
-    } // ok
-
-    public void ajouterArgent(int somme) {
-        this.solde.set(this.solde.get() + somme);
+        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
 
-    public void depenserArgent(int somme){
-        if(solde.get() >= somme) solde.set(solde.get() - somme);
-    }
-
-    public boolean perdu(){
-        return pvBase.get() <= 0;
-    }
-
-    public int getSolde() {
-        return solde.get();
-    }
-    public IntegerProperty getSoldeProperty(){
-        return solde;
-    }
-
-    public int getPvBase() {
-        return pvBase.get();
-    }
-    public IntegerProperty getPvBaseProperty(){
-        return pvBase;
-    }
+    public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }
+    public void depenserArgent(int somme){ if(solde.get() >= somme) solde.set(solde.get() - somme); }
+    public boolean perdu(){ return pvBase.get() <= 0; }
+    public int getSolde() { return solde.get(); }
+    public IntegerProperty getSoldeProperty(){ return solde; }
+    public int getPvBase() { return pvBase.get(); }
+    public IntegerProperty getPvBaseProperty(){ return pvBase; }
 
     private Ennemi creerEnnemi( int id ) {
         switch (id) {
-            case 0 :
-                return new Ennemi(0, 64 * 9, 25, 2, 5, route);
-            case 1 :
-                return new Velociraptor(0, 64 * 9, 40, 4, 20, route);
-            case 2 :
-                return new Triceratops(0, 64 * 9, 150, 1, 30, route);
-            default :
-                return new Tyrannosaurus(0, 64 * 9, 500, 1, 400, 15, route);
-
+            case 0 : return new Ennemi(0, 64 * 9, 25, 2, 5, route);
+            case 1 : return new Velociraptor(0, 64 * 9, 40, 4, 20, route);
+            case 2 : return new Triceratops(0, 64 * 9, 150, 1, 30, route);
+            default : return new Tyrannosaurus(0, 64 * 9, 500, 1, 400, 15, route);
         }
-
     }
 }

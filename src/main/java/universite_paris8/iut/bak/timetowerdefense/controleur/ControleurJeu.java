@@ -178,7 +178,7 @@ public class ControleurJeu implements Initializable {
                 jeu.poserTour(tourSelectionne);
             }
             case 4 -> {
-                this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5);
+                this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5 ,5);
                 jeu.poserPiege(piegeSelectione);
             }
         }
