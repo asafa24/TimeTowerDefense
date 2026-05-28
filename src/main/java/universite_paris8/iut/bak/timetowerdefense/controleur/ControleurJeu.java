@@ -124,6 +124,9 @@ public class ControleurJeu implements Initializable {
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
                 poseDeTourTrois();
             }
+            case DIGIT4, NUMPAD4, QUOTE-> {
+                poseDeTourQuatre();
+            }
             case ESCAPE -> {
                 this.typeDefenseSelectionnee = 0;
                 System.out.println("Selection annulée");
