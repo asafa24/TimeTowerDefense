@@ -57,6 +57,8 @@ public class ControleurJeu implements Initializable {
     private Button tourDeux;
     @FXML
     private Button tourTrois;
+    @FXML
+    private Button tourQuatre;
 
     private Timeline gameLoop;
     private int temps, delay;
@@ -121,6 +123,7 @@ public class ControleurJeu implements Initializable {
         tourUn.setGraphic(uiVue.setImageT1(epoque,1));
         tourDeux.setGraphic(uiVue.setImageT1(epoque,2));
         tourTrois.setGraphic(uiVue.setImageT1(epoque,3));
+        tourQuatre.setGraphic(uiVue.setImageT1(epoque,0));
 
 
     }

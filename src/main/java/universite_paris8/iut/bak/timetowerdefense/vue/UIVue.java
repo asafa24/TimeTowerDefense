@@ -11,7 +11,7 @@ public class UIVue {
     }
 
     public ImageView setImageT1(int epoque, int button){
-        String epoque_txt, button_txt;
+        String epoque_txt;
         switch (epoque){
             case 0:
                 epoque_txt = "prehistoire/";
@@ -20,21 +20,8 @@ public class UIVue {
                 epoque_txt = "prehistoire/";
                 break;
         }
-        switch (button){
-            case 1:
-                button_txt = "b_01.png";
-                break;
-            case 2:
-                button_txt = "b_02.png";
-                break;
-            case 3:
-                button_txt = "b_03.png";
-                break;
-            default:
-                button_txt = "b_01.png";
-                break;
-        }
-        Image img = new Image(String.valueOf(Application.class.getResource("images/tiles/" + epoque_txt +"button/" + button_txt )));
+
+        Image img = new Image(String.valueOf(Application.class.getResource("images/tiles/" + epoque_txt +"button/b_0" + button +".png" )));
         ImageView imageView = new ImageView(img);
         imageView.setFitHeight(64);
         imageView.setFitWidth(64);

@@ -34,6 +34,12 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
                      <children>
+                        <Button fx:id="tourQuatre" mnemonicParsing="false" onAction="#poseDeTourQuatre" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                        <Label id="tourQuatreArgent" text="25" textFill="WHITE" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
+                     <children>
       
                         <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseDeTourUn" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                         <Label id="tourUnArgent" text="50" textFill="WHITE" />
@@ -42,16 +48,17 @@
                   <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourDeux" mnemonicParsing="false" onAction="#poseDeTourDeux" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label id="tourUnArgent" text="150" textFill="WHITE" />
+                        <Label id="tourDeuxArgent" text="150" textFill="WHITE" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourTrois" mnemonicParsing="false" onAction="#poseDeTourTrois" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label id="tourUnArgent" text="250" textFill="WHITE" />
+                        <Label id="tourTroisArgent" text="250" textFill="WHITE" />
                      </children>
                   </VBox>
-                  <Button fx:id="tour4" mnemonicParsing="false" onAction="#poseDeTourQuatre" text="Tour 4 : Volcan (25$)" />
+
+
 
                </children>
                <padding>

@@ -94,9 +94,9 @@ public class Jeu {
                     for (int i = ennemis.size() - 1; i >= 0; i--) {
                         Ennemi e = ennemis.get(i);
                         if (((Piege) d).aAtteintPiege(e)){
-                            if (d instanceof MiniVolcan){
-                                e.appliqueEffet(Effet.BURN);
-                            }
+
+                                e.appliqueEffet(Effet.SLOW);
+                                e.appliqueEffet(Effet.BRULAGE);
                         }
                     }
                 }
