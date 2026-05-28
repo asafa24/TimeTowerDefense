@@ -74,8 +74,9 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
-        this.uiVue = new UIVue(tourUn);
-        uiVue.setImageT1();
+        this.uiVue = new UIVue();
+        tourUn.setGraphic(uiVue.setImageT1());
+
         vueEntite.creerBindings(jeu.getEnnemi());
         vueEntite.creerBindings(jeu.getDefenses());
         vueEntite.creerBindings(jeu.getProjectiles());
