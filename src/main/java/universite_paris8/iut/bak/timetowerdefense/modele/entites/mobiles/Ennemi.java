@@ -15,15 +15,18 @@ public class Ennemi extends Entite implements Destructible {
     private int pv, pvMax;
     private DoubleProperty pvProp;
     private IntegerProperty direction;
-    private int vitesseBase;
-    private int vitesseActuelle;
+    private double vitesseBase;
+    private double vitesseActuelle;
     private int recompense;
+
+    // Compteurs pour la durée des effets en frames (ticks)
     private int dureeStunRestante = 0;
+    private int dureeSlowRestante = 0;
+    private int dureeBrulageRestante = 0;
 
     private List<Point2D> chemin;
     private int etapeActuelle;
     private final int TILE_SIZE = 64;
-
 
     public Ennemi(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y);
@@ -39,17 +42,28 @@ public class Ennemi extends Entite implements Destructible {
         this.direction = new SimpleIntegerProperty(-1);
     }
 
+    public void avancer() {
+        if (this.dureeBrulageRestante > 0) {
+            this.dureeBrulageRestante--;
+            if (this.dureeBrulageRestante % 10 == 0) {
+                this.recevoirDegats(1);
+            }
+        }
 
-
-    public void avancer(){
         if (this.dureeStunRestante > 0) {
             this.dureeStunRestante--;
             this.vitesseActuelle = 0;
             return;
+        }
+
+        if (this.dureeSlowRestante > 0) {
+            this.dureeSlowRestante--;
+            this.vitesseActuelle = this.vitesseBase / 2.0;
         } else {
             this.vitesseActuelle = this.vitesseBase;
         }
-        if(chemin == null || etapeActuelle >= chemin.size()) return;
+
+        if (chemin == null || etapeActuelle >= chemin.size()) return;
 
         Point2D caseCible = chemin.get(etapeActuelle);
         double cibleX = caseCible.getX() * TILE_SIZE;
@@ -57,34 +71,35 @@ public class Ennemi extends Entite implements Destructible {
         double distanceX = cibleX - this.getX();
         double distanceY = cibleY - this.getY();
 
-        if(distanceX > 0) {
+        if (distanceX > 0) {
             this.setX(this.getX() + vitesseActuelle);
             this.direction.set(-1);
-        }
-        else if(distanceX < 0) {
+        } else if (distanceX < 0) {
             this.setX(this.getX() - vitesseActuelle);
-        this.direction.set(1);}
+            this.direction.set(1);
+        }
 
-        if(distanceY > 0) this.setY(this.getY() + vitesseActuelle);
-        else if(distanceY < 0) this.setY(this.getY() - vitesseActuelle);
+        if (distanceY > 0) this.setY(this.getY() + vitesseActuelle);
+        else if (distanceY < 0) this.setY(this.getY() - vitesseActuelle);
 
-        if(vitesseActuelle > 0 && Math.abs(distanceX) <= vitesseActuelle && Math.abs(distanceY) <= vitesseActuelle){
+        if (vitesseActuelle > 0 && Math.abs(distanceX) <= vitesseActuelle && Math.abs(distanceY) <= vitesseActuelle) {
             this.setX(cibleX);
             this.setY(cibleY);
             etapeActuelle++;
-        }else dureeStunRestante-- ;
+        }
     }
 
-    public void recevoirDegats(int dgt){
+    public void recevoirDegats(int dgt) {
         this.pv -= dgt;
+        if (this.pv < 0) this.pv = 0;
         this.pvProp.set(pv);
     }
 
-    public boolean estMort(){
+    public boolean estMort() {
         return this.pv <= 0;
     }
 
-    public boolean aAtteintLaBase(){
+    public boolean aAtteintLaBase() {
         return chemin != null && etapeActuelle >= chemin.size();
     }
 
@@ -95,7 +110,6 @@ public class Ennemi extends Entite implements Destructible {
     public int getPvMax() {
         return pvMax;
     }
-
 
     public IntegerProperty getDirectionProperty() {
         return direction;
@@ -113,25 +127,27 @@ public class Ennemi extends Entite implements Destructible {
         return etapeActuelle;
     }
 
-    public double getCentreX(){
-        return this.getX() + TILE_SIZE / 2;
+    public double getCentreX() {
+        return this.getX() + TILE_SIZE / 2.0;
     }
-    public double getCentreY(){
-        return this.getY() + TILE_SIZE / 2;
+
+    public double getCentreY() {
+        return this.getY() + TILE_SIZE / 2.0;
     }
+
     public void appliqueEffet(Effet effet) {
         switch (effet) {
             case STUN -> {
                 this.dureeStunRestante = Math.max(this.dureeStunRestante, 120);
                 this.vitesseActuelle = 0;
             }
-            case BURN -> {
-                System.out.println("hhehehee tu brules");
-
+            case SLOW -> {
+                this.dureeSlowRestante = Math.max(this.dureeSlowRestante, 120);
+                this.vitesseActuelle = this.vitesseBase / 2.0;
+            }
+            case BRULAGE -> {
+                this.dureeBrulageRestante = Math.max(this.dureeBrulageRestante, 60);
             }
         }
     }
 }
-
-
-
