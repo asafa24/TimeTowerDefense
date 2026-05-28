@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -27,6 +28,7 @@ import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
 import java.net.URL;
 import javafx.util.Duration;
+import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,9 @@ public class ControleurJeu implements Initializable {
     @FXML
     private Label labelVague;
 
+    @FXML
+    private Button tourUn;
+
     private Timeline gameLoop;
     private int temps, delay;
 
@@ -57,6 +62,7 @@ public class ControleurJeu implements Initializable {
     private Level level;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
+    private UIVue uiVue;
     private Jeu jeu;
     private Tour tourSelectionne;
     private int typeTourSelectionnee = 0;
@@ -68,6 +74,8 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
+        this.uiVue = new UIVue(tourUn);
+        uiVue.setImageT1();
         vueEntite.creerBindings(jeu.getEnnemi());
         vueEntite.creerBindings(jeu.getDefenses());
         vueEntite.creerBindings(jeu.getProjectiles());
@@ -86,6 +94,7 @@ public class ControleurJeu implements Initializable {
     }
 
     private void initAnimation() {
+
         gameLoop = new Timeline();
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
