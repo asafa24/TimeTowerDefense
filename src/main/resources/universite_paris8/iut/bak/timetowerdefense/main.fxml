@@ -30,15 +30,16 @@
          </top>
 
          <bottom>
-            <HBox alignment="CENTER" spacing="20.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" BorderPane.alignment="CENTER">
+            <HBox fx:id="boutonBox" alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" BorderPane.alignment="CENTER">
                <children>
-                  <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
+                  <Button mnemonicParsing="false" text="cacher" />
+                  <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourQuatre" mnemonicParsing="false" onAction="#poseDeTourQuatre" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                         <Label id="tourQuatreArgent" text="25" textFill="WHITE" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
+                  <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
       
                         <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseDeTourUn" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
@@ -51,7 +52,7 @@
                         <Label id="tourDeuxArgent" text="150" textFill="WHITE" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
+                  <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourTrois" mnemonicParsing="false" onAction="#poseDeTourTrois" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                         <Label id="tourTroisArgent" text="250" textFill="WHITE" />

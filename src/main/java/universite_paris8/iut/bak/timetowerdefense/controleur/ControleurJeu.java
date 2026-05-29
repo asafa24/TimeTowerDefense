@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
@@ -28,6 +29,7 @@ import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 import java.net.URL;
 import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
+import universite_paris8.iut.bak.timetowerdefense.vue.effets.ExplosionVue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,8 @@ public class ControleurJeu implements Initializable {
     private Button tourTrois;
     @FXML
     private Button tourQuatre;
+    @FXML
+    private HBox boutonBox;
 
     private Timeline gameLoop;
     private int temps, delay;
@@ -67,6 +71,7 @@ public class ControleurJeu implements Initializable {
     private Level level;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
+    private ExplosionVue vueExplosion;
     private UIVue uiVue;
     private Jeu jeu;
     private Tour tourSelectionne;
@@ -146,6 +151,9 @@ public class ControleurJeu implements Initializable {
             case ESCAPE -> {
                 this.typeDefenseSelectionnee = 0;
                 System.out.println("Selection annulée");
+                cacherUI();
+
+
             }
             default -> System.out.println(event.getCode().getName());
         }
@@ -154,6 +162,7 @@ public class ControleurJeu implements Initializable {
 
     @FXML
     public void handleMouseClick(MouseEvent mouseEvent) {
+        boutonBox.setVisible(true);
 
         int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
         int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
@@ -187,27 +196,40 @@ public class ControleurJeu implements Initializable {
     }
 
 
+
     @FXML
     public void poseDeTourUn() {
         this.typeDefenseSelectionnee = 1;
+        boutonBox.setVisible(false);
         System.out.println("Défense numéro un sélectionnée.");
     }
 
     @FXML
     public void poseDeTourDeux() {
         this.typeDefenseSelectionnee = 2;
+        boutonBox.setVisible(false);
         System.out.println("Défense numéro deux sélectionnée.");
     }
 
     @FXML
     public void poseDeTourTrois() {
         this.typeDefenseSelectionnee = 3;
+        boutonBox.setVisible(false);
         System.out.println("Défense numéro trois sélectionnée.");
     }
-    // et houi c
+    // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
 
     public void poseDeTourQuatre( ) {
         this.typeDefenseSelectionnee = 4;
+        boutonBox.setVisible(false);
         System.out.println("Défense numéro quatre sélectionnée.");
+    }
+    public void cacherUI(){
+        if(boutonBox.isDisabled()){
+            boutonBox.setVisible(true);
+        }
+        else{
+            boutonBox.setVisible(false);
+        }
     }
 }

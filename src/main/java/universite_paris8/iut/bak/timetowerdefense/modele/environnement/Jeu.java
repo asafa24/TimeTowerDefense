@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
@@ -192,6 +193,9 @@ public class Jeu {
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
+    }
+    public void preview(ImageView img){
+
     }
 
     public void poserPiege(Piege piege ){
