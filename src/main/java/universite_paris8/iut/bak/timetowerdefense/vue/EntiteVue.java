@@ -155,20 +155,4 @@ public class EntiteVue {
         }
 
     }
-
-    public void creerBindings(ObservableList<? extends Entite> liste){
-        liste.addListener((ListChangeListener<Entite>) ch -> {
-            while(ch.next()){
-                if(ch.wasAdded()){
-                    for(Entite e : ch.getAddedSubList()) creerSprite(e);
-                }
-
-                if (ch.wasRemoved()){
-                    for(Entite e : ch.getRemoved()) supprimerSprite(e);
-                }
-            }
-        });
-    }
-
-
 }

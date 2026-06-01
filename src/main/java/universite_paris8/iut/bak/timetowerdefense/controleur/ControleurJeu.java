@@ -86,13 +86,14 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
+        EcouteEntite ecouteEntite = new EcouteEntite(vueEntite);
         this.uiVue = new UIVue();
         afficherButton(0);
 
+        jeu.getEnnemi().addListener(ecouteEntite);
+        jeu.getDefenses().addListener(ecouteEntite);
+        jeu.getProjectiles().addListener(ecouteEntite);
 
-        vueEntite.creerBindings(jeu.getEnnemi());
-        vueEntite.creerBindings(jeu.getDefenses());
-        vueEntite.creerBindings(jeu.getProjectiles());
 
 
         labelArgent.textProperty().bind(jeu.getSoldeProperty().asString("Solde : %d"));
@@ -224,6 +225,8 @@ public class ControleurJeu implements Initializable {
         boutonBox.setVisible(false);
         System.out.println("Défense numéro quatre sélectionnée.");
     }
+
+    @FXML
     public void cacherUI(){
         if(boutonBox.isDisabled()){
             boutonBox.setVisible(true);

@@ -104,7 +104,6 @@ public class Jeu {
                                 volcanBlesseCeTick = true;
                             }
                         }
-                        System.out.println(volcan.getPv());
                     }
                     if (volcan.getPv() <= 0) {
                         defenses.remove(j);
@@ -163,8 +162,6 @@ public class Jeu {
         }
         if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
             addEnnemi(creerEnnemi(vague.defiler() ));
-
-
         }
         else{
             if (delay > 600 ){
