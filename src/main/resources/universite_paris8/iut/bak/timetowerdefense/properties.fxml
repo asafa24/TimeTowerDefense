@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="192.0" prefWidth="128.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="128.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView id="p_image" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Téléchargements/arbre.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label id="p_nom" text="Arbre" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="lv : " />
+                              <Label id="p_lv" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="dégat :" textFill="RED" />
+                        <Label id="p_current_degat" text="1" textFill="RED" />
+                        <Label text="-&gt;" textFill="RED" />
+                        <Label id="p_new_degat" text="2" textFill="RED" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="porté :" textFill="LIME" />
+                        <Label id="p_current_porte" text="1" textFill="#0dff00" />
+                        <Label text="-&gt;" textFill="#0dff00" />
+                        <Label id="p_new_porte" text="1" textFill="#0dff00" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="cadence :" textFill="#ff9000" />
+                        <Label id="p_current_cadence" text="1" textFill="#ff9000" />
+                        <Label text="-&gt;" textFill="#ff9000" />
+                        <Label id="p_new_cadence" text="2" textFill="#ff9000" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: green;" textFill="WHITE">
+                     <graphic>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <Label text="améliorer : " textFill="WHITE" />
+                              <Label id="p_prix_upgrade" text="500" textFill="WHITE" />
+                           </children>
+                        </HBox>
+                     </graphic></Button>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: red;" textFill="WHITE">
+                     <graphic>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <Label text="vendre : " textFill="WHITE" />
+                              <Label id="p_prix_vente" text="150" textFill="WHITE" />
+                           </children>
+                        </HBox>
+                     </graphic></Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>
