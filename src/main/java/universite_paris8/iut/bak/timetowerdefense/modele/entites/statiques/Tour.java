@@ -12,6 +12,8 @@ public class Tour extends Defense {
     private int compteurTir;
     
     private boolean isStun = false;
+    private int dureeStun = 0;
+    // Les durées et compteurs sont en frame
 
     public Tour(int cout ,double x, double y){
         super(cout,x,y);
@@ -30,10 +32,16 @@ public class Tour extends Defense {
     }
 
     public void attaquer(List<Ennemi> ennemis, List<Projectile> projectiles){
-        if(compteurTir < cadence){
-            if(this.isStun == false){
-                compteurTir++;    
+        if (this.isStun) {
+            dureeStun--;
+            if (dureeStun <= 0) {
+                this.isStun = false;
             }
+            return;
+        }
+
+        if(compteurTir < cadence){
+            compteurTir++;
             return;
         }
 
@@ -86,7 +94,8 @@ public class Tour extends Defense {
         this.compteurTir = compteurTir;
     }
     
-    public void setStun(boolean stun){
-        isStun = stun;
+    public void setStun(int dureeStun){
+        isStun = true;
+        this.dureeStun = dureeStun;
     }
 }

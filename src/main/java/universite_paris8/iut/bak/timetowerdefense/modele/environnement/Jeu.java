@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
+import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
+import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
@@ -39,6 +41,10 @@ public class Jeu {
     private final int TEMPS_ENTRE_VAGUE = 220 ;
     private int delaySpawnMob = 80;
 
+    private Ultime ultimeActuelle;
+    private IntegerProperty compteurKill;
+
+
     public Jeu() {
         this.ennemis = FXCollections.observableArrayList();
         this.defenses = FXCollections.observableArrayList();
@@ -52,6 +58,8 @@ public class Jeu {
         this.route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         this.vague = new Vague();
         this.delay = 0;
+        this.ultimeActuelle = new PluieMeteorites();
+        this.compteurKill = new SimpleIntegerProperty(0);
     }
 
     public Vague getVague() {
@@ -84,6 +92,7 @@ public class Jeu {
 
     public void tick() {
         if (!perdu()) {
+            ultimeActuelle.tick(ennemis);
             for (int j = defenses.size() - 1; j >= 0; j--) {
                 Defense d = defenses.get(j);
 
@@ -145,6 +154,7 @@ public class Jeu {
                     if (e.estMort()) {
                         ajouterArgent(e.getRecompense());
                         System.out.println("+" + e.getRecompense() + "$");
+                        this.compteurKill.set(this.compteurKill.get() + 1);
                         ennemis.remove(i);
                         continue;
                     }
@@ -152,8 +162,13 @@ public class Jeu {
                     if (e.aAtteintLaBase()) {
                         ajouterArgent(e.getRecompense());
                         ennemis.remove(i);
+                        this.compteurKill.set(this.compteurKill.get() + 1);
                         pvBase.set(pvBase.get() - e.getPv());
                         continue;
+                    }
+
+                    if(e instanceof Tyrannosaurus){
+                        ((Tyrannosaurus) e).competence(defenses);
                     }
 
                     e.avancer();
@@ -234,6 +249,13 @@ public class Jeu {
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
 
+    public void activerUltime(){
+        if(compteurKill.get() >= ultimeActuelle.getCompteurKill()){
+            compteurKill.set(compteurKill.get() - ultimeActuelle.getCompteurKill());
+            ultimeActuelle.activerUlt(ennemis);
+        }
+    }
+
 
     public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }
     public void depenserArgent(int somme){ if(solde.get() >= somme) solde.set(solde.get() - somme); }
@@ -242,13 +264,19 @@ public class Jeu {
     public IntegerProperty getSoldeProperty(){ return solde; }
     public int getPvBase() { return pvBase.get(); }
     public IntegerProperty getPvBaseProperty(){ return pvBase; }
+    public int getCompteurKill(){
+        return compteurKill.get();
+    }
+    public IntegerProperty getCompteurKillProperty(){
+        return compteurKill;
+    }
 
-    private Ennemi creerEnnemi( int id ) {
+    private Ennemi creerEnnemi(int id) {
         switch (id) {
             case 0 : return new Ennemi(0, 64 * 9, 25, 2, 5, route);
             case 1 : return new Velociraptor(0, 64 * 9, 40, 4, 20, route);
             case 2 : return new Triceratops(0, 64 * 9, 150, 1, 30, route);
-            default : return new Tyrannosaurus(0, 64 * 9, 500, 1, 400, 15, route);
+            default : return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
         }
     }
 }

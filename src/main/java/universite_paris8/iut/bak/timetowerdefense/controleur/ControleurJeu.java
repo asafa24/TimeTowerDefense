@@ -64,6 +64,11 @@ public class ControleurJeu implements Initializable {
     @FXML
     private HBox boutonBox;
 
+    @FXML
+    private Button ultButton;
+    @FXML
+    private Label labelCompteurKill;
+
     private Timeline gameLoop;
     private int temps, delay;
 
@@ -94,12 +99,12 @@ public class ControleurJeu implements Initializable {
         jeu.getDefenses().addListener(ecouteEntite);
         jeu.getProjectiles().addListener(ecouteEntite);
 
-
-
         labelArgent.textProperty().bind(jeu.getSoldeProperty().asString("Solde : %d"));
         labelVague.textProperty().bind(jeu.getVague().getVagueProperty().asString("Vague : %d"));
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
+        labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
+        ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
         initAnimation();
         gameLoop.play();
@@ -224,6 +229,10 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 4;
         boutonBox.setVisible(false);
         System.out.println("Défense numéro quatre sélectionnée.");
+    }
+
+    public void lancerUltime(){
+        jeu.activerUltime();
     }
 
     @FXML

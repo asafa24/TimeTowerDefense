@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClick" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClick" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
    <children>
       <Pane fx:id="backgroundPane" prefHeight="200.0" prefWidth="200.0" />
       <Pane fx:id="entityPane" prefHeight="200.0" prefWidth="200.0" />
@@ -21,6 +19,7 @@
                   <Label fx:id="labelPvBase" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="WHITE" />
                   <Label fx:id="labelVague" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="WHITE" />
                   <Label fx:id="labelArgent" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="GOLD" />
+                  <Label fx:id="labelCompteurKill" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="RED" />
 
                </children>
                <padding>
@@ -55,7 +54,7 @@
                   <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourTrois" mnemonicParsing="false" onAction="#poseDeTourTrois" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label id="tourTroisArgent" text="250" textFill="WHITE" />
+                        <Label id="tourTroisArgent" text="150" textFill="WHITE" />
                      </children>
                   </VBox>
 
@@ -67,6 +66,13 @@
                </padding>
             </HBox>
          </bottom>
+         <right>
+            <Button fx:id="ultButton" mnemonicParsing="false" onAction="#lancerUltime" text="ULTIME" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="13.0" />
+               </font>
+            </Button>
+         </right>
 
       </BorderPane>
    </children>
