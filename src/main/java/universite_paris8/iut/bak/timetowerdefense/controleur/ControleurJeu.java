@@ -16,13 +16,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Vague;
+import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
+import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
 
@@ -37,6 +40,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControleurJeu implements Initializable {
+    @FXML
+    private StackPane paneMain ;
 
     @FXML
     private Pane backgroundPane;
@@ -71,11 +76,14 @@ public class ControleurJeu implements Initializable {
 
     private Timeline gameLoop;
     private int temps, delay;
-
+    private double mouseX, mouseY;
 
     private Level level;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
+    private PreviewVue vuePreview;
+
+
     private ExplosionVue vueExplosion;
     private UIVue uiVue;
     private Jeu jeu;
@@ -91,6 +99,7 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
+        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview());
         EcouteEntite ecouteEntite = new EcouteEntite(vueEntite);
         this.uiVue = new UIVue();
         afficherButton(0);
@@ -111,6 +120,10 @@ public class ControleurJeu implements Initializable {
 
         int[][] donneesMap = level.loadLevel(0);
         vueTerrain.drawMap(donneesMap);
+
+        paneMain.setOnMouseMoved(event -> {
+            recupererPosition(event);
+        });
     }
 
     private void initAnimation() {
@@ -124,6 +137,10 @@ public class ControleurJeu implements Initializable {
                 Duration.seconds(0.017),
                 (ev -> {
                     jeu.tick();
+                    if (typeDefenseSelectionnee != 0){
+                        jeu.preview(mouseX,mouseY);
+                    }
+
                     temps++;
                 })
         );
@@ -137,6 +154,11 @@ public class ControleurJeu implements Initializable {
         tourQuatre.setGraphic(uiVue.setImageT1(epoque,0));
 
 
+    }
+
+    public void recupererPosition(MouseEvent e){
+        mouseX = e.getX();
+        mouseY = e.getY();
     }
 
     @FXML
@@ -175,6 +197,8 @@ public class ControleurJeu implements Initializable {
 
         if (this.typeDefenseSelectionnee == 0) {
             System.out.println("Veuillez sélectionner une tour d'abord.");
+            vuePreview.setId(-1);
+            vuePreview.remove();
             return;
         }
         switch(typeDefenseSelectionnee){
@@ -186,7 +210,6 @@ public class ControleurJeu implements Initializable {
             case 2 -> {
                 this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
                 jeu.poserTour(tourSelectionne);
-
             }
             case 3 -> {
                 this.tourSelectionne = new TourStun(150, xGrille, yGrille,10,128, 200,180);
@@ -195,9 +218,12 @@ public class ControleurJeu implements Initializable {
             case 4 -> {
                 this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5 ,5);
                 jeu.poserPiege(piegeSelectione);
+
             }
         }
 
+        vuePreview.setId(-1);
+        vuePreview.remove();
         this.typeDefenseSelectionnee= 0;
     }
 
@@ -208,6 +234,10 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 1;
         boutonBox.setVisible(false);
         System.out.println("Défense numéro un sélectionnée.");
+        vuePreview.setId(1);
+        vuePreview.preview();
+
+
     }
 
     @FXML
@@ -215,6 +245,8 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 2;
         boutonBox.setVisible(false);
         System.out.println("Défense numéro deux sélectionnée.");
+        vuePreview.setId(2);
+        vuePreview.preview();
     }
 
     @FXML
@@ -222,6 +254,8 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 3;
         boutonBox.setVisible(false);
         System.out.println("Défense numéro trois sélectionnée.");
+        vuePreview.setId(3);
+        vuePreview.preview();
     }
     // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
 
@@ -229,6 +263,8 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 4;
         boutonBox.setVisible(false);
         System.out.println("Défense numéro quatre sélectionnée.");
+        vuePreview.setId(4);
+        vuePreview.preview();
     }
 
     public void lancerUltime(){
@@ -244,4 +280,6 @@ public class ControleurJeu implements Initializable {
             boutonBox.setVisible(false);
         }
     }
+
+
 }

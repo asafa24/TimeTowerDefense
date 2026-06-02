@@ -18,6 +18,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Jeu {
 
     private Level level;
     private int epoqueActuel;
+    private Preview preview = new  Preview(0.0,0.0,this);
 
     private IntegerProperty solde;
     private IntegerProperty pvBase;
@@ -174,6 +176,7 @@ public class Jeu {
                     e.avancer();
                 }
             }
+
         }
         if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
             addEnnemi(creerEnnemi(vague.defiler() ));
@@ -192,6 +195,8 @@ public class Jeu {
             }
         }
         frame++;
+    }
+    public void preview(double x, double y) {preview.update(x,y);
     }
 
     public void poserTour(Tour tour) {
@@ -248,6 +253,12 @@ public class Jeu {
         }
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
+    public boolean piegeloc(int x , int y){
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+        }
+        return true;
+    }
 
     public void activerUltime(){
         if(compteurKill.get() >= ultimeActuelle.getCompteurKill()){
@@ -271,7 +282,12 @@ public class Jeu {
         return compteurKill;
     }
 
-    private Ennemi creerEnnemi(int id) {
+
+    public Preview getPreview() {
+        return preview;
+    }
+
+    private Ennemi creerEnnemi(int id ) {
         switch (id) {
             case 0 : return new Ennemi(0, 64 * 9, 25, 2, 5, route);
             case 1 : return new Velociraptor(0, 64 * 9, 40, 4, 20, route);

@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense;
+package universite_paris8.iut.bak.timetowerdefense;;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +16,7 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
     }
 
     public static void main(String[] args) {
