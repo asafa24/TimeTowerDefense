@@ -182,7 +182,7 @@ public class Jeu {
             if (delay > 600 ){
                 delay = 0;
                 vague.vagueSuivante();
-                delaySpawnMob -= 8;
+                if (delaySpawnMob > 16) delaySpawnMob -= 8;
             }
             else {
                 if (vague.getQueue().isEmpty()){
