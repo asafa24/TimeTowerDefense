@@ -11,7 +11,7 @@ public class Tyrannosaurus extends Boss{
 
     public Tyrannosaurus(double x, double y, int pv, int vitesseBase, int recompense, int tempsRecharge, List<Point2D> chemin) {
         super(x, y, pv, vitesseBase, recompense, tempsRecharge, chemin);
-        frameCount = tempsRecharge;
+        frameCount = 60;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Tyrannosaurus extends Boss{
             return;
         }
         for(Defense tour : tours){
-            if(tour instanceof Tour) ((Tour) tour).setStun(180);
+            if(tour instanceof Tour) ((Tour) tour).setStun(300);
         }
         frameCount = getTempsRecharge();
     }

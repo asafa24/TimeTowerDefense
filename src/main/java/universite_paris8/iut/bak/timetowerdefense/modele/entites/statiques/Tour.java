@@ -36,6 +36,7 @@ public class Tour extends Defense {
             dureeStun--;
             if (dureeStun <= 0) {
                 this.isStun = false;
+                System.out.println("Plus stun hehe");
             }
             return;
         }
@@ -97,5 +98,6 @@ public class Tour extends Defense {
     public void setStun(int dureeStun){
         isStun = true;
         this.dureeStun = dureeStun;
+        System.out.println("RAWR (tsais) Tour stun mskn");
     }
 }
