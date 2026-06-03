@@ -55,12 +55,7 @@
             <HBox fx:id="boutonBox" alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" BorderPane.alignment="CENTER">
                <children>
                   <Button mnemonicParsing="false" text="cacher" />
-                  <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
-                     <children>
-                        <Button fx:id="tourQuatre" mnemonicParsing="false" onAction="#poseDeTourQuatre" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label id="tourQuatreArgent" text="25" textFill="WHITE" />
-                     </children>
-                  </VBox>
+
                   <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
       
@@ -78,6 +73,12 @@
                      <children>
                         <Button fx:id="tourTrois" mnemonicParsing="false" onAction="#poseDeTourTrois" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                         <Label id="tourTroisArgent" text="150" textFill="WHITE" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
+                     <children>
+                        <Button fx:id="tourQuatre" mnemonicParsing="false" onAction="#poseDeTourQuatre" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                        <Label id="tourQuatreArgent" text="25" textFill="WHITE" />
                      </children>
                   </VBox>
 

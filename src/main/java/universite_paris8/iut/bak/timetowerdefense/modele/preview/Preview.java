@@ -43,7 +43,7 @@ public class Preview {
         this.id = id;
     }
     public void setDefense(){
-        if(id != 4){
+        if(id != 1){
             piege = false;
             //System.out.println("id = " + id);
         }
@@ -71,7 +71,7 @@ public class Preview {
     }
 
     public void couleur(){
-        if (id != 4){
+        if (id != 1){
             this.peut.set(jeu.peuxPoserTourCoord(epoque, (int) Math.floor(x.get() / 64), (int) Math.floor(y.get() / 64) ));
         }
         else {

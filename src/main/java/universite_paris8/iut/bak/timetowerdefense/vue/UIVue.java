@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -34,7 +35,6 @@ public class UIVue {
         imageView.setPreserveRatio(true);
         return imageView;
     }
-
     public void afficherStatsTour(Tour tour, Pane zoneStats, Jeu jeu) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));

@@ -148,10 +148,10 @@ public class ControleurJeu implements Initializable {
     }
 
     public void afficherButton(int epoque) {
-        tourUn.setGraphic(uiVue.setImageT1(epoque, 1));
-        tourDeux.setGraphic(uiVue.setImageT1(epoque, 2));
-        tourTrois.setGraphic(uiVue.setImageT1(epoque, 3));
-        tourQuatre.setGraphic(uiVue.setImageT1(epoque, 0));
+        tourUn.setGraphic(uiVue.setImageT1(epoque, 0));
+        tourDeux.setGraphic(uiVue.setImageT1(epoque, 1));
+        tourTrois.setGraphic(uiVue.setImageT1(epoque, 2));
+        tourQuatre.setGraphic(uiVue.setImageT1(epoque, 3));
     }
 
     public void recupererPosition(MouseEvent e){
@@ -236,23 +236,24 @@ public class ControleurJeu implements Initializable {
         }
         switch(typeDefenseSelectionnee){
             case 1 -> {
-                this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
-                jeu.poserTour(tourSelectionne);
-            }
-
-            case 2 -> {
-                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
-                jeu.poserTour(tourSelectionne);
-            }
-            case 3 -> {
-                this.tourSelectionne = new TourStun(150, xGrille, yGrille,10,128, 200,180);
-                jeu.poserTour(tourSelectionne);
-            }
-            case 4 -> {
                 this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5 ,5);
                 jeu.poserPiege(piegeSelectione);
 
             }
+            case 2 -> {
+                this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
+                jeu.poserTour(tourSelectionne);
+            }
+
+            case 3 -> {
+                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
+                jeu.poserTour(tourSelectionne);
+            }
+            case 4 -> {
+                this.tourSelectionne = new TourStun(200, xGrille, yGrille,10,128, 200,180);
+                jeu.poserTour(tourSelectionne);
+            }
+
         }
 
         this.typeDefenseSelectionnee = 0;
