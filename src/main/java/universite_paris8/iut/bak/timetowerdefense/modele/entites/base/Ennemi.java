@@ -135,6 +135,15 @@ public class Ennemi extends Entite implements Destructible {
         return this.getY() + TILE_SIZE / 2.0;
     }
 
+
+    public double getVitesseBase() {
+        return vitesseBase;
+    }
+
+    public void setVitesseBase(double vitesseBase) {
+        this.vitesseBase = vitesseBase;
+    }
+
     public void appliqueEffet(Effet effet) {
         switch (effet) {
             case STUN -> {
