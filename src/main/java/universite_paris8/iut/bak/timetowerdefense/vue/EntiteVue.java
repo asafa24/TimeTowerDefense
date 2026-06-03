@@ -45,7 +45,10 @@ public class EntiteVue {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d01.png")));
             }
             else if (e instanceof Triceratops){
-                img = img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d02.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d02.png")));
+            }
+            else if (e instanceof Tyrannosaurus){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/trex.png")));
             }
             else {
                  img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi1.png")));
