@@ -45,21 +45,21 @@ public class PropertiController {
         } else {
             p_nom.setText("Arbre rustre");
         }
-        p_lv.setText("1");
+        p_lv.setText(String.valueOf(tour.getNiveau() + 1));
 
         p_current_degat.setText(String.valueOf(tour.getDegats()));
         p_current_porte.setText(String.valueOf(tour.getPortee()));
         p_current_cadence.setText(String.valueOf(tour.getCadence()));
 
         int futursDegats = (int) (tour.getDegats() * 1.2);
-        int futurePorte = tour.getPortee() + 16;
-        int futureCadence = (int) (tour.getCadence() * 1.2);
+        int futurePorte = tour.getPortee() + 20;
+        int futureCadence = (int) (tour.getCadence() / 1.10);
 
         p_new_degat.setText(String.valueOf(futursDegats));
         p_new_porte.setText(String.valueOf(futurePorte));
         p_new_cadence.setText(String.valueOf(futureCadence));
 
-        int prixUpgrade = (int) (tour.getCout() * 1.30);
+        int prixUpgrade = (int) (tour.getCout() * 2);
         int prixVente = (int) (tour.getCout() * 0.75);
 
         p_prix_upgrade.setText(String.valueOf(prixUpgrade));
@@ -85,9 +85,13 @@ public class PropertiController {
     public void ameliorationT() {
         if (this.tourActuelle != null && this.jeu != null) {
             int montantUpgrade = Integer.parseInt(p_prix_upgrade.getText());
-
-            System.out.println(p_nom.getText() + " ameliorerrr pour " + montantUpgrade + " pièces !");
-
+            if (jeu.getSoldeProperty().get() >= montantUpgrade) {
+                jeu.ajouterArgent(-montantUpgrade);
+                tourActuelle.amelioration();
+                updateStats(tourActuelle, jeu);
+            } else {
+                System.out.println("Pas assez d'or !");
+            }
         }
     }
 }

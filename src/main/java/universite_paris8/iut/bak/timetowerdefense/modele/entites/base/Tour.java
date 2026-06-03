@@ -3,6 +3,8 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Tour extends Defense {
     private int degats;
@@ -11,7 +13,7 @@ public class Tour extends Defense {
     private int compteurTir;
     
     private boolean isStun = false;
-    private int niveau ;
+    private IntegerProperty niveau ;
     private int dureeStun = 0;
     // Les durées et compteurs sont en frame
 
@@ -21,7 +23,7 @@ public class Tour extends Defense {
         this.portee = 100;
         this.cadence = 120;
         this.compteurTir = cadence/2;
-
+        niveau = new SimpleIntegerProperty(0);
     }
 
     public Tour(int cout ,double x, double y, int degats, int portee, int cadence){
@@ -30,6 +32,7 @@ public class Tour extends Defense {
         this.portee = portee;
         this.cadence = cadence;
         this.compteurTir = 0;
+        niveau = new SimpleIntegerProperty(0);
     }
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
@@ -100,6 +103,21 @@ public class Tour extends Defense {
         isStun = true;
         this.dureeStun = dureeStun;
         System.out.println("RAWR (tsais) Tour stun mskn");
+    }
+    public void amelioration(){
+        this.niveau.set(this.niveau.get() + 1);
+        this.degats = (int) (this.degats * 1.2);
+        this.cadence = (int) (this.cadence / 1.10);
+        this.portee = this.portee + 20;
+        super.setCout((int) (this.getCout() * 1.30));
+    }
+
+    public IntegerProperty niveauProperty() {
+        return niveau;
+    }
+
+    public int getNiveau() {
+        return niveau.get();
     }
 
 }
