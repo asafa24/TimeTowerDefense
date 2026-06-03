@@ -22,6 +22,8 @@
                   <Label fx:id="labelPvBase" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="WHITE" />
                   <Label fx:id="labelVague" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="WHITE" />
                   <Label fx:id="labelArgent" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="GOLD" />
+                  <Label fx:id="labelCompteurKill" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="RED" />
+
 
                </children>
                <padding>
