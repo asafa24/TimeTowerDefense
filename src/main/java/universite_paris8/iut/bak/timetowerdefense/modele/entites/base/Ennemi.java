@@ -39,6 +39,49 @@ public class Ennemi extends Entite implements Destructible {
         this.pvProp = new SimpleDoubleProperty(pv);
         this.direction = new SimpleIntegerProperty(-1);
     }
+    public Ennemi(List<Point2D> chemin) {
+        super();
+        super.setX(0);
+        super.setY(64 * 9);
+        this.pv = 25;
+        this.vitesseBase = 2;
+        this.vitesseActuelle = 2;
+        this.recompense = 5;
+        this.chemin = chemin;
+        etapeActuelle = 0;
+        this.pvMax = pv;
+        this.pvProp = new SimpleDoubleProperty(pv);
+        this.direction = new SimpleIntegerProperty(-1);
+    }
+    public Ennemi(int pv, double vitesseBase, int recompense,List<Point2D> chemin) {
+        super();
+        super.setX(0);
+        super.setY(64 * 9);
+        this.pv = pv;
+        this.vitesseBase = vitesseBase;
+        this.vitesseActuelle = vitesseBase;
+        this.recompense = recompense;
+        this.chemin = chemin;
+        etapeActuelle = 0;
+        this.pvMax = pv;
+        this.pvProp = new SimpleDoubleProperty(pv);
+        this.direction = new SimpleIntegerProperty(-1);
+    }
+
+    public Ennemi(int x, int y, List<Point2D> chemin) {
+        super();
+        super.setX(0);
+        super.setY(64 * 9);
+        this.pv = 25;
+        this.vitesseBase = 2;
+        this.vitesseActuelle = 2;
+        this.recompense = 5;
+        this.chemin = chemin;
+        etapeActuelle = 0;
+        this.pvMax = pv;
+        this.pvProp = new SimpleDoubleProperty(pv);
+        this.direction = new SimpleIntegerProperty(-1);
+    }
 
     public void avancer() {
         if (this.dureeBrulageRestante > 0) {

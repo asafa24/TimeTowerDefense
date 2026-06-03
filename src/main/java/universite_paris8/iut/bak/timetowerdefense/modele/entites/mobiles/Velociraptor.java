@@ -10,6 +10,9 @@ public class Velociraptor extends Ennemi {
     public Velociraptor(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y, pv, vitesseBase, recompense, chemin);
     }
+    public Velociraptor(List<Point2D> chemin) {
+        super( 42, 4.5, 20, chemin);
+    }
 
 
 

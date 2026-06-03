@@ -274,9 +274,9 @@ public class Jeu {
 
     private Ennemi creerEnnemi(int id ) {
         switch (id) {
-            case 0 : return new Ennemi(0, 64 * 9, 25, 2, 5, route);
-            case 1 : return new Velociraptor(0, 64 * 9, 40, 5, 20, route);
-            case 2 : return new Triceratops(0, 64 * 9, 150, 1, 30, route);
+            case 0 : return new Ennemi(route);
+            case 1 : return new Velociraptor(route);
+            case 2 : return new Triceratops(route);
             default : return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
         }
     }

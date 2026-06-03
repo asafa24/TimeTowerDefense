@@ -15,6 +15,10 @@ public abstract class Entite {
         this.id = compteurId;
         compteurId++;
     }
+    public Entite(){
+        this.id = compteurId;
+        compteurId++;
+    }
 
     public double getX(){
         return x.get();
