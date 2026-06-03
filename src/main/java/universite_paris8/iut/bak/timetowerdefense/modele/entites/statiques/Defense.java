@@ -9,7 +9,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 import java.util.List;
 
 public abstract class Defense extends Entite {
-    private int cout;
+    public int cout;
     private BooleanProperty selectionnee;
 
 

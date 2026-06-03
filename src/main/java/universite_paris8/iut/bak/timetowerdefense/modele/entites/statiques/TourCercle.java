@@ -9,6 +9,7 @@ import java.util.List;
 
 public class TourCercle extends Tour {
     private int rayonExplosion;
+
     public TourCercle(int cout ,double x, double y, int degats, int portee, int cadence, int rayonExplosion){
         super(cout, x, y, degats, portee, cadence);
         this.rayonExplosion = rayonExplosion;

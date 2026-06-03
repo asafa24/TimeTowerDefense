@@ -9,6 +9,7 @@ import java.util.List;
 
 public class TourStun extends Tour {
     private int dureeStun;
+    public static final int PRIX_ACHAT = 125 ;
     public TourStun(int cout ,double x, double y, int degats, int portee, int cadence, int dureeStun){
         super(cout, x, y, degats, portee, cadence);
         this.dureeStun = dureeStun;

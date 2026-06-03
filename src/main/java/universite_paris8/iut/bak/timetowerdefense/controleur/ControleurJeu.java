@@ -91,6 +91,14 @@ public class ControleurJeu implements Initializable {
 
     @FXML
     private Pane zoneStats;
+    @FXML
+    private Label tourUnArgent;
+    @FXML
+    private Label tourDeuxArgent;
+    @FXML
+    private Label tourTroisArgent;
+    @FXML
+    private Label tourQuatreArgent;
 
 
     @Override
@@ -112,6 +120,15 @@ public class ControleurJeu implements Initializable {
         labelVague.textProperty().bind(jeu.getVague().getVagueProperty().asString("Vague : %d"));
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
+
+        tourUnArgent.textProperty().bind(jeu.getPrixSlotProperty(0).asString());
+        tourDeuxArgent.textProperty().bind(jeu.getPrixSlotProperty(1).asString());
+        tourTroisArgent.textProperty().bind(jeu.getPrixSlotProperty(2).asString());
+        tourQuatreArgent.textProperty().bind(jeu.getPrixSlotProperty(3).asString());
+
+
+
+
 
         ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
@@ -250,7 +267,7 @@ public class ControleurJeu implements Initializable {
                 jeu.poserTour(tourSelectionne);
             }
             case 4 -> {
-                this.tourSelectionne = new TourStun(200, xGrille, yGrille,10,128, 200,180);
+                this.tourSelectionne = new TourStun(125, xGrille, yGrille,10,128, 200,180);
                 jeu.poserTour(tourSelectionne);
             }
 

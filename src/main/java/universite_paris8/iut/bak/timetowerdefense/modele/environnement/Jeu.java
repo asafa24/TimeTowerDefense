@@ -43,6 +43,12 @@ public class Jeu {
 
     private Ultime ultimeActuelle;
     private IntegerProperty compteurKill;
+    private IntegerProperty[] prixBoutique = new IntegerProperty[] {
+            new SimpleIntegerProperty(50),
+            new SimpleIntegerProperty(150),
+            new SimpleIntegerProperty(150),
+            new SimpleIntegerProperty(25)
+    };
 
 
     public Jeu() {
@@ -60,6 +66,30 @@ public class Jeu {
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
+    }
+    public void chargerEpoque(int epoque) {
+        this.epoqueActuel = epoque;
+        switch (epoque) {
+            case 0: // Préhistoire
+                prixBoutique[0].set(25);
+                prixBoutique[1].set(50);
+                prixBoutique[2].set(125);
+                prixBoutique[3].set(150);
+                break;
+            case 1: // Moyen-Âge
+                prixBoutique[0].set(100);
+                prixBoutique[1].set(220);
+                prixBoutique[2].set(300);
+                prixBoutique[3].set(60);
+                break;
+        }
+    }
+    public IntegerProperty getPrixSlotProperty(int indexSlot) {
+        return prixBoutique[indexSlot];
+    }
+
+    public int getEpoqueActuel() {
+        return epoqueActuel;
     }
 
     public Vague getVague() {

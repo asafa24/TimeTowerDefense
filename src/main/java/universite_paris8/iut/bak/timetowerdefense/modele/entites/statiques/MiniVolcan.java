@@ -1,5 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class MiniVolcan extends Piege {
     private int degats;
+
 
     public MiniVolcan(int cout, double x, double y, int degats, int pv) {
         super(cout, x, y, pv);
