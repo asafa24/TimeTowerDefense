@@ -2,10 +2,11 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
-
 import java.util.List;
 
 public class Velociraptor extends Ennemi {
+    private int tick = 0 ;
+    private final double VITTESSE_MIN = 2;
     public Velociraptor(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y, pv, vitesseBase, recompense, chemin);
     }
@@ -15,6 +16,12 @@ public class Velociraptor extends Ennemi {
 
 
 
-
+    public void avancer(){
+        super.avancer();
+        if (tick%30 == 0 && super.getVitesseBase() > VITTESSE_MIN){
+            super.setVitesseBase(super.getVitesseBase() - 0.1);
+        }
+        tick++;
+    }
 
 }
