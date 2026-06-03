@@ -28,7 +28,7 @@ public class Jeu {
 
     private Level level;
     private int epoqueActuel;
-    private Preview preview = new  Preview(0.0,0.0,this);
+    private Preview preview = new  Preview(0.0,0.0,this,-1);
 
     private IntegerProperty solde;
     private IntegerProperty pvBase;
@@ -39,6 +39,7 @@ public class Jeu {
     private int delay;
     private final int TEMPS_ENTRE_VAGUE = 220 ;
     private int delaySpawnMob = 80;
+    private int id = -1;
 
     private Ultime ultimeActuelle;
     private IntegerProperty compteurKill;
@@ -154,7 +155,7 @@ public class Jeu {
         }
         frame++;
     }
-    public void preview(double x, double y) {preview.update(x,y);
+    public void preview(double x, double y) {preview.update(x,y,id);
     }
 
     public void poserTour(Tour tour) {
@@ -168,9 +169,6 @@ public class Jeu {
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }
-    }
-    public void preview(ImageView img){
-
     }
 
     public void poserPiege(Piege piege ){
@@ -198,6 +196,18 @@ public class Jeu {
         }
         return this.solde.get() >= tour.getCout();
     }
+    public boolean peuxPoserTourCoord(int epoque, int caseX, int caseY) {
+        int[][] grille = level.loadLevel(epoque);
+
+        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
+        if (grille[caseY][caseX] != 0) return false;
+
+        for (Defense d : defenses) {
+            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
+        }
+        return true;
+
+    }
 
     public boolean peuxPoserPiege(int epoque, Piege piege){
         int[][] test = level.loadLevel(epoque);
@@ -211,6 +221,18 @@ public class Jeu {
         }
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
+
+    public boolean peuxPoserPiegeCoord(int epoque, int x, int y){
+        int[][] test = level.loadLevel(epoque);
+
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
+
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+        }
+        return (test[y][x] > 0 && test[y][x] <= 6 );
+    }
+
     public boolean piegeloc(int x , int y){
         for (int i = 0; i < defenses.size(); i++) {
             if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
@@ -239,7 +261,12 @@ public class Jeu {
     public IntegerProperty getCompteurKillProperty(){
         return compteurKill;
     }
-
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Preview getPreview() {
         return preview;

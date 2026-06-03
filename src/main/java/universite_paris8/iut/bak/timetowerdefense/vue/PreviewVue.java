@@ -1,8 +1,10 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.beans.binding.Bindings;
+import javafx.scene.effect.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
@@ -12,13 +14,22 @@ public class PreviewVue {
     private int id;
     private Preview preview ;
     private ImageView img ;
+    private Blend blush;
+    private ColorAdjust monochrome ;
 
     public PreviewVue(Pane entityPane, int id, Preview preview) {
         this.entityPane = entityPane;
         this.id = id;
         this.preview = preview;
+
+
+
+        ColorAdjust monochrome = new ColorAdjust();
+        monochrome.setSaturation(-1.0);
+
         preview();
-        System.out.println("est créé");
+
+
 
     }
 
@@ -30,26 +41,41 @@ public class PreviewVue {
         if (id != -1) {
             if (id == 1) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
-                System.out.println("oui le 1");
+
 
             }
             else if (id == 2) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
-                System.out.println("oui le 2");
+
             }
             else if (id == 3) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
-                System.out.println("oui le 3");
+
 
             }
             else if (id == 4) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
-                System.out.println("oui le 4");
+
             }
             else {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
-                System.out.println("id = " + id);
+
             }
+            Light.Distant redLight = new Light.Distant();
+            redLight.setColor(Color.RED);
+
+            Lighting redEffect = new Lighting();
+            redEffect.setLight(redLight);
+            redEffect.setSurfaceScale(0.0);
+            redEffect.setContentInput(monochrome);
+
+            Light.Distant greenLight = new Light.Distant();
+            greenLight.setColor(Color.LIME);
+
+            Lighting greenEffect = new Lighting();
+            greenEffect.setLight(greenLight);
+            greenEffect.setSurfaceScale(1.0);
+            greenEffect.setContentInput(monochrome);
 
             img.translateXProperty().bind(
                     Bindings.createDoubleBinding(
@@ -62,6 +88,14 @@ public class PreviewVue {
                             () -> (double) (Math.floor(preview.yProperty().getValue() / TILE_SIZE) * TILE_SIZE),
                             preview.yProperty()
                     )
+
+            );
+
+            img.effectProperty().bind(
+                    Bindings
+                            .when(preview.peutProperty())
+                            .then((Effect) greenEffect)
+                            .otherwise((Effect) redEffect)
             );
             img.setFitHeight(TILE_SIZE);
             img.setFitWidth(TILE_SIZE);

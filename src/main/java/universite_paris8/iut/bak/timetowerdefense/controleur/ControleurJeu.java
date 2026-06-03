@@ -163,18 +163,23 @@ public class ControleurJeu implements Initializable {
     public void gererTouches(KeyEvent event) {
         switch (event.getCode()) {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
+                vuePreview.remove();
                 poseDeTourQuatre();
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
+                vuePreview.remove();
                 poseDeTourUn();
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
+                vuePreview.remove();
                 poseDeTourDeux();
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
+                vuePreview.remove();
                 poseDeTourTrois();
             }
             case ESCAPE -> {
+                vuePreview.remove();
                 this.typeDefenseSelectionnee = 0;
                 System.out.println("Selection annulée");
                 cacherUI();
@@ -265,7 +270,9 @@ public class ControleurJeu implements Initializable {
         boutonBox.setVisible(false);
         System.out.println("Défense numéro un sélectionnée.");
         vuePreview.setId(1);
+        jeu.setId(1);
         vuePreview.preview();
+
 
 
     }
@@ -276,7 +283,9 @@ public class ControleurJeu implements Initializable {
         boutonBox.setVisible(false);
         System.out.println("Défense numéro deux sélectionnée.");
         vuePreview.setId(2);
+        jeu.setId(2);
         vuePreview.preview();
+
     }
 
     @FXML
@@ -285,7 +294,9 @@ public class ControleurJeu implements Initializable {
         boutonBox.setVisible(false);
         System.out.println("Défense numéro trois sélectionnée.");
         vuePreview.setId(3);
+        jeu.setId(3);
         vuePreview.preview();
+
     }
     // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
 
@@ -294,6 +305,7 @@ public class ControleurJeu implements Initializable {
         boutonBox.setVisible(false);
         System.out.println("Défense numéro quatre sélectionnée.");
         vuePreview.setId(4);
+        jeu.setId(4);
         vuePreview.preview();
     }
 
