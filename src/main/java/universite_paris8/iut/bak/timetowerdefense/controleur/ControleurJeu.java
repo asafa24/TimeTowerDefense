@@ -188,6 +188,8 @@ public class ControleurJeu implements Initializable {
     @FXML
     public void handleMouseClick(MouseEvent mouseEvent) throws IOException {
         boutonBox.setVisible(true);
+        vuePreview.setId(-1);
+        vuePreview.remove();
 
         int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
         int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
@@ -226,22 +228,22 @@ public class ControleurJeu implements Initializable {
             vuePreview.remove();
             return;
         }
-        switch (typeDefenseSelectionnee) {
+        switch(typeDefenseSelectionnee){
             case 1 -> {
-                this.tourSelectionne = new Tour(50, xGrille, yGrille, 10, 64, 60);
+                this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
                 jeu.poserTour(tourSelectionne);
             }
 
             case 2 -> {
-                this.tourSelectionne = new TourCercle(150, xGrille, yGrille, 40, 128, 150, 64);
+                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
                 jeu.poserTour(tourSelectionne);
             }
             case 3 -> {
-                this.tourSelectionne = new TourStun(150, xGrille, yGrille, 10, 128, 200, 180);
+                this.tourSelectionne = new TourStun(150, xGrille, yGrille,10,128, 200,180);
                 jeu.poserTour(tourSelectionne);
             }
             case 4 -> {
-                this.piegeSelectione = new MiniVolcan(25, xGrille, yGrille, 5, 5);
+                this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5 ,5);
                 jeu.poserPiege(piegeSelectione);
 
             }
@@ -250,6 +252,7 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee = 0;
         vuePreview.setId(-1);
         vuePreview.remove();
+
         this.typeDefenseSelectionnee= 0;
     }
 
@@ -298,11 +301,14 @@ public class ControleurJeu implements Initializable {
     }
 
     @FXML
-    public void cacherUI() {
-        if (boutonBox.isDisabled()) {
+    public void cacherUI(){
+        if(boutonBox.isDisabled()){
             boutonBox.setVisible(true);
-        } else {
+        }
+        else{
             boutonBox.setVisible(false);
         }
     }
+
+
 }

@@ -31,7 +31,10 @@ public class Vague {
         }
     }
     public void vagueSuivante(){
-        vague.set(vague.get() + 1);
+        if (vague.get() > 9 ){
+            vague.set(vague.get() + 1);
+        }
+
     }
 
     public void test() {
