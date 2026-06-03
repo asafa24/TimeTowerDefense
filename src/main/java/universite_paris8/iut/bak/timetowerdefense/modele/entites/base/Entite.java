@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 
 public abstract class Entite {
     private static int compteurId = 0;
+    private String sprite;
     private DoubleProperty x = new SimpleDoubleProperty();
     private DoubleProperty y = new SimpleDoubleProperty();
     private int id;
@@ -18,6 +19,22 @@ public abstract class Entite {
     public Entite(){
         this.id = compteurId;
         compteurId++;
+    }
+    public Entite(String sprite){
+        this.id = compteurId;
+        this.sprite = sprite;
+        compteurId++;
+    }
+    public Entite(double x, double y, String sprite){
+        this.x.set(x);
+        this.y.set(y);
+        this.id = compteurId;
+        this.sprite = sprite;
+        compteurId++;
+    }
+
+    public String getSprite() {
+        return sprite;
     }
 
     public double getX(){

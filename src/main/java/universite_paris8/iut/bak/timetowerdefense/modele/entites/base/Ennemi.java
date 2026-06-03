@@ -39,8 +39,8 @@ public class Ennemi extends Entite implements Destructible {
         this.pvProp = new SimpleDoubleProperty(pv);
         this.direction = new SimpleIntegerProperty(-1);
     }
-    public Ennemi(List<Point2D> chemin) {
-        super();
+    public Ennemi(List<Point2D> chemin, String sprite) {
+        super(sprite);
         super.setX(0);
         super.setY(64 * 9);
         this.pv = 25;
@@ -53,8 +53,8 @@ public class Ennemi extends Entite implements Destructible {
         this.pvProp = new SimpleDoubleProperty(pv);
         this.direction = new SimpleIntegerProperty(-1);
     }
-    public Ennemi(int pv, double vitesseBase, int recompense,List<Point2D> chemin) {
-        super();
+    public Ennemi(int pv, double vitesseBase, int recompense,List<Point2D> chemin, String sprite) {
+        super(sprite);
         super.setX(0);
         super.setY(64 * 9);
         this.pv = pv;

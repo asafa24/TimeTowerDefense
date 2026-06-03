@@ -13,6 +13,7 @@ public class ProjectileCercle extends Projectile {
         this.rayonExplosion = rayonExplosion;
     }
 
+
     @Override
     public void appliquerImpact(List<Ennemi> ennemis) {
             double epicentreX = getX();

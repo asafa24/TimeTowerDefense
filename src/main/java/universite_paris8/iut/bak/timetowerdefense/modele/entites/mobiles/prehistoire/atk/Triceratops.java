@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk;
 
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
@@ -10,6 +10,6 @@ public class Triceratops extends Ennemi {
         super(x, y, pv, vitesseBase, recompense, chemin);
     }
     public Triceratops(List<Point2D> chemin) {
-        super(150, 1, 30, chemin);
+        super(150, 1, 30, chemin,"images/tiles/prehistoire/ennemi/d02.png");
     }
 }
