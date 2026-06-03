@@ -1,7 +1,5 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
@@ -34,7 +32,7 @@ public class Tour extends Defense {
         this.compteurTir = 0;
     }
 
-    public void attaquer(List<Ennemi> ennemis, List<Projectile> projectiles){
+    public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if (this.isStun) {
             dureeStun--;
             if (dureeStun <= 0) {

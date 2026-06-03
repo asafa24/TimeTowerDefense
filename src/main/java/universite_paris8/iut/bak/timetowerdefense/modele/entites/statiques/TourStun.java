@@ -13,7 +13,7 @@ public class TourStun extends Tour {
         super(cout, x, y, degats, portee, cadence);
         this.dureeStun = dureeStun;
     }
-    public void attaquer(List<Ennemi> ennemis, List<Projectile> projectiles){
+    public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if(getCompteurTir() < getCadence()){
             setCompteurTir(getCompteurTir()+1);
             return;

@@ -7,15 +7,26 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defen
 import java.util.List;
 
 public abstract class Boss extends Ennemi {
-
     private int tempsRecharge;
+    protected int compteurCompetence;
 
     public Boss(double x, double y, int pv, int vitesseBase, int recompense, int tempsRecharge, List<Point2D> chemin) {
         super(x, y, pv, vitesseBase, recompense, chemin);
         this.tempsRecharge = tempsRecharge;
+        this.compteurCompetence = 60;
     }
 
-    public abstract void competence(List<Defense> tours);
+    @Override
+    public void agir(List<Ennemi> allies, List<Defense> defenses) {
+            if(compteurCompetence > 0){
+                compteurCompetence--;
+            } else{
+                competence(allies, defenses);
+                compteurCompetence = tempsRecharge;
+            }
+    }
+
+    public abstract void competence(List<Ennemi> ennemis, List<Defense> defenses);
 
 
     public int getTempsRecharge() {

@@ -15,7 +15,7 @@ public class TourCercle extends Tour {
     }
 
     @Override
-    public void attaquer(List<Ennemi> ennemis, List<Projectile> projectiles) {
+    public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {
         if(getCompteurTir() < getCadence()){
             setCompteurTir(getCompteurTir()+1);
             return;

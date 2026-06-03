@@ -24,7 +24,7 @@ public class Vague {
                 {60,10,6,0}, // vague 9
                 {75,12,8,1}  // vague 10 avec le boss (nn c'est toi tié le boss)
         };
-        vague = new SimpleIntegerProperty(9);
+        vague = new SimpleIntegerProperty(0);
         queue = new Queue[level1.length];
         for (int i = 0; i < level1.length; i++) {
             queue[i] = laQueue(level1[i]);

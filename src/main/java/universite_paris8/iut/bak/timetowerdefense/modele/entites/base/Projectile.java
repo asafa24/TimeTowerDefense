@@ -1,5 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
+import java.util.List;
+
 public class Projectile extends Entite {
     private Ennemi cible;
     private int degats;
@@ -30,6 +32,10 @@ public class Projectile extends Entite {
             this.setX(this.getX() + (dx / distance) * vitesse);
             this.setY(this.getY() + (dy / distance) * vitesse);
         }
+    }
+
+    public void appliquerImpact(List<Ennemi> ennemis){
+            cible.recevoirDegats(degats);
     }
 
 

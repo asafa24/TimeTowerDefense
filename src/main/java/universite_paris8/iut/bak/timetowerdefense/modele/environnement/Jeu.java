@@ -8,15 +8,12 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
@@ -52,7 +49,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(2000);
+        this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         this.frame = 0;
@@ -95,52 +92,19 @@ public class Jeu {
     public void tick() {
         if (!perdu()) {
             ultimeActuelle.tick(ennemis);
-            for (int j = defenses.size() - 1; j >= 0; j--) {
-                Defense d = defenses.get(j);
-
-                if (d instanceof Tour) {
-                    ((Tour) d).attaquer(ennemis, projectiles);
-                } else if (d instanceof MiniVolcan) {
-                    MiniVolcan volcan = (MiniVolcan) d;
-                    boolean volcanBlesseCeTick = false;
-
-                    for (int i = ennemis.size() - 1; i >= 0; i--) {
-                        Ennemi e = ennemis.get(i);
-                        if (((Piege) volcan).aAtteintPiege(e)) {
-                            e.appliqueEffet(Effet.SLOW);
-                            e.appliqueEffet(Effet.BURN);
-                            if ( volcan.getPv() > 0) {
-                                volcan.prendreDegats(1);
-                            }
-                        }
-                    }
-                    if (volcan.getPv() <= 0) {
-                        defenses.remove(j);
-                    }
+            for (int i = defenses.size() - 1; i >= 0; i--) {
+                Defense d = defenses.get(i);
+                d.agir(ennemis, projectiles);
+                if(d instanceof Destructible && ((Destructible) d).estMort()){
+                    defenses.remove(i);
                 }
             }
 
             if (!projectiles.isEmpty()) {
                 for (int i = projectiles.size() - 1; i >= 0; i--) {
                     Projectile p = projectiles.get(i);
-                    if (p.aAtteintCible()) {
-                        if (p instanceof ProjectileCercle){
-                            ProjectileCercle pCercle = (ProjectileCercle) p ;
-                            double epicentreX = pCercle.getX();
-                            double epicentreY = pCercle.getY();
-                            for (Ennemi e : ennemis){
-                                double distanceExplosion = Math.hypot(epicentreX - e.getCentreX(), epicentreY - e.getCentreY());
-                                if (distanceExplosion <= pCercle.getRayonExplosion()){
-                                    e.recevoirDegats(pCercle.getDegats());
-                                }
-                            }
-
-                        } else if (p.getCible() != null && !p.getCible().estMort()) {
-                            if (p instanceof ProjectileStun){
-                                p.getCible().appliqueEffet(Effet.STUN);
-                            }
-                            p.getCible().recevoirDegats(p.getDegats());
-                        }
+                    if(p.aAtteintCible()){
+                        p.appliquerImpact(ennemis);
                         projectiles.remove(i);
                         continue;
                     }
@@ -166,11 +130,7 @@ public class Jeu {
                         pvBase.set(pvBase.get() - e.getPv());
                         continue;
                     }
-
-                    if(e instanceof Tyrannosaurus){
-                        ((Tyrannosaurus) e).competence(defenses);
-                    }
-
+                    e.agir(ennemis, defenses);
                     e.avancer();
                 }
             }
@@ -178,8 +138,6 @@ public class Jeu {
         }
         if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
             addEnnemi(creerEnnemi(vague.defiler() ));
-
-
         }
         else{
             if (delay > 600 ){

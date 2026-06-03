@@ -5,6 +5,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
 
@@ -91,6 +92,8 @@ public class Ennemi extends Entite implements Destructible {
         if (this.pv < 0) this.pv = 0;
         this.pvProp.set(pv);
     }
+
+    public void agir(List<Ennemi> allies, List<Defense> defenses) {}
 
     public boolean estMort() {
         return this.pv <= 0;
