@@ -2,10 +2,7 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,12 +25,11 @@ import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
-
+import java.io.IOException;
 import java.net.URL;
 import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.effets.ExplosionVue;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +88,9 @@ public class ControleurJeu implements Initializable {
 
     private int typeDefenseSelectionnee = 0;
 
+    @FXML
+    private Pane zoneStats;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -146,14 +145,12 @@ public class ControleurJeu implements Initializable {
         );
         gameLoop.getKeyFrames().add(kf);
     }
-    public void afficherButton(int epoque){
 
-        tourUn.setGraphic(uiVue.setImageT1(epoque,1));
-        tourDeux.setGraphic(uiVue.setImageT1(epoque,2));
-        tourTrois.setGraphic(uiVue.setImageT1(epoque,3));
-        tourQuatre.setGraphic(uiVue.setImageT1(epoque,0));
-
-
+    public void afficherButton(int epoque) {
+        tourUn.setGraphic(uiVue.setImageT1(epoque, 1));
+        tourDeux.setGraphic(uiVue.setImageT1(epoque, 2));
+        tourTrois.setGraphic(uiVue.setImageT1(epoque, 3));
+        tourQuatre.setGraphic(uiVue.setImageT1(epoque, 0));
     }
 
     public void recupererPosition(MouseEvent e){
@@ -189,39 +186,68 @@ public class ControleurJeu implements Initializable {
 
 
     @FXML
-    public void handleMouseClick(MouseEvent mouseEvent) {
+    public void handleMouseClick(MouseEvent mouseEvent) throws IOException {
         boutonBox.setVisible(true);
 
         int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
         int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
 
         if (this.typeDefenseSelectionnee == 0) {
+            boolean tourTrouvee = false;
+
+            for (Defense d : jeu.getDefenses()) {
+                if (d instanceof Tour) {
+                    if ((int) d.getX() == xGrille && (int) d.getY() == yGrille) {
+                        d.setSelectionnee(true);
+                        tourTrouvee = true;
+                        System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
+
+                        if (zoneStats == null) {
+                            System.err.println("Erreur : zoneStats est null ! L'injection @FXML a échoué. Vérifie le fx:id dans ton FXML principal.");
+                        } else {
+                            uiVue.afficherStatsTour((Tour) d, zoneStats ,jeu);
+                        }
+
+                    } else {
+                        d.setSelectionnee(false);
+                    }
+                }
+            }
+            if (!tourTrouvee) {
+                uiVue.masquerStatsTour(zoneStats);
+                for (Defense d : jeu.getDefenses()) {
+                    if (d instanceof Tour) {
+                        ((Tour) d).setSelectionnee(false);
+                    }
+                }
+            }
             System.out.println("Veuillez sélectionner une tour d'abord.");
             vuePreview.setId(-1);
             vuePreview.remove();
             return;
         }
-        switch(typeDefenseSelectionnee){
+        switch (typeDefenseSelectionnee) {
             case 1 -> {
-                this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
+                this.tourSelectionne = new Tour(50, xGrille, yGrille, 10, 64, 60);
                 jeu.poserTour(tourSelectionne);
             }
 
             case 2 -> {
-                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
+                this.tourSelectionne = new TourCercle(150, xGrille, yGrille, 40, 128, 150, 64);
                 jeu.poserTour(tourSelectionne);
             }
             case 3 -> {
-                this.tourSelectionne = new TourStun(150, xGrille, yGrille,10,128, 200,180);
+                this.tourSelectionne = new TourStun(150, xGrille, yGrille, 10, 128, 200, 180);
                 jeu.poserTour(tourSelectionne);
             }
             case 4 -> {
-                this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5 ,5);
+                this.piegeSelectione = new MiniVolcan(25, xGrille, yGrille, 5, 5);
                 jeu.poserPiege(piegeSelectione);
 
             }
         }
 
+        this.typeDefenseSelectionnee = 0;
         vuePreview.setId(-1);
         vuePreview.remove();
         this.typeDefenseSelectionnee= 0;
@@ -259,7 +285,7 @@ public class ControleurJeu implements Initializable {
     }
     // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
 
-    public void poseDeTourQuatre( ) {
+    public void poseDeTourQuatre() {
         this.typeDefenseSelectionnee = 4;
         boutonBox.setVisible(false);
         System.out.println("Défense numéro quatre sélectionnée.");
@@ -272,14 +298,11 @@ public class ControleurJeu implements Initializable {
     }
 
     @FXML
-    public void cacherUI(){
-        if(boutonBox.isDisabled()){
+    public void cacherUI() {
+        if (boutonBox.isDisabled()) {
             boutonBox.setVisible(true);
-        }
-        else{
+        } else {
             boutonBox.setVisible(false);
         }
     }
-
-
 }

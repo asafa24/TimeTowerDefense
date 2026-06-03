@@ -1,5 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
 
@@ -12,6 +14,7 @@ public class Tour extends Defense {
     private int compteurTir;
     
     private boolean isStun = false;
+    private int niveau ;
     private int dureeStun = 0;
     // Les durées et compteurs sont en frame
 
@@ -21,6 +24,7 @@ public class Tour extends Defense {
         this.portee = 100;
         this.cadence = 120;
         this.compteurTir = cadence/2;
+
     }
 
     public Tour(int cout ,double x, double y, int degats, int portee, int cadence){
@@ -100,4 +104,5 @@ public class Tour extends Defense {
         this.dureeStun = dureeStun;
         System.out.println("RAWR (tsais) Tour stun mskn");
     }
+
 }

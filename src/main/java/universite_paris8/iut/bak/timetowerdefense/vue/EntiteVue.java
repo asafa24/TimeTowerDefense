@@ -37,6 +37,7 @@ public class EntiteVue {
         Node rectangle_vie = null;
         ImageView img;
 
+
         if (e instanceof Ennemi){
             DoubleProperty taille = new SimpleDoubleProperty(56);
             ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
@@ -49,7 +50,6 @@ public class EntiteVue {
             else {
                  img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi1.png")));
             }
-
 
             Rectangle rec = new Rectangle();
             rec.setWidth(56);

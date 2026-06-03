@@ -1,0 +1,93 @@
+package universite_paris8.iut.bak.timetowerdefense.controleur;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
+
+public class PropertiController {
+
+    @FXML private Button button_ameliorez;
+    @FXML private Button button_vendre;
+
+    @FXML private ImageView p_image;
+    @FXML private Label p_nom;
+    @FXML private Label p_lv;
+
+    @FXML private Label p_current_degat;
+    @FXML private Label p_new_degat;
+
+    @FXML private Label p_current_porte;
+    @FXML private Label p_new_porte;
+
+    @FXML private Label p_current_cadence;
+    @FXML private Label p_new_cadence;
+
+    @FXML private Label p_prix_upgrade;
+    @FXML private Label p_prix_vente;
+
+    private Jeu jeu;
+    private Tour tourActuelle;
+
+    public void updateStats(Tour tour, Jeu jeu) {
+        this.jeu = jeu;
+        this.tourActuelle = tour;
+
+        if (tour instanceof TourCercle) {
+            p_nom.setText("Lance-pierre");
+        } else if (tour instanceof TourStun) {
+            p_nom.setText("Filetoorr");
+        } else {
+            p_nom.setText("Arbre rustre");
+        }
+        p_lv.setText("1");
+
+        p_current_degat.setText(String.valueOf(tour.getDegats()));
+        p_current_porte.setText(String.valueOf(tour.getPortee()));
+        p_current_cadence.setText(String.valueOf(tour.getCadence()));
+
+        int futursDegats = (int) (tour.getDegats() * 1.2);
+        int futurePorte = tour.getPortee() + 16;
+        int futureCadence = (int) (tour.getCadence() * 1.2);
+
+        p_new_degat.setText(String.valueOf(futursDegats));
+        p_new_porte.setText(String.valueOf(futurePorte));
+        p_new_cadence.setText(String.valueOf(futureCadence));
+
+        int prixUpgrade = (int) (tour.getCout() * 1.30);
+        int prixVente = (int) (tour.getCout() * 0.75);
+
+        p_prix_upgrade.setText(String.valueOf(prixUpgrade));
+        p_prix_vente.setText(String.valueOf(prixVente));
+    }
+
+    @FXML
+    public void gereVentes() {
+        if (this.tourActuelle != null && this.jeu != null) {
+
+            int montantRevente = Integer.parseInt(p_prix_vente.getText());
+
+            jeu.ajouterArgent(montantRevente);
+
+            jeu.getDefenses().remove(this.tourActuelle);
+
+            System.out.println(p_nom.getText() + " vendue pour " + montantRevente + " pièces !");
+
+            p_nom.getScene().lookup("#zoneStats").setVisible(false);
+        }
+    }
+    @FXML
+    public void ameliorationT() {
+        if (this.tourActuelle != null && this.jeu != null) {
+            int montantUpgrade = Integer.parseInt(p_prix_upgrade.getText());
+
+            System.out.println(p_nom.getText() + " ameliorerrr pour " + montantUpgrade + " pièces !");
+
+        }
+    }
+}

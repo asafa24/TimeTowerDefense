@@ -109,10 +109,8 @@ public class Jeu {
                         if (((Piege) volcan).aAtteintPiege(e)) {
                             e.appliqueEffet(Effet.SLOW);
                             e.appliqueEffet(Effet.BURN);
-
-                            if (!volcanBlesseCeTick && volcan.getPv() > 0) {
+                            if ( volcan.getPv() > 0) {
                                 volcan.prendreDegats(1);
-                                volcanBlesseCeTick = true;
                             }
                         }
                     }
@@ -180,6 +178,8 @@ public class Jeu {
         }
         if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
             addEnnemi(creerEnnemi(vague.defiler() ));
+
+
         }
         else{
             if (delay > 600 ){
