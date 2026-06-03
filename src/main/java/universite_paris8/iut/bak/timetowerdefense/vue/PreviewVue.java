@@ -22,6 +22,7 @@ public class PreviewVue {
         this.id = id;
         this.preview = preview;
         preview();
+        System.out.println("est créé");
 
     }
 
@@ -31,25 +32,25 @@ public class PreviewVue {
 
     public void preview(){
         if (id != -1) {
-            ImageView img = new ImageView();
-            if (id == 0) {
+            if (id == 1) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
 
-
-            }
-            if (id == 1) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
 
             }
             if (id == 2) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
 
             }
             if (id == 3) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
+
+            }
+            if (id == 4) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
             }
             else {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
+                System.out.println("id = " + id);
             }
 
             img.translateXProperty().bind(

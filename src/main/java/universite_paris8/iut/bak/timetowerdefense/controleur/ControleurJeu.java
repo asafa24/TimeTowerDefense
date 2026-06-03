@@ -191,14 +191,14 @@ public class ControleurJeu implements Initializable {
     @FXML
     public void handleMouseClick(MouseEvent mouseEvent) {
         boutonBox.setVisible(true);
+        vuePreview.setId(-1);
+        vuePreview.remove();
 
         int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
         int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
 
         if (this.typeDefenseSelectionnee == 0) {
             System.out.println("Veuillez sélectionner une tour d'abord.");
-            vuePreview.setId(-1);
-            vuePreview.remove();
             return;
         }
         switch(typeDefenseSelectionnee){
@@ -222,8 +222,7 @@ public class ControleurJeu implements Initializable {
             }
         }
 
-        vuePreview.setId(-1);
-        vuePreview.remove();
+
         this.typeDefenseSelectionnee= 0;
     }
 
