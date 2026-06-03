@@ -15,7 +15,7 @@ public class PreviewVue {
     private static int TILE_SIZE = 64;
     private int id;
     private Preview preview ;
-    private ImageView img = new ImageView();
+    private ImageView img ;
 
     public PreviewVue(Pane entityPane, int id, Preview preview) {
         this.entityPane = entityPane;
@@ -34,22 +34,24 @@ public class PreviewVue {
         if (id != -1) {
             if (id == 1) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
-
+                System.out.println("oui le 1");
 
             }
-            if (id == 2) {
+            else if (id == 2) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
-
+                System.out.println("oui le 2");
             }
-            if (id == 3) {
+            else if (id == 3) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
+                System.out.println("oui le 3");
 
             }
-            if (id == 4) {
+            else if (id == 4) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
+                System.out.println("oui le 4");
             }
             else {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
                 System.out.println("id = " + id);
             }
 
