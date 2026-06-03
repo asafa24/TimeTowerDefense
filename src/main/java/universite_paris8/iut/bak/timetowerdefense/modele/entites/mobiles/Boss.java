@@ -1,12 +1,12 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
 
 import java.util.List;
 
-public abstract class Boss extends Ennemi{
+public abstract class Boss extends Ennemi {
 
     private int tempsRecharge;
 

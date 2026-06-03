@@ -9,14 +9,14 @@ import javafx.scene.image.ImageView;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
@@ -52,7 +52,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(200);
+        this.solde = new SimpleIntegerProperty(2000);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         this.frame = 0;

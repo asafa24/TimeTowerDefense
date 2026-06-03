@@ -1,7 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Destructible;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 
 public class Piege extends Defense implements Destructible {
     private int pv;

@@ -1,6 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.competences;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 
 import java.util.List;
 

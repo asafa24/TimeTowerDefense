@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.controleur.PropertiController;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 import java.io.IOException;

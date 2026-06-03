@@ -4,7 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 import javafx.scene.paint.Color;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 public class Preview {

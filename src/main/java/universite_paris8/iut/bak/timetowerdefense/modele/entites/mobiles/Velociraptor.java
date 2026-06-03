@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 
 import java.util.List;
 

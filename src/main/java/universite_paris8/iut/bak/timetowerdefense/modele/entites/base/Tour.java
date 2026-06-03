@@ -1,9 +1,8 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Ennemi;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
 

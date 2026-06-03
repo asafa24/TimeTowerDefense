@@ -1,13 +1,10 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Destructible;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 
 import java.util.List;
 

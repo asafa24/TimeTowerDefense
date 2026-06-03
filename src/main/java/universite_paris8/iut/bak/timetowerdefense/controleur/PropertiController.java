@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;

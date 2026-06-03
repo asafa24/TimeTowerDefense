@@ -1,6 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
-
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
 public class Projectile extends Entite {
     private Ennemi cible;

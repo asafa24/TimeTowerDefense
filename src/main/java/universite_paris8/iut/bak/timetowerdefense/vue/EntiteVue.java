@@ -2,15 +2,15 @@ package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;

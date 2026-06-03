@@ -2,7 +2,7 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles;
 
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 
 import java.util.List;
 

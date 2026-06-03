@@ -4,10 +4,6 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.bak.timetowerdefense.Application;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
 public class PreviewVue {
