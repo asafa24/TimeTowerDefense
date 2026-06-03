@@ -14,10 +14,13 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 
 import java.util.HashMap;
 
 public class EntiteVue {
+    private HashMap<Tour, HBox> affichageEtoiles;
     private Pane entityPane;
     private static int TILE_SIZE = 64;
     private HashMap<Entite, Node> affichageEntite;
@@ -28,6 +31,8 @@ public class EntiteVue {
         this.affichageEntite = new HashMap<>();
         this.affichageBarre = new HashMap<>();
         this.affichageRectangle = new HashMap<>();
+        this.affichageEtoiles = new HashMap<>();
+
     }
 
 
@@ -82,6 +87,10 @@ public class EntiteVue {
             img.setTranslateX(e.getX()*64);
             img.setTranslateY(e.getY()*64);
             sprite = img;
+            actualiserEtoiles((Tour) e);
+            ((Tour) e).niveauProperty().addListener((obs, oldVal, newVal) -> {
+                actualiserEtoiles((Tour) e);
+            });
         }
         if (e instanceof TourCercle) {
              img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
@@ -155,6 +164,29 @@ public class EntiteVue {
         }
         if (rectangle_vie != null){
             entityPane.getChildren().remove(rectangle_vie);
+        }
+        if (e instanceof Tour) {
+            HBox etoiles = affichageEtoiles.remove((Tour) e);
+            if (etoiles != null) entityPane.getChildren().remove(etoiles);
+        }
+    }
+    public void actualiserEtoiles(Tour tour) {
+        if (affichageEtoiles.containsKey(tour)) {
+            entityPane.getChildren().remove(affichageEtoiles.get(tour));
+            affichageEtoiles.remove(tour);
+        }
+        if (tour.getNiveau() > 0) {
+            HBox boiteEtoiles = new HBox(2);
+            boiteEtoiles.setTranslateX((tour.getX() * 64) + 8);
+            boiteEtoiles.setTranslateY((tour.getY() * 64) - 10);
+            for (int i = 0; i < tour.getNiveau(); i++) {
+                Image imgEtoile = new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/etoiles.png")));
+                ImageView etoileVue = new ImageView(imgEtoile);
+                etoileVue.setFitWidth(16); etoileVue.setFitHeight(16); etoileVue.setPreserveRatio(true);
+                boiteEtoiles.getChildren().add(etoileVue);
+            }
+            entityPane.getChildren().add(boiteEtoiles);
+            affichageEtoiles.put(tour, boiteEtoiles);
         }
 
     }

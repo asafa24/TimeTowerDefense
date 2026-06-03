@@ -12,6 +12,7 @@ public abstract class Defense extends Entite {
     private int cout;
     private BooleanProperty selectionnee;
 
+
     public Defense(int cout, double x, double y) {
         super(x, y);
         this.cout = cout;
@@ -33,5 +34,9 @@ public abstract class Defense extends Entite {
 
     public void setSelectionnee(boolean selectionnee) {
         this.selectionnee.set(selectionnee);
+    }
+
+    public void setCout(int cout) {
+        this.cout = cout;
     }
 }
