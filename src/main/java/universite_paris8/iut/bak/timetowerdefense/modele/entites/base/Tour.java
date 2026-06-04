@@ -6,7 +6,7 @@ import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Tour extends Defense {
+public abstract class Tour extends Defense {
     private int degats;
     private int portee;
     private int cadence;
@@ -120,5 +120,6 @@ public class Tour extends Defense {
     public int getNiveau() {
         return niveau.get();
     }
+    public abstract void inflation();
 
 }

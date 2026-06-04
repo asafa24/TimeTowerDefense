@@ -4,6 +4,12 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourC
 
 public class CatapulteOs extends TourCercle {
     public CatapulteOs(double x, double y) {
-        super(150, x, y, 40, 128, 200, 180);
+        super(cout, x, y, 40, 128, 200, 180);
+    }
+
+    @Override
+    public void inflation(){
+        cout = (int) Math.floor(cout * 1.1);
+        super.setCout(cout);
     }
 }

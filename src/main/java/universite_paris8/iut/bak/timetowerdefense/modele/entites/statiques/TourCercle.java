@@ -7,7 +7,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Project
 
 import java.util.List;
 
-public class TourCercle extends Tour {
+public abstract class TourCercle extends Tour {
     private int rayonExplosion;
 
     public TourCercle(int cout ,double x, double y, int degats, int portee, int cadence, int rayonExplosion){
@@ -34,5 +34,7 @@ public class TourCercle extends Tour {
         }
 
     }
+    @Override
+    public abstract void inflation();
 
 }

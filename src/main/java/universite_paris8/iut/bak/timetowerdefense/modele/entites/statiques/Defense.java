@@ -40,4 +40,5 @@ public abstract class Defense extends Entite {
     public void setCout(int cout) {
         this.cout = cout;
     }
+    public abstract void inflation();
 }

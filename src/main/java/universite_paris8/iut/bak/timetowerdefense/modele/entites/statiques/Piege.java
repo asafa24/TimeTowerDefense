@@ -7,7 +7,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 
 import java.util.List;
 
-public class Piege extends Defense implements Destructible {
+public abstract class Piege extends Defense implements Destructible {
     private int pv;
 
     public Piege(int cout, double x, double y, int pv) {
@@ -41,4 +41,5 @@ public class Piege extends Defense implements Destructible {
     public void recevoirDegats(int dgt) {
         this.pv -= dgt;
     }
+    public abstract void inflation();
 }
