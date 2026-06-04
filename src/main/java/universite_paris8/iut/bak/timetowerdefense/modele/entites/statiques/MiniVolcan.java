@@ -15,6 +15,10 @@ public class MiniVolcan extends Piege {
         super(cout, x, y, pv);
         this.degats = degats;
     }
+    public MiniVolcan(double x, double y) {
+        super(25, x, y, 5,"images/tiles/prehistoire/def/volcan.png");
+        this.degats = 5;
+    }
 
     @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){

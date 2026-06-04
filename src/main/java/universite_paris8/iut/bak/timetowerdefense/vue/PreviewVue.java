@@ -40,28 +40,28 @@ public class PreviewVue {
     public void preview(){
         if (id != -1) {
             if (id == 1) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
 
 
 
             }
             else if (id == 2) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
 
 
             }
             else if (id == 3) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png")));
 
 
 
             }
             else if (id == 4) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png")));
 
             }
             else {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
 
             }
             Light.Distant redLight = new Light.Distant();

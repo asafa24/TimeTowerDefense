@@ -95,8 +95,8 @@ public class EntiteVue {
             //img.setScaleX(-1);
             sprite = img;
         }
-        if (e instanceof MiniVolcan){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/volcan.png")));
+        if (e instanceof Piege){
+            img = new ImageView(String.valueOf(Application.class.getResource(e.getSprite())));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;

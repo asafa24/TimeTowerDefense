@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 
 public abstract class Entite {
     private static int compteurId = 0;
-    private String sprite;
+    private String sprite = "images/tiles/noTexture.png";
     private DoubleProperty x = new SimpleDoubleProperty();
     private DoubleProperty y = new SimpleDoubleProperty();
     private int id;

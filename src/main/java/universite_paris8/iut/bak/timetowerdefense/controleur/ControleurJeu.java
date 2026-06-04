@@ -14,6 +14,9 @@ import javafx.scene.layout.StackPane;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteOs;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
@@ -249,7 +252,7 @@ public class ControleurJeu implements Initializable {
         }
         switch(typeDefenseSelectionnee){
             case 1 -> {
-                this.piegeSelectione = new MiniVolcan(25 ,xGrille ,yGrille,5 ,5);
+                this.piegeSelectione = new MiniVolcan(xGrille ,yGrille);
                 jeu.poserPiege(piegeSelectione);
 
             }
@@ -259,11 +262,11 @@ public class ControleurJeu implements Initializable {
             }
 
             case 3 -> {
-                this.tourSelectionne = new TourCercle(150, xGrille, yGrille,40,128, 150,64);
+                this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
                 jeu.poserTour(tourSelectionne);
             }
             case 4 -> {
-                this.tourSelectionne = new TourStun(125, xGrille, yGrille,10,128, 200,180);
+                this.tourSelectionne = new LanceFilet(xGrille, yGrille);
                 jeu.poserTour(tourSelectionne);
             }
 
