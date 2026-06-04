@@ -258,6 +258,7 @@ public class ControleurJeu implements Initializable {
             }
             case 2 -> {
                 this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
+                this.tourSelectionne.inflation();
                 jeu.poserTour(tourSelectionne);
             }
 

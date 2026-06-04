@@ -7,7 +7,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Project
 
 import java.util.List;
 
-public class TourStun extends Tour {
+public abstract class TourStun extends Tour {
     private int dureeStun;
     public static final int PRIX_ACHAT = 125 ;
     public TourStun(int cout ,double x, double y, int degats, int portee, int cadence, int dureeStun){
@@ -35,4 +35,6 @@ public class TourStun extends Tour {
     public int getDureeStun() {
         return dureeStun;
     }
+
+    public abstract void inflation();
 }
