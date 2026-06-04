@@ -7,6 +7,6 @@ import java.util.List;
 
 public class Compsognathus extends Ennemi {
     public Compsognathus(List<Point2D> chemin) {
-        super( 25, 2, 5, chemin,"images/tiles/prehistoire/ennemi/ennemi1.png");
+        super( 25, 2, 5, chemin);
     }
 }

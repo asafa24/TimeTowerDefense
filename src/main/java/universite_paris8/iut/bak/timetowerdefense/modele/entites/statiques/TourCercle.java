@@ -14,10 +14,7 @@ public class TourCercle extends Tour {
         super(cout, x, y, degats, portee, cadence);
         this.rayonExplosion = rayonExplosion;
     }
-    public TourCercle(int cout ,double x, double y, int degats, int portee, int cadence, int rayonExplosion,String sprite){
-        super(cout, x, y, degats, portee, cadence,sprite);
-        this.rayonExplosion = rayonExplosion;
-    }
+
 
     @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {

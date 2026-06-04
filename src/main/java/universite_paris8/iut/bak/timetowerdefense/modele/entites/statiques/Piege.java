@@ -14,10 +14,7 @@ public class Piege extends Defense implements Destructible {
         super(cout, x, y);
         this.pv = pv;
     }
-    public Piege(int cout, double x, double y, int pv,String sprite) {
-        super(cout, x, y,sprite);
-        this.pv = pv;
-    }
+
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {
 

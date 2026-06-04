@@ -11,7 +11,7 @@ public class Velociraptor extends Ennemi {
         super(x, y, pv, vitesseBase, recompense, chemin);
     }
     public Velociraptor(List<Point2D> chemin) {
-        super( 42, 4.5, 20, chemin,"images/tiles/prehistoire/d01.png");
+        super( 42, 4.5, 20, chemin);
     }
 
 

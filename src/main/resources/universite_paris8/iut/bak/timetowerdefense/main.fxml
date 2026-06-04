@@ -60,13 +60,13 @@
                      <children>
       
                         <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseDeTourUn" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label fx:id="tourUnArgent" text="50" textFill="WHITE" />
+                        <Label fx:id="tourUnArgent" text="25" textFill="WHITE" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourDeux" mnemonicParsing="false" onAction="#poseDeTourDeux" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label fx:id="tourDeuxArgent" text="150" textFill="WHITE" />
+                        <Label fx:id="tourDeuxArgent" text="50" textFill="WHITE" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
@@ -78,7 +78,7 @@
                   <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
                         <Button fx:id="tourQuatre" mnemonicParsing="false" onAction="#poseDeTourQuatre" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label fx:id="tourQuatreArgent" text="25" textFill="WHITE" />
+                        <Label fx:id="tourQuatreArgent" text="200" textFill="WHITE" />
                      </children>
                   </VBox>
 

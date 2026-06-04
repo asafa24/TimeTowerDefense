@@ -4,6 +4,6 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 
 public class ArbreRuste extends Tour {
     public ArbreRuste(double x, double y) {
-        super(50, x, y, 10, 64, 60, "images/tiles/prehistoire/def/arbre.png");
+        super(50, x, y, 10, 64, 60);
     }
 }

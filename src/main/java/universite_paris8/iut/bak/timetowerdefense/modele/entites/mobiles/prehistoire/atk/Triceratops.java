@@ -10,6 +10,6 @@ public class Triceratops extends Ennemi {
         super(x, y, pv, vitesseBase, recompense, chemin);
     }
     public Triceratops(List<Point2D> chemin) {
-        super(150, 1, 30, chemin,"images/tiles/prehistoire/ennemi/d02.png");
+        super(150, 1, 30, chemin);
     }
 }

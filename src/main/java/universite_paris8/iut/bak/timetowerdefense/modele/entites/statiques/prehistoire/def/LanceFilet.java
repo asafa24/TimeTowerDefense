@@ -4,6 +4,6 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourS
 
 public class LanceFilet extends TourStun {
     public LanceFilet(double x, double y) {
-        super(200, x, y, 10, 128, 200, 180, "images/tiles/prehistoire/def/LanceFilet.png");
+        super(200, x, y, 10, 128, 200, 180);
     }
 }

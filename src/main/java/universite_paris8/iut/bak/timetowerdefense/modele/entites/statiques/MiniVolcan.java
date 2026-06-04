@@ -16,7 +16,7 @@ public class MiniVolcan extends Piege {
         this.degats = degats;
     }
     public MiniVolcan(double x, double y) {
-        super(25, x, y, 5,"images/tiles/prehistoire/def/volcan.png");
+        super(25, x, y, 5);
         this.degats = 5;
     }
 

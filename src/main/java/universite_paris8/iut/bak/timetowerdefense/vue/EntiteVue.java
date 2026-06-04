@@ -13,9 +13,15 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Triceratops;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Velociraptor;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteOs;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
 
 import java.util.HashMap;
 
@@ -46,7 +52,19 @@ public class EntiteVue {
         if (e instanceof Ennemi){
             DoubleProperty taille = new SimpleDoubleProperty(56);
             ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
-            img = new ImageView(String.valueOf(Application.class.getResource(e.getSprite())));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/ennemi1.png")));
+            if(e instanceof Compsognathus){
+                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/ennemi1.png")));
+            }
+            if(e instanceof Triceratops){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d02.png")));
+            }
+            if(e instanceof Velociraptor){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d01.png")));
+            }
+            if(e instanceof Tyrannosaurus){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/trex.png")));
+            }
             Rectangle rec = new Rectangle();
             rec.setWidth(56);
             rec.setHeight(4);
@@ -64,8 +82,15 @@ public class EntiteVue {
             barre_vie = vie;
         }
         if (e instanceof Tour){
-            System.out.println("truc " + e.getSprite());
-             img = new ImageView(String.valueOf(Application.class.getResource(e.getSprite())));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
+            if(e instanceof ArbreRuste){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
+            }
+            if(e instanceof CatapulteOs){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png")));
+            }if(e instanceof LanceFilet){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png")));
+            }
             img.setTranslateX(e.getX()*64);
             img.setTranslateY(e.getY()*64);
             sprite = img;
@@ -96,7 +121,7 @@ public class EntiteVue {
             sprite = img;
         }
         if (e instanceof Piege){
-            img = new ImageView(String.valueOf(Application.class.getResource(e.getSprite())));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;
