@@ -1,7 +1,9 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
@@ -9,13 +11,13 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 import java.util.List;
 
 public abstract class Defense extends Entite {
-    public int cout;
+    public IntegerProperty cout;
     private BooleanProperty selectionnee;
 
 
     public Defense(int cout, double x, double y) {
         super(x, y);
-        this.cout = cout;
+        this.cout = new SimpleIntegerProperty(cout);
         selectionnee = new SimpleBooleanProperty(false);
     }
 
@@ -23,7 +25,7 @@ public abstract class Defense extends Entite {
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){}
 
     public int getCout() {
-        return cout;
+        return cout.get();
     }
     public BooleanProperty selectionneeProperty() {
         return selectionnee;
@@ -38,7 +40,7 @@ public abstract class Defense extends Entite {
     }
 
     public void setCout(int cout) {
-        this.cout = cout;
+        this.cout.set(cout);
     }
     public abstract void inflation();
 }
