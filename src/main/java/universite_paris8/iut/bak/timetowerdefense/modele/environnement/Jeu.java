@@ -1,5 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 
+import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -11,14 +12,22 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Velociraptor;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteOs;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
 import java.util.List;
 
 public class Jeu {
+    private Defense temoinTourUn;
+    private ArbreRuste temoinTourDeux;
+    private Defense temoinTourTrois;
+    private Defense temoinTourQuatre;
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Defense> defenses;
     private ObservableList<Projectile> projectiles;
@@ -66,6 +75,12 @@ public class Jeu {
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
         this.chargerEpoque(0);
+
+        this.temoinTourUn = new MiniVolcan(0, 0);
+        this.temoinTourDeux = new ArbreRuste(0, 0);
+        this.temoinTourTrois = new CatapulteOs(0, 0);
+        this.temoinTourQuatre = new LanceFilet(0, 0);
+
     }
     public void chargerEpoque(int epoque) {
         this.epoqueActuel = epoque;
@@ -310,4 +325,17 @@ public class Jeu {
             default : return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
         }
     }
+    public IntegerProperty getCoutTourUnProperty(){
+        return this.temoinTourUn.getCoutIntegerProperty();
+    }
+    public IntegerProperty getCoutTourDeuxProperty(){
+        return ArbreRuste.coutPropertyArbre();
+    }
+    public IntegerProperty getCoutTourTroisProperty(){
+        return this.temoinTourTrois.getCoutIntegerProperty();
+    }
+    public IntegerProperty getCoutTourQuatreProperty(){
+        return this.temoinTourQuatre.getCoutIntegerProperty();
+    }
+
 }

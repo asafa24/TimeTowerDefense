@@ -2,6 +2,7 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -118,10 +120,10 @@ public class ControleurJeu implements Initializable {
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
-        tourUnArgent.textProperty().bind(jeu.getPrixSlotProperty(0).asString());
-        tourDeuxArgent.textProperty().bind(jeu.getPrixSlotProperty(1).asString());
-        tourTroisArgent.textProperty().bind(jeu.getPrixSlotProperty(2).asString());
-        tourQuatreArgent.textProperty().bind(jeu.getPrixSlotProperty(3).asString());
+        tourUnArgent.textProperty().bind(MiniVolcan.coutPropertyArbre().asString());
+        tourDeuxArgent.textProperty().bind(ArbreRuste.coutPropertyArbre().asString());
+        tourTroisArgent.textProperty().bind(CatapulteOs.coutPropertyArbre().asString());
+        tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
 
 
 

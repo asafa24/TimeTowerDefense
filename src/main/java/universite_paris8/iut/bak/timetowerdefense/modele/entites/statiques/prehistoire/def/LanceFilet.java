@@ -15,6 +15,9 @@ public  class LanceFilet extends TourStun {
         cout.set((int) Math.floor(cout.get() * 1.1));
         super.setCout(cout.get());
     }
+    public static IntegerProperty coutPropertyArbre() {
+        return cout;
+    }
 
 
 }

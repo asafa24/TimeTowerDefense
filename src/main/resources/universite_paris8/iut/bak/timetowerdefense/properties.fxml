@@ -4,69 +4,100 @@
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="192.0" prefWidth="128.0" style="-fx-background-color: grey;"
+      prefHeight="192.0" prefWidth="128.0"
       xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.PropertiController">
+
+   <stylesheets>
+      <URL value="@style.css" />
+   </stylesheets>
+
    <children>
-      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="128.0">
+      <ImageView fitHeight="192.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="false">
+         <image>
+            <Image url="@images/tiles/prehistoire/bordCardUpragde/bordCardUpgrade.png" />
+         </image>
+      </ImageView>
+
+      <VBox alignment="TOP_CENTER" prefHeight="192.0" prefWidth="128.0" spacing="3.0" style="-fx-padding: 8 14 12 16;">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+
+            <Label fx:id="p_nom" styleClass="texte-titre" text="Arbre rustre" />
+
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <ImageView fx:id="p_image" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                  </ImageView>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <ImageView fx:id="p_image" fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox alignment="CENTER_LEFT">
                      <children>
-                        <Label fx:id="p_nom" text="Arbre" />
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label text="lv : " />
-                              <Label fx:id="p_lv" text="1" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                        <Label styleClass="texte-titre" text="Niv :" />
+                        <Label fx:id="p_lv" styleClass="texte-titre" text="1" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="dégat :" textFill="RED" />
-                        <Label fx:id="p_current_degat" text="1" textFill="RED" />
-                        <Label text="-&gt;" textFill="RED" />
-                        <Label fx:id="p_new_degat" text="2" textFill="RED" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="porté :" textFill="LIME" />
-                        <Label fx:id="p_current_porte" text="1" textFill="#0dff00" />
-                        <Label text="-&gt;" textFill="#0dff00" />
-                        <Label fx:id="p_new_porte" text="1" textFill="#0dff00" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="cadence :" textFill="#ff9000" />
-                        <Label fx:id="p_current_cadence" text="1" textFill="#ff9000" />
-                        <Label text="-&gt;" textFill="#ff9000" />
-                        <Label fx:id="p_new_cadence" text="2" textFill="#ff9000" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-               <children>
-                  <Button onAction="#ameliorationT" fx:id="button_ameliorez" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: green;" text="Améliorer" textFill="WHITE" />
-                  <Label fx:id="p_prix_upgrade" text="500" visible="false" managed="false" />
 
-                  <Button onAction="#gereVentes" fx:id="button_vendre" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: red;" text="Vendre" textFill="WHITE" />
-                  <Label fx:id="p_prix_vente" text="150" visible="false" managed="false" />
+            <VBox alignment="CENTER" spacing="0.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="texte-degat" text="Dgt:" />
+                        <Label fx:id="p_current_degat" styleClass="texte-degat" text="10" />
+                        <Label styleClass="texte-degat" text="-&gt;" />
+                        <Label fx:id="p_new_degat" styleClass="texte-degat" text="12" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="texte-portee" text="Prt:" />
+                        <Label fx:id="p_current_porte" styleClass="texte-portee" text="64" />
+                        <Label styleClass="texte-portee" text="-&gt;" />
+                        <Label fx:id="p_new_porte" styleClass="texte-portee" text="84" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="texte-cadence" text="Cad:" />
+                        <Label fx:id="p_current_cadence" styleClass="texte-cadence" text="60" />
+                        <Label styleClass="texte-cadence" text="-&gt;" />
+                        <Label fx:id="p_new_cadence" styleClass="texte-cadence" text="54" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <VBox alignment="BOTTOM_CENTER" spacing="4.0">
+               <children>
+
+                  <Button fx:id="button_ameliorez" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#ameliorationT" styleClass="bouton-classique, bouton-ameliorer">
+                     <graphic>
+                        <HBox alignment="CENTER" spacing="5">
+                           <children>
+                              <Label styleClass="texte-bouton" text="Up:" />
+                              <Label fx:id="p_prix_upgrade" styleClass="texte-prix" text="500" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </Button>
+
+                  <Button fx:id="button_vendre" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gereVentes" styleClass="bouton-classique, bouton-vendre">
+                     <graphic>
+                        <HBox alignment="CENTER" spacing="5">
+                           <children>
+                              <Label styleClass="texte-bouton" text="Sell:" />
+                              <Label fx:id="p_prix_vente" styleClass="texte-prix" text="150" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </Button>
+
+               </children>
+            </VBox>
+
          </children>
       </VBox>
    </children>
