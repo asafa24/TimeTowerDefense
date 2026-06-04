@@ -41,5 +41,6 @@ public abstract class Piege extends Defense implements Destructible {
     public void recevoirDegats(int dgt) {
         this.pv -= dgt;
     }
+    @Override
     public abstract void inflation();
 }

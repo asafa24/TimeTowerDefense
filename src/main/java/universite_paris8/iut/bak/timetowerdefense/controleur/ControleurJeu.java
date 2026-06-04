@@ -250,7 +250,7 @@ public class ControleurJeu implements Initializable {
             case 1 -> {
                 this.piegeSelectione = new MiniVolcan(xGrille ,yGrille);
                 jeu.poserPiege(piegeSelectione);
-                this.tourSelectionne.inflation();
+                //this.tourSelectionne.inflation();
 
             }
             case 2 -> {
