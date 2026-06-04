@@ -18,6 +18,11 @@ public abstract class Defense extends Entite {
         this.cout = cout;
         selectionnee = new SimpleBooleanProperty(false);
     }
+    public Defense(int cout, double x, double y,String sprite) {
+        super(x, y,sprite);
+        this.cout = cout;
+        selectionnee = new SimpleBooleanProperty(false);
+    }
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){}
 

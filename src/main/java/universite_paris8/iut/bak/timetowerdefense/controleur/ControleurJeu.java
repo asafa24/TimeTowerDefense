@@ -2,11 +2,8 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -14,14 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Vague;
-import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
@@ -31,8 +25,6 @@ import java.net.URL;
 import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.effets.ExplosionVue;
-import java.util.ArrayList;
-import java.util.List;
 
 import java.util.ResourceBundle;
 
@@ -181,19 +173,23 @@ public class ControleurJeu implements Initializable {
         switch (event.getCode()) {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
                 vuePreview.remove();
-                poseDeTourQuatre();
+                poseDeTourUn();
+
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
                 vuePreview.remove();
-                poseDeTourUn();
+                poseDeTourDeux();
+
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
                 vuePreview.remove();
-                poseDeTourDeux();
+                poseDeTourTrois();
+
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
                 vuePreview.remove();
-                poseDeTourTrois();
+                poseDeTourQuatre();
+
             }
             case ESCAPE -> {
                 vuePreview.remove();
@@ -258,7 +254,7 @@ public class ControleurJeu implements Initializable {
 
             }
             case 2 -> {
-                this.tourSelectionne = new Tour(50, xGrille, yGrille ,10 ,64  ,60);
+                this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
                 jeu.poserTour(tourSelectionne);
             }
 

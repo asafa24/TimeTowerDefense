@@ -16,7 +16,7 @@
                <children>
                   <ImageView fx:id="p_image" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/tiles/prehistoire/arbre.png" />
+                        <Image url="@images/tiles/prehistoire/def/arbre.png" />
                      </image>
                   </ImageView>
                   <VBox prefHeight="200.0" prefWidth="100.0">

@@ -5,13 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileStun;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Triceratops;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Velociraptor;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
@@ -304,7 +303,7 @@ public class Jeu {
 
     private Ennemi creerEnnemi(int id ) {
         switch (id) {
-            case 0 : return new Ennemi(route);
+            case 0 : return new Compsognathus(route);
             case 1 : return new Velociraptor(route);
             case 2 : return new Triceratops(route);
             default : return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);

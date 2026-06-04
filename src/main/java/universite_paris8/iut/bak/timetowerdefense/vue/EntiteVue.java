@@ -46,44 +46,26 @@ public class EntiteVue {
         if (e instanceof Ennemi){
             DoubleProperty taille = new SimpleDoubleProperty(56);
             ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
-            if (e instanceof Velociraptor){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d01.png")));
-            }
-            else if (e instanceof Triceratops){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/d02.png")));
-            }
-            else if (e instanceof Tyrannosaurus){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/trex.png")));
-            }
-            else {
-                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi1.png")));
-            }
-
+            img = new ImageView(String.valueOf(Application.class.getResource(e.getSprite())));
             Rectangle rec = new Rectangle();
             rec.setWidth(56);
             rec.setHeight(4);
             rec.setFill(Color.GREEN);
-
-
             rec.translateXProperty().bind(e.xProperty().add(4));
             rec.translateYProperty().bind(e.yProperty().add(-4));
             rec.widthProperty().bind(taille.multiply(((Ennemi) e).getPvPropProperty()).divide(((Ennemi) e).getPv()));
-
             vie.translateXProperty().bind(e.xProperty());
             vie.translateYProperty().bind(e.yProperty().add(-20));
-
-
-
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.scaleXProperty().bind(((Ennemi) e).getDirectionProperty());
-
             rectangle_vie = rec;
             sprite = img;
             barre_vie = vie;
         }
         if (e instanceof Tour){
-             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/arbre.png")));
+            System.out.println("truc " + e.getSprite());
+             img = new ImageView(String.valueOf(Application.class.getResource(e.getSprite())));
             img.setTranslateX(e.getX()*64);
             img.setTranslateY(e.getY()*64);
             sprite = img;
@@ -92,38 +74,25 @@ public class EntiteVue {
                 actualiserEtoiles((Tour) e);
             });
         }
-        if (e instanceof TourCercle) {
-             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/catapulteT2.png")));
-            img.setTranslateX(e.getX() * 64);
-            img.setTranslateY(e.getY() * 64);
-            sprite = img;
-        }
-        if (e instanceof TourStun) {
-             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/LanceFilet.png")));
-            img.setTranslateX(e.getX() * 64);
-            img.setTranslateY(e.getY() * 64);
-            sprite = img;
-        }
-
         if(e instanceof Projectile){
              img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
-            img.setScaleX(-1);
+            //img.setScaleX(-1);
             sprite = img;
         }
         if(e instanceof ProjectileCercle){
              img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
-            img.setScaleX(-1);
+            //img.setScaleX(-1);
             sprite = img;
         }
         if(e instanceof ProjectileStun){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
-            img.setScaleX(-1);
+            //img.setScaleX(-1);
             sprite = img;
         }
         if (e instanceof MiniVolcan){
@@ -150,6 +119,7 @@ public class EntiteVue {
             entityPane.getChildren().add(rectangle_vie);
             affichageRectangle.put((Ennemi) e, rectangle_vie);
         }
+
     }
 
     public void supprimerSprite(Entite e){

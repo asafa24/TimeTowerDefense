@@ -11,13 +11,28 @@ public class Tour extends Defense {
     private int portee;
     private int cadence;
     private int compteurTir;
-
-
+    
     private boolean isStun = false;
     private IntegerProperty niveau ;
     private int dureeStun = 0;
     // Les durées et compteurs sont en frame
 
+    public Tour(int cout ,double x, double y){
+        super(cout,x,y);
+        this.degats = 25;
+        this.portee = 100;
+        this.cadence = 120;
+        this.compteurTir = cadence/2;
+        niveau = new SimpleIntegerProperty(0);
+    }
+    public Tour(int cout ,double x, double y, String sprite){
+        super(cout,x,y, sprite);
+        this.degats = 25;
+        this.portee = 100;
+        this.cadence = 120;
+        this.compteurTir = cadence/2;
+        niveau = new SimpleIntegerProperty(0);
+    }
 
     public Tour(int cout ,double x, double y, int degats, int portee, int cadence){
         super(cout,x,y);
@@ -27,7 +42,14 @@ public class Tour extends Defense {
         this.compteurTir = 0;
         niveau = new SimpleIntegerProperty(0);
     }
-
+    public Tour(int cout ,double x, double y, int degats, int portee, int cadence, String sprite){
+        super(cout,x,y,sprite);
+        this.degats = degats;
+        this.portee = portee;
+        this.cadence = cadence;
+        this.compteurTir = 0;
+        niveau = new SimpleIntegerProperty(0);
+    }
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if (this.isStun) {
