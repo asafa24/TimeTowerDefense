@@ -8,6 +8,10 @@ import javafx.scene.layout.Pane;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.controleur.PropertiController;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteOs;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 import java.io.IOException;
@@ -35,21 +39,16 @@ public class UIVue {
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void afficherStatsTour(Tour tour, Pane zoneStats, Jeu jeu) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));
-        Pane carteState = fxmlLoader.load();
-
-        PropertiController controller = fxmlLoader.getController();
-        controller.updateStats(tour, jeu);
-
-        zoneStats.getChildren().setAll(carteState);
-        zoneStats.setVisible(true);
-        System.out.printf("affihcerrrr");
-    }
-
-    public void masquerStatsTour(Pane zoneStats) {
-        zoneStats.getChildren().clear();
-        zoneStats.setVisible(false);
+    public void setImageEtNom(ImageView p_image, Tour tour, Label p_nom){
+        if (tour instanceof CatapulteOs) {
+            p_nom.setText("Lance-pierre");
+            p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png"))));
+        } else if (tour instanceof LanceFilet) {
+            p_nom.setText("Filetoorr");
+            p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png"))));
+        } else {
+            p_nom.setText("Arbre rustre");
+            p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png"))));
+        }
     }
 }

@@ -65,6 +65,7 @@ public class Jeu {
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
+        this.chargerEpoque(0);
     }
     public void chargerEpoque(int epoque) {
         this.epoqueActuel = epoque;

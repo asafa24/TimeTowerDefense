@@ -3,6 +3,7 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
@@ -225,20 +227,14 @@ public class ControleurJeu implements Initializable {
                         d.setSelectionnee(true);
                         tourTrouvee = true;
                         System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
-
-                        if (zoneStats == null) {
-                            System.err.println("Erreur : zoneStats est null ! L'injection @FXML a échoué. Vérifie le fx:id dans ton FXML principal.");
-                        } else {
-                            uiVue.afficherStatsTour((Tour) d, zoneStats ,jeu);
-                        }
-
+                        this.afficherStatsTour((Tour) d);
                     } else {
                         d.setSelectionnee(false);
                     }
                 }
             }
             if (!tourTrouvee) {
-                uiVue.masquerStatsTour(zoneStats);
+                this.masquerStatsTour(zoneStats);
                 for (Defense d : jeu.getDefenses()) {
                     if (d instanceof Tour) {
                         ((Tour) d).setSelectionnee(false);
@@ -279,7 +275,10 @@ public class ControleurJeu implements Initializable {
         this.typeDefenseSelectionnee= 0;
     }
 
-
+    public void masquerStatsTour(Pane zoneStats) {
+        zoneStats.getChildren().clear();
+        zoneStats.setVisible(false);
+    }
 
     @FXML
     public void poseDeTourUn() {
@@ -338,6 +337,17 @@ public class ControleurJeu implements Initializable {
         else{
             boutonBox.setVisible(false);
         }
+    }
+    private void afficherStatsTour(Tour tour) throws IOException {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));
+            Pane carteState = fxmlLoader.load();
+
+            PropertiController controller = fxmlLoader.getController();
+            controller.updateStats(tour, this.jeu);
+
+            zoneStats.getChildren().setAll(carteState);
+            zoneStats.setVisible(true);
     }
 
 

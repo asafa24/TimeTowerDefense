@@ -3,48 +3,51 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
+import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
+import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
+import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
+import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class PropertiController {
 
     @FXML private Button button_ameliorez;
     @FXML private Button button_vendre;
-
     @FXML private ImageView p_image;
     @FXML private Label p_nom;
     @FXML private Label p_lv;
-
     @FXML private Label p_current_degat;
     @FXML private Label p_new_degat;
-
     @FXML private Label p_current_porte;
     @FXML private Label p_new_porte;
-
     @FXML private Label p_current_cadence;
     @FXML private Label p_new_cadence;
-
     @FXML private Label p_prix_upgrade;
     @FXML private Label p_prix_vente;
 
+
     private Jeu jeu;
     private Tour tourActuelle;
+    private UIVue uiVue;
+
 
     public void updateStats(Tour tour, Jeu jeu) {
-        this.jeu = jeu;
         this.tourActuelle = tour;
+        this.uiVue = new UIVue();
+        this.jeu = jeu;
 
-        if (tour instanceof TourCercle) {
-            p_nom.setText("Lance-pierre");
-        } else if (tour instanceof TourStun) {
-            p_nom.setText("Filetoorr");
-        } else {
-            p_nom.setText("Arbre rustre");
-        }
+        uiVue.setImageEtNom(p_image, tour, p_nom);
+
         p_lv.setText(String.valueOf(tour.getNiveau() + 1));
 
         p_current_degat.setText(String.valueOf(tour.getDegats()));
@@ -94,4 +97,5 @@ public class PropertiController {
             }
         }
     }
+
 }
