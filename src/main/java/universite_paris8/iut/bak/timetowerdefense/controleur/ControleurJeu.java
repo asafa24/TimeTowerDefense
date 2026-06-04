@@ -250,21 +250,25 @@ public class ControleurJeu implements Initializable {
             case 1 -> {
                 this.piegeSelectione = new MiniVolcan(xGrille ,yGrille);
                 jeu.poserPiege(piegeSelectione);
+                this.tourSelectionne.inflation();
 
             }
             case 2 -> {
                 this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
-                this.tourSelectionne.inflation();
                 jeu.poserTour(tourSelectionne);
+                this.tourSelectionne.inflation();
             }
 
             case 3 -> {
                 this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
                 jeu.poserTour(tourSelectionne);
+                this.tourSelectionne.inflation();
             }
             case 4 -> {
                 this.tourSelectionne = new LanceFilet(xGrille, yGrille);
                 jeu.poserTour(tourSelectionne);
+                this.tourSelectionne.inflation();
+
             }
 
         }
