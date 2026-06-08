@@ -1,11 +1,13 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
@@ -32,12 +34,14 @@ public class EntiteVue {
     private HashMap<Entite, Node> affichageEntite;
     private HashMap<Ennemi, Node> affichageBarre;
     private HashMap<Ennemi, Node> affichageRectangle;
+    private HashMap<Ennemi, Node> affichageCapacity;
     public EntiteVue(Pane entityPane){
         this.entityPane = entityPane;
         this.affichageEntite = new HashMap<>();
         this.affichageBarre = new HashMap<>();
         this.affichageRectangle = new HashMap<>();
         this.affichageEtoiles = new HashMap<>();
+        this.affichageCapacity = new HashMap<>();
 
     }
 
@@ -46,6 +50,7 @@ public class EntiteVue {
         Node sprite = null;
         Node barre_vie = null;
         Node rectangle_vie = null;
+        Node capacity = null;
         ImageView img;
 
 
@@ -58,6 +63,14 @@ public class EntiteVue {
             }
             if(e instanceof Triceratops){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d02.png")));
+                Circle cr = new Circle();
+                cr.setFill(Color.CYAN);
+                cr.setOpacity(0.5);
+                cr.setRadius(128);
+                cr.translateXProperty().bind(e.xProperty().add(32));
+                cr.translateYProperty().bind(e.yProperty().add(32));
+                cr.visibleProperty().bind( ((Triceratops) e).getShield() );
+                capacity = cr ;
             }
             if(e instanceof Velociraptor){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d01.png")));
@@ -100,9 +113,12 @@ public class EntiteVue {
             });
         }
         if(e instanceof Projectile){
+
+
              img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
+            img.rotateProperty().bind( ((Projectile)e).getRotation() );
             //img.setScaleX(-1);
             sprite = img;
         }
@@ -112,6 +128,7 @@ public class EntiteVue {
             img.translateYProperty().bind(e.yProperty());
             //img.setScaleX(-1);
             sprite = img;
+
         }
         if(e instanceof ProjectileStun){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
@@ -127,6 +144,10 @@ public class EntiteVue {
             sprite = img;
 
         }
+        if (capacity != null){
+            entityPane.getChildren().add(capacity);
+            affichageCapacity.put((Ennemi) e, capacity);
+        }
 
         if (sprite != null){
             entityPane.getChildren().add(sprite);
@@ -134,16 +155,13 @@ public class EntiteVue {
         }
         if (barre_vie != null  ){
             entityPane.getChildren().add(barre_vie);
-
             affichageBarre.put((Ennemi) e, barre_vie);
-
-
-
         }
         if (rectangle_vie != null){
             entityPane.getChildren().add(rectangle_vie);
             affichageRectangle.put((Ennemi) e, rectangle_vie);
         }
+
 
     }
 
@@ -151,6 +169,7 @@ public class EntiteVue {
         Node sprite = affichageEntite.get(e);
         Node barre_vie = affichageBarre.get(e);
         Node rectangle_vie = affichageRectangle.get(e);
+        Node capacity = affichageCapacity.get(e);
         if(sprite != null){
             entityPane.getChildren().remove(sprite);
         }
@@ -159,6 +178,9 @@ public class EntiteVue {
         }
         if (rectangle_vie != null){
             entityPane.getChildren().remove(rectangle_vie);
+        }
+        if (capacity !=null){
+            entityPane.getChildren().remove(capacity);
         }
         if (e instanceof Tour) {
             HBox etoiles = affichageEtoiles.remove((Tour) e);

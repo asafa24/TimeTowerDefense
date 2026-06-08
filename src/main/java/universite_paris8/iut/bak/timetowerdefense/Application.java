@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense;;
+package universite_paris8.iut.bak.timetowerdefense;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

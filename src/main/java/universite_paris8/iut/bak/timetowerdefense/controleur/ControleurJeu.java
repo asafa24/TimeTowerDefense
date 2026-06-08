@@ -124,7 +124,7 @@ public class ControleurJeu implements Initializable {
         jeu.getProjectiles().addListener(ecouteEntite);
 
         labelArgent.textProperty().bind(jeu.getSoldeProperty().asString("Solde : %d"));
-        labelVague.textProperty().bind(jeu.getVague().getVagueProperty().asString("Vague : %d"));
+        labelVague.textProperty().bind(jeu.getVague().getVagueProperty().add(1).asString("Vague : %d"));
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
