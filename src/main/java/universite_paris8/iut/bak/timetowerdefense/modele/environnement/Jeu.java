@@ -64,7 +64,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(200);
+        this.solde = new SimpleIntegerProperty(2000);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         this.frame = 0;
@@ -211,6 +211,7 @@ public class Jeu {
             depenserArgent(tour.getCout());
             addDefense(tour);
             System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
+            tour.inflation();
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
         }

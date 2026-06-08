@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
@@ -98,7 +100,8 @@ public class ControleurJeu implements Initializable {
     private Label tourTroisArgent;
     @FXML
     private Label tourQuatreArgent;
-
+    @FXML
+    private Circle cerclePortee;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -126,6 +129,13 @@ public class ControleurJeu implements Initializable {
         tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
 
 
+        // Initialisation DU CERCLE de la portee
+        this.cerclePortee = new Circle();
+        this.cerclePortee.setFill(Color.rgb(255, 255, 255, 0.2));
+        this.cerclePortee.setStroke(Color.WHITE);
+        this.cerclePortee.setVisible(false);
+        this.cerclePortee.setMouseTransparent(false);
+        this.entityPane.getChildren().add(cerclePortee);
 
 
 
@@ -181,30 +191,24 @@ public class ControleurJeu implements Initializable {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
                 vuePreview.remove();
                 poseDeTourUn();
-
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
                 vuePreview.remove();
                 poseDeTourDeux();
-
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
                 vuePreview.remove();
                 poseDeTourTrois();
-
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
                 vuePreview.remove();
                 poseDeTourQuatre();
-
             }
             case ESCAPE -> {
                 vuePreview.remove();
                 this.typeDefenseSelectionnee = 0;
                 System.out.println("Selection annulée");
                 cacherUI();
-
-
             }
             default -> System.out.println(event.getCode().getName());
         }
@@ -230,6 +234,13 @@ public class ControleurJeu implements Initializable {
                         tourTrouvee = true;
                         System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
                         this.afficherStatsTour((Tour) d);
+
+                        // AFFICHAGE du cercle de la porte au coordonnee de la tour et bind avec la porte
+                        cerclePortee.setCenterX(d.getX() * 64 + 32);
+                        cerclePortee.setCenterY(d.getY() * 64 + 32);
+                        cerclePortee.radiusProperty().bind(((Tour) d).porteeProperty());
+                        cerclePortee.setVisible(true);
+
                     } else {
                         d.setSelectionnee(false);
                     }
@@ -237,6 +248,11 @@ public class ControleurJeu implements Initializable {
             }
             if (!tourTrouvee) {
                 this.masquerStatsTour(zoneStats);
+
+                // disparition des cercle
+                cerclePortee.setVisible(false);
+                cerclePortee.radiusProperty().unbind();
+
                 for (Defense d : jeu.getDefenses()) {
                     if (d instanceof Tour) {
                         ((Tour) d).setSelectionnee(false);
@@ -253,24 +269,19 @@ public class ControleurJeu implements Initializable {
                 this.piegeSelectione = new MiniVolcan(xGrille ,yGrille);
                 jeu.poserPiege(piegeSelectione);
                 //this.tourSelectionne.inflation();
-
             }
             case 2 -> {
                 this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
                 jeu.poserTour(tourSelectionne);
-                this.tourSelectionne.inflation();
-            }
 
+            }
             case 3 -> {
                 this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
                 jeu.poserTour(tourSelectionne);
-                this.tourSelectionne.inflation();
             }
             case 4 -> {
                 this.tourSelectionne = new LanceFilet(xGrille, yGrille);
                 jeu.poserTour(tourSelectionne);
-                this.tourSelectionne.inflation();
-
             }
 
         }
@@ -295,9 +306,6 @@ public class ControleurJeu implements Initializable {
         vuePreview.setId(1);
         jeu.setId(1);
         vuePreview.preview();
-
-
-
     }
 
     @FXML
@@ -308,7 +316,6 @@ public class ControleurJeu implements Initializable {
         vuePreview.setId(2);
         jeu.setId(2);
         vuePreview.preview();
-
     }
 
     @FXML

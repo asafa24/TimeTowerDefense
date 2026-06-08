@@ -8,34 +8,33 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Tour extends Defense {
     private int degats;
-    private int portee;
+    private IntegerProperty portee;
     private int cadence;
     private int compteurTir;
-    
+
     private boolean isStun = false;
-    private IntegerProperty niveau ;
+    private IntegerProperty niveau;
     private int dureeStun = 0;
     // Les durées et compteurs sont en frame
 
     public Tour(int cout ,double x, double y){
         super(cout,x,y);
         this.degats = 25;
-        this.portee = 100;
+        this.portee = new SimpleIntegerProperty(100);
         this.cadence = 120;
         this.compteurTir = cadence/2;
-        niveau = new SimpleIntegerProperty(0);
+        this.niveau = new SimpleIntegerProperty(0);
     }
-
-
 
     public Tour(int cout ,double x, double y, int degats, int portee, int cadence){
         super(cout,x,y);
         this.degats = degats;
-        this.portee = portee;
+        this.portee = new SimpleIntegerProperty(portee);
         this.cadence = cadence;
         this.compteurTir = 0;
-        niveau = new SimpleIntegerProperty(0);
+        this.niveau = new SimpleIntegerProperty(0);
     }
+
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if (this.isStun) {
             dureeStun--;
@@ -70,7 +69,7 @@ public abstract class Tour extends Defense {
 
         for(Ennemi e : ennemis){
             double distance = Math.hypot(centreTx - e.getCentreX(), centreTy - e.getCentreY());
-            if(distance <= portee){
+            if(distance <= portee.get()){
                 if(e.getEtapeActuelle() > etapeMax){
                     etapeMax = e.getEtapeActuelle();
                     ciblePlusAvancee = e;
@@ -80,6 +79,7 @@ public abstract class Tour extends Defense {
 
         return ciblePlusAvancee;
     }
+
     public int getCadence() {
         return cadence;
     }
@@ -93,23 +93,28 @@ public abstract class Tour extends Defense {
     }
 
     public int getPortee() {
+        return portee.get();
+    }
+
+    public IntegerProperty porteeProperty() {
         return portee;
     }
 
     public void setCompteurTir(int compteurTir) {
         this.compteurTir = compteurTir;
     }
-    
+
     public void setStun(int dureeStun){
         isStun = true;
         this.dureeStun = dureeStun;
         System.out.println("RAWR (tsais) Tour stun mskn");
     }
+
     public void amelioration(){
         this.niveau.set(this.niveau.get() + 1);
         this.degats = (int) (this.degats * 1.2);
         this.cadence = (int) (this.cadence / 1.10);
-        this.portee = this.portee + 20;
+        this.portee.set(this.portee.get() + 20);
         super.setCout((int) (this.getCout() * 1.30));
     }
 
@@ -120,6 +125,6 @@ public abstract class Tour extends Defense {
     public int getNiveau() {
         return niveau.get();
     }
-    public abstract void inflation();
 
+    public abstract void inflation();
 }
