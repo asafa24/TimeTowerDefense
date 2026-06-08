@@ -4,5 +4,6 @@ public enum Effet {
     STUN,
     BURN,
     SLOW,
+    SHIELD
 }
 

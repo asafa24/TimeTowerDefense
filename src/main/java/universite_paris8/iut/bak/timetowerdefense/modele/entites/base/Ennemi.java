@@ -21,6 +21,7 @@ public class Ennemi extends Entite implements Destructible {
     private int dureeStunRestante = 0;
     private int dureeSlowRestante = 0;
     private int dureeBrulageRestante = 0;
+    private  boolean shield = false;
 
     private List<Point2D> chemin;
     private int etapeActuelle;
@@ -138,6 +139,9 @@ public class Ennemi extends Entite implements Destructible {
     public int getPv() {
         return pv;
     }
+    public void ajouterPv(int pv) {
+        this.pv += pv;
+    }
 
     public int getPvMax() {
         return pvMax;
@@ -188,6 +192,13 @@ public class Ennemi extends Entite implements Destructible {
             }
             case BURN -> {
                 this.dureeBrulageRestante = Math.max(this.dureeBrulageRestante, 60);
+            }
+            case SHIELD -> {
+                if (!shield) {
+                    this.ajouterPv(((int) Math.floor(this.getPv() * 1.3)));
+                    shield = true;
+                }
+
             }
         }
     }
