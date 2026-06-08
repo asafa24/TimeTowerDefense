@@ -7,7 +7,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourC
 public class CatapulteOs extends TourCercle {
     public static IntegerProperty cout = new SimpleIntegerProperty(150);
     public CatapulteOs(double x, double y) {
-        super(cout.get(), x, y, 40, 128, 200, 180);
+        super(cout.get(), x, y, 40, 128, 200, 96);
     }
 
     @Override

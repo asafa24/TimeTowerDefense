@@ -21,10 +21,12 @@ public abstract class Piege extends Defense implements Destructible {
     }
 
     public boolean aAtteintPiege(Ennemi e){
-        double centreX = (getX() * 64);
-        double centreY = (getY() * 64);
+        double centreX = (getX() * 64) + 32;
+        double centreY = (getY() * 64) + 32;
+
         double distance = Math.hypot(centreX - e.getCentreX(), centreY - e.getCentreY());
-        return distance <= 32;
+
+        return distance <= 48;
     }
 
     @Override
