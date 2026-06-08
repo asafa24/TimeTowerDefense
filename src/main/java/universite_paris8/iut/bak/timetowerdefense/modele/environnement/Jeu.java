@@ -24,10 +24,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 import java.util.List;
 
 public class Jeu {
-    private Defense temoinTourUn;
-    private ArbreRuste temoinTourDeux;
-    private Defense temoinTourTrois;
-    private Defense temoinTourQuatre;
+
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Defense> defenses;
     private ObservableList<Projectile> projectiles;
@@ -40,9 +37,6 @@ public class Jeu {
 
     private IntegerProperty solde;
     private IntegerProperty pvBase;
-
-    private int typeTourSelectionne ;
-
     private Vague vague;
     private int delay;
     private final int TEMPS_ENTRE_VAGUE = 220 ;
@@ -51,12 +45,6 @@ public class Jeu {
 
     private Ultime ultimeActuelle;
     private IntegerProperty compteurKill;
-    private IntegerProperty[] prixBoutique = new IntegerProperty[] {
-            new SimpleIntegerProperty(50),
-            new SimpleIntegerProperty(150),
-            new SimpleIntegerProperty(150),
-            new SimpleIntegerProperty(25)
-    };
 
 
     public Jeu() {
@@ -68,41 +56,13 @@ public class Jeu {
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         this.frame = 0;
-        typeTourSelectionne = 0 ;
         this.route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
         this.vague = new Vague();
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
-        this.chargerEpoque(0);
-
-        this.temoinTourUn = new MiniVolcan(0, 0);
-        this.temoinTourDeux = new ArbreRuste(0, 0);
-        this.temoinTourTrois = new CatapulteOs(0, 0);
-        this.temoinTourQuatre = new LanceFilet(0, 0);
 
     }
-    public void chargerEpoque(int epoque) {
-        this.epoqueActuel = epoque;
-        switch (epoque) {
-            case 0: // Préhistoire
-                prixBoutique[0].set(25);
-                prixBoutique[1].set(50);
-                prixBoutique[2].set(125);
-                prixBoutique[3].set(150);
-                break;
-            case 1: // Moyen-Âge
-                prixBoutique[0].set(100);
-                prixBoutique[1].set(220);
-                prixBoutique[2].set(300);
-                prixBoutique[3].set(60);
-                break;
-        }
-    }
-    public IntegerProperty getPrixSlotProperty(int indexSlot) {
-        return prixBoutique[indexSlot];
-    }
-
     public int getEpoqueActuel() {
         return epoqueActuel;
     }
@@ -325,18 +285,6 @@ public class Jeu {
             case 2 : return new Triceratops(route);
             default : return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
         }
-    }
-    public IntegerProperty getCoutTourUnProperty(){
-        return this.temoinTourUn.getCoutIntegerProperty();
-    }
-    public IntegerProperty getCoutTourDeuxProperty(){
-        return ArbreRuste.coutPropertyArbre();
-    }
-    public IntegerProperty getCoutTourTroisProperty(){
-        return this.temoinTourTrois.getCoutIntegerProperty();
-    }
-    public IntegerProperty getCoutTourQuatreProperty(){
-        return this.temoinTourQuatre.getCoutIntegerProperty();
     }
 
 }
