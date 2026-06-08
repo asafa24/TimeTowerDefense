@@ -18,8 +18,6 @@ public class ArbreRuste extends Tour {
         super.setCout(cout.get());
     }
 
-
-
     public static IntegerProperty coutPropertyArbre() {
         return cout;
     }

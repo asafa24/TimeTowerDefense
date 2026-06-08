@@ -52,7 +52,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(2000);
+        this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = 0;
         this.frame = 0;
@@ -95,13 +95,13 @@ public class Jeu {
         return projectiles;
     }
 
-    public void tick() {
+    public boolean tick() {
         if (!perdu()) {
             ultimeActuelle.tick(ennemis);
             for (int i = defenses.size() - 1; i >= 0; i--) {
                 Defense d = defenses.get(i);
                 d.agir(ennemis, projectiles);
-                if(d instanceof Destructible && ((Destructible) d).estMort()){
+                if (d instanceof Destructible && ((Destructible) d).estMort()) {
                     defenses.remove(i);
                 }
             }
@@ -109,7 +109,7 @@ public class Jeu {
             if (!projectiles.isEmpty()) {
                 for (int i = projectiles.size() - 1; i >= 0; i--) {
                     Projectile p = projectiles.get(i);
-                    if(p.aAtteintCible()){
+                    if (p.aAtteintCible()) {
                         p.appliquerImpact(ennemis);
                         projectiles.remove(i);
                         continue;
@@ -140,30 +140,31 @@ public class Jeu {
                     e.avancer();
                 }
             }
+            if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
+                addEnnemi(creerEnnemi(vague.defiler()));
+            } else {
+                if (delay > 600) {
+                    delay = 0;
+                    vague.vagueSuivante();
+                    if (delaySpawnMob > 16) delaySpawnMob -= 8;
+                } else {
+                    if (vague.getQueue().isEmpty()) {
+                        delay++;
+                    }
 
-        }
-        if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
-            addEnnemi(creerEnnemi(vague.defiler() ));
-        }
-        else{
-            if (delay > 600 ){
-                delay = 0;
-                vague.vagueSuivante();
-                if (delaySpawnMob > 16) delaySpawnMob -= 8;
-            }
-            else {
-                if (vague.getQueue().isEmpty()){
-                    delay++;
                 }
-
             }
+            frame++;
+            return true;
         }
-        frame++;
-    }
-    public void preview(double x, double y) {preview.update(x,y,id);
+        return false;
     }
 
-    public void poserTour(Tour tour) {
+    public void preview(double x, double y) {
+        preview.update(x,y,id);
+    }
+
+    public boolean poserTour(Tour tour) {
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
 
@@ -172,12 +173,14 @@ public class Jeu {
             addDefense(tour);
             System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
             tour.inflation();
+            return true;
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
+            return false;
         }
     }
 
-    public void poserPiege(Piege piege ){
+    public boolean poserPiege(Piege piege ){
         int caseX = (int) (piege.getX()) ;
         int caseY = (int) (piege.getY())  ;
 
@@ -185,8 +188,10 @@ public class Jeu {
             depenserArgent(piege.getCout());
             addDefense(piege);
             System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
+            return true;
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
+            return false;
         }
     }
     public boolean peuxPoserTour(int epoque, Tour tour ) {

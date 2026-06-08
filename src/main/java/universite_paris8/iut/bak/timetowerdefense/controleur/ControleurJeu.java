@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -103,6 +104,10 @@ public class ControleurJeu implements Initializable {
     @FXML
     private Circle cerclePortee;
 
+    @FXML
+    private Label labelMessageSys;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.level = new Level();
@@ -128,6 +133,8 @@ public class ControleurJeu implements Initializable {
         tourTroisArgent.textProperty().bind(CatapulteOs.coutPropertyArbre().asString());
         tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
 
+        labelMessageSys.setVisible(false);
+        jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + nouv + " en approche", Color.DARKBLUE, 3));
 
         // Initialisation DU CERCLE de la portee
         this.cerclePortee = new Circle();
@@ -162,7 +169,10 @@ public class ControleurJeu implements Initializable {
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
-                    jeu.tick();
+                    if (!jeu.tick()){
+                        afficherMessage("Un peu la honte mais bon..", Color.BLACK, 30);
+                    }
+
                     if (typeDefenseSelectionnee != 0){
                         jeu.preview(mouseX,mouseY);
                     }
@@ -267,21 +277,29 @@ public class ControleurJeu implements Initializable {
         switch(typeDefenseSelectionnee){
             case 1 -> {
                 this.piegeSelectione = new MiniVolcan(xGrille ,yGrille);
-                jeu.poserPiege(piegeSelectione);
+                if(!jeu.poserPiege(piegeSelectione)){
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
                 //this.tourSelectionne.inflation();
             }
             case 2 -> {
                 this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
-                jeu.poserTour(tourSelectionne);
+                if(!jeu.poserTour(tourSelectionne)){
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
 
             }
             case 3 -> {
                 this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
-                jeu.poserTour(tourSelectionne);
+                if(!jeu.poserTour(tourSelectionne)){
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
             }
             case 4 -> {
                 this.tourSelectionne = new LanceFilet(xGrille, yGrille);
-                jeu.poserTour(tourSelectionne);
+                if(!jeu.poserTour(tourSelectionne)){
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
             }
 
         }
@@ -368,5 +386,13 @@ public class ControleurJeu implements Initializable {
         cerclePortee.setVisible(false);
     }
 
+    public void afficherMessage(String texte, Color color, int duree){
+        labelMessageSys.setTextFill(color);
+        labelMessageSys.setText(texte);
+        labelMessageSys.setVisible(true);
 
+        PauseTransition pause = new PauseTransition(Duration.seconds(duree));
+        pause.setOnFinished(e -> labelMessageSys.setVisible(false));
+        pause.play();
+    }
 }

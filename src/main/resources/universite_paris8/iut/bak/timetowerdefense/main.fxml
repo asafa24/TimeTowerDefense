@@ -7,16 +7,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<StackPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClick" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
+<StackPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClick" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
    <children>
       <Pane fx:id="backgroundPane" prefHeight="200.0" prefWidth="200.0" />
       <Pane fx:id="entityPane" prefHeight="200.0" prefWidth="200.0" />
-      <Pane fx:id="effectPane" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="effectPane" prefHeight="200.0" prefWidth="200.0">
+         <children>
 
-      <BorderPane fx:id="uiPane" focusTraversable="true" onKeyPressed="#gererTouches" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
+         </children></Pane>
 
-         <top>
+            <BorderPane fx:id="uiPane" focusTraversable="true" onKeyPressed="#gererTouches" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
+
+               <top>
             <HBox alignment="CENTER" spacing="30.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="labelPvBase" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="WHITE" />
@@ -30,7 +32,7 @@
             </HBox>
          </top>
 
-         <right>
+               <right>
             <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="ultButton" mnemonicParsing="false" onAction="#lancerUltime" text="ULTIME">
@@ -39,7 +41,7 @@
                      </font>
                   </Button>
 
-                  <Pane fx:id="zoneStats" prefHeight="200.0" prefWidth="150.0" visible="false">
+                        <Pane fx:id="zoneStats" prefHeight="200.0" prefWidth="150.0" visible="false">
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>
@@ -51,15 +53,14 @@
             </VBox>
          </right>
 
-         <bottom>
+               <bottom>
             <HBox fx:id="boutonBox" alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="cacher" />
 
-                  <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
+                        <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
       
-                        <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseDeTourUn" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                              <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseDeTourUn" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                         <Label fx:id="tourUnArgent" text="25" textFill="WHITE" />
                      </children>
                   </VBox>
@@ -82,15 +83,18 @@
                      </children>
                   </VBox>
 
-
-
-               </children>
+                     </children>
                <padding>
                   <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
                </padding>
             </HBox>
          </bottom>
 
-      </BorderPane>
+            </BorderPane>
+      <Label fx:id="labelMessageSys" alignment="CENTER" mouseTransparent="true" text="">
+         <font>
+            <Font name="DejaVu Sans Bold" size="36.0" />
+         </font>
+      </Label>
    </children>
 </StackPane>
