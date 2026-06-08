@@ -1,39 +1,34 @@
-/* --- style.css --- */
 
-/* 1. Écriture globale moderne et arrondie */
 .root {
     -fx-font-family: "Segoe UI", "Arial Rounded MT Bold", sans-serif;
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
 
-/* 2. Textes des statistiques avec ombre pour une lisibilité parfaite sur fond gris */
 .texte-titre {
     -fx-text-fill: white;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 .texte-degat {
-    -fx-text-fill: #ff4d4d; /* Rouge vif */
+    -fx-text-fill: #ff4d4d;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 .texte-portee {
-    -fx-text-fill: #4dff4d; /* Vert vif */
+    -fx-text-fill: #4dff4d;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 .texte-cadence {
-    -fx-text-fill: #ffb84d; /* Orange/Or */
+    -fx-text-fill: #ffb84d;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 
-/* 3. Base des boutons (Affinés pour ne pas prendre trop de place) */
 .bouton-classique {
     -fx-background-radius: 5;
-    -fx-padding: 2 6 2 6; /* Marges internes réduites pour affiner la hauteur */
+    -fx-padding: 2 6 2 6
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 2, 0.0, 0, 2);
 }
 
-/* Bouton Améliorer : Vert forêt riche et naturel */
 .bouton-ameliorer {
     -fx-background-color: linear-gradient(to bottom, #2d8a4e, #1c6334);
     -fx-border-color: #124222;
@@ -42,8 +37,6 @@
 .bouton-ameliorer:hover {
     -fx-background-color: linear-gradient(to bottom, #3eb569, #237a41);
 }
-
-/* Bouton Vendre : Rouge brique/sombre plus élégant */
 .bouton-vendre {
     -fx-background-color: linear-gradient(to bottom, #cc2929, #991f1f);
     -fx-border-color: #661414;
@@ -53,14 +46,13 @@
     -fx-background-color: linear-gradient(to bottom, #e63939, #b32424);
 }
 
-/* 4. Textes à l'intérieur des boutons (Taille réduite pour bien s'intégrer) */
 .texte-bouton {
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 11px;
 }
 .texte-prix {
-    -fx-text-fill: #ffd700; /* Couleur Or */
+    -fx-text-fill: #ffd700;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 2, 0.0, 0, 1);
     -fx-font-size: 11px;
