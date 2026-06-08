@@ -12,11 +12,13 @@ public class MiniVolcan extends Piege {
     private int degats;
     public static IntegerProperty cout = new SimpleIntegerProperty(25);
 
+    private int cooldownDegats = 0;
 
     public MiniVolcan(int cout, double x, double y, int degats, int pv) {
         super(cout, x, y, pv);
         this.degats = degats;
     }
+
     public MiniVolcan(double x, double y) {
         super(cout.get(), x, y, 5);
         this.degats = 5;
@@ -24,14 +26,21 @@ public class MiniVolcan extends Piege {
 
     @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
-        boolean volcanBlesseCeTick = false;
+        if (cooldownDegats > 0) {
+            cooldownDegats--;
+        }
+
         for (int i = ennemis.size() - 1; i >= 0; i--) {
             Ennemi e = ennemis.get(i);
             if (aAtteintPiege(e)) {
                 e.appliqueEffet(Effet.SLOW);
                 e.appliqueEffet(Effet.BURN);
-                if (getPv() > 0) {
+
+                if (getPv() > 0 && cooldownDegats <= 0) {
                     recevoirDegats(1);
+                    System.out.println("Le volcan a brûlé un ennemi ! PV restants : " + getPv());
+
+                    cooldownDegats = 60;
                 }
             }
         }
@@ -42,6 +51,7 @@ public class MiniVolcan extends Piege {
         cout.set((int) Math.floor(cout.get() * 1.1));
         super.setCout(cout.get());
     }
+
     public static IntegerProperty coutPropertyArbre() {
         return cout;
     }
