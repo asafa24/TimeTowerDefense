@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -112,9 +113,12 @@ public class EntiteVue {
             });
         }
         if(e instanceof Projectile){
+
+
              img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
+            img.rotateProperty().bind( ((Projectile)e).getRotation() );
             //img.setScaleX(-1);
             sprite = img;
         }
@@ -124,6 +128,7 @@ public class EntiteVue {
             img.translateYProperty().bind(e.yProperty());
             //img.setScaleX(-1);
             sprite = img;
+
         }
         if(e instanceof ProjectileStun){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
@@ -139,6 +144,10 @@ public class EntiteVue {
             sprite = img;
 
         }
+        if (capacity != null){
+            entityPane.getChildren().add(capacity);
+            affichageCapacity.put((Ennemi) e, capacity);
+        }
 
         if (sprite != null){
             entityPane.getChildren().add(sprite);
@@ -152,10 +161,7 @@ public class EntiteVue {
             entityPane.getChildren().add(rectangle_vie);
             affichageRectangle.put((Ennemi) e, rectangle_vie);
         }
-        if (capacity != null){
-            entityPane.getChildren().add(capacity);
-            affichageCapacity.put((Ennemi) e, capacity);
-        }
+
 
     }
 
