@@ -233,7 +233,7 @@ public class ControleurJeu implements Initializable {
                         d.setSelectionnee(true);
                         tourTrouvee = true;
                         System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
-                        this.afficherStatsTour((Tour) d);
+                        this.afficherMenuTour((Tour) d);
 
                         // AFFICHAGE du cercle de la porte au coordonnee de la tour et bind avec la porte
                         cerclePortee.setCenterX(d.getX() * 64 + 32);
@@ -352,16 +352,20 @@ public class ControleurJeu implements Initializable {
             boutonBox.setVisible(false);
         }
     }
-    private void afficherStatsTour(Tour tour) throws IOException {
+    private void afficherMenuTour(Tour tour) throws IOException {
 
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));
             Pane carteState = fxmlLoader.load();
 
             PropertiController controller = fxmlLoader.getController();
-            controller.updateStats(tour, this.jeu);
+            controller.updateStats(tour, this.jeu,this);
 
             zoneStats.getChildren().setAll(carteState);
             zoneStats.setVisible(true);
+    }
+    public void fermerMenuTour() {
+        masquerStatsTour(zoneStats);
+        cerclePortee.setVisible(false);
     }
 
 

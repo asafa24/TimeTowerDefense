@@ -39,12 +39,14 @@ public class PropertiController {
     private Jeu jeu;
     private Tour tourActuelle;
     private UIVue uiVue;
+    private ControleurJeu controleurJeu ;
 
 
-    public void updateStats(Tour tour, Jeu jeu) {
+    public void updateStats(Tour tour, Jeu jeu ,ControleurJeu controleurJeu) {
         this.tourActuelle = tour;
         this.uiVue = new UIVue();
         this.jeu = jeu;
+        this.controleurJeu = controleurJeu;
 
         uiVue.setImageEtNom(p_image, tour, p_nom);
 
@@ -74,14 +76,14 @@ public class PropertiController {
         if (this.tourActuelle != null && this.jeu != null) {
 
             int montantRevente = Integer.parseInt(p_prix_vente.getText());
-
             jeu.ajouterArgent(montantRevente);
-
             jeu.getDefenses().remove(this.tourActuelle);
 
             System.out.println(p_nom.getText() + " vendue pour " + montantRevente + " pièces !");
 
-            p_nom.getScene().lookup("#zoneStats").setVisible(false);
+            if (this.controleurJeu != null) {
+                this.controleurJeu.fermerMenuTour();
+            }
         }
     }
     @FXML
@@ -91,7 +93,7 @@ public class PropertiController {
             if (jeu.getSoldeProperty().get() >= montantUpgrade) {
                 jeu.ajouterArgent(-montantUpgrade);
                 tourActuelle.amelioration();
-                updateStats(tourActuelle, jeu);
+                updateStats(tourActuelle, jeu, this.controleurJeu);
             } else {
                 System.out.println("Pas assez d'or !");
             }
