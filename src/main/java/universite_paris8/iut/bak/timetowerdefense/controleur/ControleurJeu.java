@@ -153,7 +153,7 @@ public class ControleurJeu implements Initializable {
         gameLoop.play();
 
         int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
-        vueTerrain.drawMap(donneesMap);
+        vueTerrain.drawMap(donneesMap, 1);
 
         paneMain.setOnMouseMoved(event -> {
             recupererPosition(event);
