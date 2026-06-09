@@ -5,9 +5,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -20,6 +22,7 @@ import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Antique.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteOs;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
@@ -201,19 +204,19 @@ public class ControleurJeu implements Initializable {
         switch (event.getCode()) {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
                 vuePreview.remove();
-                poseDeTourUn();
+                typeDefenseSelectionnee = 1;
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
                 vuePreview.remove();
-                poseDeTourDeux();
+                typeDefenseSelectionnee = 2;
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
                 vuePreview.remove();
-                poseDeTourTrois();
+                typeDefenseSelectionnee = 3;
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
                 vuePreview.remove();
-                poseDeTourQuatre();
+                typeDefenseSelectionnee = 4;
             }
             case ESCAPE -> {
                 vuePreview.remove();
@@ -275,34 +278,69 @@ public class ControleurJeu implements Initializable {
             vuePreview.remove();
             return;
         }
-        switch(typeDefenseSelectionnee){
-            case 1 -> {
-                this.piegeSelectione = new MiniVolcan(xGrille ,yGrille);
-                if(!jeu.poserPiege(piegeSelectione)){
-                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                }
-            }
-            case 2 -> {
-                this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
-                if(!jeu.poserTour(tourSelectionne)){
-                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                }
+        switch (jeu.getEpoqueActuel()) {
+            case 0:
+                switch (typeDefenseSelectionnee) {
+                    case 1 -> {
+                        this.piegeSelectione = new MiniVolcan(xGrille, yGrille);
+                        if (!jeu.poserPiege(piegeSelectione)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+                    }
+                    case 2 -> {
+                        this.tourSelectionne = new ArbreRuste(xGrille, yGrille);
+                        if (!jeu.poserTour(tourSelectionne)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
 
-            }
-            case 3 -> {
-                this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
-                if(!jeu.poserTour(tourSelectionne)){
-                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                    }
+                    case 3 -> {
+                        this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
+                        if (!jeu.poserTour(tourSelectionne)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+                    }
+                    case 4 -> {
+                        this.tourSelectionne = new LanceFilet(xGrille, yGrille);
+                        if (!jeu.poserTour(tourSelectionne)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+                    }
+
                 }
-            }
-            case 4 -> {
-                this.tourSelectionne = new LanceFilet(xGrille, yGrille);
-                if(!jeu.poserTour(tourSelectionne)){
-                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                break;
+            case 1:
+                switch (typeDefenseSelectionnee) {
+                    case 1 -> {
+                        this.piegeSelectione = new MiniVolcan(xGrille, yGrille);
+                        if (!jeu.poserPiege(piegeSelectione)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+                    }
+                    case 2 -> {
+                        this.tourSelectionne = new TotemFlechette(xGrille, yGrille);
+                        if (!jeu.poserTour(tourSelectionne)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+
+                    }
+                    case 3 -> {
+                        this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
+                        if (!jeu.poserTour(tourSelectionne)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+                    }
+                    case 4 -> {
+                        this.tourSelectionne = new LanceFilet(xGrille, yGrille);
+                        if (!jeu.poserTour(tourSelectionne)) {
+                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                        }
+                    }
+
                 }
-            }
+                break;
+
         }
-        this.typeDefenseSelectionnee = 0;
         vuePreview.setId(-1);
         vuePreview.remove();
         this.typeDefenseSelectionnee= 0;
@@ -312,30 +350,13 @@ public class ControleurJeu implements Initializable {
         zoneStats.getChildren().clear();
         zoneStats.setVisible(false);
     }
-
     @FXML
-    public void poseDeTourUn() {
-        this.typeDefenseSelectionnee = 1;
-        poseTour(1);
-    }
-    @FXML
-    public void poseDeTourDeux() {
-        this.typeDefenseSelectionnee = 2;
-        poseTour(2);
-    }
-    @FXML
-    public void poseDeTourTrois() {
-        this.typeDefenseSelectionnee = 3;
-        poseTour(3);
-    }
-    public void poseDeTourQuatre() {
-        this.typeDefenseSelectionnee = 4;
-        poseTour(4);
-    }
-    public void poseTour(int type){
+    public void poseTour(ActionEvent event){
+        Node button = (Button) event.getSource();
+        this.typeDefenseSelectionnee = Integer.parseInt(button.getUserData().toString());
         boutonBox.setVisible(false);
-        System.out.println("Défense numéro " + type +" sélectionnée.");
-        vuePreview.setId(type);
+        System.out.println("Défense numéro " + this.typeDefenseSelectionnee +" sélectionnée.");
+        vuePreview.setId(this.typeDefenseSelectionnee);
         vuePreview.preview();
     }
     // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ??? c'est kevin qui a écrit
