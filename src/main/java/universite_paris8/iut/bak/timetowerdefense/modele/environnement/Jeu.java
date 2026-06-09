@@ -9,6 +9,7 @@ import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Momie;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Triceratops;
@@ -197,7 +198,7 @@ public class Jeu {
                     case 0:
                         return new Momie(route);
                     case 1:
-                        return new Velociraptor(route);
+                        return new GolemSable(route);
                     case 2:
                         return new Triceratops(route);
                     default:

@@ -341,6 +341,7 @@ public class ControleurJeu implements Initializable {
                 break;
 
         }
+        this.typeDefenseSelectionnee = 0;
         vuePreview.setId(-1);
         vuePreview.remove();
         this.typeDefenseSelectionnee= 0;
