@@ -240,8 +240,8 @@ public class Jeu {
         }
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
-    public boolean peuxPoserPiegeCoord(int epoque, int x, int y){
-        int[][] test = level.loadLevel(epoque);
+    public boolean peuxPoserPiegeCoord(int x, int y){
+        int[][] test = level.loadLevel(epoqueActuel);
 
         if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
 
@@ -281,8 +281,8 @@ public class Jeu {
     }
 
     // preview
-    public boolean peuxPoserTourCoord(int epoque, int caseX, int caseY) {
-        int[][] grille = level.loadLevel(epoque);
+    public boolean peuxPoserTourCoord( int caseX, int caseY) {
+        int[][] grille = level.loadLevel(epoqueActuel);
 
         if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
         if (grille[caseY][caseX] != 0) return false;

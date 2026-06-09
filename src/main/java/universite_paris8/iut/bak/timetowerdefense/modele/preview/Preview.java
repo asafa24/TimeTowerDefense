@@ -72,10 +72,10 @@ public class Preview {
 
     public void couleur(){
         if (id != 1){
-            this.peut.set(jeu.peuxPoserTourCoord(epoque, (int) Math.floor(x.get() / 64), (int) Math.floor(y.get() / 64) ));
+            this.peut.set(jeu.peuxPoserTourCoord((int) Math.floor(x.get() / 64), (int) Math.floor(y.get() / 64) ));
         }
         else {
-            this.peut.set(jeu.peuxPoserPiegeCoord(epoque, (int) Math.floor(x.get() / 64), (int) Math.floor(y.get() / 64) ));
+            this.peut.set(jeu.peuxPoserPiegeCoord((int) Math.floor(x.get() / 64), (int) Math.floor(y.get() / 64) ));
 
 
         }

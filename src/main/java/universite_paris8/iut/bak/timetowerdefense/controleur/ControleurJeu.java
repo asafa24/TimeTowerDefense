@@ -174,7 +174,7 @@ public class ControleurJeu implements Initializable {
                 Duration.seconds(0.017),
                 (ev -> {
                     if (!jeu.tick()){
-                        afficherMessage("Un peu la honte mais bon..", Color.DARKGREY, 30);
+                        afficherMessage("Un peu la honte mais bon.. caca", Color.DARKGREY, 30);
                     }
 
                     if (typeDefenseSelectionnee != 0){
