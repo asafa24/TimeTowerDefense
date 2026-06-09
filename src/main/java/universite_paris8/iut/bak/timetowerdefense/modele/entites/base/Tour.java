@@ -1,5 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Fleche;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
@@ -54,7 +55,6 @@ public abstract class Tour extends Defense {
         if(cible != null){
             double departX = (getX() * 64) + 32;
             double departY = (getY() * 64) + 32;
-
             Projectile tir = new Projectile(departX, departY, cible, degats);
             projectiles.add(tir);
             compteurTir = 0;
