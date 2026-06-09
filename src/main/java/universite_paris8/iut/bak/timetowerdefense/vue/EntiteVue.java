@@ -15,11 +15,15 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Tyrannosaurus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Momie;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Velociraptor;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Caillou;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Filet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Fleche;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -128,16 +132,14 @@ public class EntiteVue {
             });
         }
         if(e instanceof Projectile){
-
-
-             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             img.rotateProperty().bind( ((Projectile)e).getRotation() );
             //img.setScaleX(-1);
             sprite = img;
         }
-        if(e instanceof ProjectileCercle){
+        if(e instanceof Caillou){
              img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
@@ -145,14 +147,14 @@ public class EntiteVue {
             sprite = img;
 
         }
-        if(e instanceof ProjectileStun){
+        if(e instanceof Filet){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             //img.setScaleX(-1);
             sprite = img;
         }
-        if (e instanceof Piege){
+        if (e instanceof MiniVolcan){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);

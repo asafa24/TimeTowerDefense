@@ -3,19 +3,19 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.projectiles.ProjectileFlechette;
 
 import java.util.List;
 
-public abstract class TourStun extends Tour {
-    private int dureeStun;
+public abstract class TourPoison extends Tour {
+    private int dureePoison;
     public static final int PRIX_ACHAT = 125;
 
-    public TourStun(int cout, double x, double y, int degats, int portee, int cadence, int dureeStun){
+    public TourPoison(int cout, double x, double y, int degats, int portee, int cadence, int dureePoison){
         super(cout, x, y, degats, portee, cadence);
-        this.dureeStun = dureeStun;
+        this.dureePoison = dureePoison;
     }
 
-    @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if(getCompteurTir() < getCadence()){
             setCompteurTir(getCompteurTir()+1);
@@ -27,19 +27,15 @@ public abstract class TourStun extends Tour {
             double departX = (getX() * 64) + 32;
             double departY = (getY() * 64) + 32;
 
-            Projectile tir = creerProjectile(departX, departY, cible);
+            Projectile tir = new ProjectileFlechette(departX, departY, cible, 2, this.dureePoison);
+            projectiles.add(tir);
 
-            if (tir != null) {
-                projectiles.add(tir);
-            }
             setCompteurTir(0);
         }
     }
 
-    protected abstract Projectile creerProjectile(double x, double y, Ennemi cible);
-
-    public int getDureeStun() {
-        return dureeStun;
+    public int getDureePoison() {
+        return dureePoison;
     }
 
     public abstract void inflation();

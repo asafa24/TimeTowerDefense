@@ -4,6 +4,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Caillou;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public abstract class TourCercle extends Tour {
             double departX = (getX() * 64) + 32;
             double departY = (getY() * 64) + 32;
 
-            ProjectileCercle tir = new ProjectileCercle(departX, departY, cible, getDegats(), this.rayonExplosion);
+            ProjectileCercle tir = new Caillou(departX, departY, cible, getDegats(), this.rayonExplosion);
             projectiles.add(tir);
             setCompteurTir(0);
         }
