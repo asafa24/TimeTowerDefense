@@ -1,5 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.controleur;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -134,7 +135,7 @@ public class ControleurJeu implements Initializable {
         tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
 
         labelMessageSys.setVisible(false);
-        jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + nouv + " en approche", Color.DARKBLUE, 3));
+        jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + nouv + " en approche", Color.GOLD, 3));
 
         // Initialisation DU CERCLE de la portee
         this.cerclePortee = new Circle();
@@ -170,7 +171,7 @@ public class ControleurJeu implements Initializable {
                 Duration.seconds(0.017),
                 (ev -> {
                     if (!jeu.tick()){
-                        afficherMessage("Un peu la honte mais bon..", Color.BLACK, 30);
+                        afficherMessage("Un peu la honte mais bon..", Color.DARKGREY, 30);
                     }
 
                     if (typeDefenseSelectionnee != 0){
@@ -391,8 +392,19 @@ public class ControleurJeu implements Initializable {
         labelMessageSys.setText(texte);
         labelMessageSys.setVisible(true);
 
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.2), labelMessageSys);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
+
         PauseTransition pause = new PauseTransition(Duration.seconds(duree));
-        pause.setOnFinished(e -> labelMessageSys.setVisible(false));
+        pause.setOnFinished(e -> {
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), labelMessageSys);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(eventFade -> labelMessageSys.setVisible(false));
+            fadeOut.play();
+        });
         pause.play();
     }
 }

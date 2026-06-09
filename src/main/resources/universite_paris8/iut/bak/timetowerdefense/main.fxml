@@ -91,9 +91,10 @@
          </bottom>
 
             </BorderPane>
-      <Label fx:id="labelMessageSys" alignment="CENTER" mouseTransparent="true" text="">
+      <Label fx:id="labelMessageSys" alignment="CENTER" mouseTransparent="true" text=""
+             style="-fx-effect: dropshadow(one-pass-box, black, 8, 1.0, 0, 0);">
          <font>
-            <Font name="DejaVu Sans Bold" size="36.0" />
+            <Font name="DejaVu Sans Bold" size="38.0" />
          </font>
       </Label>
    </children>
