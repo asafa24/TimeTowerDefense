@@ -118,7 +118,7 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
-        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview());
+        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
         EcouteEntite ecouteEntite = new EcouteEntite(vueEntite);
         this.uiVue = new UIVue();
         afficherButton(jeu.getEpoqueActuel());

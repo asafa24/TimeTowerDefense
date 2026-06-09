@@ -24,15 +24,20 @@ public class UIVue {
     public ImageView setImageT1(int epoque, int button){
         String epoque_txt;
         switch (epoque){
-            case 0:
-                epoque_txt = "prehistoire/";
+            case 1:
+                epoque_txt = "antiquite/";
                 break;
             default:
                 epoque_txt = "prehistoire/";
                 break;
         }
-
-        Image img = new Image(String.valueOf(Application.class.getResource("images/tiles/" + epoque_txt +"button/b_0" + button +".png" )));
+        Image img ;
+        try {
+             img = new Image(String.valueOf(Application.class.getResource("images/tiles/" + epoque_txt + "button/b_0" + button + ".png")));
+        }
+        catch (Exception e){
+             img = new Image(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+        }
         ImageView imageView = new ImageView(img);
         imageView.setFitHeight(64);
         imageView.setFitWidth(64);

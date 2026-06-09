@@ -2,6 +2,7 @@ package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.beans.binding.Bindings;
 import javafx.scene.effect.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -16,11 +17,13 @@ public class PreviewVue {
     private ImageView img ;
     private Blend blush;
     private ColorAdjust monochrome ;
+    private int epoque;
 
-    public PreviewVue(Pane entityPane, int id, Preview preview) {
+    public PreviewVue(Pane entityPane, int id, Preview preview,int epoque) {
         this.entityPane = entityPane;
         this.id = id;
         this.preview = preview;
+        this.epoque = epoque;
 
 
 
@@ -39,31 +42,49 @@ public class PreviewVue {
 
     public void preview(){
         if (id != -1) {
-            if (id == 1) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
+            switch (epoque){
+                case 0 ->{
+                    if (id == 1) {
+                        img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
 
 
 
+                    }
+                    else if (id == 2) {
+                        img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
+
+
+                    }
+                    else if (id == 3) {
+                        img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png")));
+
+
+
+                    }
+                    else if (id == 4) {
+                        img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png")));
+
+                    }
+                    else {
+                        img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
+
+                    }
+                }
+                case 1 ->{
+                    switch (id){
+                        case 1 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
+                        }
+                        case 2 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piegeFlechette.png")));
+                        }
+                        default -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+                        }
+                    }
+                }
             }
-            else if (id == 2) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
 
-
-            }
-            else if (id == 3) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png")));
-
-
-
-            }
-            else if (id == 4) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png")));
-
-            }
-            else {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
-
-            }
             Light.Distant redLight = new Light.Distant();
             redLight.setColor(Color.RED);
 
