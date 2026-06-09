@@ -281,7 +281,6 @@ public class ControleurJeu implements Initializable {
                 if(!jeu.poserPiege(piegeSelectione)){
                     afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                 }
-                //this.tourSelectionne.inflation();
             }
             case 2 -> {
                 this.tourSelectionne = new ArbreRuste(xGrille, yGrille );
@@ -302,13 +301,10 @@ public class ControleurJeu implements Initializable {
                     afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                 }
             }
-
         }
-
         this.typeDefenseSelectionnee = 0;
         vuePreview.setId(-1);
         vuePreview.remove();
-
         this.typeDefenseSelectionnee= 0;
     }
 
@@ -320,43 +316,29 @@ public class ControleurJeu implements Initializable {
     @FXML
     public void poseDeTourUn() {
         this.typeDefenseSelectionnee = 1;
-        boutonBox.setVisible(false);
-        System.out.println("Défense numéro un sélectionnée.");
-        vuePreview.setId(1);
-        jeu.setId(1);
-        vuePreview.preview();
+        poseTour(1);
     }
-
     @FXML
     public void poseDeTourDeux() {
         this.typeDefenseSelectionnee = 2;
-        boutonBox.setVisible(false);
-        System.out.println("Défense numéro deux sélectionnée.");
-        vuePreview.setId(2);
-        jeu.setId(2);
-        vuePreview.preview();
+        poseTour(2);
     }
-
     @FXML
     public void poseDeTourTrois() {
         this.typeDefenseSelectionnee = 3;
-        boutonBox.setVisible(false);
-        System.out.println("Défense numéro trois sélectionnée.");
-        vuePreview.setId(3);
-        jeu.setId(3);
-        vuePreview.preview();
-
+        poseTour(3);
     }
-    // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
-
     public void poseDeTourQuatre() {
         this.typeDefenseSelectionnee = 4;
+        poseTour(4);
+    }
+    public void poseTour(int type){
         boutonBox.setVisible(false);
-        System.out.println("Défense numéro quatre sélectionnée.");
-        vuePreview.setId(4);
-        jeu.setId(4);
+        System.out.println("Défense numéro " + type +" sélectionnée.");
+        vuePreview.setId(type);
         vuePreview.preview();
     }
+    // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ??? c'est kevin qui a écrit
 
     public void lancerUltime(){
         jeu.activerUltime();

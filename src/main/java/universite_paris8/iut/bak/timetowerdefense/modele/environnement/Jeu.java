@@ -163,22 +163,6 @@ public class Jeu {
         preview.update(x,y,id);
     }
 
-    public boolean poserTour(Tour tour) {
-        int caseX = (int) tour.getX();
-        int caseY = (int) tour.getY();
-
-        if (peuxPoserTour(this.epoqueActuel, tour)) {
-            depenserArgent(tour.getCout());
-            addDefense(tour);
-            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
-            tour.inflation();
-            return true;
-        } else {
-            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
-            return false;
-        }
-    }
-
     public boolean poserPiege(Piege piege ){
         int caseX = (int) (piege.getX()) ;
         int caseY = (int) (piege.getY())  ;
@@ -187,6 +171,44 @@ public class Jeu {
             depenserArgent(piege.getCout());
             addDefense(piege);
             System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
+            return true;
+        } else {
+            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
+            return false;
+        }
+    }
+    public boolean peuxPoserPiege(int epoque, Piege piege){
+        int[][] test = level.loadLevel(epoque);
+        int x = (int) piege.getX();
+        int y = (int) piege.getY();
+
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
+
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+        }
+        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
+    }
+    public boolean peuxPoserPiegeCoord(int epoque, int x, int y){
+        int[][] test = level.loadLevel(epoque);
+
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
+
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+        }
+        return (test[y][x] > 0 && test[y][x] <= 6 );
+    }
+    public boolean poserTour(Tour tour) {
+
+        int caseX = (int) tour.getX();
+        int caseY = (int) tour.getY();
+
+        if (peuxPoserTour(this.epoqueActuel, tour)) {
+            depenserArgent(tour.getCout());
+            addDefense(tour);
+            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
+            tour.inflation();
             return true;
         } else {
             System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
@@ -206,6 +228,8 @@ public class Jeu {
         }
         return this.solde.get() >= tour.getCout();
     }
+
+    // preview
     public boolean peuxPoserTourCoord(int epoque, int caseX, int caseY) {
         int[][] grille = level.loadLevel(epoque);
 
@@ -217,37 +241,6 @@ public class Jeu {
         }
         return true;
 
-    }
-
-    public boolean peuxPoserPiege(int epoque, Piege piege){
-        int[][] test = level.loadLevel(epoque);
-        int x = (int) piege.getX();
-        int y = (int) piege.getY();
-
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
-
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
-        }
-        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
-    }
-
-    public boolean peuxPoserPiegeCoord(int epoque, int x, int y){
-        int[][] test = level.loadLevel(epoque);
-
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
-
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
-        }
-        return (test[y][x] > 0 && test[y][x] <= 6 );
-    }
-
-    public boolean piegeloc(int x , int y){
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
-        }
-        return true;
     }
 
     public void activerUltime(){
