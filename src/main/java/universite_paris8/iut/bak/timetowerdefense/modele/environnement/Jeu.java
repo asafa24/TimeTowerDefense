@@ -196,7 +196,7 @@ public class Jeu {
             case 1 -> {
                 switch (id) {
                     case 0:
-                        return new GolemSable(route);
+                        return new Momie(route);
                     case 1:
                         return new GolemSable(route);
                     case 2:
