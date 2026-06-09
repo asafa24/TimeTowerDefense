@@ -9,6 +9,7 @@ import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Momie;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Velociraptor;
@@ -54,9 +55,9 @@ public class Jeu {
         this.level = new Level();
         this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
-        this.epoqueActuel = 0;
+        this.epoqueActuel = 1;
         this.frame = 0;
-        this.route = level.calculerChemin(0, new Point2D(0, 9), new Point2D(10, 1));
+        this.route = level.calculerChemin(epoqueActuel, ennemiDepart(epoqueActuel), ennemiArrivee(epoqueActuel));
         this.vague = new Vague();
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
@@ -158,6 +159,55 @@ public class Jeu {
         }
         return false;
     }
+
+    public Point2D ennemiDepart(int epoque){
+        switch(epoque){
+            case 0: return new Point2D(0, 9);
+            case 1: return new Point2D(10, 10);
+        }
+
+        return null;
+    }
+
+    public Point2D ennemiArrivee(int epoque){
+        switch (epoque){
+            case 0: return new Point2D(10, 1);
+            case 1: return new Point2D(0, 2);
+        }
+
+        return null;
+    }
+
+    private Ennemi creerEnnemi(int id ) {
+        switch (this.epoqueActuel){
+            case 0 -> {
+                switch (id) {
+                    case 0:
+                        return new Compsognathus(route);
+                    case 1:
+                        return new Velociraptor(route);
+                    case 2:
+                        return new Triceratops(route);
+                    default:
+                        return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
+                }
+            }
+            case 1 -> {
+                switch (id) {
+                    case 0:
+                        return new Momie(route);
+                    case 1:
+                        return new Velociraptor(route);
+                    case 2:
+                        return new Triceratops(route);
+                    default:
+                        return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
+                }
+            }
+        }
+        return null;
+    }
+
 
     public void preview(double x, double y) {
         preview.update(x,y,id);
@@ -292,21 +342,6 @@ public class Jeu {
         }
     }
 
-    private Ennemi creerEnnemi(int id ) {
-        switch (this.epoqueActuel){
-            default -> {
-                switch (id) {
-                    case 0:
-                        return new Compsognathus(route);
-                    case 1:
-                        return new Velociraptor(route);
-                    case 2:
-                        return new Triceratops(route);
-                    default:
-                        return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
-                }
-            }
-        }
-    }
+
 
 }

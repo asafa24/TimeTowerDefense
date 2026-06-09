@@ -15,10 +15,6 @@ public class Velociraptor extends Ennemi {
     }
 
 
-
-
-
-
     public void avancer(){
         super.avancer();
         if (tick%30 == 0 && super.getVitesseBase() > VITTESSE_MIN){

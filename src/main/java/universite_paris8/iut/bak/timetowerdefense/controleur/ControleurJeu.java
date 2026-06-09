@@ -118,7 +118,7 @@ public class ControleurJeu implements Initializable {
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview());
         EcouteEntite ecouteEntite = new EcouteEntite(vueEntite);
         this.uiVue = new UIVue();
-        afficherButton(0);
+        afficherButton(jeu.getEpoqueActuel());
 
         jeu.getEnnemi().addListener(ecouteEntite);
         jeu.getDefenses().addListener(ecouteEntite);
@@ -152,7 +152,7 @@ public class ControleurJeu implements Initializable {
         initAnimation();
         gameLoop.play();
 
-        int[][] donneesMap = level.loadLevel(0);
+        int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
         vueTerrain.drawMap(donneesMap);
 
         paneMain.setOnMouseMoved(event -> {
