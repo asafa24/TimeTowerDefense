@@ -60,8 +60,8 @@ public class Ennemi extends Entite implements Destructible {
 
     public Ennemi(int x , int y, List<Point2D> chemin) {
         super();
-        super.setX(0);
-        super.setY(64 * 9);
+        super.setX(x);
+        super.setY(y);
         this.pv = 25;
         this.vitesseBase = 2;
         this.vitesseActuelle = 2;
