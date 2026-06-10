@@ -35,30 +35,8 @@ public abstract class Tour extends Defense {
         this.niveau = new SimpleIntegerProperty(0);
     }
 
-    public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
-        if (this.isStun) {
-            dureeStun--;
-            if (dureeStun <= 0) {
-                this.isStun = false;
-                System.out.println("Plus stun hehe");
-            }
-            return;
-        }
+    public abstract void agir(List<Ennemi> ennemis, List<Projectile> projectiles);
 
-        if(compteurTir < cadence){
-            compteurTir++;
-            return;
-        }
-
-        Ennemi cible = trouverCible(ennemis);
-        if(cible != null){
-            double departX = (getX() * 64) + 32;
-            double departY = (getY() * 64) + 32;
-            Projectile tir = new Projectile(departX, departY, cible, degats);
-            projectiles.add(tir);
-            compteurTir = 0;
-        }
-    }
 
     public Ennemi trouverCible(List<Ennemi> ennemis){
         Ennemi ciblePlusAvancee = null;
@@ -126,4 +104,25 @@ public abstract class Tour extends Defense {
     }
 
     public abstract void inflation();
+    public boolean isStunOuPas(){
+        if (this.dureeStun > 0) {
+            this.dureeStun-- ;
+            if (getDureeStun() <= 0) {
+                this.isStun = false ;
+                System.out.println("Plus stun hehe");
+            }
+        }
+        return isStun;
+    }
+
+    public void setDureeStun(int dureeStun) {
+        this.dureeStun = dureeStun;
+    }
+    public void modifStun(Boolean stun){
+        this.isStun = stun;
+    }
+
+    public int getDureeStun() {
+        return dureeStun;
+    }
 }

@@ -19,6 +19,9 @@ public abstract class TourCercle extends Tour {
 
     @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {
+        if (isStunOuPas()) {
+            return;
+        }
         if(getCompteurTir() < getCadence()){
             setCompteurTir(getCompteurTir()+1);
             return;
@@ -29,13 +32,15 @@ public abstract class TourCercle extends Tour {
             double departX = (getX() * 64) + 32;
             double departY = (getY() * 64) + 32;
 
-            ProjectileCercle tir = new Caillou(departX, departY, cible, getDegats(), this.rayonExplosion);
+            Projectile tir = creerProjectile(departX, departY, cible, getDegats(), rayonExplosion);
             projectiles.add(tir);
             setCompteurTir(0);
         }
-
     }
     @Override
     public abstract void inflation();
+    protected abstract Projectile creerProjectile(double x, double y, Ennemi cible ,int degats , int rayonExplosion );
+
+
 
 }

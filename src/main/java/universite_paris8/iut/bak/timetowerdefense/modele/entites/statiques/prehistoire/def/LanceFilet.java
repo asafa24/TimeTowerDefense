@@ -19,12 +19,12 @@ public class LanceFilet extends TourStun {
     }
 
     @Override
-    protected Projectile creerProjectile(double x, double y, Ennemi cible) {
+    protected Projectile creerProjectile(double x, double y, Ennemi cible, int degats, int dureeStun) {
         ArrayList<Effet> effets = new ArrayList<>();
         effets.add(Effet.STUN);
-
         return new Filet(x, y, cible, getDegats(), getDureeStun());
     }
+
     @Override
     public void inflation(){
         cout.set((int) Math.floor(cout.get() * 1.1));
