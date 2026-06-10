@@ -414,8 +414,8 @@ public class ControleurJeu implements Initializable {
     public void setDifficulteExtreme(boolean extreme) {
         this.jeu.setModeExtreme(extreme);
         if (extreme) {
-            System.out.println("Mode Extrême ! Préparez-vous à souffrir");
-            afficherMessage("Mode Extrême ! Préparez-vous à souffrir", Color.DARKRED, 3);
+            System.out.println("Mode Extrême ! Si vous recommencez, ce sera du tout début hehe");
+            afficherMessage("Mode Extrême ! Préparez-vous", Color.DARKRED, 3);
         }
     }
 }
