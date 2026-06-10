@@ -3,7 +3,6 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.ProjectileFlechette;
 
 import java.util.List;
 

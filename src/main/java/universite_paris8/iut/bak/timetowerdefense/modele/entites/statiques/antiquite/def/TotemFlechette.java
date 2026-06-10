@@ -4,7 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.ProjectileFlechette;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.FlechetteEmpoisonne;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourPoison;
 
 public class TotemFlechette extends TourPoison {
@@ -16,7 +16,7 @@ public class TotemFlechette extends TourPoison {
 
     @Override
     protected Projectile creerProjectile(double x, double y, Ennemi cible, int degats, int dureePoison) {
-        return new ProjectileFlechette(x,y,cible,degats,dureePoison);
+        return new FlechetteEmpoisonne(x,y,cible,degats,dureePoison);
     }
 
     @Override

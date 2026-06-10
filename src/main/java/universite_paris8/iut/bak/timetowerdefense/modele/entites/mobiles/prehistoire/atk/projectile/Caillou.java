@@ -7,7 +7,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Project
 import java.util.ArrayList;
 
 public class Caillou extends ProjectileCercle {
-    public Caillou(double x, double y, Ennemi cible, int degats, int dureeEffet) {
-        super(x, y, cible, degats, dureeEffet);
+    public Caillou(double x, double y, Ennemi cible, int degats, int rayonExplosion) {
+        super(x, y, cible, degats, rayonExplosion);
     }
 }

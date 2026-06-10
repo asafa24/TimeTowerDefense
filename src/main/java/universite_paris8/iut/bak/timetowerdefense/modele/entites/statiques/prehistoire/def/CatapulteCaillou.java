@@ -7,9 +7,9 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Caillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
 
-public class CatapulteOs extends TourCercle {
+public class CatapulteCaillou extends TourCercle {
     public static IntegerProperty cout = new SimpleIntegerProperty(130);
-    public CatapulteOs(double x, double y) {
+    public CatapulteCaillou(double x, double y) {
         super(cout.get(), x, y, 40, 128, 200, 96);
     }
 

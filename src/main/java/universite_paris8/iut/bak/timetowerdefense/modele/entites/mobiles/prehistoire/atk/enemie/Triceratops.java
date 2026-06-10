@@ -21,7 +21,6 @@ public class Triceratops extends Ennemi {
         super(150, 1, 30, chemin);
         shield = new SimpleBooleanProperty(false);
     }
-
     public BooleanProperty getShield(){
         return shield;
     }

@@ -6,9 +6,9 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Project
 
 import java.util.ArrayList;
 
-public class ProjectileFlechette extends ProjectileAEffet {
+public class FlechetteEmpoisonne extends ProjectileAEffet {
 
-    public ProjectileFlechette(double x, double y, Ennemi cible, int degats, int dureeEffet) {
+    public FlechetteEmpoisonne(double x, double y, Ennemi cible, int degats, int dureeEffet) {
         super(x, y, cible, degats, dureeEffet, initialiserEffets());
     }
 

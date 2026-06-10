@@ -23,7 +23,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteOs;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
@@ -132,7 +132,7 @@ public class ControleurJeu implements Initializable {
 
         tourUnArgent.textProperty().bind(MiniVolcan.coutPropertyArbre().asString());
         tourDeuxArgent.textProperty().bind(ArbreRuste.coutPropertyArbre().asString());
-        tourTroisArgent.textProperty().bind(CatapulteOs.coutPropertyArbre().asString());
+        tourTroisArgent.textProperty().bind(CatapulteCaillou.coutPropertyArbre().asString());
         tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
 
         labelMessageSys.setVisible(false);
@@ -292,7 +292,7 @@ public class ControleurJeu implements Initializable {
 
                     }
                     case 3 -> {
-                        this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
+                        this.tourSelectionne = new CatapulteCaillou(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }
@@ -322,7 +322,7 @@ public class ControleurJeu implements Initializable {
 
                     }
                     case 3 -> {
-                        this.tourSelectionne = new CatapulteOs(xGrille, yGrille);
+                        this.tourSelectionne = new CatapulteCaillou(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }
