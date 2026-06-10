@@ -138,7 +138,7 @@ public class ControleurJeu implements Initializable {
         tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
 
         labelMessageSys.setVisible(false);
-        jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + nouv + " en approche", Color.GOLD, 3));
+        jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue()+1) + " en approche", Color.GOLD, 3));
 
         // Initialisation DU CERCLE de la portee
         this.cerclePortee = new Circle();
