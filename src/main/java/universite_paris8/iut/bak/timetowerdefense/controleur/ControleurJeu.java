@@ -224,7 +224,6 @@ public class ControleurJeu implements Initializable {
                 System.out.println("Selection annulée");
                 cacherUI();
             }
-            default -> System.out.println(event.getCode().getName());
         }
     }
 
@@ -410,5 +409,13 @@ public class ControleurJeu implements Initializable {
             fadeOut.play();
         });
         pause.play();
+    }
+
+    public void setDifficulteExtreme(boolean extreme) {
+        this.jeu.setModeExtreme(extreme);
+        if (extreme) {
+            System.out.println("Mode Extrême ! Préparez-vous à souffrir");
+            afficherMessage("Mode Extrême ! Préparez-vous à souffrir", Color.DARKRED, 3);
+        }
     }
 }

@@ -48,6 +48,7 @@ public class Jeu {
     private Ultime ultimeActuelle;
     private IntegerProperty compteurKill;
 
+    private boolean modeExtreme = false;
 
     public Jeu() {
         this.ennemis = FXCollections.observableArrayList();
@@ -337,5 +338,10 @@ public class Jeu {
     }
 
 
-
+    public void setModeExtreme(boolean extreme) {
+        this.modeExtreme = extreme;
+    }
+    public boolean isModeExtreme() {
+        return this.modeExtreme;
+    }
 }
