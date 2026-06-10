@@ -3,25 +3,24 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Caillou;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.ProjectileFlechette;
 
 import java.util.List;
 
-public abstract class TourCercle extends Tour {
-    private int rayonExplosion;
+public abstract class TourPoison extends Tour {
+    private int dureePoison;
+    public static final int PRIX_ACHAT = 125;
 
-    public TourCercle(int cout ,double x, double y, int degats, int portee, int cadence, int rayonExplosion){
+    public TourPoison(int cout, double x, double y, int degats, int portee, int cadence, int dureePoison){
         super(cout, x, y, degats, portee, cadence);
-        this.rayonExplosion = rayonExplosion;
+        this.dureePoison = dureePoison;
     }
 
-
-    @Override
-    public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {
+    public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if (isStunOuPas()) {
             return;
         }
+
         if(getCompteurTir() < getCadence()){
             setCompteurTir(getCompteurTir()+1);
             return;
@@ -32,15 +31,18 @@ public abstract class TourCercle extends Tour {
             double departX = (getX() * 64) + 32;
             double departY = (getY() * 64) + 32;
 
-            Projectile tir = creerProjectile(departX, departY, cible, getDegats(), rayonExplosion);
+            Projectile tir = creerProjectile(departX, departY, cible, 2, this.dureePoison);
             projectiles.add(tir);
+
             setCompteurTir(0);
         }
     }
-    @Override
+
+    public int getDureePoison() {
+        return dureePoison;
+    }
+    protected abstract Projectile creerProjectile(double x, double y, Ennemi cible, int degats, int dureePoison);
+
+
     public abstract void inflation();
-    protected abstract Projectile creerProjectile(double x, double y, Ennemi cible ,int degats , int rayonExplosion );
-
-
-
 }

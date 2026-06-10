@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie;
 
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;

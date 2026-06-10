@@ -4,19 +4,25 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectileStun extends Projectile {
+public class ProjectileAEffet extends Projectile {
     private int dureeStun;
-    public ProjectileStun(double x, double y, Ennemi cible, int degats, int stun){
+    private ArrayList<Effet> effets;
+
+    public ProjectileAEffet(double x, double y, Ennemi cible, int degats, int stun , ArrayList<Effet> listeEffet){
         super(x, y, cible, degats);
         this.dureeStun = stun ;
+        this.effets = listeEffet ;
     }
 
     @Override
     public void appliquerImpact(List<Ennemi> ennemis) {
-            getCible().appliqueEffet(Effet.STUN);
-            getCible().recevoirDegats(getDegats());
+        for (int i = 0; i < effets.size() ; i++ ){
+            getCible().appliqueEffet(effets.get(i));
+        }
+        getCible().recevoirDegats(getDegats());
     }
 
     public int getDureeStun() {
