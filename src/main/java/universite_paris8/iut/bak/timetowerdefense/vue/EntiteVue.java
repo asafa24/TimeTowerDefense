@@ -157,8 +157,11 @@ public class EntiteVue {
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/flechette.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
+            img.rotateProperty().bind(((Projectile) e).getRotation());
             //img.setScaleX(-1);
             sprite = img;
+
+
         }
         if(e instanceof Filet){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));

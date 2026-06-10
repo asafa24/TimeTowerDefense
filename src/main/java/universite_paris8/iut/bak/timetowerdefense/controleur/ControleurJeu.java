@@ -123,6 +123,7 @@ public class ControleurJeu implements Initializable {
 
         jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
             this.changerNiveau(nouvelleEpoque.intValue());
+            System.out.println("oui");
         });
 
         jeu.getEnnemi().addListener(ecouteEntite);

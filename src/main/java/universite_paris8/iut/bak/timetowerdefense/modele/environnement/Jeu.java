@@ -162,6 +162,10 @@ public class Jeu {
                 if (delay > 600) {
                     delay = 0;
                     if (vague.vagueSuivante()){
+
+
+                    }
+                    else{
                         vague.levelSuiv();
                         prochaineEpoque();
                     }
