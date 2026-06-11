@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
@@ -346,10 +347,9 @@ public class ControleurJeu implements Initializable {
                         }
                     }
                     case 4 -> {
-                        this.tourSelectionne = new LanceFilet(xGrille, yGrille);
+                        this.tourSelectionne = new PyramideShooteuse(150, xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
                     }
 
                 }
