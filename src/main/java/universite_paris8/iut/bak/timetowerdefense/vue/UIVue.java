@@ -1,18 +1,57 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
+import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundRepeat;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
+
+import java.text.BreakIterator;
 
 public class UIVue {
 
     public UIVue() {
     }
 
+
+    public StringBinding setPrixT1(int epoque, int id) {
+        switch (epoque) {
+            case 0: //  Prehistoire
+                switch (id) {
+                    case 0:
+                        return MiniVolcan.coutPropertyArbre().asString();
+                    case 1:
+                        return ArbreRuste.coutPropertyArbre().asString();
+                    case 2:
+                        return CatapulteCaillou.coutPropertyArbre().asString();
+                    case 3:
+                        return LanceFilet.coutPropertyArbre().asString();
+                }
+                break;
+
+            case 1: // epoque Antiquité
+                switch (id) {
+                    case 0:
+                        return MiniVolcan.coutPropertyArbre().asString();
+                    case 1:
+                        return TotemFlechette.coutPropertyTotemFlechette().asString();
+                    case 2:
+                        return CatapulteJAR.coutPropertyCatapulteJar().asString();
+                    case 3:
+                        return LanceFilet.coutPropertyArbre().asString();
+                }
+                break;
+        }
+        return null;
+    }
     public ImageView setImageT1(int epoque, int button){
         String epoque_txt;
         switch (epoque){
@@ -36,16 +75,37 @@ public class UIVue {
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void setImageEtNom(ImageView p_image, Tour tour, Label p_nom){
-        if (tour instanceof CatapulteCaillou) {
-            p_nom.setText("Lance-pierre");
-            p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png"))));
-        } else if (tour instanceof LanceFilet) {
-            p_nom.setText("Filetoorr");
-            p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png"))));
-        } else {
-            p_nom.setText("Arbre rustre");
-            p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png"))));
+    public void setImageEtNom(ImageView p_image, Tour tour, Label p_nom , int epoqueActuelle){
+        switch (epoqueActuelle){
+            case 0:
+                if (tour instanceof CatapulteCaillou) {
+                p_nom.setText("Lance-pierre");
+                p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png"))));
+                } else if (tour instanceof LanceFilet) {
+                    p_nom.setText("Filetoorr");
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png"))));
+                } else {
+                    p_nom.setText("Arbre rustre");
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png"))));
+                }
+                break;
+            case 1:
+                if (tour instanceof TotemFlechette) {
+                    p_nom.setText("Totem empoisonné");
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piegeFlechette.png"))));
+                } else if (tour instanceof CatapulteJAR) {
+                    p_nom.setText("CataJar");
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png"))));
+                } else {
+                    p_nom.setText("Pyramidor");
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png"))));
+                }
+
         }
+
+
+
+
+
     }
 }

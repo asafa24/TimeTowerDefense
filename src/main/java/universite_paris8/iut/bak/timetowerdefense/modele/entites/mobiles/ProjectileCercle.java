@@ -5,7 +5,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 
 import java.util.List;
 
-public class ProjectileCercle extends Projectile {
+public abstract class ProjectileCercle extends Projectile {
     private int rayonExplosion;
 
     public ProjectileCercle(double x, double y, Ennemi cible, int degats, int rayonExplosion){
@@ -29,6 +29,4 @@ public class ProjectileCercle extends Projectile {
     public int getRayonExplosion() {
         return rayonExplosion;
     }
-
-
 }

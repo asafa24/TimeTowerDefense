@@ -128,6 +128,7 @@ public class Jeu {
                     if (p.aAtteintCible()) {
                         p.appliquerImpact(ennemis);
                         projectiles.remove(i);
+                        //ici gemini
                         continue;
                     }
                     p.deplacer();

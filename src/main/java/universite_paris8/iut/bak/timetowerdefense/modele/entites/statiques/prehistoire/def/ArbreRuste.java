@@ -24,8 +24,8 @@ public class ArbreRuste extends TourNormal {
     public static IntegerProperty coutPropertyArbre() {
         return cout;
     }
-    protected Projectile creerProjectile(double x, double y, Ennemi cible) {
-        return new Fleche(x,y,cible);
+    protected Projectile creerProjectile(double x, double y, Ennemi cible ) {
+        return new Fleche(x,y,cible,this.getDegats());
     }
 
 }

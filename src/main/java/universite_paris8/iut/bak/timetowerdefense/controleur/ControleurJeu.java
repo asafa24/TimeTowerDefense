@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
@@ -135,10 +136,12 @@ public class ControleurJeu implements Initializable {
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
-        tourUnArgent.textProperty().bind(MiniVolcan.coutPropertyArbre().asString());
-        tourDeuxArgent.textProperty().bind(ArbreRuste.coutPropertyArbre().asString());
-        tourTroisArgent.textProperty().bind(CatapulteCaillou.coutPropertyArbre().asString());
-        tourQuatreArgent.textProperty().bind(LanceFilet.coutPropertyArbre().asString());
+
+        // gere les bind pour les prix des tours
+        this.afficherPrix(jeu.getEpoqueActuel());
+
+
+
 
         labelMessageSys.setVisible(false);
         jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue()+1) + " en approche", Color.GOLD, 3));
@@ -195,6 +198,13 @@ public class ControleurJeu implements Initializable {
         tourDeux.setGraphic(uiVue.setImageT1(epoque, 1));
         tourTrois.setGraphic(uiVue.setImageT1(epoque, 2));
         tourQuatre.setGraphic(uiVue.setImageT1(epoque, 3));
+    }
+    public void afficherPrix(int epoque ){
+        tourUnArgent.textProperty().bind(uiVue.setPrixT1(epoque,0));
+        tourDeuxArgent.textProperty().bind(uiVue.setPrixT1(epoque,1));
+        tourTroisArgent.textProperty().bind(uiVue.setPrixT1(epoque,2));
+        tourQuatreArgent.textProperty().bind(uiVue.setPrixT1(epoque,3));
+
     }
 
     public void recupererPosition(MouseEvent e){
@@ -330,7 +340,7 @@ public class ControleurJeu implements Initializable {
 
                     }
                     case 3 -> {
-                        this.tourSelectionne = new CatapulteCaillou(xGrille, yGrille);
+                        this.tourSelectionne = new CatapulteJAR(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }
@@ -432,6 +442,7 @@ public class ControleurJeu implements Initializable {
         vueTerrain.drawMap(donneesMap, jeu.getEpoqueActuel());
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
         afficherButton(jeu.getEpoqueActuel());
+        afficherPrix(jeu.getEpoqueActuel());
     }
     public void changerNiveauForcing(int nb){
         int[][] donneesMap = level.loadLevel(nb);
@@ -441,5 +452,6 @@ public class ControleurJeu implements Initializable {
         vueTerrain.drawMap(donneesMap, nb);
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), nb);
         afficherButton(nb);
+        afficherPrix(jeu.getEpoqueActuel());
     }
 }
