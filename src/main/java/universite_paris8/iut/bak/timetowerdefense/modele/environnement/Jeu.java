@@ -10,7 +10,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Momie;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Tyrannosaurus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Velociraptor;
@@ -29,7 +29,7 @@ public class Jeu {
     private List<Point2D> route ;
 
     private Level level;
-    private int epoqueActuel;
+    private IntegerProperty epoqueActuel;
     private Preview preview = new  Preview(0.0,0.0,this,-1);
 
     private IntegerProperty solde;
@@ -52,17 +52,29 @@ public class Jeu {
         this.level = new Level();
         this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
-        this.epoqueActuel = 1;
+        this.epoqueActuel = new SimpleIntegerProperty(0);
         this.frame = 0;
-        this.route = level.calculerChemin(epoqueActuel, ennemiDepart(epoqueActuel), ennemiArrivee(epoqueActuel));
+        this.route = level.calculerChemin(epoqueActuel.get(), ennemiDepart(epoqueActuel.get()), ennemiArrivee(epoqueActuel.get()));
         this.vague = new Vague();
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
 
     }
+
+    public void newRoute() {
+        this.route = level.calculerChemin(epoqueActuel.get(), ennemiDepart(epoqueActuel.get()), ennemiArrivee(epoqueActuel.get()));
+    }
+
     public int getEpoqueActuel() {
+        return epoqueActuel.get();
+    }
+    public IntegerProperty getEpoqueActuelProperty() {
         return epoqueActuel;
+    }
+
+    public void setEpoqueActuel(int epoqueActuel) {
+        this.epoqueActuel.set(epoqueActuel);
     }
 
     public Vague getVague() {
@@ -77,6 +89,12 @@ public class Jeu {
     }
     public void removeEnnemi(Ennemi ennemi) {
         ennemis.remove(ennemi);
+    }
+    public void nuke(){
+        ennemis.clear();
+        defenses.clear();
+        projectiles.clear();
+
     }
 
     public ObservableList<Defense> getDefenses() {
@@ -143,7 +161,14 @@ public class Jeu {
             } else {
                 if (delay > 600) {
                     delay = 0;
-                    vague.vagueSuivante();
+                    if (vague.vagueSuivante()){
+
+
+                    }
+                    else{
+                        vague.levelSuiv();
+                        prochaineEpoque();
+                    }
                     if (delaySpawnMob > 16) delaySpawnMob -= 8;
                 } else {
                     if (vague.getQueue().isEmpty()) {
@@ -176,7 +201,7 @@ public class Jeu {
     }
 
     private Ennemi creerEnnemi(int id ) {
-        switch (this.epoqueActuel){
+        switch (this.epoqueActuel.get()){
             case 0 -> {
                 switch (id) {
                     case 0:
@@ -214,7 +239,7 @@ public class Jeu {
         int caseX = (int) (piege.getX()) ;
         int caseY = (int) (piege.getY())  ;
 
-        if (peuxPoserPiege(this.epoqueActuel, piege)) {
+        if (peuxPoserPiege(this.epoqueActuel.get(), piege)) {
             depenserArgent(piege.getCout());
             addDefense(piege);
             System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
@@ -237,7 +262,7 @@ public class Jeu {
         return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
     }
     public boolean peuxPoserPiegeCoord(int x, int y){
-        int[][] test = level.loadLevel(epoqueActuel);
+        int[][] test = level.loadLevel(epoqueActuel.get());
 
         if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
 
@@ -251,7 +276,7 @@ public class Jeu {
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
 
-        if (peuxPoserTour(this.epoqueActuel, tour)) {
+        if (peuxPoserTour(this.epoqueActuel.get(), tour)) {
             depenserArgent(tour.getCout());
             addDefense(tour);
             System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
@@ -278,7 +303,7 @@ public class Jeu {
 
     // preview
     public boolean peuxPoserTourCoord( int caseX, int caseY) {
-        int[][] grille = level.loadLevel(epoqueActuel);
+        int[][] grille = level.loadLevel(epoqueActuel.get());
 
         if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
         if (grille[caseY][caseX] != 0) return false;
@@ -323,12 +348,12 @@ public class Jeu {
     }
 
     public void prochaineEpoque(){
-        this.epoqueActuel++;
+        this.epoqueActuel.set(epoqueActuel.get() + 1);
     }
 
     public void changerEpoque(int epoque){
         if(epoque >= 0 && epoque < 5){
-            this.epoqueActuel = epoque;
+            this.epoqueActuel.set(epoque);
         }
     }
 

@@ -122,6 +122,11 @@ public class ControleurJeu implements Initializable {
         this.uiVue = new UIVue();
         afficherButton(jeu.getEpoqueActuel());
 
+        jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
+            this.changerNiveau(nouvelleEpoque.intValue());
+            System.out.println("oui");
+        });
+
         jeu.getEnnemi().addListener(ecouteEntite);
         jeu.getDefenses().addListener(ecouteEntite);
         jeu.getProjectiles().addListener(ecouteEntite);
@@ -155,7 +160,7 @@ public class ControleurJeu implements Initializable {
         gameLoop.play();
 
         int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
-        vueTerrain.drawMap(donneesMap, 1);
+        vueTerrain.drawMap(donneesMap, jeu.getEpoqueActuel());
 
         paneMain.setOnMouseMoved(event -> {
             recupererPosition(event);
@@ -222,6 +227,9 @@ public class ControleurJeu implements Initializable {
                 this.typeDefenseSelectionnee = 0;
                 System.out.println("Selection annulée");
                 cacherUI();
+            }
+            case M ->{
+                changerNiveauForcing(1);
             }
         }
     }
@@ -416,5 +424,23 @@ public class ControleurJeu implements Initializable {
             System.out.println("Mode Extrême ! Si vous recommencez, ce sera du tout début hehe");
             afficherMessage("Mode Extrême ! Préparez-vous", Color.DARKRED, 3);
         }
+    }
+
+    public void changerNiveau(int nb){
+        int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
+        jeu.nuke();
+        jeu.newRoute();
+        vueTerrain.drawMap(donneesMap, jeu.getEpoqueActuel());
+        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
+        afficherButton(jeu.getEpoqueActuel());
+    }
+    public void changerNiveauForcing(int nb){
+        int[][] donneesMap = level.loadLevel(nb);
+        jeu.setEpoqueActuel(nb);
+        jeu.nuke();
+        jeu.newRoute();
+        vueTerrain.drawMap(donneesMap, nb);
+        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), nb);
+        afficherButton(nb);
     }
 }

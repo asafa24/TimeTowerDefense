@@ -16,7 +16,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.FlechetteEmpoisonne;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Momie;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.Compsognathus;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Tyrannosaurus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Velociraptor;
@@ -157,8 +157,11 @@ public class EntiteVue {
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/flechette.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
+            img.rotateProperty().bind(((Projectile) e).getRotation());
             //img.setScaleX(-1);
             sprite = img;
+
+
         }
         if(e instanceof Filet){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
