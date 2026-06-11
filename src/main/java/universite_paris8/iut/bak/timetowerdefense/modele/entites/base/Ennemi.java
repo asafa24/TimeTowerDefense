@@ -21,11 +21,16 @@ public class Ennemi extends Entite implements Destructible {
     private int dureeStunRestante = 0;
     private int dureeSlowRestante = 0;
     private int dureeBrulageRestante = 0;
-    private  boolean shield = false;
+    private boolean shield = false;
 
     private List<Point2D> chemin;
     private int etapeActuelle;
     private final int TILE_SIZE = 64;
+
+    private int degatsSurMur = 10;
+    private int cadenceAttaque = 60;
+    private int compteurAttaque = 0;
+    private boolean estBloque = false; // ➔ NOUVEAU
 
     public Ennemi(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y);
@@ -40,6 +45,7 @@ public class Ennemi extends Entite implements Destructible {
         this.pvProp = new SimpleDoubleProperty(pv);
         this.direction = new SimpleIntegerProperty(-1);
     }
+
     public Ennemi(int pv, double vitesseBase, int recompense, List<Point2D> chemin) {
         super();
         super.setX(0);
@@ -55,8 +61,6 @@ public class Ennemi extends Entite implements Destructible {
         this.pvProp = new SimpleDoubleProperty(pv);
         this.direction = new SimpleIntegerProperty(-1);
     }
-
-
 
     public Ennemi(int x , int y, List<Point2D> chemin) {
         super();
@@ -94,6 +98,11 @@ public class Ennemi extends Entite implements Destructible {
             this.vitesseActuelle = this.vitesseBase;
         }
 
+        // ➔ NOUVEAU : On coupe le mouvement s'il y a un mur
+        if (this.estBloque) {
+            return;
+        }
+
         if (chemin == null || etapeActuelle >= chemin.size()) return;
 
         Point2D caseCible = chemin.get(etapeActuelle);
@@ -126,7 +135,29 @@ public class Ennemi extends Entite implements Destructible {
         this.pvProp.set(pv);
     }
 
-    public void agir(List<Ennemi> allies, List<Defense> defenses) {}
+    public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
+        this.estBloque = false; // On réinitialise à chaque frame
+
+        int maCaseX = (int) (getX() / 64);
+        int maCaseY = (int) (getY() / 64);
+
+        for (Defense d : defenses) {
+            if (d instanceof Destructible) {
+                if ((int) d.getX() == maCaseX && (int) d.getY() == maCaseY) {
+                    this.estBloque = true; // Il a trouvé un mur !
+
+                    if (compteurAttaque >= cadenceAttaque) {
+                        ((Destructible) d).recevoirDegats(this.degatsSurMur);
+                        compteurAttaque = 0;
+                        System.out.println(this.getClass().getSimpleName() + " tape la porte !");
+                    } else {
+                        compteurAttaque++;
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
     public boolean estMort() {
         return this.pv <= 0;
@@ -205,7 +236,6 @@ public class Ennemi extends Entite implements Destructible {
                     this.ajouterPv(((int) Math.floor(this.getPv() * 1.3)));
                     shield = true;
                 }
-
             }
         }
     }
