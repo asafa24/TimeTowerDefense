@@ -25,7 +25,7 @@ public class TotemFlechette extends TourPoison {
         super.setCout(cout.get());
     }
 
-    public static IntegerProperty coutPropertyFlechette() {
+    public static IntegerProperty coutPropertyTotemFlechette() {
         return cout;
     }
 }

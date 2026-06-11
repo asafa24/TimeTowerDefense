@@ -14,6 +14,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.FlechetteEmpoisonne;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.Jar;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Momie;
@@ -27,10 +28,14 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehist
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.MiniVolcan;
 
 import java.util.HashMap;
 
@@ -42,6 +47,7 @@ public class EntiteVue {
     private HashMap<Ennemi, Node> affichageBarre;
     private HashMap<Ennemi, Node> affichageRectangle;
     private HashMap<Ennemi, Node> affichageCapacity;
+    private HashMap<Defense, Node> affichageProj;
     public EntiteVue(Pane entityPane){
         this.entityPane = entityPane;
         this.affichageEntite = new HashMap<>();
@@ -49,6 +55,8 @@ public class EntiteVue {
         this.affichageRectangle = new HashMap<>();
         this.affichageEtoiles = new HashMap<>();
         this.affichageCapacity = new HashMap<>();
+        this.affichageProj = new HashMap<>();
+
 
     }
 
@@ -58,6 +66,7 @@ public class EntiteVue {
         Node barre_vie = null;
         Node rectangle_vie = null;
         Node capacity = null;
+        Node proj = null;
         ImageView img = null;
 
         try{
@@ -103,6 +112,7 @@ public class EntiteVue {
             }
 
 
+
             Rectangle rec = new Rectangle();
             rec.setWidth(56);
             rec.setHeight(4);
@@ -133,6 +143,43 @@ public class EntiteVue {
             if (e instanceof TotemFlechette){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piegeFlechette.png")));
             }
+            if (e instanceof PyramideShooteuse){
+                PyramideShooteuse pyramide = (PyramideShooteuse) e;
+
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piramidJ.png")));
+
+                Rectangle rec = new Rectangle();
+                rec.setHeight(6); // Épaisseur du laser
+                rec.setFill(Color.RED);
+                rec.setArcWidth(10);
+                rec.setArcHeight(10);
+
+                // 1. Positionner le départ du rectangle AU CENTRE de la tour
+                // (X de la tour * 64 + 32 pour le centre - la moitié de la hauteur du laser pour le centrer verticalement)
+                rec.translateXProperty().bind(pyramide.xProperty().multiply(64).add(32));
+                rec.translateYProperty().bind(pyramide.yProperty().multiply(64).add(32 - (rec.getHeight() / 2)));
+
+                // 2. Changer le point de pivot de la rotation pour qu'il soit au début à gauche (0, hauteur/2)
+                javafx.scene.transform.Rotate rotation = new javafx.scene.transform.Rotate();
+                rotation.setPivotX(0);
+                rotation.setPivotY(rec.getHeight() / 2);
+
+                // Lier l'angle de la rotation à la propriété du modèle
+                rotation.angleProperty().bind(pyramide.angleProperty());
+                rec.getTransforms().add(rotation);
+
+                // 3. Dynamiser la LARGEUR du rectangle pour qu'elle suive l'ennemi
+                rec.widthProperty().bind(pyramide.distanceCibleProperty());
+
+                // 4. Visibilité
+                rec.visibleProperty().bind(pyramide.atkProperty());
+
+                proj = rec;
+            }
+            if (e instanceof CatapulteJAR){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png")));
+            }
+
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;
@@ -155,7 +202,13 @@ public class EntiteVue {
             img.translateYProperty().bind(e.yProperty());
             //img.setScaleX(-1);
             sprite = img;
-
+        }
+        if (e instanceof Jar){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/jar.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            //img.setScaleX(-1);
+            sprite = img;
         }
         if(e instanceof FlechetteEmpoisonne){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/flechette.png")));
@@ -180,6 +233,14 @@ public class EntiteVue {
             img.setTranslateY(e.getY() * 64);
             sprite = img;
         }
+        if (e instanceof PorteDeSable){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
+            img.setTranslateX(e.getX() * 64);
+            img.setTranslateY(e.getY() * 64);
+            sprite = img;
+        }
+
+
     }
     catch (Exception v){
         img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
@@ -192,10 +253,13 @@ public class EntiteVue {
             entityPane.getChildren().add(capacity);
             affichageCapacity.put((Ennemi) e, capacity);
         }
-
         if (sprite != null){
             entityPane.getChildren().add(sprite);
             affichageEntite.put(e, sprite);
+        }
+        if (proj != null){
+            entityPane.getChildren().add(proj);
+            affichageProj.put((Defense) e, proj);
         }
         if (barre_vie != null  ){
             entityPane.getChildren().add(barre_vie);
@@ -214,6 +278,7 @@ public class EntiteVue {
         Node barre_vie = affichageBarre.get(e);
         Node rectangle_vie = affichageRectangle.get(e);
         Node capacity = affichageCapacity.get(e);
+        Node proj = affichageProj.get(e);
         if(sprite != null){
             entityPane.getChildren().remove(sprite);
         }
@@ -225,6 +290,9 @@ public class EntiteVue {
         }
         if (capacity !=null){
             entityPane.getChildren().remove(capacity);
+        }
+        if (proj !=null){
+            entityPane.getChildren().remove(proj);
         }
         if (e instanceof Tour) {
             HBox etoiles = affichageEtoiles.remove((Tour) e);

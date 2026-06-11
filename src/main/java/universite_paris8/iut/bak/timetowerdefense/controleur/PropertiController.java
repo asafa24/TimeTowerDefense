@@ -48,7 +48,7 @@ public class PropertiController {
         this.jeu = jeu;
         this.controleurJeu = controleurJeu;
 
-        uiVue.setImageEtNom(p_image, tour, p_nom);
+        uiVue.setImageEtNom(p_image, tour, p_nom ,jeu.getEpoqueActuel());
 
         p_lv.setText(String.valueOf(tour.getNiveau() + 1));
 
