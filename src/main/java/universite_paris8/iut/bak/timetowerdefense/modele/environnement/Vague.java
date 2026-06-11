@@ -79,6 +79,9 @@ public class Vague {
     }
     public int defiler(){
         System.out.println(queue[vague.get()].toString());
+        if (queue[vague.get()].size() == 0){
+            return -1;
+        }
         return queue[vague.get()].remove();
     }
 
