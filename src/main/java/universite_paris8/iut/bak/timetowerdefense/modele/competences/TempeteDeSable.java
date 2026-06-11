@@ -15,6 +15,7 @@ public class TempeteDeSable extends Ultime{
             e.setX(64 * 10);
             e.setY(64 * 10);
             e.setEtapeActuelle(0);
+            e.recevoirDegats(10);
         }
     }
 }
