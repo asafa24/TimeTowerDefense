@@ -42,7 +42,6 @@ public class Vague {
 
         };
 
-
         vague = new SimpleIntegerProperty(0);
         queue = new Queue[level1[level].length];
         for (int i = 0; i < level1[level].length; i++) {
@@ -54,9 +53,7 @@ public class Vague {
             vague.set(vague.get() + 1);
             return true;
         }
-
         return false;
-
     }
 
     public int getLevel() {
