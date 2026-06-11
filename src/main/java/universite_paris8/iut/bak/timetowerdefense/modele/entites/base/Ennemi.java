@@ -163,6 +163,10 @@ public class Ennemi extends Entite implements Destructible {
         return etapeActuelle;
     }
 
+    public void setEtapeActuelle(int etapeActuelle) {
+        this.etapeActuelle = etapeActuelle;
+    }
+
     public double getCentreX() {
         return this.getX() + TILE_SIZE / 2.0;
     }
@@ -171,6 +175,9 @@ public class Ennemi extends Entite implements Destructible {
         return this.getY() + TILE_SIZE / 2.0;
     }
 
+    public List<Point2D> getChemin() {
+        return chemin;
+    }
 
     public double getVitesseBase() {
         return vitesseBase;

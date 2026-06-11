@@ -8,7 +8,9 @@ import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.GolemSable;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Momie;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Triceratops;
@@ -142,6 +144,19 @@ public class Jeu {
                         System.out.println("+" + e.getRecompense() + "$");
                         this.compteurKill.set(this.compteurKill.get() + 1);
                         ennemis.remove(i);
+                        if (e instanceof Boss){
+                            vague.levelSuiv();
+                            prochaineEpoque();
+                        }
+                        if (e instanceof GolemSable){
+                            Ennemi a = new Golime(e.getX(),e.getY(),e.getChemin());
+                            a.setEtapeActuelle(e.getEtapeActuelle());
+                            addEnnemi(a);
+                            Ennemi b = new Golime(e.getX() + 20 ,e.getY() + 20 ,e.getChemin());
+                            b.setEtapeActuelle(e.getEtapeActuelle());
+                            addEnnemi(b);
+
+                        }
                         continue;
                     }
 
@@ -161,14 +176,8 @@ public class Jeu {
             } else {
                 if (delay > 600) {
                     delay = 0;
-                    if (vague.vagueSuivante()){
+                    vague.vagueSuivante();
 
-
-                    }
-                    else{
-                        vague.levelSuiv();
-                        prochaineEpoque();
-                    }
                     if (delaySpawnMob > 16) delaySpawnMob -= 8;
                 } else {
                     if (vague.getQueue().isEmpty()) {
@@ -224,6 +233,7 @@ public class Jeu {
                         return new Triceratops(route);
                     default:
                         return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
+
                 }
             }
         }
