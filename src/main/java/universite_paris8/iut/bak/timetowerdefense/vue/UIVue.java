@@ -9,6 +9,7 @@ import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
@@ -46,7 +47,7 @@ public class UIVue {
                     case 2:
                         return CatapulteJAR.coutPropertyCatapulteJar().asString();
                     case 3:
-                        return LanceFilet.coutPropertyArbre().asString();
+                        return PyramideShooteuse.coutPropertyPyramideShooteuse().asString();
                 }
                 break;
         }

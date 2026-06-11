@@ -347,13 +347,13 @@ public class ControleurJeu implements Initializable {
                         }
                     }
                     case 4 -> {
-                        this.tourSelectionne = new PyramideShooteuse(150, xGrille, yGrille);
+                        this.tourSelectionne = new PyramideShooteuse(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                    }
+                        }
 
+                    }
                 }
-                break;
 
         }
         this.typeDefenseSelectionnee = 0;

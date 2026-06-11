@@ -1,5 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
@@ -14,8 +16,11 @@ public class PyramideShooteuse extends Tour {
     private int degatsBase;
     private int tick = 0;
 
-    public PyramideShooteuse(int cout, double x, double y) {
-        super(cout, x, y, 1, 150, 1);
+    public static IntegerProperty cout = new SimpleIntegerProperty(150);
+
+
+    public PyramideShooteuse(double x, double y) {
+        super(cout.get() , x, y, 1, 150, 1);
         this.degatsBase = 1;
         this.degatsMax = 30;
         this.tempsFocus = 0;
@@ -61,7 +66,8 @@ public class PyramideShooteuse extends Tour {
 
     @Override
     public void inflation() {
-
+        cout.set((int) Math.floor(cout.get() * 1.1));
+        super.setCout(cout.get());
     }
 
     private boolean horsDePortee(Ennemi e) {
@@ -72,4 +78,9 @@ public class PyramideShooteuse extends Tour {
     public Ennemi getCibleActuelle() {
         return cibleActuelle;
     }
+
+    public static IntegerProperty coutPropertyPyramideShooteuse() {
+        return cout;
+    }
+
 }
