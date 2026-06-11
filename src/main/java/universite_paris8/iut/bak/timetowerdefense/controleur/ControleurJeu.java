@@ -21,10 +21,10 @@ import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
@@ -101,17 +101,12 @@ public class ControleurJeu implements Initializable {
     private Pane zoneStats;
     @FXML
     private Label tourUnArgent;
-    @FXML
-    private Label tourDeuxArgent;
-    @FXML
-    private Label tourTroisArgent;
-    @FXML
-    private Label tourQuatreArgent;
-    @FXML
-    private Circle cerclePortee;
+    @FXML private Label tourDeuxArgent;
+    @FXML private Label tourTroisArgent;
+    @FXML private Label tourQuatreArgent;
+    @FXML private Circle cerclePortee;
 
-    @FXML
-    private Label labelMessageSys;
+    @FXML private Label labelMessageSys;
 
 
     @Override

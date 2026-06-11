@@ -29,7 +29,6 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
@@ -233,7 +232,7 @@ public class EntiteVue {
             img.setTranslateY(e.getY() * 64);
             sprite = img;
         }
-        if (e instanceof PorteDeSable){
+        if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege.PorteDeSable){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);

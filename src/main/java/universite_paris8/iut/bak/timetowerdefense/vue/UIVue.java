@@ -41,7 +41,7 @@ public class UIVue {
             case 1: // epoque Antiquité
                 switch (id) {
                     case 0:
-                        return MiniVolcan.coutPropertyArbre().asString();
+                        return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege.PorteDeSable.coutPropertyPorteSable().asString();
                     case 1:
                         return TotemFlechette.coutPropertyTotemFlechette().asString();
                     case 2:
@@ -99,7 +99,7 @@ public class UIVue {
                     p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png"))));
                 } else {
                     p_nom.setText("Pyramidor");
-                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png"))));
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piramidJ.png"))));
                 }
 
         }
