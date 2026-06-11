@@ -14,7 +14,7 @@ public class TempeteDeSable extends Ultime{
         for(Ennemi e : ennemis) {
             e.setX(64 * 10);
             e.setY(64 * 10);
-            e.retourAuSpawn();
+            e.setEtapeActuelle(0);
         }
     }
 }
