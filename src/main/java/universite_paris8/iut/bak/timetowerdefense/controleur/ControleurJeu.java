@@ -11,11 +11,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
@@ -107,6 +109,9 @@ public class ControleurJeu implements Initializable {
     @FXML private Circle cerclePortee;
 
     @FXML private Label labelMessageSys;
+
+    @FXML private ScrollPane paneGlossaire;
+    @FXML private VBox contenuGlossaire;
 
 
     @Override
@@ -453,4 +458,52 @@ public class ControleurJeu implements Initializable {
         afficherButton(nb);
         afficherPrix(jeu.getEpoqueActuel());
     }
-}
+
+    @FXML
+    public void toggleGlossaire() {
+        if (paneGlossaire.isVisible()) {
+            paneGlossaire.setVisible(false);
+        } else {
+            actualiserGlossaire();
+            paneGlossaire.setVisible(true);
+        }
+    }
+
+        private void actualiserGlossaire() {
+            contenuGlossaire.getChildren().clear();
+            int epoque = jeu.getEpoqueActuel();
+
+            Label titre = new Label("GLOSSAIRE - ÉPOQUE " + epoque);
+            titre.setTextFill(Color.GOLD);
+            titre.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
+            contenuGlossaire.getChildren().add(titre);
+
+            switch (epoque) {
+                case 0:
+                    ajouterEntreeGlossaire("Arbre Rustique", "Tour basique infligeant des dégâts modérés.", Color.WHITE);
+                    ajouterEntreeGlossaire("Mini Volcan", "Piège infligeant des dégâts de zone.", Color.WHITE);
+                    ajouterEntreeGlossaire("T-Rex (Boss)", "Étourdit vos défenses avec son rugissement !", Color.ORANGE);
+                    // reste de tes mobs de l'époque 0 ici
+                    break;
+                case 1:
+                    ajouterEntreeGlossaire("Pyramide Shooteuse", "Dégâts continus qui augmentent sur une même cible.", Color.WHITE);
+                    ajouterEntreeGlossaire("Mur de Sable", "Piège bloquant les ennemis.", Color.WHITE);
+                    ajouterEntreeGlossaire("Golem de Sable", "Se divise en deux Golimes à sa mort.", Color.ORANGE);
+                    // reste de tes mobs de l'époque 1 ici
+                    break;
+            }
+        }
+
+        private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
+            Label lblNom = new Label("• " + nom);
+            lblNom.setTextFill(couleurTitre);
+            lblNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+            Label lblDesc = new Label(description);
+            lblDesc.setTextFill(Color.LIGHTGRAY);
+            lblDesc.setWrapText(true);
+
+            VBox entree = new VBox(2, lblNom, lblDesc);
+            contenuGlossaire.getChildren().add(entree);
+        }
+    }

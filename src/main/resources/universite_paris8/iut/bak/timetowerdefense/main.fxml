@@ -52,6 +52,13 @@
                </padding>
             </VBox>
          </right>
+               <left>
+                  <Button text="📖 GLOSSAIRE" onAction="#toggleGlossaire" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" BorderPane.alignment="TOP_LEFT">
+                     <BorderPane.margin>
+                        <Insets top="10.0" left="10.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </left>
 
                <bottom>
             <HBox fx:id="boutonBox" alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" BorderPane.alignment="CENTER">
@@ -97,5 +104,9 @@
             <Font name="DejaVu Sans Bold" size="38.0" />
          </font>
       </Label>
+      <ScrollPane fx:id="paneGlossaire" visible="false" maxWidth="450.0" maxHeight="350.0" style="-fx-background-color: transparent; -fx-background: rgba(0,0,0,0.85); -fx-padding: 10;">
+         <VBox fx:id="contenuGlossaire" spacing="15.0" alignment="TOP_LEFT">
+         </VBox>
+      </ScrollPane>
    </children>
 </StackPane>
