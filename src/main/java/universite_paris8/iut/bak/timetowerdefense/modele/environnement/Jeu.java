@@ -145,7 +145,7 @@ public class Jeu {
                     if (e.estMort()) {
                         ajouterArgent(e.getRecompense());
                         System.out.println("+" + e.getRecompense() + "$");
-                        this.compteurKill.set(this.compteurKill.get() + 50);
+                        this.compteurKill.set(this.compteurKill.get() + 1);
                         ennemis.remove(i);
                         if (e instanceof Boss){
                             vague.levelSuiv();
