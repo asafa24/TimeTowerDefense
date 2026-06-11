@@ -11,11 +11,11 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourS
 import java.util.List;
 
 public class LanceFilet extends TourStun {
-    public static IntegerProperty cout = new SimpleIntegerProperty(130);
+    public static IntegerProperty cout = new SimpleIntegerProperty(125);
 
 
     public LanceFilet(double x, double y) {
-        super(100, x, y, 5, 150, 70, 60); //
+        super(cout.get(), x, y, 5, 150, 70, 60);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class PyramideShooteuse extends Tour {
     private BooleanProperty atk = new SimpleBooleanProperty(false);
     private javafx.beans.property.DoubleProperty distanceCible = new javafx.beans.property.SimpleDoubleProperty(0);
 
-    public static IntegerProperty cout = new SimpleIntegerProperty(150);
+    public static IntegerProperty cout = new SimpleIntegerProperty(140);
 
 
     public PyramideShooteuse(double x, double y) {
@@ -40,7 +40,6 @@ public class PyramideShooteuse extends Tour {
 
     // 2. Mets à jour la distance dans ta méthode setAngle() (ou crée une méthode dédiée)
     public void setAngle() {
-        // Calcul basé sur les centres (pour être raccord avec ton horsDePortee)
         double tourX = this.getX() * 64 + 32;
         double tourY = this.getY() * 64 + 32;
         double cibleX = cibleActuelle.getCentreX();

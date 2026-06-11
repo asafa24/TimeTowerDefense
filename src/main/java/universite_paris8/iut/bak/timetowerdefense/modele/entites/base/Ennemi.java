@@ -17,7 +17,6 @@ public class Ennemi extends Entite implements Destructible {
     private double vitesseActuelle;
     private int recompense;
 
-    // Compteurs pour la durée des effets en frames (ticks)
     private int dureeStunRestante = 0;
     private int dureeSlowRestante = 0;
     private int dureeBrulageRestante = 0;
@@ -30,7 +29,7 @@ public class Ennemi extends Entite implements Destructible {
     private int degatsSurMur = 10;
     private int cadenceAttaque = 60;
     private int compteurAttaque = 0;
-    private boolean estBloque = false; // ➔ NOUVEAU
+    private boolean estBloque = false;
 
     public Ennemi(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y);
@@ -98,8 +97,8 @@ public class Ennemi extends Entite implements Destructible {
             this.vitesseActuelle = this.vitesseBase;
         }
 
-        // ➔ NOUVEAU : On coupe le mouvement s'il y a un mur
         if (this.estBloque) {
+            this.estBloque = false;
             return;
         }
 
@@ -129,34 +128,25 @@ public class Ennemi extends Entite implements Destructible {
         }
     }
 
+    public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
+    }
+
+    public void seHeurterA(Destructible mur) {
+        this.estBloque = true;
+
+        if (compteurAttaque >= cadenceAttaque) {
+            mur.recevoirDegats(this.degatsSurMur);
+            compteurAttaque = 0;
+            System.out.println(this.getClass().getSimpleName() + " tape la porte !");
+        } else {
+            compteurAttaque++;
+        }
+    }
+
     public void recevoirDegats(int dgt) {
         this.pv -= dgt;
         if (this.pv < 0) this.pv = 0;
         this.pvProp.set(pv);
-    }
-
-    public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
-        this.estBloque = false; // On réinitialise à chaque frame
-
-        int maCaseX = (int) (getX() / 64);
-        int maCaseY = (int) (getY() / 64);
-
-        for (Defense d : defenses) {
-            if (d instanceof Destructible) {
-                if ((int) d.getX() == maCaseX && (int) d.getY() == maCaseY) {
-                    this.estBloque = true; // Il a trouvé un mur !
-
-                    if (compteurAttaque >= cadenceAttaque) {
-                        ((Destructible) d).recevoirDegats(this.degatsSurMur);
-                        compteurAttaque = 0;
-                        System.out.println(this.getClass().getSimpleName() + " tape la porte !");
-                    } else {
-                        compteurAttaque++;
-                    }
-                    break;
-                }
-            }
-        }
     }
 
     public boolean estMort() {
@@ -170,6 +160,7 @@ public class Ennemi extends Entite implements Destructible {
     public int getPv() {
         return pv;
     }
+
     public void ajouterPv(int pv) {
         this.pv += pv;
     }
