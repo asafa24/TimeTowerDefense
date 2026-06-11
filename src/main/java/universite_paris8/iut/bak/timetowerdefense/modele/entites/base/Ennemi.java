@@ -171,6 +171,9 @@ public class Ennemi extends Entite implements Destructible {
         return this.getY() + TILE_SIZE / 2.0;
     }
 
+    public void retourAuSpawn(){
+        etapeActuelle = 0;
+    }
 
     public double getVitesseBase() {
         return vitesseBase;

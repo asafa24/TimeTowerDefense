@@ -439,6 +439,8 @@ public class ControleurJeu implements Initializable {
         jeu.setEpoqueActuel(nb);
         jeu.nuke();
         jeu.newRoute();
+        jeu.actualiserUltime();
+
         vueTerrain.drawMap(donneesMap, nb);
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), nb);
         afficherButton(nb);

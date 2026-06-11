@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
+import universite_paris8.iut.bak.timetowerdefense.modele.competences.TempeteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.GolemSable;
@@ -42,6 +43,7 @@ public class Jeu {
 
     private Ultime ultimeActuelle;
     private IntegerProperty compteurKill;
+    private Ultime[] ultimes;
 
     private boolean modeExtreme = false;
 
@@ -59,7 +61,7 @@ public class Jeu {
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
-
+        this.ultimes = new Ultime[]{new PluieMeteorites(), new TempeteDeSable(), null, null, null};
     }
 
     public void newRoute() {
@@ -140,7 +142,7 @@ public class Jeu {
                     if (e.estMort()) {
                         ajouterArgent(e.getRecompense());
                         System.out.println("+" + e.getRecompense() + "$");
-                        this.compteurKill.set(this.compteurKill.get() + 1);
+                        this.compteurKill.set(this.compteurKill.get() + 50);
                         ennemis.remove(i);
                         continue;
                     }
@@ -349,12 +351,17 @@ public class Jeu {
 
     public void prochaineEpoque(){
         this.epoqueActuel.set(epoqueActuel.get() + 1);
+        actualiserUltime();
     }
 
     public void changerEpoque(int epoque){
         if(epoque >= 0 && epoque < 5){
             this.epoqueActuel.set(epoque);
         }
+    }
+
+    public void actualiserUltime(){
+        this.ultimeActuelle = ultimes[this.epoqueActuel.get()];
     }
 
 
