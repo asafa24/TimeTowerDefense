@@ -48,7 +48,7 @@ public class MiniVolcan extends Piege {
         super.setCout(cout.get());
     }
 
-    public static IntegerProperty coutPropertyArbre() {
+    public static IntegerProperty coutPropertyMiniVolcan() {
         return cout;
     }
 }

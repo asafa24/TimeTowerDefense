@@ -194,6 +194,13 @@ public class Jeu {
         return false;
     }
 
+    public void resetTimersEtVague() {
+        this.frame = 0;
+        this.delay = 0;
+        this.delaySpawnMob = 80;
+        this.vague.reinitialiser(this.epoqueActuel.get());
+    }
+
     public Point2D ennemiDepart(int epoque){
         switch(epoque){
             case 0: return new Point2D(0, 9);

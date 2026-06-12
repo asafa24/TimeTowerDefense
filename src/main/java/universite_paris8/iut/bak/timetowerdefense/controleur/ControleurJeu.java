@@ -113,6 +113,12 @@ public class ControleurJeu implements Initializable {
     @FXML private ScrollPane paneGlossaire;
     @FXML private VBox contenuGlossaire;
 
+    @FXML private VBox panePause;
+    @FXML private VBox paneGameOver;
+    @FXML private Label labelDetailGameOver;
+
+    private boolean enPause = false;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -183,9 +189,8 @@ public class ControleurJeu implements Initializable {
                 Duration.seconds(0.017),
                 (ev -> {
                     if (!jeu.tick()){
-                        afficherMessage("Un peu la honte mais bon.. caca", Color.DARKGREY, 30);
+                        gererGameOver();
                     }
-
                     if (typeDefenseSelectionnee != 0){
                         jeu.preview(mouseX,mouseY);
                     }
@@ -219,24 +224,16 @@ public class ControleurJeu implements Initializable {
     public void gererTouches(KeyEvent event) {
         switch (event.getCode()) {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
-                vuePreview.remove();
-                typeDefenseSelectionnee = 1;
-                selectionTour();
+                selectionnerTour(1);
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
-                vuePreview.remove();
-                typeDefenseSelectionnee = 2;
-                selectionTour();
+                selectionnerTour(2);
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
-                vuePreview.remove();
-                typeDefenseSelectionnee = 3;
-                selectionTour();
+                selectionnerTour(3);
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
-                vuePreview.remove();
-                typeDefenseSelectionnee = 4;
-                selectionTour();
+                selectionnerTour(4);
             }
             case ESCAPE -> {
                 if(this.typeDefenseSelectionnee != 0) {
@@ -245,6 +242,7 @@ public class ControleurJeu implements Initializable {
                     System.out.println("Selection annulée");
                     toggleUI();
                 } else if (paneGlossaire.isVisible()) toggleGlossaire();
+                else togglePause();
             }
             case M ->{
                 changerNiveauForcing(1);
@@ -254,6 +252,9 @@ public class ControleurJeu implements Initializable {
             }
             case G -> {
                 toggleGlossaire();
+            }
+            case P -> {
+                togglePause();
             }
         }
     }
@@ -384,14 +385,22 @@ public class ControleurJeu implements Initializable {
     public void poseTour(ActionEvent event){
         Node button = (Button) event.getSource();
         this.typeDefenseSelectionnee = Integer.parseInt(button.getUserData().toString());
-        selectionTour();
+        modeSelectionTour();
     }
 
-    public void selectionTour(){
+    public void modeSelectionTour(){
         boutonBox.setVisible(false);
         System.out.println("Défense numéro " + this.typeDefenseSelectionnee +" sélectionnée.");
         vuePreview.setId(this.typeDefenseSelectionnee);
         vuePreview.preview();
+    }
+
+    public void selectionnerTour(int tour){
+        if (!enPause){
+            vuePreview.remove();
+            typeDefenseSelectionnee = tour;
+            modeSelectionTour();
+        }
     }
     // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ??? c'est kevin qui a écrit
 
@@ -454,13 +463,15 @@ public class ControleurJeu implements Initializable {
     }
 
     public void changerNiveau(int nb){
-        int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
+        int[][] donneesMap = level.loadLevel(nb);
         jeu.nuke();
         jeu.newRoute();
-        vueTerrain.drawMap(donneesMap, jeu.getEpoqueActuel());
-        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
-        afficherButton(jeu.getEpoqueActuel());
-        afficherPrix(jeu.getEpoqueActuel());
+        jeu.resetTimersEtVague();
+
+        vueTerrain.drawMap(donneesMap, nb);
+        this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), nb);
+        afficherButton(nb);
+        afficherPrix(nb);
     }
     public void changerNiveauForcing(int nb){
         int[][] donneesMap = level.loadLevel(nb);
@@ -468,11 +479,12 @@ public class ControleurJeu implements Initializable {
         jeu.nuke();
         jeu.newRoute();
         jeu.actualiserUltime();
+        jeu.resetTimersEtVague();
 
         vueTerrain.drawMap(donneesMap, nb);
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), nb);
         afficherButton(nb);
-        afficherPrix(jeu.getEpoqueActuel());
+        afficherPrix(nb);
     }
 
     @FXML
@@ -533,4 +545,70 @@ public class ControleurJeu implements Initializable {
             VBox entree = new VBox(2, lblNom, lblDesc);
             contenuGlossaire.getChildren().add(entree);
         }
+
+        @FXML
+    public void togglePause() {
+        if(paneGameOver.isVisible()) return;
+
+        enPause = !enPause;
+        if(enPause){
+            gameLoop.pause();
+            panePause.setVisible(true);
+        }
+        else{
+            gameLoop.play();
+            panePause.setVisible(false);
+        }
     }
+
+    @FXML
+    public void recommencerPartie() {
+        paneGameOver.setVisible(false);
+        panePause.setVisible(false);
+        enPause = false;
+
+        resetPrixTours();
+        jeu.getPvBaseProperty().set(50);
+        jeu.getSoldeProperty().set(200);
+
+        if (jeu.isModeExtreme()) {
+            jeu.getCompteurKillProperty().set(0);
+            jeu.actualiserUltime();
+
+            if (jeu.getEpoqueActuel() != 0) {
+                jeu.setEpoqueActuel(0);
+            } else {
+                changerNiveau(0);
+            }
+
+        } else {
+            changerNiveau(jeu.getEpoqueActuel());
+        }
+
+        gameLoop.play();
+    }
+    private void resetPrixTours() {
+        // époque 0
+        MiniVolcan.coutPropertyMiniVolcan().set(25);
+        ArbreRuste.coutPropertyArbre().set(40);
+        CatapulteCaillou.coutPropertyCatapulteCaillou().set(130);
+        LanceFilet.coutPropertyLanceFilet().set(125);
+
+        //  époque 1
+        PorteDeSable.coutPropertyPorteSable().set(40);
+        TotemFlechette.coutPropertyTotemFlechette().set(50);
+        CatapulteJAR.coutPropertyCatapulteJar().set(130);
+        PyramideShooteuse.coutPropertyPyramideShooteuse().set(140);
+    }
+
+    private void gererGameOver() {
+        gameLoop.stop();
+        paneGameOver.setVisible(true);
+
+        if (jeu.isModeExtreme()) {
+            labelDetailGameOver.setText("Mode Extrême : Retour à la case départ (Préhistoire) !");
+        } else {
+            labelDetailGameOver.setText("Mode Normal : Vous pouvez retenter cette époque.");
+        }
+    }
+}

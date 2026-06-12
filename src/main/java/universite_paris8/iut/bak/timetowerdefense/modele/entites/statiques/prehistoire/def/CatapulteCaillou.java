@@ -24,7 +24,7 @@ public class CatapulteCaillou extends TourCercle {
         return new Caillou(x,y,cible,degats,rayonExplosion);
     }
 
-    public static IntegerProperty coutPropertyArbre() {
+    public static IntegerProperty coutPropertyCatapulteCaillou() {
         return cout;
     }
 }

@@ -147,6 +147,15 @@ public class Vague {
         return queue;
     }
 
+    public void reinitialiser(int nouveauLevel) {
+        this.level = nouveauLevel;
+        this.vague.set(0);
+        this.queue = new Queue[level1[level].length];
+
+        for (int i = 0; i < level1[level].length; i++) {
+            this.queue[i] = laQueue(level1[level][i]);
+        }
+    }
     public int getVague() {
         return vague.get();
     }

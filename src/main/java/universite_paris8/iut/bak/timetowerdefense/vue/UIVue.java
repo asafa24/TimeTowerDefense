@@ -4,7 +4,6 @@ import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundRepeat;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
@@ -15,8 +14,6 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehi
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.MiniVolcan;
-
-import java.text.BreakIterator;
 
 public class UIVue {
 
@@ -29,13 +26,13 @@ public class UIVue {
             case 0: //  Prehistoire
                 switch (id) {
                     case 0:
-                        return MiniVolcan.coutPropertyArbre().asString();
+                        return MiniVolcan.coutPropertyMiniVolcan().asString();
                     case 1:
                         return ArbreRuste.coutPropertyArbre().asString();
                     case 2:
-                        return CatapulteCaillou.coutPropertyArbre().asString();
+                        return CatapulteCaillou.coutPropertyCatapulteCaillou().asString();
                     case 3:
-                        return LanceFilet.coutPropertyArbre().asString();
+                        return LanceFilet.coutPropertyLanceFilet().asString();
                 }
                 break;
 

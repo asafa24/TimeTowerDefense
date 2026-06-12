@@ -108,5 +108,33 @@
          <VBox fx:id="contenuGlossaire" spacing="15.0" alignment="TOP_LEFT">
          </VBox>
       </ScrollPane>
+
+      <VBox fx:id="panePause" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.75);" spacing="25">
+         <children>
+            <Label text="PAUSE" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="48.0" />
+               </font>
+            </Label>
+            <Button text="REPRENDRE" onAction="#togglePause" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" />
+            <Button text="RECOMMENCER" onAction="#recommencerPartie" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" />
+         </children>
+      </VBox>
+
+      <VBox fx:id="paneGameOver" alignment="CENTER" visible="false" style="-fx-background-color: rgba(15, 17, 26, 0.95);" spacing="20">
+         <children>
+            <Label text="GAME OVER" textFill="#e74c3c" style="-fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.4), 15, 0.5, 0, 0);">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="54.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelDetailGameOver" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button text="RECOMMENCER" onAction="#recommencerPartie" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" />
+         </children>
+      </VBox>
    </children>
 </StackPane>
