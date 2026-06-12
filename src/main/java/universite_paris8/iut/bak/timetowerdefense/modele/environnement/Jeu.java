@@ -206,6 +206,7 @@ public class Jeu {
         switch(epoque){
             case 0: return new Point2D(0, 9);
             case 1: return new Point2D(10, 10);
+            case 2: return new Point2D(6, 10);
         }
 
         return null;
@@ -215,6 +216,7 @@ public class Jeu {
         switch (epoque){
             case 0: return new Point2D(10, 1);
             case 1: return new Point2D(0, 2);
+            case 2: return new Point2D(6, 0);
         }
 
         return null;

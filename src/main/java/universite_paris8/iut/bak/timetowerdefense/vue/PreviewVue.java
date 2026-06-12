@@ -89,6 +89,16 @@ public class PreviewVue {
                         }
                     }
                 }
+                case 2 ->{
+                    switch (id){
+                        case 2 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/archer.png")));
+                        }
+                        default -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+                        }
+                    }
+                }
             }
 
             Light.Distant redLight = new Light.Distant();

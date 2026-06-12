@@ -35,6 +35,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
@@ -155,12 +156,12 @@ public class EntiteVue {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piramidJ.png")));
 
                 Rectangle rec = new Rectangle();
-                rec.setHeight(6); // Épaisseur du laser
+                rec.setHeight(6);
                 rec.setFill(Color.RED);
                 rec.setArcWidth(10);
                 rec.setArcHeight(10);
 
-                // 1. Positionner le départ du rectangle AU CENTRE de la tour
+                // 1. Positionner le départ du rectangle au centre de la tour
                 // (X de la tour * 64 + 32 pour le centre - la moitié de la hauteur du laser pour le centrer verticalement)
                 rec.translateXProperty().bind(pyramide.xProperty().multiply(64).add(32));
                 rec.translateYProperty().bind(pyramide.yProperty().multiply(64).add(32 - (rec.getHeight() / 2)));
@@ -174,7 +175,7 @@ public class EntiteVue {
                 rotation.angleProperty().bind(pyramide.angleProperty());
                 rec.getTransforms().add(rotation);
 
-                // 3. Dynamiser la LARGEUR du rectangle pour qu'elle suive l'ennemi
+                // 3. Adapter la largeur du rectangle pour qu'elle suive l'ennemi
                 rec.widthProperty().bind(pyramide.distanceCibleProperty());
 
                 // 4. Visibilité
@@ -184,6 +185,9 @@ public class EntiteVue {
             }
             if (e instanceof CatapulteJAR){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png")));
+            }
+            if (e instanceof Archer){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/archer.png")));
             }
 
             img.setTranslateX(e.getX() * 64);
