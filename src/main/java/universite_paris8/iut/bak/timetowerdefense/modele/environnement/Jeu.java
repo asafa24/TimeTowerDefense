@@ -14,6 +14,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqui
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Fantassin;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
@@ -22,7 +23,9 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Jeu {
 
@@ -30,7 +33,7 @@ public class Jeu {
     private ObservableList<Defense> defenses;
     private ObservableList<Projectile> projectiles;
     private int frame;
-    private List<Point2D> route ;
+    private List<List<Point2D>> routes;
 
     private Level level;
     private IntegerProperty epoqueActuel;
@@ -59,16 +62,22 @@ public class Jeu {
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = new SimpleIntegerProperty(0);
         this.frame = 0;
-        this.route = level.calculerChemin(epoqueActuel.get(), ennemiDepart(epoqueActuel.get()), ennemiArrivee(epoqueActuel.get()));
+        this.routes = new ArrayList<>();
+        newRoute();
         this.vague = new Vague();
         this.delay = 0;
         this.ultimeActuelle = new PluieMeteorites();
         this.compteurKill = new SimpleIntegerProperty(0);
-        this.ultimes = new Ultime[]{new PluieMeteorites(), new TempeteDeSable(), null, null, null};
+        this.ultimes = new Ultime[]{new PluieMeteorites(), new TempeteDeSable(), new PluieMeteorites(), new PluieMeteorites(), new PluieMeteorites()};
     }
 
     public void newRoute() {
-        this.route = level.calculerChemin(epoqueActuel.get(), ennemiDepart(epoqueActuel.get()), ennemiArrivee(epoqueActuel.get()));
+        this.routes = new ArrayList<>();
+        Point2D[] departs = ennemisDeparts(epoqueActuel.get());
+        Point2D arrivee = ennemiArrivee(epoqueActuel.get());
+        for (Point2D depart : departs){
+            routes.add(level.calculerChemin(epoqueActuel.get(), depart, arrivee));
+        }
     }
 
     public int getEpoqueActuel() {
@@ -202,14 +211,13 @@ public class Jeu {
         this.vague.reinitialiser(this.epoqueActuel.get());
     }
 
-    public Point2D ennemiDepart(int epoque){
+    public Point2D[] ennemisDeparts(int epoque){
         switch(epoque){
-            case 0: return new Point2D(0, 9);
-            case 1: return new Point2D(10, 10);
-            case 2: return new Point2D(6, 10);
+            case 0: return new Point2D[]{new Point2D(0, 9)};
+            case 1: return new Point2D[]{new Point2D(10, 10)};
+            case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
         }
-
-        return null;
+        return new Point2D[]{new Point2D(0, 0)};
     }
 
     public Point2D ennemiArrivee(int epoque){
@@ -223,6 +231,9 @@ public class Jeu {
     }
 
     private Ennemi creerEnnemi(int id ) {
+        Random rand = new Random();
+        List<Point2D> route = routes.get(rand.nextInt(routes.size()));
+
         switch (this.epoqueActuel.get()){
             case 0 -> {
                 switch (id) {
@@ -248,6 +259,12 @@ public class Jeu {
                         return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
 
                 }
+            }
+            case 2 -> {
+                switch (id){
+                    default:
+                        return new Fantassin(route);
+                    }
             }
         }
         return null;

@@ -246,10 +246,10 @@ public class ControleurJeu implements Initializable {
                 else togglePause();
             }
             case L -> {
-                changerNiveauForcing(jeu.getEpoqueActuel()-1);
+                if(jeu.getEpoqueActuel() > 0) changerNiveauForcing(jeu.getEpoqueActuel()-1);
             }
             case M -> {
-                changerNiveauForcing(jeu.getEpoqueActuel()+1);
+                if (jeu.getEpoqueActuel() < 5)changerNiveauForcing(jeu.getEpoqueActuel()+1);
             }
             case H -> {
                 toggleUI();
