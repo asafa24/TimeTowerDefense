@@ -10,6 +10,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.TempeteDeSa
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Chacal;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
@@ -238,9 +239,9 @@ public class Jeu {
                     case 0:
                         return new Momie(route);
                     case 1:
-                        return new GolemSable(route);
+                        return new Chacal(route);
                     case 2:
-                        return new Triceratops(route);
+                        return new GolemSable(route);
                     default:
                         return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
 

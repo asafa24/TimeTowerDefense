@@ -15,6 +15,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Chacal;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.FlechetteEmpoisonne;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.Jar;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
@@ -108,6 +109,9 @@ public class EntiteVue {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golem.png")));
                 img.setFitHeight(80);
                 img.setFitWidth(80);
+            }
+            if (e instanceof Chacal){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/chacal.png")));
             }
             if (e instanceof Golime){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golime.png")));
