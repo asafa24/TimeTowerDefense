@@ -1,5 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
@@ -8,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
@@ -280,7 +282,14 @@ public class EntiteVue {
         Node capacity = affichageCapacity.get(e);
         Node proj = affichageProj.get(e);
         if(sprite != null){
-            entityPane.getChildren().remove(sprite);
+            if(!(e instanceof Projectile)) {
+                FadeTransition fadeout = new FadeTransition(Duration.seconds(1), sprite);
+                fadeout.setToValue(0.0);
+                fadeout.setOnFinished(event -> entityPane.getChildren().remove(sprite));
+                fadeout.play();
+            } else {
+                entityPane.getChildren().remove(sprite);
+            }
         }
         if (barre_vie != null){
             entityPane.getChildren().remove(barre_vie);

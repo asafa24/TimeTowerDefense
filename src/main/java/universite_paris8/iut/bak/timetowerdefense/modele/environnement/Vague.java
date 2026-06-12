@@ -49,7 +49,7 @@ public class Vague {
         }
     }
     public boolean vagueSuivante(){
-        if (vague.get() < 10 ){
+        if (vague.get() < 9){
             vague.set(vague.get() + 1);
             return true;
         }

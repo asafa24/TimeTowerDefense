@@ -603,6 +603,7 @@ public class ControleurJeu implements Initializable {
 
     private void gererGameOver() {
         gameLoop.stop();
+        vuePreview.remove();
         paneGameOver.setVisible(true);
 
         if (jeu.isModeExtreme()) {
