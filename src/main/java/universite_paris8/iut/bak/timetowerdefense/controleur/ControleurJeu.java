@@ -28,6 +28,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.TourMage;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
@@ -393,7 +394,7 @@ public class ControleurJeu implements Initializable {
 
                     }
                     case 3 -> {
-                        this.tourSelectionne = new CatapulteJAR(xGrille, yGrille);
+                        this.tourSelectionne = new TourMage(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }

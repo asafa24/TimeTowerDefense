@@ -13,7 +13,7 @@ public class LanceFilet extends TourStun {
 
 
     public LanceFilet(double x, double y) {
-        super(cout.get(), x, y, 5, 150, 70, 60);
+        super(cout.get(), x, y, 5, 150, 120, 60);
     }
 
     @Override

@@ -37,6 +37,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.TourMage;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
@@ -194,6 +195,11 @@ public class EntiteVue {
             }
             if (e instanceof Archer){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/archer.png")));
+            }
+            if (e instanceof TourMage){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/tourmage.png")));
+                img.setFitWidth(74);
+                img.setFitHeight(74);
             }
 
             img.setTranslateX(e.getX() * 64);
