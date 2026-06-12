@@ -209,6 +209,14 @@ public class Ennemi extends Entite implements Destructible {
         this.vitesseBase = vitesseBase;
     }
 
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+    public void setRecompense(int recompense) {
+        this.recompense = recompense;
+    }
+
     public void appliqueEffet(Effet effet) {
         switch (effet) {
             case STUN -> {

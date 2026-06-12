@@ -17,6 +17,8 @@ public class Chacal extends Ennemi {
     public Chacal(List<Point2D> chemin){
         super(10*64, 10*64, chemin);
         setVitesseBase(4.5);
+        setPv(40);
+        setRecompense(25);
     }
 
     public void avancer(){
