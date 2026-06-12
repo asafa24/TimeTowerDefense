@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClick" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
+<StackPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClick" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurJeu">
    <children>
       <Pane fx:id="backgroundPane" prefHeight="200.0" prefWidth="200.0" />
       <Pane fx:id="entityPane" prefHeight="200.0" prefWidth="200.0" />
@@ -53,11 +51,23 @@
             </VBox>
          </right>
                <left>
-                  <Button text="GLOSSAIRE (G)" onAction="#toggleGlossaire" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" BorderPane.alignment="TOP_LEFT">
+                  <VBox alignment="TOP_LEFT" spacing="20.0" BorderPane.alignment="TOP_LEFT">
+                  <children>
+                  <Button onAction="#togglePause" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="PAUSE (P)" BorderPane.alignment="TOP_LEFT">
                      <BorderPane.margin>
-                        <Insets top="10.0" left="10.0" />
+                        <Insets left="10.0" top="20.0" />
+                     </BorderPane.margin>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button onAction="#toggleGlossaire" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="GLOSSAIRE (G)" BorderPane.alignment="TOP_LEFT">
+                     <BorderPane.margin>
+                        <Insets left="10.0" top="20.0" />
                      </BorderPane.margin>
                   </Button>
+                  </children>
+                  </VBox>
                </left>
 
                <bottom>
@@ -67,25 +77,25 @@
                         <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
       
-                              <Button fx:id="tourUn" mnemonicParsing="false" userData="1" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                              <Button fx:id="tourUn" mnemonicParsing="false" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" userData="1" />
                         <Label fx:id="tourUnArgent" text="25" textFill="WHITE" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="3.0" prefWidth="106.0">
                      <children>
-                        <Button fx:id="tourDeux" mnemonicParsing="false" userData="2" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                        <Button fx:id="tourDeux" mnemonicParsing="false" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" userData="2" />
                         <Label fx:id="tourDeuxArgent" text="50" textFill="WHITE" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
-                        <Button fx:id="tourTrois" mnemonicParsing="false" userData="3" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                        <Button fx:id="tourTrois" mnemonicParsing="false" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" userData="3" />
                         <Label fx:id="tourTroisArgent" text="150" textFill="WHITE" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="1.0" prefWidth="106.0">
                      <children>
-                        <Button fx:id="tourQuatre" mnemonicParsing="false" userData="4" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                        <Button fx:id="tourQuatre" mnemonicParsing="false" onAction="#poseTour" style="-fx-background-color: transparent; -fx-border-color: transparent;" userData="4" />
                         <Label fx:id="tourQuatreArgent" text="200" textFill="WHITE" />
                      </children>
                   </VBox>
@@ -98,32 +108,31 @@
          </bottom>
 
             </BorderPane>
-      <Label fx:id="labelMessageSys" alignment="CENTER" mouseTransparent="true" text=""
-             style="-fx-effect: dropshadow(one-pass-box, black, 8, 1.0, 0, 0);">
+      <Label fx:id="labelMessageSys" alignment="CENTER" mouseTransparent="true" style="-fx-effect: dropshadow(one-pass-box, black, 8, 1.0, 0, 0);" text="">
          <font>
             <Font name="DejaVu Sans Bold" size="38.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="paneGlossaire" visible="false" maxWidth="450.0" maxHeight="350.0" style="-fx-background-color: transparent; -fx-background: rgba(0,0,0,0.85); -fx-padding: 10;">
-         <VBox fx:id="contenuGlossaire" spacing="15.0" alignment="TOP_LEFT">
+      <ScrollPane fx:id="paneGlossaire" maxHeight="350.0" maxWidth="450.0" style="-fx-background-color: transparent; -fx-background: rgba(0,0,0,0.85); -fx-padding: 10;" visible="false">
+         <VBox fx:id="contenuGlossaire" alignment="TOP_LEFT" spacing="15.0">
          </VBox>
       </ScrollPane>
 
-      <VBox fx:id="panePause" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.75);" spacing="25">
+      <VBox fx:id="panePause" alignment="CENTER" spacing="25" style="-fx-background-color: rgba(0, 0, 0, 0.75);" visible="false">
          <children>
             <Label text="PAUSE" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="48.0" />
                </font>
             </Label>
-            <Button text="REPRENDRE" onAction="#togglePause" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" />
-            <Button text="RECOMMENCER" onAction="#recommencerPartie" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" />
+            <Button onAction="#togglePause" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" text="REPRENDRE" />
+            <Button onAction="#recommencerPartie" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" text="RECOMMENCER" />
          </children>
       </VBox>
 
-      <VBox fx:id="paneGameOver" alignment="CENTER" visible="false" style="-fx-background-color: rgba(15, 17, 26, 0.95);" spacing="20">
+      <VBox fx:id="paneGameOver" alignment="CENTER" spacing="20" style="-fx-background-color: rgba(15, 17, 26, 0.95);" visible="false">
          <children>
-            <Label text="GAME OVER" textFill="#e74c3c" style="-fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.4), 15, 0.5, 0, 0);">
+            <Label style="-fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.4), 15, 0.5, 0, 0);" text="GAME OVER" textFill="#e74c3c">
                <font>
                   <Font name="DejaVu Sans Bold" size="54.0" />
                </font>
@@ -133,7 +142,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button text="RECOMMENCER" onAction="#recommencerPartie" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" />
+            <Button onAction="#recommencerPartie" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 10 30 10 30; -fx-cursor: hand;" text="RECOMMENCER" />
          </children>
       </VBox>
    </children>
