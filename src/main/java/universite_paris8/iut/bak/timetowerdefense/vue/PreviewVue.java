@@ -78,6 +78,12 @@ public class PreviewVue {
                         case 2 -> {
                             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piegeFlechette.png")));
                         }
+                        case 3 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png")));
+                        }
+                        case 4 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piramidJ.png")));
+                        }
                         default -> {
                             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
                         }

@@ -373,6 +373,7 @@ public class ControleurJeu implements Initializable {
         }
         this.typeDefenseSelectionnee = 0;
         vuePreview.setId(-1);
+        jeu.setId(-1);
         vuePreview.remove();
         this.typeDefenseSelectionnee= 0;
     }
@@ -392,6 +393,7 @@ public class ControleurJeu implements Initializable {
         boutonBox.setVisible(false);
         System.out.println("Défense numéro " + this.typeDefenseSelectionnee +" sélectionnée.");
         vuePreview.setId(this.typeDefenseSelectionnee);
+        jeu.setId(this.typeDefenseSelectionnee);
         vuePreview.preview();
     }
 
