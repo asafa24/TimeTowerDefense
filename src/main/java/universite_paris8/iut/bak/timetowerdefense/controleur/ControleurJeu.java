@@ -26,7 +26,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege.PorteDeSable;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
@@ -221,27 +221,39 @@ public class ControleurJeu implements Initializable {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
                 vuePreview.remove();
                 typeDefenseSelectionnee = 1;
+                selectionTour();
             }
             case DIGIT2, NUMPAD2, UNDEFINED -> {
                 vuePreview.remove();
                 typeDefenseSelectionnee = 2;
+                selectionTour();
             }
             case DIGIT3, NUMPAD3, QUOTEDBL-> {
                 vuePreview.remove();
                 typeDefenseSelectionnee = 3;
+                selectionTour();
             }
             case DIGIT4, NUMPAD4, QUOTE-> {
                 vuePreview.remove();
                 typeDefenseSelectionnee = 4;
+                selectionTour();
             }
             case ESCAPE -> {
-                vuePreview.remove();
-                this.typeDefenseSelectionnee = 0;
-                System.out.println("Selection annulée");
-                cacherUI();
+                if(this.typeDefenseSelectionnee != 0) {
+                    vuePreview.remove();
+                    this.typeDefenseSelectionnee = 0;
+                    System.out.println("Selection annulée");
+                    toggleUI();
+                } else if (paneGlossaire.isVisible()) toggleGlossaire();
             }
             case M ->{
                 changerNiveauForcing(1);
+            }
+            case H -> {
+                toggleUI();
+            }
+            case G -> {
+                toggleGlossaire();
             }
         }
     }
@@ -267,7 +279,7 @@ public class ControleurJeu implements Initializable {
                         System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
                         this.afficherMenuTour((Tour) d);
 
-                        // AFFICHAGE du cercle de la porte au coordonnee de la tour et bind avec la porte
+                        // affichage du cercle de la portée au coordonnee de la tour et bind avec la porte
                         cerclePortee.setCenterX(d.getX() * 64 + 32);
                         cerclePortee.setCenterY(d.getY() * 64 + 32);
                         cerclePortee.radiusProperty().bind(((Tour) d).porteeProperty());
@@ -287,7 +299,7 @@ public class ControleurJeu implements Initializable {
 
                 for (Defense d : jeu.getDefenses()) {
                     if (d instanceof Tour) {
-                        ((Tour) d).setSelectionnee(false);
+                        d.setSelectionnee(false);
                     }
                 }
             }
@@ -372,6 +384,10 @@ public class ControleurJeu implements Initializable {
     public void poseTour(ActionEvent event){
         Node button = (Button) event.getSource();
         this.typeDefenseSelectionnee = Integer.parseInt(button.getUserData().toString());
+        selectionTour();
+    }
+
+    public void selectionTour(){
         boutonBox.setVisible(false);
         System.out.println("Défense numéro " + this.typeDefenseSelectionnee +" sélectionnée.");
         vuePreview.setId(this.typeDefenseSelectionnee);
@@ -384,8 +400,8 @@ public class ControleurJeu implements Initializable {
     }
 
     @FXML
-    public void cacherUI(){
-        if(boutonBox.isDisabled()){
+    public void toggleUI(){
+        if(boutonBox.isDisabled() || !boutonBox.isVisible()){
             boutonBox.setVisible(true);
         }
         else{
@@ -469,30 +485,41 @@ public class ControleurJeu implements Initializable {
         }
     }
 
-        private void actualiserGlossaire() {
-            contenuGlossaire.getChildren().clear();
-            int epoque = jeu.getEpoqueActuel();
+    private void actualiserGlossaire() {
+        contenuGlossaire.getChildren().clear();
+        int epoque = jeu.getEpoqueActuel();
 
-            Label titre = new Label("GLOSSAIRE - ÉPOQUE " + epoque);
-            titre.setTextFill(Color.GOLD);
-            titre.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
-            contenuGlossaire.getChildren().add(titre);
+        Label titre = new Label("GLOSSAIRE - ÉPOQUE " + epoque);
+        titre.setTextFill(Color.GOLD);
+        titre.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
+        contenuGlossaire.getChildren().add(titre);
 
-            switch (epoque) {
-                case 0:
-                    ajouterEntreeGlossaire("Arbre Rustique", "Tour basique infligeant des dégâts modérés.", Color.WHITE);
-                    ajouterEntreeGlossaire("Mini Volcan", "Piège infligeant des dégâts de zone.", Color.WHITE);
-                    ajouterEntreeGlossaire("T-Rex (Boss)", "Étourdit vos défenses avec son rugissement !", Color.ORANGE);
-                    // reste de tes mobs de l'époque 0 ici
-                    break;
-                case 1:
-                    ajouterEntreeGlossaire("Pyramide Shooteuse", "Dégâts continus qui augmentent sur une même cible.", Color.WHITE);
-                    ajouterEntreeGlossaire("Mur de Sable", "Piège bloquant les ennemis.", Color.WHITE);
-                    ajouterEntreeGlossaire("Golem de Sable", "Se divise en deux Golimes à sa mort.", Color.ORANGE);
-                    // reste de tes mobs de l'époque 1 ici
-                    break;
-            }
+        switch (epoque) {
+            case 0:
+                ajouterEntreeGlossaire("Arbre Rustique", "Tour basique infligeant des dégâts modérés.", Color.WHITE);
+                ajouterEntreeGlossaire("Mini Volcan", "Piège infligeant des dégâts de zone et brûlant les ennemis.", Color.WHITE);
+                ajouterEntreeGlossaire("Catapulte", "Lance de lourds cailloux pour des dégâts massifs à l'impact.", Color.WHITE);
+                ajouterEntreeGlossaire("Lance-Filet", "Entrave (stun) les ennemis, réduisant considérablement leur vitesse.", Color.WHITE);
+
+                ajouterEntreeGlossaire("Compsognathus", "Petit dinosaure fragile mais qui se déplace en nombre.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Vélociraptor", "Rapide et féroce, il fonce vers la base.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Tricératops", "Protège la horde en appliquant un bouclier aux alliés proches.", Color.ORANGE);
+                ajouterEntreeGlossaire("T-Rex (Boss)", "Étourdit vos défenses avec son rugissement !", Color.RED);
+                break;
+
+            case 1:
+                ajouterEntreeGlossaire("Mur de Sable", "Piège bloquant les ennemis jusqu'à sa destruction.", Color.WHITE);
+                ajouterEntreeGlossaire("Totem à Fléchettes", "Cadence de tir élevée, applique du poison sur la durée.", Color.WHITE);
+                ajouterEntreeGlossaire("Catapulte à Jarres", "Fait pleuvoir des jarres explosives causant des effets sur les ennemis.", Color.WHITE);
+                ajouterEntreeGlossaire("Pyramide Shooteuse", "Dégâts continus sous forme de rayon qui augmentent sur une même cible.", Color.WHITE);
+
+                ajouterEntreeGlossaire("Momie", "Lente mais résistante aux attaques.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Golem de Sable", "Créature massive. Se divise en deux Golimes à sa mort.", Color.ORANGE);
+                ajouterEntreeGlossaire("Golime", "Petit fragment issu de la destruction d'un Golem.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Boss", "(Ca arrive fort)", Color.RED);
+                break;
         }
+    }
 
         private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
             Label lblNom = new Label("• " + nom);

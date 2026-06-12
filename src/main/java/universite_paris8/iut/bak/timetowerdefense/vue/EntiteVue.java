@@ -13,22 +13,23 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.FlechetteEmpoisonne;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile.Jar;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.GolemSable;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Golime;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.enemie.Momie;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Compsognathus;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Triceratops;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Tyrannosaurus;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie.Velociraptor;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Caillou;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Filet;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Fleche;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.FlechetteEmpoisonne;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.Jar;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Velociraptor;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Caillou;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Filet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Fleche;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
@@ -232,7 +233,7 @@ public class EntiteVue {
             img.setTranslateY(e.getY() * 64);
             sprite = img;
         }
-        if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege.PorteDeSable){
+        if (e instanceof PorteDeSable){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);

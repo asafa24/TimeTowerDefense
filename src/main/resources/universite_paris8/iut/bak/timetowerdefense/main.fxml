@@ -53,7 +53,7 @@
             </VBox>
          </right>
                <left>
-                  <Button text="📖 GLOSSAIRE" onAction="#toggleGlossaire" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" BorderPane.alignment="TOP_LEFT">
+                  <Button text="GLOSSAIRE (G)" onAction="#toggleGlossaire" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" BorderPane.alignment="TOP_LEFT">
                      <BorderPane.margin>
                         <Insets top="10.0" left="10.0" />
                      </BorderPane.margin>

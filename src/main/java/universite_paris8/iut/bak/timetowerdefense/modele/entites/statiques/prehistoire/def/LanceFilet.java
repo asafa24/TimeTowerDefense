@@ -5,10 +5,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import java.util.ArrayList;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectile.Filet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Filet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
-
-import java.util.List;
 
 public class LanceFilet extends TourStun {
     public static IntegerProperty cout = new SimpleIntegerProperty(125);

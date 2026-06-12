@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.enemie;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

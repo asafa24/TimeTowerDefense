@@ -8,6 +8,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
@@ -41,7 +42,7 @@ public class UIVue {
             case 1: // epoque Antiquité
                 switch (id) {
                     case 0:
-                        return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege.PorteDeSable.coutPropertyPorteSable().asString();
+                        return PorteDeSable.coutPropertyPorteSable().asString();
                     case 1:
                         return TotemFlechette.coutPropertyTotemFlechette().asString();
                     case 2:

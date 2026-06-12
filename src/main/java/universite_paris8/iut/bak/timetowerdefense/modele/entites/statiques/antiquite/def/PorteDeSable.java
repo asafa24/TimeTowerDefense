@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.piege;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

@@ -1,4 +1,4 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.Projectile;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles;
 
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
