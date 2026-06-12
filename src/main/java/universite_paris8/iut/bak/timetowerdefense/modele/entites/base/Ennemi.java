@@ -232,7 +232,7 @@ public class Ennemi extends Entite implements Destructible {
             }
             case SHIELD -> {
                 if (!shield) {
-                    this.ajouterPv(((int) Math.floor(this.getPv() * 1.3)));
+                    this.ajouterPv(((int) Math.floor(this.getPv() * 1.2)));
                     shield = true;
                 }
             }

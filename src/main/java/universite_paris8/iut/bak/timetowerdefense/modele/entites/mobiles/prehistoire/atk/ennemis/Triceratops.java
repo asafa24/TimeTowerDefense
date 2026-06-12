@@ -12,10 +12,8 @@ import java.util.List;
 public class Triceratops extends Ennemi {
 
     private int tick = 0;
-    private final BooleanProperty shield; // 'final' car la référence ne change pas
-
-    // Portée de l'effet au carré (ex: portée de 50 pixels -> 50 * 50 = 2500)
-    private static final double PORTEE_CARRE = 2500.0;
+    private final BooleanProperty shield;
+    private static final double PORTEE = 50;
 
     public Triceratops(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y, pv, vitesseBase, recompense, chemin);
@@ -23,7 +21,7 @@ public class Triceratops extends Ennemi {
     }
 
     public Triceratops(List<Point2D> chemin) {
-        super(150, 1, 30, chemin); // PV, Vitesse, Recompense ?
+        super(150, 1, 30, chemin);
         this.shield = new SimpleBooleanProperty(false);
     }
 
@@ -33,22 +31,17 @@ public class Triceratops extends Ennemi {
 
     @Override
     public void agir(List<Ennemi> allies, List<Defense> defenses) {
-        // Optionnel : On fait avancer le Tricératops via la classe parente si super.agir() existe
-        // super.agir(allies, defenses);
-
-        // On ne vérifie pas à chaque frame pour optimiser les performances (tous les 5 ticks)
         if (tick % 5 == 0) {
             boolean aProtegeQuelquUn = false;
 
             for (Ennemi allie : allies) {
                 // On évite de se protéger soi-même ou un autre Tricératops
-                if (allie != this && !(allie instanceof Triceratops)) {
+                if (!(allie instanceof Triceratops)) {
                     double dx = allie.getX() - this.getX();
                     double dy = allie.getY() - this.getY();
-                    double distanceCarre = (dx * dx) + (dy * dy);
+                    double distance = Math.hypot(dx, dy);
 
-                    // Si l'allié est à portée
-                    if (distanceCarre <= PORTEE_CARRE) {
+                    if (distance <= PORTEE) {
                         allie.appliqueEffet(Effet.SHIELD);
                         aProtegeQuelquUn = true;
                     }
@@ -58,7 +51,6 @@ public class Triceratops extends Ennemi {
             // Met à jour la propriété pour la vue (si vrai, on affiche un effet visuel sur le Tricératops)
             this.shield.set(aProtegeQuelquUn);
         }
-
         tick++;
     }
 }
