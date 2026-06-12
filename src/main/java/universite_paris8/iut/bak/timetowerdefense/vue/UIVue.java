@@ -48,6 +48,18 @@ public class UIVue {
                         return PyramideShooteuse.coutPropertyPyramideShooteuse().asString();
                 }
                 break;
+            default:
+                switch (id) {
+                    case 0:
+                        return MiniVolcan.coutPropertyMiniVolcan().asString();
+                    case 1:
+                        return ArbreRuste.coutPropertyArbre().asString();
+                    case 2:
+                        return CatapulteCaillou.coutPropertyCatapulteCaillou().asString();
+                    case 3:
+                        return LanceFilet.coutPropertyLanceFilet().asString();
+                }
+                break;
         }
         return null;
     }

@@ -267,7 +267,7 @@ public class EntiteVue {
             entityPane.getChildren().add(proj);
             affichageProj.put((Defense) e, proj);
         }
-        if (barre_vie != null  ){
+        if (barre_vie != null){
             entityPane.getChildren().add(barre_vie);
             affichageBarre.put((Ennemi) e, barre_vie);
         }
