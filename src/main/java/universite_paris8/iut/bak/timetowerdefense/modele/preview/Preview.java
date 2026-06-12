@@ -4,21 +4,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
-import javafx.scene.paint.Color;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 public class Preview {
     private DoubleProperty x = new SimpleDoubleProperty();
     private DoubleProperty y = new SimpleDoubleProperty();
-    private Jeu jeu ;
-    private BooleanProperty peut ;
+    private Jeu jeu;
+    private BooleanProperty peut;
     private boolean piege;
     private int id;
     private int epoque;
@@ -43,14 +35,9 @@ public class Preview {
         this.id = id;
     }
     public void setDefense(){
-        if(id != 1){
-            piege = false;
-            //System.out.println("id = " + id);
-        }
-        else {
-            piege = true;
-
-        }
+//        if(id != 1) piege = false;
+//        else piege = true;
+        piege = id == 1;
     }
 
     public int getEpoque() {
@@ -90,12 +77,9 @@ public class Preview {
 
     }
 
-
     public DoubleProperty xProperty() {
         return x;
     }
-
-
 
     public DoubleProperty yProperty() {
         return y;

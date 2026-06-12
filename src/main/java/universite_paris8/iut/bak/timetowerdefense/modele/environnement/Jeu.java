@@ -35,7 +35,7 @@ public class Jeu {
     private int frame;
     private List<List<Point2D>> routes;
 
-    private Level level;
+    private final Level level;
     private IntegerProperty epoqueActuel;
     private Preview preview = new  Preview(0.0,0.0,this,-1);
 
@@ -43,7 +43,7 @@ public class Jeu {
     private IntegerProperty pvBase;
     private Vague vague;
     private int delay;
-    private final int TEMPS_ENTRE_VAGUE = 220 ;
+    private final int TEMPS_ENTRE_VAGUE = 220;
     private int delaySpawnMob = 80;
     private int id = -1;
 
@@ -71,59 +71,7 @@ public class Jeu {
         this.ultimes = new Ultime[]{new PluieMeteorites(), new TempeteDeSable(), new PluieMeteorites(), new PluieMeteorites(), new PluieMeteorites()};
     }
 
-    public void newRoute() {
-        this.routes = new ArrayList<>();
-        Point2D[] departs = ennemisDeparts(epoqueActuel.get());
-        Point2D arrivee = ennemiArrivee(epoqueActuel.get());
-        for (Point2D depart : departs){
-            routes.add(level.calculerChemin(epoqueActuel.get(), depart, arrivee));
-        }
-    }
-
-    public int getEpoqueActuel() {
-        return epoqueActuel.get();
-    }
-    public IntegerProperty getEpoqueActuelProperty() {
-        return epoqueActuel;
-    }
-
-    public void setEpoqueActuel(int epoqueActuel) {
-        this.epoqueActuel.set(epoqueActuel);
-    }
-
-    public Vague getVague() {
-        return vague;
-    }
-
-    public ObservableList<Ennemi> getEnnemi() {
-        return ennemis ;
-    }
-    public void addEnnemi(Ennemi ennemi) {
-        ennemis.add(ennemi);
-    }
-    public void removeEnnemi(Ennemi ennemi) {
-        ennemis.remove(ennemi);
-    }
-    public void nuke(){
-        ennemis.clear();
-        defenses.clear();
-        projectiles.clear();
-
-    }
-
-    public ObservableList<Defense> getDefenses() {
-        return defenses;
-    }
-    public void addDefense(Defense defense) {
-        defenses.add(defense);
-    }
-    public void removeDefense(Defense defense) {
-        defenses.remove(defense);
-    }
-
-    public ObservableList<Projectile> getProjectiles() {
-        return projectiles;
-    }
+    // Boucle de jeu
 
     public boolean tick() {
         if (!perdu()) {
@@ -142,7 +90,6 @@ public class Jeu {
                     if (p.aAtteintCible()) {
                         p.appliquerImpact(ennemis);
                         projectiles.remove(i);
-                        //ici gemini
                         continue;
                     }
                     p.deplacer();
@@ -204,31 +151,14 @@ public class Jeu {
         return false;
     }
 
-    public void resetTimersEtVague() {
-        this.frame = 0;
-        this.delay = 0;
-        this.delaySpawnMob = 80;
-        this.vague.reinitialiser(this.epoqueActuel.get());
-    }
-
-    public Point2D[] ennemisDeparts(int epoque){
-        switch(epoque){
-            case 0: return new Point2D[]{new Point2D(0, 9)};
-            case 1: return new Point2D[]{new Point2D(10, 10)};
-            case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
+    public void activerUltime(){
+        if(compteurKill.get() >= ultimeActuelle.getCompteurKill()){
+            compteurKill.set(compteurKill.get() - ultimeActuelle.getCompteurKill());
+            ultimeActuelle.activerUlt(ennemis);
         }
-        return new Point2D[]{new Point2D(0, 0)};
     }
 
-    public Point2D ennemiArrivee(int epoque){
-        switch (epoque){
-            case 0: return new Point2D(10, 1);
-            case 1: return new Point2D(0, 2);
-            case 2: return new Point2D(6, 0);
-        }
-
-        return null;
-    }
+    // Méthodes de gestion vagues, ennemis et niveau
 
     private Ennemi creerEnnemi(int id ) {
         Random rand = new Random();
@@ -264,127 +194,53 @@ public class Jeu {
                 switch (id){
                     default:
                         return new Fantassin(route);
-                    }
+                }
             }
         }
         return null;
     }
 
-
-    public void preview(double x, double y) {
-        preview.update(x,y,id);
-    }
-
-    public boolean poserPiege(Piege piege ){
-        int caseX = (int) (piege.getX()) ;
-        int caseY = (int) (piege.getY())  ;
-
-        if (peuxPoserPiege(this.epoqueActuel.get(), piege)) {
-            depenserArgent(piege.getCout());
-            addDefense(piege);
-            System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
-            return true;
-        } else {
-            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
-            return false;
-        }
-    }
-    public boolean peuxPoserPiege(int epoque, Piege piege){
-        int[][] test = level.loadLevel(epoque);
-        int x = (int) piege.getX();
-        int y = (int) piege.getY();
-
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
-
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
-        }
-        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
-    }
-    public boolean peuxPoserPiegeCoord(int x, int y){
-        int[][] test = level.loadLevel(epoqueActuel.get());
-
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
-
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
-        }
-        return (test[y][x] > 0 && test[y][x] <= 6 );
-    }
-    public boolean poserTour(Tour tour) {
-
-        int caseX = (int) tour.getX();
-        int caseY = (int) tour.getY();
-
-        if (peuxPoserTour(this.epoqueActuel.get(), tour)) {
-            depenserArgent(tour.getCout());
-            addDefense(tour);
-            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
-            tour.inflation();
-            return true;
-        } else {
-            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
-            return false;
-        }
-    }
-    public boolean peuxPoserTour(int epoque, Tour tour ) {
-        int[][] grille = level.loadLevel(epoque);
-        int caseX = (int) tour.getX();
-        int caseY = (int) tour.getY();
-
-        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
-        if (grille[caseY][caseX] != 0) return false;
-
-        for (Defense d : defenses) {
-            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
-        }
-        return this.solde.get() >= tour.getCout();
-    }
-
-    // preview
-    public boolean peuxPoserTourCoord( int caseX, int caseY) {
-        int[][] grille = level.loadLevel(epoqueActuel.get());
-
-        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
-        if (grille[caseY][caseX] != 0) return false;
-
-        for (Defense d : defenses) {
-            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
-        }
-        return true;
-
-    }
-
-    public void activerUltime(){
-        if(compteurKill.get() >= ultimeActuelle.getCompteurKill()){
-            compteurKill.set(compteurKill.get() - ultimeActuelle.getCompteurKill());
-            ultimeActuelle.activerUlt(ennemis);
+    public void newRoute() {
+        this.routes = new ArrayList<>();
+        Point2D[] departs = ennemisDeparts(epoqueActuel.get());
+        Point2D arrivee = ennemiArrivee(epoqueActuel.get());
+        for (Point2D depart : departs){
+            routes.add(level.calculerChemin(epoqueActuel.get(), depart, arrivee));
         }
     }
 
-
-    public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }
-    public void depenserArgent(int somme){ if(solde.get() >= somme) solde.set(solde.get() - somme); }
-    public boolean perdu(){ return pvBase.get() <= 0; }
-    public int getSolde() { return solde.get(); }
-    public IntegerProperty getSoldeProperty(){ return solde; }
-    public int getPvBase() { return pvBase.get(); }
-    public IntegerProperty getPvBaseProperty(){ return pvBase; }
-    public int getCompteurKill(){
-        return compteurKill.get();
-    }
-    public IntegerProperty getCompteurKillProperty(){
-        return compteurKill;
-    }
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
+    public Point2D[] ennemisDeparts(int epoque){
+        switch(epoque){
+            case 0: return new Point2D[]{new Point2D(0, 9)};
+            case 1: return new Point2D[]{new Point2D(10, 10)};
+            case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
+            case 3: return new Point2D[]{new Point2D(0, 6), new Point2D(12, 6)}; // 2 spawns (nouvelle map de niveau 4)
+        }
+        return new Point2D[]{new Point2D(0, 0)};
     }
 
-    public Preview getPreview() {
-        return preview;
+    public Point2D ennemiArrivee(int epoque){
+        switch (epoque){
+            case 0: return new Point2D(10, 1);
+            case 1: return new Point2D(0, 2);
+            case 2: return new Point2D(6, 0);
+            case 3: return new Point2D(6, 0); // arrivee de nouvelle map de niveau 4
+        }
+
+        return null;
+    }
+
+    public void nuke(){
+        ennemis.clear();
+        defenses.clear();
+        projectiles.clear();
+    }
+
+    public void resetTimersEtVague() {
+        this.frame = 0;
+        this.delay = 0;
+        this.delaySpawnMob = 80;
+        this.vague.reinitialiser(this.epoqueActuel.get());
     }
 
     public void prochaineEpoque(){
@@ -402,10 +258,161 @@ public class Jeu {
         this.ultimeActuelle = ultimes[this.epoqueActuel.get()];
     }
 
+    public boolean perdu(){ return pvBase.get() <= 0; }
+
+    public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }
+    public void depenserArgent(int somme){ if(solde.get() >= somme) solde.set(solde.get() - somme); }
+
+    // Placement et Actions Utilisateur
+
+    public boolean poserTour(Tour tour) {
+        int caseX = (int) tour.getX();
+        int caseY = (int) tour.getY();
+
+        if (peuxPoserTour(this.epoqueActuel.get(), tour)) {
+            depenserArgent(tour.getCout());
+            addDefense(tour);
+            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
+            tour.inflation();
+            return true;
+        } else {
+            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
+            return false;
+        }
+    }
+
+    public boolean poserPiege(Piege piege ){
+        int caseX = (int) (piege.getX()) ;
+        int caseY = (int) (piege.getY())  ;
+
+        if (peuxPoserPiege(this.epoqueActuel.get(), piege)) {
+            depenserArgent(piege.getCout());
+            addDefense(piege);
+            System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
+            return true;
+        } else {
+            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
+            return false;
+        }
+    }
+
+    public boolean peuxPoserTour(int epoque, Tour tour ) {
+        int[][] grille = level.loadLevel(epoque);
+        int caseX = (int) tour.getX();
+        int caseY = (int) tour.getY();
+
+        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
+        if (grille[caseY][caseX] != 0) return false;
+
+        for (Defense d : defenses) {
+            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
+        }
+        return this.solde.get() >= tour.getCout();
+    }
+
+    public boolean peuxPoserPiege(int epoque, Piege piege){
+        int[][] test = level.loadLevel(epoque);
+        int x = (int) piege.getX();
+        int y = (int) piege.getY();
+
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
+
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+        }
+        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
+    }
+
+    public void preview(double x, double y) {
+        preview.update(x,y,id);
+    }
+
+    public boolean peuxPoserTourCoord( int caseX, int caseY) {
+        int[][] grille = level.loadLevel(epoqueActuel.get());
+
+        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
+        if (grille[caseY][caseX] != 0) return false;
+
+        for (Defense d : defenses) {
+            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
+        }
+        return true;
+    }
+
+    public boolean peuxPoserPiegeCoord(int x, int y){
+        int[][] test = level.loadLevel(epoqueActuel.get());
+
+        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
+
+        for (int i = 0; i < defenses.size(); i++) {
+            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+        }
+        return (test[y][x] > 0 && test[y][x] <= 6 );
+    }
+
+    // Getters / Setters et méthodes simples
+
+    public void addEnnemi(Ennemi ennemi) {
+        ennemis.add(ennemi);
+    }
+
+    public void addDefense(Defense defense) {
+        defenses.add(defense);
+    }
+
+    public Vague getVague() {
+        return vague;
+    }
+
+    public int getEpoqueActuel() {
+        return epoqueActuel.get();
+    }
+
+    public IntegerProperty getEpoqueActuelProperty() {
+        return epoqueActuel;
+    }
+
+    public void setEpoqueActuel(int epoqueActuel) {
+        this.epoqueActuel.set(epoqueActuel);
+    }
+
+    public ObservableList<Ennemi> getEnnemi() {
+        return ennemis ;
+    }
+
+    public ObservableList<Defense> getDefenses() {
+        return defenses;
+    }
+
+    public ObservableList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public int getSolde() { return solde.get(); }
+    public IntegerProperty getSoldeProperty(){ return solde; }
+
+    public int getPvBase() { return pvBase.get(); }
+    public IntegerProperty getPvBaseProperty(){ return pvBase; }
+
+    public int getCompteurKill(){
+        return compteurKill.get();
+    }
+    public IntegerProperty getCompteurKillProperty(){
+        return compteurKill;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Preview getPreview() {
+        return preview;
+    }
 
     public void setModeExtreme(boolean extreme) {
         this.modeExtreme = extreme;
     }
+
     public boolean isModeExtreme() {
         return this.modeExtreme;
     }
