@@ -1,6 +1,7 @@
 module universite_paris8.iut.bak.timetowerdefense {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
     requires org.controlsfx.controls;
 
