@@ -3,7 +3,9 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 import javafx.scene.media.AudioClip;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.FlechetteEmpoisonne;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Caillou;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Filet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles.Fleche;
 
 import java.net.URL;
@@ -25,6 +27,9 @@ public class GestionnaireAudio {
         try {
 
             ajouterSon(Fleche.class, "media/sfx_arc.mp3");
+            ajouterSon(Caillou.class, "media/sfx_caillou.mp3");
+            ajouterSon(Filet.class, "media/sfx_filet.mp3");
+            ajouterSon(FlechetteEmpoisonne.class, "media/sfx_arc.mp3");
 
             // Exemples pour la suite :
             // ajouterSon(Jar.class, "media/sfx_jarre.mp3");

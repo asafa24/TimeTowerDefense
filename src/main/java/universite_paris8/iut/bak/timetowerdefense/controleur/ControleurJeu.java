@@ -148,6 +148,7 @@ public class ControleurJeu implements Initializable {
 
         jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
             this.changerNiveau(nouvelleEpoque.intValue());
+            lancerMusique(nouvelleEpoque.intValue());
             System.out.println("oui");
         });
 
@@ -600,6 +601,7 @@ public class ControleurJeu implements Initializable {
         }
         String cheminMusique = "";
         switch (epoque){
+            case 1 -> cheminMusique = "media/antiquite.mp3";
             default -> cheminMusique = "media/prehistoire.mp3";
         }
 
