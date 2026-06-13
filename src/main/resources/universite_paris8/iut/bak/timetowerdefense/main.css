@@ -73,3 +73,14 @@
 .btn-recommencer {
     -fx-background-color: #e67e22;
 }
+
+.btn-audio {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-cursor: hand;
+}
+
+.btn-audio:hover {
+    -fx-text-fill: #f1c40f;
+}

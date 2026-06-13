@@ -12,12 +12,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
@@ -119,6 +122,15 @@ public class ControleurJeu implements Initializable {
     @FXML private VBox paneGameOver;
     @FXML private Label labelDetailGameOver;
 
+    private MediaPlayer musiqueAmbiance;
+    @FXML private Slider sliderMusique;
+    @FXML private Slider sliderSfx;
+    @FXML private Button btnMusique;
+    @FXML private Button btnSfx;
+
+    private GestionnaireAudio gestionnaireAudio;
+    private boolean muteSfx = false;
+
     private boolean enPause = false;
 
 
@@ -129,7 +141,8 @@ public class ControleurJeu implements Initializable {
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
-        EcouteEntite ecouteEntite = new EcouteEntite(vueEntite);
+        this.gestionnaireAudio = new GestionnaireAudio();
+        EcouteEntite ecouteEntite = new EcouteEntite(vueEntite, gestionnaireAudio);
         this.uiVue = new UIVue();
         afficherButton(jeu.getEpoqueActuel());
 
@@ -151,9 +164,6 @@ public class ControleurJeu implements Initializable {
         // gere les bind pour les prix des tours
         this.afficherPrix(jeu.getEpoqueActuel());
 
-
-
-
         labelMessageSys.setVisible(false);
         jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue()+1) + " en approche", Color.GOLD, 3));
 
@@ -165,11 +175,21 @@ public class ControleurJeu implements Initializable {
         this.cerclePortee.setMouseTransparent(false);
         this.entityPane.getChildren().add(cerclePortee);
 
-
-
         ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
+        // Musique
+        sliderMusique.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (musiqueAmbiance != null) {
+                musiqueAmbiance.setVolume(newVal.doubleValue());
+            }
+        });
+        // Sons
+        sliderSfx.valueProperty().addListener((obs, oldVal, newVal) -> {
+            gestionnaireAudio.setVolume(newVal.doubleValue());
+        });
+
         initAnimation();
+        lancerMusique(jeu.getEpoqueActuel());
         gameLoop.play();
 
         int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
@@ -574,6 +594,24 @@ public class ControleurJeu implements Initializable {
         }
     }
 
+    public void lancerMusique(int epoque){
+        if(musiqueAmbiance != null){
+            musiqueAmbiance.stop();
+        }
+        String cheminMusique = "";
+        switch (epoque){
+            default -> cheminMusique = "media/prehistoire.mp3";
+        }
+
+        URL url = Application.class.getResource(cheminMusique);
+        if(url != null){
+            musiqueAmbiance = new MediaPlayer(new Media(url.toExternalForm()));
+            musiqueAmbiance.setVolume(0.2);
+            musiqueAmbiance.setCycleCount(MediaPlayer.INDEFINITE);
+            musiqueAmbiance.play();
+        }
+    }
+
         private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
             Label lblNom = new Label("• " + nom);
             lblNom.setTextFill(couleurTitre);
@@ -652,5 +690,20 @@ public class ControleurJeu implements Initializable {
         } else {
             labelDetailGameOver.setText("Mode Normal : Vous pouvez retenter cette époque.");
         }
+    }
+    @FXML
+    public void toggleMuteMusique() {
+        if (musiqueAmbiance != null) {
+            boolean estMuet = !musiqueAmbiance.isMute();
+            musiqueAmbiance.setMute(estMuet);
+            btnMusique.setText(estMuet ? "🔇 désactiver" : "🔊 activer");
+        }
+    }
+
+    @FXML
+    public void toggleMuteSfx() {
+        muteSfx = !muteSfx;
+        gestionnaireAudio.setMute(muteSfx);
+        btnSfx.setText(muteSfx ? "🔇 désactiver" : "🔊 activer");
     }
 }
