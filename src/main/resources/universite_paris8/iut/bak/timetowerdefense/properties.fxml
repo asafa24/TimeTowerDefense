@@ -12,7 +12,7 @@
       fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.PropertiController">
 
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@carte.css" />
    </stylesheets>
 
    <children>

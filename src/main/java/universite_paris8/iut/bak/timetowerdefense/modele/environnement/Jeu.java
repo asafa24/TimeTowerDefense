@@ -214,7 +214,7 @@ public class Jeu {
             case 0: return new Point2D[]{new Point2D(0, 9)};
             case 1: return new Point2D[]{new Point2D(10, 10)};
             case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
-            case 3: return new Point2D[]{new Point2D(0, 6), new Point2D(12, 6)}; // 2 spawns (nouvelle map de niveau 4)
+            case 3: return new Point2D[]{new Point2D(0, 6), new Point2D(12, 6)}; // 2 spawns (map 4)
         }
         return new Point2D[]{new Point2D(0, 0)};
     }
@@ -224,7 +224,7 @@ public class Jeu {
             case 0: return new Point2D(10, 1);
             case 1: return new Point2D(0, 2);
             case 2: return new Point2D(6, 0);
-            case 3: return new Point2D(6, 0); // arrivee de nouvelle map de niveau 4
+            case 3: return new Point2D(6, 0);
         }
 
         return null;

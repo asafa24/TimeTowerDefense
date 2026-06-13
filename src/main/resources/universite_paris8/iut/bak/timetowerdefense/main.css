@@ -1,0 +1,75 @@
+/* UI */
+.top-bar, #boutonBox {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.stats-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.side-button {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Bouton Ultime */
+#ultButton {
+    -fx-background-color: linear-gradient(to bottom right, #ff416c, #ff4b2b);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 30;
+    -fx-padding: 12 30 12 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(255, 65, 108, 0.6), 15, 0.5, 0, 0);
+}
+
+/* Boutons d'Achat */
+.tour-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Messages & Glossaire */
+#labelMessageSys {
+    -fx-effect: dropshadow(one-pass-box, black, 8, 1.0, 0, 0);
+}
+
+#paneGlossaire {
+    -fx-background-color: transparent;
+    -fx-background: rgba(0,0,0,0.85);
+    -fx-padding: 10;
+}
+
+/* Ecrans de Pause / Game Over */
+#panePause {
+    -fx-background-color: rgba(0, 0, 0, 0.75);
+}
+
+#paneGameOver {
+    -fx-background-color: rgba(15, 17, 26, 0.95);
+}
+
+.game-over-title {
+    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.4), 15, 0.5, 0, 0);
+}
+
+.overlay-button {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 20;
+    -fx-padding: 10 30 10 30;
+    -fx-cursor: hand;
+}
+
+.btn-reprendre {
+    -fx-background-color: #2ecc71;
+}
+
+.btn-recommencer {
+    -fx-background-color: #e67e22;
+}
