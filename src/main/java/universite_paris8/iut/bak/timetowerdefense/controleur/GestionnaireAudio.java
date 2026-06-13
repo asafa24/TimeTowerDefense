@@ -15,11 +15,13 @@ import java.util.Map;
 public class GestionnaireAudio {
 
     private Map<Class<? extends Projectile>, AudioClip> sonsTirs;
+    private Map<String, AudioClip> sonsSpeciaux;
     private double volumeSfx = 0.2;
     private boolean mute = false;
 
     public GestionnaireAudio() {
         sonsTirs = new HashMap<>();
+        sonsSpeciaux = new HashMap<>();
         chargerSons();
     }
 
@@ -30,6 +32,11 @@ public class GestionnaireAudio {
             ajouterSon(Caillou.class, "media/sfx_caillou.mp3");
             ajouterSon(Filet.class, "media/sfx_filet.mp3");
             ajouterSon(FlechetteEmpoisonne.class, "media/sfx_arc.mp3");
+
+            ajouterSonSpecial("cri_boss", "media/sfx_rawr.mp3");
+            ajouterSonSpecial("meteore", "media/sfx_meteore.mp3");
+            ajouterSonSpecial("tornado", "media/sfx_tornado.mp3");
+
 
             // Exemples pour la suite :
             // ajouterSon(Jar.class, "media/sfx_jarre.mp3");
@@ -46,6 +53,17 @@ public class GestionnaireAudio {
         } else {
             System.err.println("Fichier audio introuvable : " + cheminRelatif);
         }
+    }
+
+    private void ajouterSonSpecial(String cle, String cheminRelatif){
+        URL url = Application.class.getResource(cheminRelatif);
+        if (url != null) sonsSpeciaux.put(cle, new AudioClip(url.toExternalForm()));
+    }
+
+    public void jouerSonSpecial(String cle){
+        if(mute) return;
+        AudioClip son = sonsSpeciaux.get(cle);
+        if(son != null) son.play(volumeSfx);
     }
 
     public void jouerSonTir(Projectile p) {

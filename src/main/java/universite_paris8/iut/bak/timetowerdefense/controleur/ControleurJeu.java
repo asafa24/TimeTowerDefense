@@ -285,6 +285,9 @@ public class ControleurJeu implements Initializable {
             case P -> {
                 togglePause();
             }
+            case K -> {
+                jeu.getCompteurKillProperty().set(jeu.getCompteurKillProperty().get()+10);
+            }
         }
     }
 
@@ -468,6 +471,11 @@ public class ControleurJeu implements Initializable {
 
     public void lancerUltime(){
         jeu.activerUltime();
+        if(jeu.getEpoqueActuel() == 0){
+            gestionnaireAudio.jouerSonSpecial("meteore");
+        } else if (jeu.getEpoqueActuel() == 1){
+            gestionnaireAudio.jouerSonSpecial("tornado");
+        }
     }
 
     @FXML
