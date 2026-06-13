@@ -190,14 +190,13 @@ public class Jeu {
 
                 }
             }
-            case 2 -> {
+            default -> {
                 switch (id){
                     default:
                         return new Fantassin(route);
                 }
             }
         }
-        return null;
     }
 
     public void newRoute() {
@@ -214,7 +213,9 @@ public class Jeu {
             case 0: return new Point2D[]{new Point2D(0, 9)};
             case 1: return new Point2D[]{new Point2D(10, 10)};
             case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
-            case 3: return new Point2D[]{new Point2D(0, 6), new Point2D(12, 6)}; // 2 spawns (map 4)
+            case 3: return
+                    new Point2D[]{new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10),
+                    new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10)}; // Juste pour qu'il calcule 8x fois les chemins possibles comme ca il en donne toujours un au hasard
         }
         return new Point2D[]{new Point2D(0, 0)};
     }

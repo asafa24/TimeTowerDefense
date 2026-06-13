@@ -99,7 +99,9 @@ public class Level {
         while (!fifo.isEmpty()) {
             Point2D s = fifo.removeFirst();
             int[][] directions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-            for (int[] dir : directions) {
+            List<int[]> directionsList = new ArrayList<>(Arrays.asList(directions));
+            Collections.shuffle(directionsList);
+            for (int[] dir : directionsList) {
                 int nx = (int) s.getX() + dir[0];
                 int ny = (int) s.getY() + dir[1];
                 if (nx >= 0 && nx < map[0].length && ny >= 0 && ny < map.length) {
