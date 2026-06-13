@@ -67,7 +67,7 @@ public class GestionnaireAudio {
     }
 
     public void jouerSonTir(Projectile p) {
-        if (mute) return; // Si le jeu est en sourdine, on bloque la lecture
+        if (mute) return;
 
         AudioClip son = sonsTirs.get(p.getClass());
         if (son != null) {
@@ -76,7 +76,6 @@ public class GestionnaireAudio {
     }
 
     public void setVolume(double volume) {
-        // Sécurité pour garder le volume entre 0.0 et 1.0
         this.volumeSfx = Math.max(0.0, Math.min(1.0, volume));
     }
 
