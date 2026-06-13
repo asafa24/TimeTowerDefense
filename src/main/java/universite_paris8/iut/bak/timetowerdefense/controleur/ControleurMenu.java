@@ -26,14 +26,14 @@ public class ControleurMenu {
     public void lancerJeu(ActionEvent event) {
         boolean isModeExtreme = radioExtreme.isSelected();
 
-        URL mediaUrl = Application.class.getResource("media/transition.mp4");
-        if (mediaUrl == null) {
+        URL url = Application.class.getResource("media/transition.mp4");
+        if (url == null) {
             System.err.println("Vidéo introuvable, lancement direct.");
             chargerFenetreJeu(event, isModeExtreme);
             return;
         }
 
-        Media media = new Media(mediaUrl.toExternalForm());
+        Media media = new Media(url.toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         MediaView mediaView = new MediaView(mediaPlayer);
 

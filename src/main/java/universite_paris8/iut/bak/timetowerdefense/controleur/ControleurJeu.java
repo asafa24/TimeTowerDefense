@@ -342,65 +342,11 @@ public class ControleurJeu implements Initializable {
             return;
         }
         switch (jeu.getEpoqueActuel()) {
-            case 0:
-                switch (typeDefenseSelectionnee) {
-                    case 1 -> {
-                        this.piegeSelectione = new MiniVolcan(xGrille, yGrille);
-                        if (!jeu.poserPiege(piegeSelectione)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-                    }
-                    case 2 -> {
-                        this.tourSelectionne = new ArbreRuste(xGrille, yGrille);
-                        if (!jeu.poserTour(tourSelectionne)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-
-                    }
-                    case 3 -> {
-                        this.tourSelectionne = new CatapulteCaillou(xGrille, yGrille);
-                        if (!jeu.poserTour(tourSelectionne)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-                    }
-                    case 4 -> {
-                        this.tourSelectionne = new LanceFilet(xGrille, yGrille);
-                        if (!jeu.poserTour(tourSelectionne)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-                    }
-
-                }
-                break;
+//            case 0:
+//                selectionsPrehistoire(xGrille, yGrille);
+//                break;
             case 1:
-                switch (typeDefenseSelectionnee) {
-                    case 1 -> {
-                        this.piegeSelectione = new PorteDeSable(xGrille, yGrille);
-                        if (!jeu.poserPiege(piegeSelectione)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-                    }
-                    case 2 -> {
-                        this.tourSelectionne = new TotemFlechette(xGrille, yGrille);
-                        if (!jeu.poserTour(tourSelectionne)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-
-                    }
-                    case 3 -> {
-                        this.tourSelectionne = new CatapulteJAR(xGrille, yGrille);
-                        if (!jeu.poserTour(tourSelectionne)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-                    }
-                    case 4 -> {
-                        this.tourSelectionne = new PyramideShooteuse(xGrille, yGrille);
-                        if (!jeu.poserTour(tourSelectionne)) {
-                            afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
-                        }
-
-                    }
-                }
+                selectionAntiquite(xGrille, yGrille);
                 break;
             case 2:
                 switch (typeDefenseSelectionnee) {
@@ -432,6 +378,9 @@ public class ControleurJeu implements Initializable {
                     }
                 }
                 break;
+            default:
+                selectionsPrehistoire(xGrille, yGrille);
+                break;
 
         }
         this.typeDefenseSelectionnee = 0;
@@ -440,6 +389,69 @@ public class ControleurJeu implements Initializable {
         vuePreview.remove();
         this.typeDefenseSelectionnee= 0;
     }
+
+    private void selectionsPrehistoire(int xGrille, int yGrille) {
+        switch (typeDefenseSelectionnee) {
+            case 1 -> {
+                this.piegeSelectione = new MiniVolcan(xGrille, yGrille);
+                if (!jeu.poserPiege(piegeSelectione)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+            }
+            case 2 -> {
+                this.tourSelectionne = new ArbreRuste(xGrille, yGrille);
+                if (!jeu.poserTour(tourSelectionne)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+
+            }
+            case 3 -> {
+                this.tourSelectionne = new CatapulteCaillou(xGrille, yGrille);
+                if (!jeu.poserTour(tourSelectionne)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+            }
+            case 4 -> {
+                this.tourSelectionne = new LanceFilet(xGrille, yGrille);
+                if (!jeu.poserTour(tourSelectionne)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+            }
+
+        }
+    }
+
+    private void selectionAntiquite(int xGrille, int yGrille) {
+        switch (typeDefenseSelectionnee) {
+            case 1 -> {
+                this.piegeSelectione = new PorteDeSable(xGrille, yGrille);
+                if (!jeu.poserPiege(piegeSelectione)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+            }
+            case 2 -> {
+                this.tourSelectionne = new TotemFlechette(xGrille, yGrille);
+                if (!jeu.poserTour(tourSelectionne)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+
+            }
+            case 3 -> {
+                this.tourSelectionne = new CatapulteJAR(xGrille, yGrille);
+                if (!jeu.poserTour(tourSelectionne)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+            }
+            case 4 -> {
+                this.tourSelectionne = new PyramideShooteuse(xGrille, yGrille);
+                if (!jeu.poserTour(tourSelectionne)) {
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                }
+
+            }
+        }
+    }
+
 
     public void masquerStatsTour(Pane zoneStats) {
         zoneStats.getChildren().clear();

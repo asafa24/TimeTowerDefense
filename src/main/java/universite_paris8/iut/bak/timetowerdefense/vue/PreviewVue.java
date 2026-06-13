@@ -99,6 +99,9 @@ public class PreviewVue {
                         }
                     }
                 }
+                default -> {
+                    img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+                }
             }
 
             Light.Distant redLight = new Light.Distant();
