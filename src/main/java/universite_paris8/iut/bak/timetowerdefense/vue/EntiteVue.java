@@ -269,6 +269,8 @@ public class EntiteVue {
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
+            img.setFitWidth(64);
+            img.setFitHeight(64);
             sprite = img;
         }
 
