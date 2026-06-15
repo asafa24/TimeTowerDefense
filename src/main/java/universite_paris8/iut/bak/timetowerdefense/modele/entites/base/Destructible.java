@@ -4,6 +4,4 @@ public interface Destructible {
     public int getPv();
     public boolean estMort();
     public void recevoirDegats(int dgt);
-
-
 }

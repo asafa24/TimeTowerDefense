@@ -9,7 +9,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="192.0" prefWidth="128.0"
       xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.PropertiController">
+      fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurStatsTour">
 
    <stylesheets>
       <URL value="@carte.css" />

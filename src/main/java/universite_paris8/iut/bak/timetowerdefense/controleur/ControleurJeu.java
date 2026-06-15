@@ -328,7 +328,6 @@ public class ControleurJeu implements Initializable {
 
                 // disparition des cercle
                 cerclePortee.setVisible(false);
-                cerclePortee.radiusProperty().unbind();
 
                 for (Defense d : jeu.getDefenses()) {
                     if (d instanceof Tour) {
@@ -504,7 +503,7 @@ public class ControleurJeu implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));
             Pane carteState = fxmlLoader.load();
 
-            PropertiController controller = fxmlLoader.getController();
+            ControleurStatsTour controller = fxmlLoader.getController();
             controller.updateStats(tour, this.jeu,this);
 
             zoneStats.getChildren().setAll(carteState);

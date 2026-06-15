@@ -3,23 +3,13 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
-import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
-import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
-import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class PropertiController {
+public class ControleurStatsTour {
 
     @FXML private Button button_ameliorez;
     @FXML private Button button_vendre;
@@ -79,7 +69,7 @@ public class PropertiController {
             jeu.ajouterArgent(montantRevente);
             jeu.getDefenses().remove(this.tourActuelle);
 
-            System.out.println(p_nom.getText() + " vendue pour " + montantRevente + " pièces !");
+            System.out.println(p_nom.getText() + " vendue pour " + montantRevente + " ecus");
 
             if (this.controleurJeu != null) {
                 this.controleurJeu.fermerMenuTour();
@@ -88,14 +78,18 @@ public class PropertiController {
     }
     @FXML
     public void ameliorationT() {
-        if (this.tourActuelle != null && this.jeu != null) {
-            int montantUpgrade = Integer.parseInt(p_prix_upgrade.getText());
-            if (jeu.getSoldeProperty().get() >= montantUpgrade) {
-                jeu.ajouterArgent(-montantUpgrade);
-                tourActuelle.amelioration();
-                updateStats(tourActuelle, jeu, this.controleurJeu);
-            } else {
-                System.out.println("Pas assez d'or !");
+        if (tourActuelle.getNiveau() > 2 ){
+            controleurJeu.afficherMessage("cette tour a atteint son niveau maxi !",Color.GOLD , 1);
+        }else {
+            if (this.tourActuelle != null && this.jeu != null) {
+                int montantUpgrade = Integer.parseInt(p_prix_upgrade.getText());
+                if (jeu.getSoldeProperty().get() >= montantUpgrade) {
+                    jeu.ajouterArgent(-montantUpgrade);
+                    tourActuelle.amelioration();
+                    updateStats(tourActuelle, jeu, this.controleurJeu);
+                } else {
+                    controleurJeu.afficherMessage("Pas assez d'or !", Color.RED, 1);
+                }
             }
         }
     }

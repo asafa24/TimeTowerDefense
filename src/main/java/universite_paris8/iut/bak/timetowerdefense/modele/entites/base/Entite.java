@@ -8,7 +8,6 @@ public abstract class Entite {
     private DoubleProperty x = new SimpleDoubleProperty();
     private DoubleProperty y = new SimpleDoubleProperty();
     private int id;
-
     public Entite(double x, double y){
         this.x.set(x);
         this.y.set(y);
@@ -19,8 +18,6 @@ public abstract class Entite {
         this.id = compteurId;
         compteurId++;
     }
-
-
     public double getX(){
         return x.get();
     }
@@ -35,8 +32,6 @@ public abstract class Entite {
     public DoubleProperty yProperty() {
         return y;
     }
-
-
     public void setX(double x){
         this.x.set(x);
     }
