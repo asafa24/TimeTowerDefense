@@ -15,6 +15,11 @@ public abstract class Boss extends Ennemi {
         this.tempsRecharge = tempsRecharge;
         this.compteurCompetence = 60;
     }
+    public Boss(int pv, int vitesseBase, int recompense, int tempsRecharge, List<Point2D> chemin) {
+        super(pv, vitesseBase, recompense, chemin);
+        this.tempsRecharge = tempsRecharge;
+        this.compteurCompetence = 60;
+    }
 
     @Override
     public void agir(List<Ennemi> allies, List<Defense> defenses) {

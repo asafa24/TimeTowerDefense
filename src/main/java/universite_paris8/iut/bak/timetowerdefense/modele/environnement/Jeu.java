@@ -10,10 +10,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.TempeteDeSa
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Chacal;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Fantassin;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
@@ -58,7 +55,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(200);
+        this.solde = new SimpleIntegerProperty(20000);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = new SimpleIntegerProperty(0);
         this.frame = 0;
@@ -186,7 +183,7 @@ public class Jeu {
                     case 2:
                         return new GolemSable(route);
                     default:
-                        return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
+                        return new Sarko(route,this);
 
                 }
             }

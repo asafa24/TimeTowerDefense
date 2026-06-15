@@ -19,6 +19,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqui
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.FlechetteEmpoisonne;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.Jar;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Sarko;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Fantassin;
@@ -114,10 +115,13 @@ public class EntiteVue {
                 img.setFitWidth(80);
             }
             if (e instanceof Chacal){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/chacal.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/chakal.png")));
             }
             if (e instanceof Golime){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golime.png")));
+            }
+            if (e instanceof Sarko){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/sarko.png")));
             }
 
             // Epoque Moyen Age

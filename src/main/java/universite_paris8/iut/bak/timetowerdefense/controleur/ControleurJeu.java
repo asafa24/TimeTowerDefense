@@ -273,6 +273,12 @@ public class ControleurJeu implements Initializable {
             case M -> {
                 if (jeu.getEpoqueActuel() < 5)changerNiveauForcing(jeu.getEpoqueActuel()+1);
             }
+            case O ->{
+                skipVague();
+            }
+            case I ->{
+                motherload();
+            }
             case H -> {
                 toggleUI();
             }
@@ -376,6 +382,7 @@ public class ControleurJeu implements Initializable {
                         }
 
                     }
+
                 }
                 break;
             default:
@@ -727,5 +734,11 @@ public class ControleurJeu implements Initializable {
         muteSfx = !muteSfx;
         gestionnaireAudio.setMute(muteSfx);
         btnSfx.setText(muteSfx ? "🔇 désactiver" : "🔊 activer");
+    }
+    public void skipVague(){
+        jeu.getVague().vagueSuivante();
+    }
+    public void motherload(){
+        jeu.ajouterArgent(200);
     }
 }
