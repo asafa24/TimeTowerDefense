@@ -5,8 +5,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 
 import java.util.List;
 
-public class Fantassin extends Ennemi {
-    public Fantassin(List<Point2D> chemin) {
+public class Moine extends Ennemi {
+    public Moine(List<Point2D> chemin) {
         super(chemin.get(0).getX()*64, chemin.get(0).getY() * 64, 30, 2, 10, chemin);
     }
 }

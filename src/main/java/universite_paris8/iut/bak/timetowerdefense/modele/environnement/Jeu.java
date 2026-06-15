@@ -11,7 +11,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Fantassin;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
@@ -189,8 +190,12 @@ public class Jeu {
             }
             default -> {
                 switch (id){
+                    case 0:
+                        return new Moine(route);
+                    case 1:
+                        return new Chevalier(route);
                     default:
-                        return new Fantassin(route);
+                        return new Moine(route);
                 }
             }
         }

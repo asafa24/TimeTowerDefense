@@ -2,7 +2,6 @@ package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
-import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -26,7 +25,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqui
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Sarko;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Fantassin;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
@@ -129,7 +129,10 @@ public class EntiteVue {
             }
 
             // Epoque Moyen Age
-            if(e instanceof Fantassin){
+            if(e instanceof Moine){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/moino.png")));
+            }
+            if(e instanceof Chevalier){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/fantassin.png")));
             }
 
