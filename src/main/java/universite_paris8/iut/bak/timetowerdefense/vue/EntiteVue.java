@@ -1,6 +1,9 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
@@ -15,6 +18,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Entite;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Chacal;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.FlechetteEmpoisonne;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles.Jar;
@@ -146,6 +150,7 @@ public class EntiteVue {
             rectangle_vie = rec;
             sprite = img;
             barre_vie = vie;
+
         }
         if (e instanceof Tour) {
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
@@ -205,6 +210,7 @@ public class EntiteVue {
                 img.setFitWidth(74);
                 img.setFitHeight(74);
             }
+
 
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
@@ -305,6 +311,39 @@ public class EntiteVue {
         Node rectangle_vie = affichageRectangle.get(e);
         Node capacity = affichageCapacity.get(e);
         Node proj = affichageProj.get(e);
+
+        if (e instanceof ProjectileCercle && ((ProjectileCercle) e).aAtteintCible()) {
+            ProjectileCercle projCercle = (ProjectileCercle) e;
+
+            Circle rayonExplosion = new Circle(projCercle.getX(), projCercle.getY(), projCercle.getRayonExplosion());
+
+            if (e instanceof Jar){
+                rayonExplosion.setFill(Color.rgb(50, 205, 50, 0.4));
+                rayonExplosion.setStroke(Color.rgb(50, 205, 50, 0.8));
+            } else if(e instanceof Caillou){
+                rayonExplosion.setFill(Color.rgb(128, 128, 128, 0.4));
+                rayonExplosion.setStroke(Color.rgb(128, 128, 128, 0.8));
+            } else {
+                rayonExplosion.setFill(Color.rgb(255, 165, 0, 0.4));
+            }
+
+            entityPane.getChildren().add(rayonExplosion);
+
+            FadeTransition fade = new FadeTransition(Duration.seconds(0.3), rayonExplosion);
+            fade.setFromValue(1.0);
+            fade.setToValue(0.0);
+
+            ScaleTransition scale = new ScaleTransition(Duration.seconds(0.3), rayonExplosion);
+            scale.setFromX(0.2);
+            scale.setFromY(0.2);
+            scale.setToX(1.0);
+            scale.setToY(1.0);
+
+            ParallelTransition ondeDeChoc = new ParallelTransition(fade, scale);
+            ondeDeChoc.setOnFinished(evt -> entityPane.getChildren().remove(rayonExplosion)); // On nettoie à la fin
+            ondeDeChoc.play();
+        }
+
         if(sprite != null){
             if(!(e instanceof Projectile)) {
                 FadeTransition fadeout = new FadeTransition(Duration.seconds(1), sprite);
