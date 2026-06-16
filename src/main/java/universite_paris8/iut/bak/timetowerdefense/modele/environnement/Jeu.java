@@ -174,7 +174,7 @@ public class Jeu {
                     case 2:
                         return new Triceratops(route);
                     default:
-                        return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
+                        return new Tyrannosaurus(route);
                 }
             }
             case 1 -> {
