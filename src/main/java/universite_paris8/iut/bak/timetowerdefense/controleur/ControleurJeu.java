@@ -31,6 +31,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.TourMage;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
@@ -162,19 +163,11 @@ public class ControleurJeu implements Initializable {
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
 
-        // gere les bind pour les prix des tours
         this.afficherPrix(jeu.getEpoqueActuel());
 
         labelMessageSys.setVisible(false);
         jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue()+1) + " en approche", Color.GOLD, 3));
 
-        // Initialisation DU CERCLE de la portee
-        this.cerclePortee = new Circle();
-        this.cerclePortee.setFill(Color.rgb(255, 255, 255, 0.2));
-        this.cerclePortee.setStroke(Color.WHITE);
-        this.cerclePortee.setVisible(false);
-        this.cerclePortee.setMouseTransparent(false);
-        this.entityPane.getChildren().add(cerclePortee);
 
         ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
@@ -317,13 +310,7 @@ public class ControleurJeu implements Initializable {
                         tourTrouvee = true;
                         System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
                         this.afficherMenuTour((Tour) d);
-
-                        // affichage du cercle de la portée au coordonnee de la tour et bind avec la porte
-                        cerclePortee.setCenterX(d.getX() * 64 + 32);
-                        cerclePortee.setCenterY(d.getY() * 64 + 32);
-                        cerclePortee.radiusProperty().bind(((Tour) d).porteeProperty());
-                        cerclePortee.setVisible(true);
-
+                        vueEntite.afficherCerclePortee((Tour)d);
                     } else {
                         d.setSelectionnee(false);
                     }
@@ -331,9 +318,7 @@ public class ControleurJeu implements Initializable {
             }
             if (!tourTrouvee) {
                 this.masquerStatsTour(zoneStats);
-
-                // disparition des cercle
-                cerclePortee.setVisible(false);
+                vueEntite.deselectionnerCerclePortee();
 
                 for (Defense d : jeu.getDefenses()) {
                     if (d instanceof Tour) {
@@ -347,16 +332,16 @@ public class ControleurJeu implements Initializable {
             return;
         }
         switch (jeu.getEpoqueActuel()) {
-//            case 0:
-//                selectionsPrehistoire(xGrille, yGrille);
-//                break;
+            case 0:
+                selectionsPrehistoire(xGrille, yGrille);
+                break;
             case 1:
                 selectionAntiquite(xGrille, yGrille);
                 break;
             case 2:
                 switch (typeDefenseSelectionnee) {
                     case 1 -> {
-                        this.piegeSelectione = new PorteDeSable(xGrille, yGrille);
+                        this.piegeSelectione = new ElPrimo(xGrille, yGrille);
                         if (!jeu.poserPiege(piegeSelectione)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }
@@ -423,7 +408,6 @@ public class ControleurJeu implements Initializable {
                     afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                 }
             }
-
         }
     }
 
@@ -518,7 +502,7 @@ public class ControleurJeu implements Initializable {
     }
     public void fermerMenuTour() {
         masquerStatsTour(zoneStats);
-        cerclePortee.setVisible(false);
+        vueEntite.deselectionnerCerclePortee();
     }
 
     public void afficherMessage(String texte, Color color, int duree){
@@ -706,6 +690,7 @@ public class ControleurJeu implements Initializable {
         TotemFlechette.coutPropertyTotemFlechette().set(50);
         CatapulteJAR.coutPropertyCatapulteJar().set(130);
         PyramideShooteuse.coutPropertyPyramideShooteuse().set(140);
+
     }
 
     private void gererGameOver() {
