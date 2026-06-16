@@ -36,7 +36,7 @@ public class Vague {
                 {60, 10, 6, 0}, // vague 9
                 {75, 12, 8, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
             }, {
-                {10, 0, 0, 0},   // vague 1
+                {10, 0, 1, 0},   // vague 1
                 {12, 1, 0, 0},  // vague 2
                 {15, 2, 0, 0},  // vague 3
                 {34, 4, 1, 0},  // vague 4
