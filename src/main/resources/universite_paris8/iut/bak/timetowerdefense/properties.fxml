@@ -42,7 +42,7 @@
                      <children>
                         <Label styleClass="texte-degat" text="Dgt:" />
                         <Label fx:id="p_current_degat" styleClass="texte-degat" text="10" />
-                        <Label styleClass="texte-degat" text="→" />
+<!--                        <Label styleClass="texte-degat" text="→" />-->
                         <Label fx:id="p_new_degat" styleClass="texte-degat" text="12" />
                      </children>
                   </HBox>
@@ -50,7 +50,7 @@
                      <children>
                         <Label styleClass="texte-portee" text="Prt:" />
                         <Label fx:id="p_current_porte" styleClass="texte-portee" text="64" />
-                        <Label styleClass="texte-portee" text="→" />
+<!--                        <Label styleClass="texte-portee" text="→" />-->
                         <Label fx:id="p_new_porte" styleClass="texte-portee" text="84" />
                      </children>
                   </HBox>
