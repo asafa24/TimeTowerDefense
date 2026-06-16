@@ -23,10 +23,10 @@ public class TerrainVue {
     public void drawMap(int[][] map,int epoque){
 
         switch (epoque){
-            case 1 -> {this.epoque = "antiquite/";}
-            case 2 ->{this.epoque = "moyen-age/";
-            }
-            default -> {this.epoque = "prehistoire/";}
+            case 1 -> this.epoque = "antiquite/";
+            case 2 -> this.epoque = "moyen-age/";
+            case 3 -> this.epoque = "contemporain/";
+            default -> this.epoque = "prehistoire/";
 
 
         }
