@@ -23,12 +23,11 @@ public class TerrainVue {
     public void drawMap(int[][] map,int epoque){
 
         switch (epoque){
-            case 1 -> this.epoque = "antiquite/";
-            case 2 -> this.epoque = "moyen-age/";
-            case 3 -> this.epoque = "contemporain/";
-            default -> this.epoque = "prehistoire/";
-
-
+            case 1 -> {this.epoque = "antiquite/";}
+            case 2 ->{this.epoque = "moyen-age/";}
+            case 3 -> {this.epoque= "Contemporain/";}
+            case 4 -> {this.epoque= "future/";}
+            default -> {this.epoque = "prehistoire/";}
         }
 
         backgroundPane.getChildren().clear();
