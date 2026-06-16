@@ -349,13 +349,13 @@ public class ControleurJeu implements Initializable {
 
                     }
                     case 3 -> {
-                        this.tourSelectionne = new TourMage(xGrille, yGrille);
+                        this.tourSelectionne = new LanceBuche(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }
                     }
                     case 4 -> {
-                        this.tourSelectionne = new LanceBuche(xGrille, yGrille);
+                        this.tourSelectionne = new TourMage(xGrille, yGrille);
                         if (!jeu.poserTour(tourSelectionne)) {
                             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
                         }
