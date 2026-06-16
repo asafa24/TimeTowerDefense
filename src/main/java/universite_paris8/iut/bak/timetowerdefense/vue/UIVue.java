@@ -1,9 +1,14 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
@@ -19,7 +24,6 @@ public class UIVue {
 
     public UIVue() {
     }
-
 
     public StringBinding setPrixT1(int epoque, int id) {
         switch (epoque) {
@@ -63,9 +67,10 @@ public class UIVue {
         }
         return null;
     }
-    public ImageView setImageT1(int epoque, int button){
+
+    public ImageView setImageT1(int epoque, int button) {
         String epoque_txt;
-        switch (epoque){
+        switch (epoque) {
             case 1:
                 epoque_txt = "antiquite/";
                 break;
@@ -73,12 +78,11 @@ public class UIVue {
                 epoque_txt = "prehistoire/";
                 break;
         }
-        Image img ;
+        Image img;
         try {
-             img = new Image(String.valueOf(Application.class.getResource("images/tiles/" + epoque_txt + "button/b_0" + button + ".png")));
-        }
-        catch (Exception e){
-             img = new Image(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+            img = new Image(String.valueOf(Application.class.getResource("images/tiles/" + epoque_txt + "button/b_0" + button + ".png")));
+        } catch (Exception e) {
+            img = new Image(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
         }
         ImageView imageView = new ImageView(img);
         imageView.setFitHeight(64);
@@ -86,12 +90,13 @@ public class UIVue {
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void setImageEtNom(ImageView p_image, Tour tour, Label p_nom , int epoqueActuelle){
-        switch (epoqueActuelle){
+
+    public void setImageEtNom(ImageView p_image, Tour tour, Label p_nom, int epoqueActuelle) {
+        switch (epoqueActuelle) {
             case 0:
                 if (tour instanceof CatapulteCaillou) {
-                p_nom.setText("Lance-pierre");
-                p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png"))));
+                    p_nom.setText("Lance-pierre");
+                    p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png"))));
                 } else if (tour instanceof LanceFilet) {
                     p_nom.setText("Filetoorr");
                     p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png"))));
@@ -113,10 +118,39 @@ public class UIVue {
                 }
 
         }
+    }
 
+    public void afficherMessage(String texte, Color color, int duree, Label labelMessageSys) {
 
+        labelMessageSys.setTextFill(color);
+        labelMessageSys.setText(texte);
+        labelMessageSys.setVisible(true);
 
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.2), labelMessageSys);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
 
+        PauseTransition pause = new PauseTransition(Duration.seconds(duree));
+        pause.setOnFinished(e -> {
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), labelMessageSys);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(eventFade -> labelMessageSys.setVisible(false));
+            fadeOut.play();
+        });
+        pause.play();
+    }
+    public void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre ,VBox contenuGlossaire){
+        Label lblNom = new Label("• " + nom);
+        lblNom.setTextFill(couleurTitre);
+        lblNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
+        Label lblDesc = new Label(description);
+        lblDesc.setTextFill(Color.LIGHTGRAY);
+        lblDesc.setWrapText(true);
+
+        VBox entree = new VBox(2, lblNom, lblDesc);
+        contenuGlossaire.getChildren().add(entree);
     }
 }

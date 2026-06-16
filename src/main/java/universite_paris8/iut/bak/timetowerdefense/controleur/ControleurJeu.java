@@ -22,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
@@ -95,8 +94,6 @@ public class ControleurJeu implements Initializable {
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
     private PreviewVue vuePreview;
-
-
     private ExplosionVue vueExplosion;
     private UIVue uiVue;
     private Jeu jeu;
@@ -112,8 +109,6 @@ public class ControleurJeu implements Initializable {
     @FXML private Label tourDeuxArgent;
     @FXML private Label tourTroisArgent;
     @FXML private Label tourQuatreArgent;
-    @FXML private Circle cerclePortee;
-
     @FXML private Label labelMessageSys;
 
     @FXML private ScrollPane paneGlossaire;
@@ -128,7 +123,6 @@ public class ControleurJeu implements Initializable {
     @FXML private Slider sliderSfx;
     @FXML private Button btnMusique;
     @FXML private Button btnSfx;
-
     private GestionnaireAudio gestionnaireAudio;
     private boolean muteSfx = false;
 
@@ -506,24 +500,7 @@ public class ControleurJeu implements Initializable {
     }
 
     public void afficherMessage(String texte, Color color, int duree){
-        labelMessageSys.setTextFill(color);
-        labelMessageSys.setText(texte);
-        labelMessageSys.setVisible(true);
-
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.2), labelMessageSys);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-        fadeIn.play();
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(duree));
-        pause.setOnFinished(e -> {
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), labelMessageSys);
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(eventFade -> labelMessageSys.setVisible(false));
-            fadeOut.play();
-        });
-        pause.play();
+        uiVue.afficherMessage(texte , color , duree , labelMessageSys );
     }
 
     public void setDifficulteExtreme(boolean extreme) {
@@ -604,6 +581,9 @@ public class ControleurJeu implements Initializable {
                 break;
         }
     }
+    private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
+        uiVue.ajouterEntreeGlossaire(nom, description, couleurTitre, contenuGlossaire);
+    }
 
     public void lancerMusique(int epoque){
         if(musiqueAmbiance != null){
@@ -623,19 +603,6 @@ public class ControleurJeu implements Initializable {
             musiqueAmbiance.play();
         }
     }
-
-        private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
-            Label lblNom = new Label("• " + nom);
-            lblNom.setTextFill(couleurTitre);
-            lblNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-
-            Label lblDesc = new Label(description);
-            lblDesc.setTextFill(Color.LIGHTGRAY);
-            lblDesc.setWrapText(true);
-
-            VBox entree = new VBox(2, lblNom, lblDesc);
-            contenuGlossaire.getChildren().add(entree);
-        }
 
         @FXML
     public void togglePause() {
