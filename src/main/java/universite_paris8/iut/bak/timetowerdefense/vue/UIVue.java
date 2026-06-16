@@ -74,6 +74,10 @@ public class UIVue {
             case 1:
                 epoque_txt = "antiquite/";
                 break;
+            case 2:
+                epoque_txt = "moyen-age/";
+                break;
+
             default:
                 epoque_txt = "prehistoire/";
                 break;
