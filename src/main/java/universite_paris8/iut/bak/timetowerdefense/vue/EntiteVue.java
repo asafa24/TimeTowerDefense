@@ -26,8 +26,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqui
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Sarko;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Roi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
@@ -152,6 +154,18 @@ public class EntiteVue {
             }
             if(e instanceof Chevalier){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/fantassin.png")));
+            }
+            if (e instanceof Cavalier) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/cavalier.png")));
+                final ImageView vueCavalier = img;
+                ((Cavalier) e).getPvPropProperty().addListener((obs, ancienneVie, nouvelleVie) -> {
+                    if (nouvelleVie.intValue() <= 100 && ancienneVie.intValue() > 100) {
+                        vueCavalier.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/cavaliersol.png"))));
+                    }
+                });
+            }
+            if(e instanceof Roi){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
             }
 
 

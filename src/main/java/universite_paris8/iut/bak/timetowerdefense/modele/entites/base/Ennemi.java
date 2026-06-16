@@ -20,6 +20,7 @@ public class Ennemi extends Entite implements Destructible {
     private int dureeStunRestante = 0;
     private int dureeSlowRestante = 0;
     private int dureeBrulageRestante = 0;
+    private int dureeSpeedBoostRestante = 0;
     private boolean shield = false;
 
     private List<Point2D> chemin;
@@ -93,6 +94,13 @@ public class Ennemi extends Entite implements Destructible {
         if (this.dureeSlowRestante > 0) {
             this.dureeSlowRestante--;
             this.vitesseActuelle = this.vitesseBase / 2.0;
+        } else {
+            this.vitesseActuelle = this.vitesseBase;
+        }
+
+        if(dureeSpeedBoostRestante > 0){
+            this.dureeSpeedBoostRestante--;
+            this.vitesseActuelle = this.vitesseBase * 1.3;
         } else {
             this.vitesseActuelle = this.vitesseBase;
         }
@@ -209,6 +217,10 @@ public class Ennemi extends Entite implements Destructible {
         this.vitesseBase = vitesseBase;
     }
 
+    public void setVitesseActuelle(double vitesseActuelle) {
+        this.vitesseActuelle = vitesseActuelle;
+    }
+
     public void setPv(int pv) {
         this.pv = pv;
     }
@@ -235,6 +247,10 @@ public class Ennemi extends Entite implements Destructible {
                     this.ajouterPv(((int) Math.floor(this.getPv() * 1.2)));
                     shield = true;
                 }
+            }
+            case SPEED_BOOST -> {
+                this.dureeSpeedBoostRestante = Math.max(this.dureeSpeedBoostRestante, 150);
+                this.vitesseActuelle = this.vitesseBase * 1.3;
             }
         }
     }
