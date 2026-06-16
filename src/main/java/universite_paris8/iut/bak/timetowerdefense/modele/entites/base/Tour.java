@@ -9,8 +9,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Tour extends Defense {
     private int degats;
     private IntegerProperty portee;
-    private int cadence;
-    private int compteurTir;
+    private double cadence;
+    private double compteurTir;
 
     private boolean isStun = false;
     private IntegerProperty niveau;
@@ -57,11 +57,11 @@ public abstract class Tour extends Defense {
         return ciblePlusAvancee;
     }
 
-    public int getCadence() {
+    public double getCadence() {
         return cadence;
     }
 
-    public int getCompteurTir() {
+    public double getCompteurTir() {
         return compteurTir;
     }
 
@@ -77,7 +77,7 @@ public abstract class Tour extends Defense {
         return portee;
     }
 
-    public void setCompteurTir(int compteurTir) {
+    public void setCompteurTir(double compteurTir) {
         this.compteurTir = compteurTir;
     }
 
@@ -90,7 +90,7 @@ public abstract class Tour extends Defense {
     public void amelioration(){
         this.niveau.set(this.niveau.get() + 1);
         this.degats = (int) (this.degats * 1.2);
-        this.cadence = (int) (this.cadence / 1.10);
+        this.cadence = this.cadence / 1.10;
         this.portee.set(this.portee.get() + 20);
         super.setCout((int) (this.getCout() * 1.30));
     }

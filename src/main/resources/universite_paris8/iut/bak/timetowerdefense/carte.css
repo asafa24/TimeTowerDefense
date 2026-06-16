@@ -11,14 +11,17 @@
 }
 .texte-degat {
     -fx-text-fill: #ff4d4d;
+    -fx-font-size: 12;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 .texte-portee {
     -fx-text-fill: #4dff4d;
+    -fx-font-size: 12;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 .texte-cadence {
     -fx-text-fill: #ffb84d;
+    -fx-font-size: 12;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0.0, 0, 1);
 }
 

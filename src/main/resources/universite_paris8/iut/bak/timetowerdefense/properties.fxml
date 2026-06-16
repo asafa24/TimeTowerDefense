@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="192.0" prefWidth="128.0"
-      xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurStatsTour">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="192.0" prefWidth="128.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurStatsTour">
 
    <stylesheets>
       <URL value="@carte.css" />
@@ -45,7 +42,7 @@
                      <children>
                         <Label styleClass="texte-degat" text="Dgt:" />
                         <Label fx:id="p_current_degat" styleClass="texte-degat" text="10" />
-                        <Label styleClass="texte-degat" text="-&gt;" />
+                        <Label styleClass="texte-degat" text="→" />
                         <Label fx:id="p_new_degat" styleClass="texte-degat" text="12" />
                      </children>
                   </HBox>
@@ -53,16 +50,22 @@
                      <children>
                         <Label styleClass="texte-portee" text="Prt:" />
                         <Label fx:id="p_current_porte" styleClass="texte-portee" text="64" />
-                        <Label styleClass="texte-portee" text="-&gt;" />
+                        <Label styleClass="texte-portee" text="→" />
                         <Label fx:id="p_new_porte" styleClass="texte-portee" text="84" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label styleClass="texte-cadence" text="Cad:" />
-                        <Label fx:id="p_current_cadence" styleClass="texte-cadence" text="60" />
-                        <Label styleClass="texte-cadence" text="-&gt;" />
-                        <Label fx:id="p_new_cadence" styleClass="texte-cadence" text="54" />
+                        <Label prefHeight="16.0" prefWidth="37.0" styleClass="texte-cadence" text="SPA:">
+                           <font>
+                              <Font size="11.0" />
+                           </font></Label>
+                        <Label fx:id="p_current_cadence" prefHeight="16.0" prefWidth="26.0" styleClass="texte-cadence" text="6.0" />
+<!--                        <Label styleClass="texte-cadence" text="→" />-->
+                        <Label fx:id="p_new_cadence" prefHeight="16.0" prefWidth="41.0" styleClass="texte-cadence" text="→ 1.0">
+                           <font>
+                              <Font size="11.0" />
+                           </font></Label>
                      </children>
                   </HBox>
                </children>
