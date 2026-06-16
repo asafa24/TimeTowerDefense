@@ -4,6 +4,7 @@ public enum Effet {
     STUN,
     BURN,
     SLOW,
-    SHIELD
+    SHIELD,
+    SPEED_BOOST
 }
 
