@@ -91,8 +91,21 @@ public class PreviewVue {
                 }
                 case 2 ->{
                     switch (id){
+                        case 1 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/ElPrimo.png")));
+                            img.setFitWidth(64);
+                            img.setFitHeight(64);
+                        }
                         case 2 -> {
                             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/archer.png")));
+                        }
+                        case 3 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/tourmage.png")));
+                            img.setFitWidth(74);
+                            img.setFitHeight(74);
+                        }
+                        case 4 -> {
+
                         }
                         default -> {
                             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));

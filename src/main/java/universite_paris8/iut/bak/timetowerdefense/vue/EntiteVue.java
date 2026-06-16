@@ -30,6 +30,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenag
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Roi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.projectiles.Buche;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.projectiles.Sort;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
@@ -46,6 +48,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.LanceBuche;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.TourMage;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
@@ -245,6 +248,9 @@ public class EntiteVue {
                 img.setFitWidth(74);
                 img.setFitHeight(74);
             }
+            if (e instanceof LanceBuche){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+            }
 
 
             img.setTranslateX(e.getX() * 64);
@@ -284,8 +290,6 @@ public class EntiteVue {
             img.rotateProperty().bind(((Projectile) e).getRotation());
             //img.setScaleX(-1);
             sprite = img;
-
-
         }
         if(e instanceof Filet){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
@@ -294,6 +298,14 @@ public class EntiteVue {
             //img.setScaleX(-1);
             sprite = img;
         }
+        if(e instanceof Buche){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+        }
+        if(e instanceof Sort){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+        }
+
+
         if (e instanceof MiniVolcan){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
             img.setTranslateX(e.getX() * 64);
