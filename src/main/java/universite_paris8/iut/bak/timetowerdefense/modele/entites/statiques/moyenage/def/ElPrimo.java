@@ -59,7 +59,7 @@ public class ElPrimo extends Piege implements Destructible {
         super.setCout(cout.get());
     }
 
-    public static IntegerProperty coutPropertyPorteSable() {
+    public static IntegerProperty coutPropertyPrimo() {
         return cout;
     }
 

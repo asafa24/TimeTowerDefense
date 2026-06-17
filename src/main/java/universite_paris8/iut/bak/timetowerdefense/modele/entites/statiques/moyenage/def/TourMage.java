@@ -23,4 +23,8 @@ public class TourMage extends TourStun {
         cout.set((int) Math.floor(cout.get() * 1.1));
         super.setCout(cout.get());
     }
+    public static IntegerProperty coutPropertyMagee() {
+        return cout;
+    }
+
 }

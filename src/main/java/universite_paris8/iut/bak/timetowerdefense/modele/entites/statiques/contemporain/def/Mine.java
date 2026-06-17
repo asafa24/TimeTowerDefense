@@ -65,4 +65,5 @@ public class Mine extends Piege {
     public double getRayonExplosion() {
         return rayonExplosion;
     }
+
 }
