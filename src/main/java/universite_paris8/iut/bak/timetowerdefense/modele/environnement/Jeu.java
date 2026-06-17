@@ -15,6 +15,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemp
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Dictateur;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.SoldatRouge;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.AraigneeRobot;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Generateur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.IA;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Robot;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
@@ -131,7 +135,7 @@ public class Jeu {
                 e.avancer();
             }
 
-            // Logique de spawn des vagues
+            // Gestion de l'apparition des ennemis et de la transition entre les vagues
             if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
                 addEnnemi(creerEnnemi(vague.defiler()));
             } else {
@@ -139,7 +143,7 @@ public class Jeu {
                 if (delay > 600) {
                     delay = 0;
                     vague.vagueSuivante();
-                    if (delaySpawnMob > 16) delaySpawnMob -= 8; // Accélère le spawn pour les vagues suivantes
+                    if (delaySpawnMob > 16) delaySpawnMob -= 8; // Les vagues deviennent plus denses
                 } else {
                     if (vague.getQueue().isEmpty()) {
                         delay++;
@@ -159,8 +163,6 @@ public class Jeu {
         }
     }
 
-//     Crée une instance d'ennemi en fonction de l'époque et de l'ID.
-//     Le chemin est choisi au hasard parmi les routes disponibles.
     private Ennemi creerEnnemi(int id ) {
         Random rand = new Random();
         List<Point2D> route = routes.get(rand.nextInt(routes.size()));
@@ -190,12 +192,20 @@ public class Jeu {
                     default: return new Roi(route);
                 }
             }
-            default -> { // Époque contemporaine
+            case 3 -> {
                 switch (id){
                     case 0: return new SoldatRouge(route);
                     case 1: return new Vehicule(route);
                     case 2: return new CharAssaut(route);
                     default: return new Dictateur(route);
+                }
+            }
+            default -> {
+                switch (id){
+                    case 0: return new Robot(route);
+                    case 1: return new AraigneeRobot(route);
+                    case 2: return new Generateur(route);
+                    default: return new IA(route);
                 }
             }
         }

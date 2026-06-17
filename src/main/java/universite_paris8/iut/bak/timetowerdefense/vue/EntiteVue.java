@@ -33,6 +33,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemp
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.projectile.BalleSniper;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.projectile.Rocket;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.AraigneeRobot;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Generateur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.IA;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Robot;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
@@ -196,6 +200,20 @@ public class EntiteVue {
             }
             if (e instanceof Dictateur) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/dictateur.png")));
+            }
+
+            // Epoque Future
+            if (e instanceof Robot) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/robot.png")));
+            }
+            if (e instanceof Generateur) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/gen.png")));
+            }
+            if (e instanceof AraigneeRobot) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/spider.png")));
+            }
+            if (e instanceof IA) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/ai.png")));
             }
 
 
