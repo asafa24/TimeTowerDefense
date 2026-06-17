@@ -305,7 +305,8 @@ public class EntiteVue {
             sprite = img;
         }
         if(e instanceof Sort){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/sort.png")));
+            sprite = img;
         }
 
 
