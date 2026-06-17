@@ -75,11 +75,15 @@ public class Jeu {
         this.ultimes = new Ultime[]{new PluieMeteorites(), new TempeteDeSable(), new PluieMeteorites(), new PluieMeteorites(), new PluieMeteorites()};
     }
 
-    // Boucle de jeu
+//      Méthode principale qui met à jour l'état du jeu à chaque "tick" de la boucle de jeu.
+//      Gère les actions des tours, le déplacement des projectiles, le comportement des ennemis,
+//      et le déclenchement des vagues.
 
     public boolean tick() {
         if (!perdu()) {
             ultimeActuelle.tick(ennemis);
+
+            // Itération inversée pour éviter les problèmes de concurrence lors de la suppression
             for (int i = defenses.size() - 1; i >= 0; i--) {
                 Defense d = defenses.get(i);
                 d.agir(ennemis, projectiles);
@@ -88,60 +92,54 @@ public class Jeu {
                 }
             }
 
-            if (!projectiles.isEmpty()) {
-                for (int i = projectiles.size() - 1; i >= 0; i--) {
-                    Projectile p = projectiles.get(i);
-                    if (p.aAtteintCible()) {
-                        p.appliquerImpact(ennemis);
-                        projectiles.remove(i);
-                        continue;
-                    }
-                    p.deplacer();
+            for (int i = projectiles.size() - 1; i >= 0; i--) {
+                Projectile p = projectiles.get(i);
+                if (p.aAtteintCible()) {
+                    p.appliquerImpact(ennemis);
+                    projectiles.remove(i);
+                    continue;
                 }
+                p.deplacer();
             }
 
-            if (!ennemis.isEmpty()) {
-                for (int i = ennemis.size() - 1; i >= 0; i--) {
-                    Ennemi e = ennemis.get(i);
-                    if (e.estMort()) {
-                        ajouterArgent(e.getRecompense());
-                        System.out.println("+" + e.getRecompense() + "$");
-                        this.compteurKill.set(this.compteurKill.get() + 1);
-                        
-                        List<Ennemi> nouveauxEnnemis = e.onDeath();
-                        if (!nouveauxEnnemis.isEmpty()) {
-                            for (Ennemi nouvelEnnemi : nouveauxEnnemis) {
-                                addEnnemi(nouvelEnnemi);
-                            }
-                        }
-                        
-                        ennemis.remove(i);
-                        if (e instanceof Boss){
-                            vague.levelSuiv();
-                            prochaineEpoque();
-                        }
-                        continue;
+            for (int i = ennemis.size() - 1; i >= 0; i--) {
+                Ennemi e = ennemis.get(i);
+                if (e.estMort()) {
+                    ajouterArgent(e.getRecompense());
+                    this.compteurKill.set(this.compteurKill.get() + 1);
+
+                    // Gère les ennemis qui apparaissent à la mort d'un autre (ex: Golem -> Golimes)
+                    List<Ennemi> nouveauxEnnemis = e.onDeath();
+                    if (!nouveauxEnnemis.isEmpty()) {
+                        ennemis.addAll(nouveauxEnnemis);
                     }
 
-                    if (e.aAtteintLaBase()) {
-                        ajouterArgent(e.getRecompense());
-                        ennemis.remove(i);
-                        this.compteurKill.set(this.compteurKill.get() + 1);
-                        pvBase.set(pvBase.get() - e.getPv());
-                        continue;
+                    ennemis.remove(i);
+                    if (e instanceof Boss){
+                        vague.levelSuiv();
+                        prochaineEpoque();
                     }
-                    e.agir(ennemis, defenses);
-                    e.avancer();
+                    continue;
                 }
+
+                if (e.aAtteintLaBase()) {
+                    ennemis.remove(i);
+                    pvBase.set(pvBase.get() - e.getPv());
+                    continue;
+                }
+                e.agir(ennemis, defenses);
+                e.avancer();
             }
+
+            // Logique de spawn des vagues
             if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
                 addEnnemi(creerEnnemi(vague.defiler()));
             } else {
+                // Si la vague est terminée, lance un délai avant la prochaine
                 if (delay > 600) {
                     delay = 0;
                     vague.vagueSuivante();
-
-                    if (delaySpawnMob > 16) delaySpawnMob -= 8;
+                    if (delaySpawnMob > 16) delaySpawnMob -= 8; // Accélère le spawn pour les vagues suivantes
                 } else {
                     if (vague.getQueue().isEmpty()) {
                         delay++;
@@ -161,8 +159,8 @@ public class Jeu {
         }
     }
 
-    // Méthodes de gestion vagues, ennemis et niveau
-
+//     Crée une instance d'ennemi en fonction de l'époque et de l'ID.
+//     Le chemin est choisi au hasard parmi les routes disponibles.
     private Ennemi creerEnnemi(int id ) {
         Random rand = new Random();
         List<Point2D> route = routes.get(rand.nextInt(routes.size()));
@@ -170,51 +168,34 @@ public class Jeu {
         switch (this.epoqueActuel.get()){
             case 0 -> {
                 switch (id) {
-                    case 0:
-                        return new Compsognathus(route);
-                    case 1:
-                        return new Velociraptor(route);
-                    case 2:
-                        return new Triceratops(route);
-                    default:
-                        return new Tyrannosaurus(route);
+                    case 0: return new Compsognathus(route);
+                    case 1: return new Velociraptor(route);
+                    case 2: return new Triceratops(route);
+                    default: return new Tyrannosaurus(route);
                 }
             }
             case 1 -> {
                 switch (id) {
-                    case 0:
-                        return new Momie(route);
-                    case 1:
-                        return new Chacal(route);
-                    case 2:
-                        return new GolemSable(route);
-                    default:
-                        return new Sarko(route,this);
-
+                    case 0: return new Momie(route);
+                    case 1: return new Chacal(route);
+                    case 2: return new GolemSable(route);
+                    default: return new Sarko(route,this);
                 }
             }
             case 2 -> {
                 switch (id){
-                    case 0:
-                        return new Moine(route);
-                    case 1:
-                        return new Chevalier(route);
-                    case 2:
-                        return new Cavalier(route);
-                    default:
-                        return new Roi(route);
+                    case 0: return new Moine(route);
+                    case 1: return new Chevalier(route);
+                    case 2: return new Cavalier(route);
+                    default: return new Roi(route);
                 }
             }
-            default -> {
+            default -> { // Époque contemporaine
                 switch (id){
-                    case 0:
-                        return new SoldatRouge(route);
-                    case 1:
-                        return new Vehicule(route);
-                    case 2:
-                        return new CharAssaut(route);
-                    default:
-                        return new Dictateur(route);
+                    case 0: return new SoldatRouge(route);
+                    case 1: return new Vehicule(route);
+                    case 2: return new CharAssaut(route);
+                    default: return new Dictateur(route);
                 }
             }
         }
@@ -233,13 +214,10 @@ public class Jeu {
         switch(epoque){
             case 0: return new Point2D[]{new Point2D(0, 9)};
             case 1: return new Point2D[]{new Point2D(10, 10)};
-            case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
-            case 3: return new Point2D[]{new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10)};
-            case 4: return
-                    new Point2D[]{new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10),
-                            new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10), };
+            case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)};
+            case 3: return new Point2D[]{new Point2D(0, 6), new Point2D(12, 6)};
+            case 4: return new Point2D[]{new Point2D(2, 10), new Point2D(10, 10)};
         }
-
         return new Point2D[]{new Point2D(0, 0)};
     }
 
@@ -247,7 +225,7 @@ public class Jeu {
         switch (epoque){
             case 0: return new Point2D(10, 1);
             case 1: return new Point2D(0, 2);
-            default: return new Point2D(6, 0); // Epoque 2, 3 meet at top center (6, 0)
+            default: return new Point2D(6, 0);
         }
     }
 
@@ -284,8 +262,6 @@ public class Jeu {
     public void ajouterArgent(int somme) { this.solde.set(this.solde.get() + somme); }
     public void depenserArgent(int somme){ if(solde.get() >= somme) solde.set(solde.get() - somme); }
 
-    // Placement et Actions Utilisateur
-
     public boolean poserTour(Tour tour) {
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
@@ -293,13 +269,10 @@ public class Jeu {
         if (peuxPoserTour(this.epoqueActuel.get(), tour)) {
             depenserArgent(tour.getCout());
             addDefense(tour);
-            System.out.println("Tour posée : " + caseX + ", " + caseY + " -" + tour.getCout());
             tour.inflation();
             return true;
-        } else {
-            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
-            return false;
         }
+        return false;
     }
 
     public boolean poserPiege(Piege piege ){
@@ -309,12 +282,9 @@ public class Jeu {
         if (peuxPoserPiege(this.epoqueActuel.get(), piege)) {
             depenserArgent(piege.getCout());
             addDefense(piege);
-            System.out.println("Piège posé : " + caseX + ", " + caseY + " -" + piege.getCout());
             return true;
-        } else {
-            System.out.println(" la case " + caseX + ", " + caseY + " est occupee ou invalide ou argent insuffisant");
-            return false;
         }
+        return false;
     }
 
     public boolean peuxPoserTour(int epoque, Tour tour ) {
@@ -341,7 +311,7 @@ public class Jeu {
         for (int i = 0; i < defenses.size(); i++) {
             if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
         }
-        return (test[y][x] > 0 && test[y][x] <= 6 && this.solde.get() >= piege.getCout());
+        return (test[y][x] > 0 && test[y][x] <= 9 && this.solde.get() >= piege.getCout());
     }
 
     public void preview(double x, double y) {
@@ -368,10 +338,8 @@ public class Jeu {
         for (int i = 0; i < defenses.size(); i++) {
             if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
         }
-        return (test[y][x] > 0 && test[y][x] <= 6 );
+        return (test[y][x] > 0 && test[y][x] <= 9 );
     }
-
-    // Getters / Setters et méthodes simples
 
     public void addEnnemi(Ennemi ennemi) {
         ennemis.add(ennemi);
@@ -414,6 +382,8 @@ public class Jeu {
 
     public int getPvBase() { return pvBase.get(); }
     public IntegerProperty getPvBaseProperty(){ return pvBase; }
+
+
 
     public int getCompteurKill(){
         return compteurKill.get();

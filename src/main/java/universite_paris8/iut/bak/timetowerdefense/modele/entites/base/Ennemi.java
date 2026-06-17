@@ -78,6 +78,10 @@ public class Ennemi extends Entite implements Destructible {
         this.direction = new SimpleIntegerProperty(-1);
     }
 
+
+//     Fait avancer l'ennemi le long de son chemin.
+//     Gère également l'application des altérations d'état (brûlure, étourdissement, ralentissement)
+//     et l'arrêt s'il rencontre un obstacle.
     public void avancer() {
         if (this.dureeBrulageRestante > 0) {
             this.dureeBrulageRestante--;
@@ -89,7 +93,7 @@ public class Ennemi extends Entite implements Destructible {
         if (this.dureeStunRestante > 0) {
             this.dureeStunRestante--;
             this.vitesseActuelle = 0;
-            return;
+            return; // Bloque le mouvement tant qu'étourdi
         }
 
         this.vitesseActuelle = this.vitesseBase;
@@ -101,7 +105,7 @@ public class Ennemi extends Entite implements Destructible {
 
         if (this.dureeSpeedBoostRestante > 0) {
             this.dureeSpeedBoostRestante--;
-            this.vitesseActuelle *= 1.3; // Boost de 30%
+            this.vitesseActuelle *= 1.3;
         }
 
         if (this.estBloque) {
@@ -165,6 +169,9 @@ public class Ennemi extends Entite implements Destructible {
         return chemin != null && etapeActuelle >= chemin.size();
     }
     
+//     Méthode appelée à la mort de l'ennemi.
+//     À Override pour les ennemis qui génèrent d'autres entités en mourant.
+
     public List<Ennemi> onDeath() {
         return Collections.emptyList();
     }
@@ -233,6 +240,8 @@ public class Ennemi extends Entite implements Destructible {
         this.recompense = recompense;
     }
 
+//     Applique un effet de statut à cet ennemi pour une durée donnée.
+//     Renouvelle la durée si l'effet est déjà actif.
     public void appliqueEffet(Effet effet) {
         switch (effet) {
             case STUN -> {
