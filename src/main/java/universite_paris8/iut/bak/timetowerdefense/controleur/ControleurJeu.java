@@ -27,7 +27,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.LanceRocket;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Sniper;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.SoldatBleu;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla;
@@ -336,7 +339,7 @@ public class ControleurJeu implements Initializable {
             case 1 -> selectionAntiquite(xGrille, yGrille);
             case 2 -> selectionsMoyenAge(xGrille, yGrille);
             case 3 -> selectionsContemporain(xGrille, yGrille);
-            case 4 -> selectionsFutur(xGrille, yGrille); // Et voilà l'époque futur implémentée !
+            case 4 -> selectionsFutur(xGrille, yGrille);
             default -> System.out.println("Epoque introuvable");
         }
 
@@ -435,16 +438,15 @@ public class ControleurJeu implements Initializable {
                 if (!jeu.poserPiege(piegeSelectione)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 2 -> {
-                this.tourSelectionne = new Archer(xGrille, yGrille);
+                this.tourSelectionne = new SoldatBleu(xGrille, yGrille);
                 if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 3 -> {
-                this.tourSelectionne = new LanceBuche(xGrille, yGrille);
+                this.tourSelectionne = new Sniper(xGrille, yGrille);
                 if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 4 -> {
-                // ATTENTION: Pense à changer !
-                this.tourSelectionne = new TourMage(xGrille, yGrille);
+                this.tourSelectionne = new LanceRocket(xGrille, yGrille);
                 if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
         }
