@@ -31,6 +31,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemp
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Dictateur;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.SoldatRouge;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.projectile.BalleSniper;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.projectile.Rocket;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
@@ -51,7 +53,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.LanceRocket;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Sniper;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.SoldatBleu;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.LanceBuche;
@@ -268,6 +273,15 @@ public class EntiteVue {
             if (e instanceof LanceBuche){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
             }
+            if (e instanceof Sniper){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/sniper.png")));
+            }
+            if (e instanceof SoldatBleu){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/soldatbleu.png")));
+            }
+            if (e instanceof LanceRocket){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/lancerocket.png")));
+            }
 
 
             img.setTranslateX(e.getX() * 64);
@@ -310,6 +324,13 @@ public class EntiteVue {
             //img.setScaleX(-1);
             sprite = img;
         }
+        if (e instanceof Rocket) {
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/rocket.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            //img.setScaleX(-1);
+            sprite = img;
+        }
         if (e instanceof Jar){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/jar.png")));
             img.translateXProperty().bind(e.xProperty());
@@ -340,6 +361,12 @@ public class EntiteVue {
         }
         if(e instanceof Sort){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/sort.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            sprite = img;
+        }
+        if(e instanceof BalleSniper){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/ballesniper.png")));
             img.translateXProperty().bind(e.xProperty());
             img.translateYProperty().bind(e.yProperty());
             sprite = img;
