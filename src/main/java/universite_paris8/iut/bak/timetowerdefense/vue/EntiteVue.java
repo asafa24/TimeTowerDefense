@@ -57,6 +57,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.conte
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Sniper;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.SoldatBleu;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLaser;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLazerMk2;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.LanceBuche;
@@ -282,6 +284,20 @@ public class EntiteVue {
             if (e instanceof LanceRocket){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/lancerocket.png")));
             }
+            if (e instanceof PistoletLaser){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/laser.png")));
+            }
+            if (e instanceof PistoletLazerMk2){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/blaster.png")));
+            }
+            if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/temps.png")));
+            }
+            if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla){
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/tesla.png")));
+            }
+
+
 
 
             img.setTranslateX(e.getX() * 64);
