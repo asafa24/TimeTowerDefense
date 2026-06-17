@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
-
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
@@ -47,28 +46,28 @@ public class UIVue {
 
             case 2: // Moyen-Âge (Prix factices pour compiler direct)
                 switch (id) {
-                    case 0: return new SimpleIntegerProperty(50).asString(); // El Primo
-                    case 1: return new SimpleIntegerProperty(100).asString(); // Archer
-                    case 2: return new SimpleIntegerProperty(150).asString(); // LanceBuche
-                    case 3: return new SimpleIntegerProperty(200).asString(); // TourMage
+                    case 0: return  ElPrimo.coutPropertyPrimo().asString(); // El Primo
+                    case 1: return  Archer.coutPropertyArcher().asString(); // Archer
+                    case 2: return  LanceBuche.coutPropertyLanceBiuche().asString();// LanceBuche
+                    case 3: return  TourMage.coutPropertyPorteSable().asString(); // TourMage
                 }
                 break;
 
             case 3: // Contemporain (Prix factices)
                 switch (id) {
-                    case 0: return new SimpleIntegerProperty(75).asString(); // Mine
-                    case 1: return new SimpleIntegerProperty(120).asString(); // Sniper/Soldat
-                    case 2: return new SimpleIntegerProperty(180).asString(); // LanceRocket
+                    case 0: return Mine.coutMine().asString(); // Mine
+                    case 1: return Sniper.cout.asString(); // Sniper/Soldat
+                    case 2: return LanceRocket.coutRocket().asString(); // LanceRocket
                     case 3: return new SimpleIntegerProperty(250).asString();
                 }
                 break;
 
             case 4: // Futur (Prix factices)
                 switch (id) {
-                    case 0: return new SimpleIntegerProperty(100).asString(); // Laser
-                    case 1: return new SimpleIntegerProperty(250).asString(); // MK2
-                    case 2: return new SimpleIntegerProperty(200).asString(); // Tesla
-                    case 3: return new SimpleIntegerProperty(300).asString(); // Temps
+                    case 0: return PistoletLaser.cout.asString(); // Laser
+                    case 1: return PistoletLazerMk2.getCoutPropertymk2().asString(); // MK2
+                    case 2: return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla.getCoutPropertyTesla().asString(); // Tesla
+                    case 3: return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps.getCoutPropertyTourTemp().asString(); // Temps
                 }
                 break;
 
@@ -90,7 +89,7 @@ public class UIVue {
             case 1: epoque_txt = "antiquite/"; break;
             case 2: epoque_txt = "moyen-age/"; break;
             case 3: epoque_txt = "contemporain/"; break;
-            case 4: epoque_txt = "future/"; break; // Attention au dossier "future" !
+            case 4: epoque_txt = "future/"; break;
             default: epoque_txt = "prehistoire/"; break;
         }
         Image img;
