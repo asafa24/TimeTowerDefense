@@ -1,9 +1,9 @@
-package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def;
+package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.futur.atk.projectile.ProjectileLazer;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.projectile.ProjectileLazer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourNormal;
 
 public class PistoletLaser extends TourNormal {

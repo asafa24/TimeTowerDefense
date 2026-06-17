@@ -1,8 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.controleur;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,8 +28,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLaser;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLazerMk2;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;

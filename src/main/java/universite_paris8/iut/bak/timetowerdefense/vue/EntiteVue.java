@@ -5,7 +5,6 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
@@ -61,8 +60,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.conte
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Sniper;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.SoldatBleu;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLaser;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLazerMk2;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.LanceBuche;
@@ -308,10 +309,10 @@ public class EntiteVue {
             if (e instanceof PistoletLazerMk2){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/blaster.png")));
             }
-            if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps){
+            if (e instanceof TourDuTemps){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/tesla.png")));
             }
-            if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla){
+            if (e instanceof Tesla){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/temps.png")));
             }
 

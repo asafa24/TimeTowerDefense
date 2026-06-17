@@ -4,9 +4,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.futur.atk.projectile.ProjectileTesla;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.projectile.ProjectileTesla;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourCercle;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 
 public class Tesla extends TourCercle {
     public static IntegerProperty cout = new SimpleIntegerProperty(180);
