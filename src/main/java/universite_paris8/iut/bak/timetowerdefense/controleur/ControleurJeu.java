@@ -612,7 +612,29 @@ public class ControleurJeu implements Initializable {
                 ajouterEntreeGlossaire("Momie", "Lente mais résistante aux attaques.", Color.LIGHTCORAL);
                 ajouterEntreeGlossaire("Golem de Sable", "Créature massive. Se divise en deux Golimes à sa mort.", Color.ORANGE);
                 ajouterEntreeGlossaire("Golime", "Petit fragment issu de la destruction d'un Golem.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Boss", "(Ca arrive fort)", Color.RED);
+                ajouterEntreeGlossaire("Sarko (Boss)", "Invoque des vagues de momies pour submerger vos défenses.", Color.RED);
+                break;
+            case 2:
+                ajouterEntreeGlossaire("El Primo", "Piège de corps-à-corps qui frappe les ennemis proches.", Color.WHITE);
+                ajouterEntreeGlossaire("Archer", "Tour standard avec une bonne cadence de tir.", Color.WHITE);
+                ajouterEntreeGlossaire("Lance-Bûche", "Inflige des dégâts de zone en ligne droite.", Color.WHITE);
+                ajouterEntreeGlossaire("Tour de Mage", "Lance des sorts qui ignorent une partie de l'armure ennemie.", Color.WHITE);
+
+                ajouterEntreeGlossaire("Moine", "Ennemi de base en colère contre vous.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Chevalier", "Ennemi Tank, bien résistant.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Cavalier", "Rapide et résistant. Une fois son cheval vaincu, il continue à pied.", Color.ORANGE);
+                ajouterEntreeGlossaire("Roi (Boss)", "Améliore les statistiques des troupes alliées autour de lui.", Color.RED);
+                break;
+            case 3:
+                ajouterEntreeGlossaire("Mine", "Piège explosif qui inflige d'énormes dégâts de zone.", Color.WHITE);
+                ajouterEntreeGlossaire("Soldat Bleu", "Unité de base, efficace en groupe.", Color.WHITE);
+                ajouterEntreeGlossaire("Sniper", "Très longue portée et dégâts élevés, mais cadence de tir lente.", Color.WHITE);
+                ajouterEntreeGlossaire("Lance-Roquettes", "Tire des roquettes explosives qui dévastent des zones entières.", Color.WHITE);
+
+                ajouterEntreeGlossaire("Soldat Rouge", "Infanterie de base, chair à canon.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Véhicule", "Transporte des troupes. Déploie 4 soldats rouges à sa destruction.", Color.ORANGE);
+                ajouterEntreeGlossaire("Char d'Assaut", "Très résistant. Sa vitesse augmente à mesure qu'il subit des dégâts.", Color.ORANGE);
+                ajouterEntreeGlossaire("Dictateur (Boss)", "Rend inactif des tours au hasard.", Color.RED);
                 break;
         }
     }
