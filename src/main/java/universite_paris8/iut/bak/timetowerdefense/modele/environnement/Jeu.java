@@ -174,7 +174,7 @@ public class Jeu {
                     case 2:
                         return new Triceratops(route);
                     default:
-                        return new Tyrannosaurus(0, 64 * 9, 1000, 1, 400, 900, route);
+                        return new Tyrannosaurus(route);
                 }
             }
             case 1 -> {
@@ -222,7 +222,11 @@ public class Jeu {
             case 3: return
                     new Point2D[]{new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10),
                     new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10)}; // Juste pour qu'il calcule 8x fois les chemins possibles comme ca il en donne toujours un au hasard
+            case 4: return
+                    new Point2D[]{new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10),
+                            new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10), };
         }
+
         return new Point2D[]{new Point2D(0, 0)};
     }
 
@@ -230,11 +234,8 @@ public class Jeu {
         switch (epoque){
             case 0: return new Point2D(10, 1);
             case 1: return new Point2D(0, 2);
-            case 2: return new Point2D(6, 0);
-            case 3: return new Point2D(6, 0);
+            default: return new Point2D(6, 0);
         }
-
-        return null;
     }
 
     public void nuke(){

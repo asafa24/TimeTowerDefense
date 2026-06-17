@@ -8,7 +8,7 @@ import java.util.List;
 public class Chacal extends Ennemi {
 
     private int tick = 0 ;
-    private final double VITTESSE_MIN = 2;
+    private final double VITTESSE_MIN = 1;
 
     public Chacal(int x, int y, List<Point2D> chemin) {
         super(x, y, chemin);

@@ -25,7 +25,7 @@ public class TerrainVue {
         switch (epoque){
             case 1 -> {this.epoque = "antiquite/";}
             case 2 ->{this.epoque = "moyen-age/";}
-            case 3 -> {this.epoque= "Contemporain/";}
+            case 3 -> {this.epoque= "contemporain/";}
             case 4 -> {this.epoque= "future/";}
             default -> {this.epoque = "prehistoire/";}
         }
