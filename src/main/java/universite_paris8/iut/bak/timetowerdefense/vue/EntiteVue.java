@@ -285,16 +285,16 @@ public class EntiteVue {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/lancerocket.png")));
             }
             if (e instanceof PistoletLaser){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/laser.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/temp.png")));
             }
             if (e instanceof PistoletLazerMk2){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/blaster.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/blaster.png")));
             }
             if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/temps.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/tesla.png")));
             }
             if (e instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/futur/def/tesla.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/temps.png")));
             }
 
 
