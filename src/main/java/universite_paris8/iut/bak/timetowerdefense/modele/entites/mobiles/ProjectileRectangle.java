@@ -44,7 +44,6 @@ public abstract class ProjectileRectangle extends Projectile {
             double projLongueur = (vecteurAeX * uX) + (vecteurAeY * uY);
             double projLargeur = Math.abs((vecteurAeX * nX) + (vecteurAeY * nY));
 
-            // Tolérance élargie pour éviter de rater la cible à cause des virgules flottantes
             if (projLongueur >= -32 && projLongueur <= longueurAB + 64 && projLargeur <= largeurRectangle){
                 e.recevoirDegats(getDegats());
             }

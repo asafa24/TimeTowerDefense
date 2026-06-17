@@ -12,7 +12,7 @@ public class LanceRocket extends TourCercle {
 
 
     public LanceRocket(double x, double y) {
-        super(cout.get(), x, y, 60, 3, 60, 128);
+        super(cout.get(), x, y, 70, 256, 180, 128);
     }
 
     @Override

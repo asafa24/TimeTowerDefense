@@ -1,6 +1,5 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
@@ -20,46 +19,66 @@ public abstract class Tour extends Defense {
 
     private BooleanProperty actif = new SimpleBooleanProperty(true);
     private int dureeStun = 0;
-    // Les durées et compteurs sont en frame
 
-    public Tour(int cout ,double x, double y){
-        super(cout,x,y);
+    public Tour(int cout, double x, double y) {
+        super(cout, x, y);
         this.degats = 25;
         this.portee = new SimpleIntegerProperty(100);
         this.cadence = 120;
-        this.compteurTir = cadence/2;
+        this.compteurTir = cadence / 2;
         this.niveau = new SimpleIntegerProperty(0);
     }
 
-    public Tour(int cout ,double x, double y, int degats, int portee, int cadence){
-        super(cout,x,y);
+    public Tour(int cout, double x, double y, int degats, int portee, int cadence) {
+        super(cout, x, y);
         this.degats = degats;
         this.portee = new SimpleIntegerProperty(portee);
         this.cadence = cadence;
-        this.compteurTir = cadence-10;
+        this.compteurTir = cadence - 10;
         this.niveau = new SimpleIntegerProperty(0);
     }
 
     public abstract void agir(List<Ennemi> ennemis, List<Projectile> projectiles);
 
 
-    public Ennemi trouverCible(List<Ennemi> ennemis){
+     public Ennemi trouverCible(List<Ennemi> ennemis) {
         Ennemi ciblePlusAvancee = null;
         int etapeMax = -1;
-        double centreTx = getX()*64 + 32;
-        double centreTy = getY()*64 + 32;
+        double centreTx = getX() * 64 + 32;
+        double centreTy = getY() * 64 + 32;
 
-        for(Ennemi e : ennemis){
+        for (Ennemi e : ennemis) {
             double distance = Math.hypot(centreTx - e.getCentreX(), centreTy - e.getCentreY());
-            if(distance <= portee.get()){
-                if(e.getEtapeActuelle() > etapeMax){
+            if (distance <= portee.get()) {
+                if (e.getEtapeActuelle() > etapeMax) {
                     etapeMax = e.getEtapeActuelle();
                     ciblePlusAvancee = e;
                 }
             }
         }
-
         return ciblePlusAvancee;
+    }
+
+//     Améliore les statistiques de la tour (dégâts, cadence, portée)
+//     et augmente son coût pour la prochaine amélioration.
+    public void amelioration() {
+        this.niveau.set(this.niveau.get() + 1);
+        this.degats = (int) (this.degats * 1.2);
+        this.cadence = this.cadence / 1.10;
+        this.portee.set(this.portee.get() + 20);
+        super.setCout((int) (this.getCout() * 1.30));
+    }
+
+    public abstract void inflation();
+
+    public boolean isStunOuPas() {
+        if (this.dureeStun > 0) {
+            this.dureeStun--;
+            if (getDureeStun() <= 0) {
+                this.isStun = false;
+            }
+        }
+        return isStun;
     }
 
     public double getCadence() {
@@ -86,18 +105,9 @@ public abstract class Tour extends Defense {
         this.compteurTir = compteurTir;
     }
 
-    public void setStun(int dureeStun){
+    public void setStun(int dureeStun) {
         isStun = true;
         this.dureeStun = dureeStun;
-        System.out.println("RAWR (tsais) Tour stun mskn");
-    }
-
-    public void amelioration(){
-        this.niveau.set(this.niveau.get() + 1);
-        this.degats = (int) (this.degats * 1.2);
-        this.cadence = this.cadence / 1.10;
-        this.portee.set(this.portee.get() + 20);
-        super.setCout((int) (this.getCout() * 1.30));
     }
 
     public IntegerProperty niveauProperty() {
@@ -108,22 +118,11 @@ public abstract class Tour extends Defense {
         return niveau.get();
     }
 
-    public abstract void inflation();
-    public boolean isStunOuPas(){
-        if (this.dureeStun > 0) {
-            this.dureeStun-- ;
-            if (getDureeStun() <= 0) {
-                this.isStun = false ;
-                System.out.println("Plus stun hehe");
-            }
-        }
-        return isStun;
-    }
-
     public void setDureeStun(int dureeStun) {
         this.dureeStun = dureeStun;
     }
-    public void modifStun(Boolean stun){
+
+    public void modifStun(Boolean stun) {
         this.isStun = stun;
     }
 
@@ -131,15 +130,15 @@ public abstract class Tour extends Defense {
         return dureeStun;
     }
 
-    public boolean getActif(){
+    public boolean getActif() {
         return actif.get();
     }
 
-    public void desactiver(){
+    public void desactiver() {
         this.actif.set(false);
     }
 
-    public void activer(){
+    public void activer() {
         this.actif.set(true);
     }
 

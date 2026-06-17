@@ -77,4 +77,8 @@ public class Projectile extends Entite {
     public int getDegats() {
         return degats;
     }
+
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
+    }
 }

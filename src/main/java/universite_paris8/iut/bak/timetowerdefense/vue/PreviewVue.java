@@ -109,6 +109,25 @@ public class PreviewVue {
                         }
                     }
                 }
+                case 3 -> {
+                    switch (id) {
+                        case 1 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/mine.png")));
+                        }
+                        case 2 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/soldatbleu.png")));
+                        }
+                        case 3 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/sniper.png")));
+                        }
+                        case 4 -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/lancerocket.png")));
+                        }
+                        default -> {
+                            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+                        }
+                    }
+                }
                 default -> {
                     img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
                 }
