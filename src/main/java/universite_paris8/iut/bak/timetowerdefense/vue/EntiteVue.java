@@ -27,6 +27,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqui
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Sarko;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Golime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.CharAssaut;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Dictateur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.SoldatRouge;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
@@ -173,6 +177,19 @@ public class EntiteVue {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/roi.png")));
             }
 
+            // Epoque Contemporaine
+            if (e instanceof SoldatRouge) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/soldatrouge.png")));
+            }
+            if (e instanceof Vehicule) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/voiture.png")));
+            }
+            if (e instanceof CharAssaut) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/tank.png")));
+            }
+            if (e instanceof Dictateur) {
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/dictateur.png")));
+            }
 
 
             Rectangle rec = new Rectangle();

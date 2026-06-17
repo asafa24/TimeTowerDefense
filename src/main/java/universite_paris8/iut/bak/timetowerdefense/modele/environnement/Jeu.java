@@ -11,6 +11,10 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.*;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.CharAssaut;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Dictateur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.SoldatRouge;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
@@ -103,19 +107,18 @@ public class Jeu {
                         ajouterArgent(e.getRecompense());
                         System.out.println("+" + e.getRecompense() + "$");
                         this.compteurKill.set(this.compteurKill.get() + 1);
+                        
+                        List<Ennemi> nouveauxEnnemis = e.onDeath();
+                        if (!nouveauxEnnemis.isEmpty()) {
+                            for (Ennemi nouvelEnnemi : nouveauxEnnemis) {
+                                addEnnemi(nouvelEnnemi);
+                            }
+                        }
+                        
                         ennemis.remove(i);
                         if (e instanceof Boss){
                             vague.levelSuiv();
                             prochaineEpoque();
-                        }
-                        if (e instanceof GolemSable){
-                            Ennemi a = new Golime(e.getX(),e.getY(),e.getChemin());
-                            a.setEtapeActuelle(e.getEtapeActuelle());
-                            addEnnemi(a);
-                            Ennemi b = new Golime(e.getX() + 20 ,e.getY() + 20 ,e.getChemin());
-                            b.setEtapeActuelle(e.getEtapeActuelle());
-                            addEnnemi(b);
-
                         }
                         continue;
                     }
@@ -190,7 +193,7 @@ public class Jeu {
 
                 }
             }
-            default -> {
+            case 2 -> {
                 switch (id){
                     case 0:
                         return new Moine(route);
@@ -200,6 +203,18 @@ public class Jeu {
                         return new Cavalier(route);
                     default:
                         return new Roi(route);
+                }
+            }
+            default -> {
+                switch (id){
+                    case 0:
+                        return new SoldatRouge(route);
+                    case 1:
+                        return new Vehicule(route);
+                    case 2:
+                        return new CharAssaut(route);
+                    default:
+                        return new Dictateur(route);
                 }
             }
         }
@@ -219,9 +234,7 @@ public class Jeu {
             case 0: return new Point2D[]{new Point2D(0, 9)};
             case 1: return new Point2D[]{new Point2D(10, 10)};
             case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)}; // 3 spawns
-            case 3: return
-                    new Point2D[]{new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10),
-                    new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10)}; // Juste pour qu'il calcule 8x fois les chemins possibles comme ca il en donne toujours un au hasard
+            case 3: return new Point2D[]{new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10), new Point2D(6, 10)};
             case 4: return
                     new Point2D[]{new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10),
                             new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10), };
@@ -234,7 +247,7 @@ public class Jeu {
         switch (epoque){
             case 0: return new Point2D(10, 1);
             case 1: return new Point2D(0, 2);
-            default: return new Point2D(6, 0);
+            default: return new Point2D(6, 0); // Epoque 2, 3 meet at top center (6, 0)
         }
     }
 

@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Ennemi extends Entite implements Destructible {
@@ -162,6 +163,10 @@ public class Ennemi extends Entite implements Destructible {
 
     public boolean aAtteintLaBase() {
         return chemin != null && etapeActuelle >= chemin.size();
+    }
+    
+    public List<Ennemi> onDeath() {
+        return Collections.emptyList();
     }
 
     public int getPv() {
