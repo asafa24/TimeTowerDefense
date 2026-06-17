@@ -46,6 +46,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiq
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.LanceBuche;
@@ -309,7 +310,6 @@ public class EntiteVue {
             sprite = img;
         }
 
-
         if (e instanceof MiniVolcan){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
             img.setTranslateX(e.getX() * 64);
@@ -332,8 +332,14 @@ public class EntiteVue {
             img.setFitHeight(64);
             sprite = img;
         }
-
-
+        if (e instanceof Mine){
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/mine.png")));
+            img.setTranslateX(e.getX() * 64);
+            img.setTranslateY(e.getY() * 64);
+            img.setFitWidth(64);
+            img.setFitHeight(64);
+            sprite = img;
+        }
     }
     catch (Exception v){
         img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
