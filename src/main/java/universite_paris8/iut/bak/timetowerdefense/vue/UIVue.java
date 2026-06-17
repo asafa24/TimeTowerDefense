@@ -77,9 +77,13 @@ public class UIVue {
             case 2:
                 epoque_txt = "moyen-age/";
                 break;
+            case 4:
+                epoque_txt = "future/";
+                break;
 
             default:
                 epoque_txt = "prehistoire/";
+                System.out.println(epoque_txt);
                 break;
         }
         Image img;

@@ -168,7 +168,7 @@ public class EntiteVue {
                 });
             }
             if(e instanceof Roi){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/roi.png")));
             }
 
 
