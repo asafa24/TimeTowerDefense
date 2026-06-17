@@ -245,8 +245,6 @@ public class EntiteVue {
             }
             if (e instanceof TourMage){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/tourmage.png")));
-                img.setFitWidth(74);
-                img.setFitHeight(74);
             }
             if (e instanceof LanceBuche){
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
@@ -306,6 +304,8 @@ public class EntiteVue {
         }
         if(e instanceof Sort){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/sort.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
             sprite = img;
         }
 
