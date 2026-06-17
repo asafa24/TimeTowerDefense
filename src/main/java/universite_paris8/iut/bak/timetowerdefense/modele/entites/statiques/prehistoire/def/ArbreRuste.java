@@ -13,7 +13,6 @@ public class ArbreRuste extends TourNormal {
     public static IntegerProperty cout = new SimpleIntegerProperty(40);
     public ArbreRuste(double x, double y) {
         super(cout.get(), x, y, 10, 64, 60);
-        System.out.println(getDegats());
     }
 
     @Override

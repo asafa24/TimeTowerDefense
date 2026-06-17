@@ -15,6 +15,8 @@ public abstract class TourNormal extends Tour {
     public abstract void inflation();
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
+        if(!getActif()) return;
+
         if (isStunOuPas()) {
             return;
         }

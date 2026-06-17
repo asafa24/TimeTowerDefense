@@ -1,5 +1,8 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
+import javafx.beans.binding.BooleanExpression;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
@@ -14,6 +17,8 @@ public abstract class Tour extends Defense {
 
     private boolean isStun = false;
     private IntegerProperty niveau;
+
+    private BooleanProperty actif = new SimpleBooleanProperty(true);
     private int dureeStun = 0;
     // Les durées et compteurs sont en frame
 
@@ -31,7 +36,7 @@ public abstract class Tour extends Defense {
         this.degats = degats;
         this.portee = new SimpleIntegerProperty(portee);
         this.cadence = cadence;
-        this.compteurTir = 0;
+        this.compteurTir = cadence-10;
         this.niveau = new SimpleIntegerProperty(0);
     }
 
@@ -124,5 +129,21 @@ public abstract class Tour extends Defense {
 
     public int getDureeStun() {
         return dureeStun;
+    }
+
+    public boolean getActif(){
+        return actif.get();
+    }
+
+    public void desactiver(){
+        this.actif.set(false);
+    }
+
+    public void activer(){
+        this.actif.set(true);
+    }
+
+    public BooleanProperty getActifProperty() {
+        return actif;
     }
 }

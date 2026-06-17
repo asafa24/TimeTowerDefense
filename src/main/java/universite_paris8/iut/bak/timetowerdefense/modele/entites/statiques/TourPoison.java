@@ -16,6 +16,8 @@ public abstract class TourPoison extends Tour {
     }
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
+        if(!getActif()) return;
+
         if (isStunOuPas()) {
             return;
         }

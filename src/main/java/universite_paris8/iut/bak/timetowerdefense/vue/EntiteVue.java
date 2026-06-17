@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -254,6 +255,23 @@ public class EntiteVue {
 
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
+
+            ColorAdjust desaturate = new ColorAdjust();
+            desaturate.setSaturation(-1);
+
+            if (!((Tour) e).getActif()) {
+                img.setEffect(desaturate);
+            }
+
+            final ImageView finalImg = img;
+            ((Tour) e).getActifProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal) {
+                    finalImg.setEffect(null);
+                } else {
+                    finalImg.setEffect(desaturate);
+                }
+            });
+
             sprite = img;
             actualiserEtoiles((Tour) e);
             ((Tour) e).niveauProperty().addListener((obs, oldVal, newVal) -> {

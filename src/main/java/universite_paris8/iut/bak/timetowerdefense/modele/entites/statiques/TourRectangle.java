@@ -16,6 +16,8 @@ public abstract class TourRectangle extends Tour {
 
     @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {
+        if(!getActif()) return;
+
         if (isStunOuPas()) return;
         if(getCompteurTir() < getCadence()){
             setCompteurTir(getCompteurTir()+1);

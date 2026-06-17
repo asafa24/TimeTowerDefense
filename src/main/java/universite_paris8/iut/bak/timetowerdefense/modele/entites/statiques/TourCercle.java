@@ -17,6 +17,8 @@ public abstract class TourCercle extends Tour {
 
     @Override
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles) {
+        if(!getActif()) return;
+
         if (isStunOuPas()) {
             return;
         }
