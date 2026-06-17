@@ -66,7 +66,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(200000);
+        this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = new SimpleIntegerProperty(0);
         this.frame = 0;
@@ -225,8 +225,8 @@ public class Jeu {
             case 0: return new Point2D[]{new Point2D(0, 9)};
             case 1: return new Point2D[]{new Point2D(10, 10)};
             case 2: return new Point2D[]{new Point2D(6, 10), new Point2D(0, 5), new Point2D(12, 5)};
-            case 3: return new Point2D[]{new Point2D(0, 6), new Point2D(12, 6)};
-            case 4: return new Point2D[]{new Point2D(2, 10), new Point2D(10, 10)};
+            case 3: return new Point2D[]{new Point2D(6, 10), new Point2D(6, 10),new Point2D(6, 10) ,new Point2D(6, 10)};
+            case 4: return new Point2D[]{new Point2D(2, 10), new Point2D(10, 10), new Point2D(2, 10), new Point2D(10, 10)};
         }
         return new Point2D[]{new Point2D(0, 0)};
     }
