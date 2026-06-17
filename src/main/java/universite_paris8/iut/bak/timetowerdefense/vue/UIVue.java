@@ -14,8 +14,8 @@ import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLaser;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.futur.def.PistoletLazerMk2;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.*;
