@@ -292,8 +292,8 @@ public class ControleurJeu implements Initializable {
         vuePreview.setId(-1);
         vuePreview.remove();
 
-        int xGrille = (int) Math.floor(mouseEvent.getX() / 64);
-        int yGrille = (int) Math.floor(mouseEvent.getY() / 64);
+        int xGrille = (int) (mouseEvent.getX() / 64);
+        int yGrille = (int) (mouseEvent.getY() / 64);
 
         if (this.typeDefenseSelectionnee == 0) {
             boolean tourTrouvee = false;

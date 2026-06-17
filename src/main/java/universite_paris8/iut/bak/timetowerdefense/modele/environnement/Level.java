@@ -105,7 +105,7 @@ public class Level {
                 int nx = (int) s.getX() + dir[0];
                 int ny = (int) s.getY() + dir[1];
                 if (nx >= 0 && nx < map[0].length && ny >= 0 && ny < map.length) {
-                    if (map[ny][nx] >= 1 && map[ny][nx] <= 7) {
+                    if (map[ny][nx] >= 1 && map[ny][nx] <= 9) {
                         Point2D t = new Point2D(nx, ny);
                         if (!parcours.contains(t)) {
                             parcours.add(t);

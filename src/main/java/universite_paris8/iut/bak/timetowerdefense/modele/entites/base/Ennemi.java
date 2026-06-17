@@ -91,18 +91,16 @@ public class Ennemi extends Entite implements Destructible {
             return;
         }
 
+        this.vitesseActuelle = this.vitesseBase;
+
         if (this.dureeSlowRestante > 0) {
             this.dureeSlowRestante--;
-            this.vitesseActuelle = this.vitesseBase / 2.0;
-        } else {
-            this.vitesseActuelle = this.vitesseBase;
+            this.vitesseActuelle *= 0.5;
         }
 
-        if(dureeSpeedBoostRestante > 0){
+        if (this.dureeSpeedBoostRestante > 0) {
             this.dureeSpeedBoostRestante--;
-            this.vitesseActuelle = this.vitesseBase * 1.3;
-        } else {
-            this.vitesseActuelle = this.vitesseBase;
+            this.vitesseActuelle *= 1.3; // Boost de 30%
         }
 
         if (this.estBloque) {
@@ -110,6 +108,7 @@ public class Ennemi extends Entite implements Destructible {
             return;
         }
 
+        // 5. Déplacement physique
         if (chemin == null || etapeActuelle >= chemin.size()) return;
 
         Point2D caseCible = chemin.get(etapeActuelle);
@@ -237,7 +236,6 @@ public class Ennemi extends Entite implements Destructible {
             }
             case SLOW -> {
                 this.dureeSlowRestante = Math.max(this.dureeSlowRestante, 120);
-                this.vitesseActuelle = this.vitesseBase / 2.0;
             }
             case BURN -> {
                 this.dureeBrulageRestante = Math.max(this.dureeBrulageRestante, 60);
@@ -250,7 +248,6 @@ public class Ennemi extends Entite implements Destructible {
             }
             case SPEED_BOOST -> {
                 this.dureeSpeedBoostRestante = Math.max(this.dureeSpeedBoostRestante, 150);
-                this.vitesseActuelle = this.vitesseBase * 1.3;
             }
         }
     }
