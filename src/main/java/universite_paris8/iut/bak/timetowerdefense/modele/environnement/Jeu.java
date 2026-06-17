@@ -58,7 +58,7 @@ public class Jeu {
         this.defenses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.level = new Level();
-        this.solde = new SimpleIntegerProperty(20000);
+        this.solde = new SimpleIntegerProperty(200);
         this.pvBase = new SimpleIntegerProperty(50);
         this.epoqueActuel = new SimpleIntegerProperty(0);
         this.frame = 0;

@@ -299,7 +299,10 @@ public class EntiteVue {
             sprite = img;
         }
         if(e instanceof Buche){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/buche1.png")));
+            img.translateXProperty().bind(e.xProperty());
+            img.translateYProperty().bind(e.yProperty());
+            sprite = img;
         }
         if(e instanceof Sort){
             img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
