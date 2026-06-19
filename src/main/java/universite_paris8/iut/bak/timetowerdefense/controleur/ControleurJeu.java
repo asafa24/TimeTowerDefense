@@ -288,7 +288,17 @@ public class ControleurJeu implements Initializable {
             case K -> {
                 jeu.getCompteurKillProperty().set(jeu.getCompteurKillProperty().get()+10);
             }
+            case T -> {
+                toggleSpeedBoost();
+                if(gameLoop.getRate() > 1) afficherMessage("Vitesse x2.5", Color.GOLD, 1);
+                else afficherMessage("Vitesse x1", Color.WHITE, 1);
+            }
         }
+    }
+
+    public void toggleSpeedBoost(){
+        if (gameLoop.getRate() == 1) gameLoop.setRate(2.5);
+        else gameLoop.setRate(1);
     }
 
 
