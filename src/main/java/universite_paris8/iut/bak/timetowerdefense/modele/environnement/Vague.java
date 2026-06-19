@@ -23,7 +23,7 @@ public class Vague {
                 {50, 6, 3, 0},  // vague 7
                 {55, 7, 4, 0},  // vague 8
                 {60, 10, 6, 0}, // vague 9
-                {75, 12, 8, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
+                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
         }, {
                 {7, 0, 0, 0},   // vague 1
                 {12, 1, 0, 0},  // vague 2
@@ -34,7 +34,7 @@ public class Vague {
                 {50, 6, 3, 0},  // vague 7
                 {55, 7, 4, 0},  // vague 8
                 {60, 10, 6, 0}, // vague 9
-                {75, 12, 8, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
+                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
             }, {
                 {10, 0, 0, 0},   // vague 1
                 {12, 1, 0, 0},  // vague 2
@@ -45,7 +45,7 @@ public class Vague {
                 {50, 6, 3, 0},  // vague 7
                 {55, 7, 4, 0},  // vague 8
                 {60, 10, 6, 0}, // vague 9
-                {75, 12, 8, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
+                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
         }, {
                 {10, 0, 0, 0},   // vague 1
                 {12, 1, 0, 0},  // vague 2
@@ -56,7 +56,7 @@ public class Vague {
                 {50, 6, 3, 0},  // vague 7
                 {55, 7, 4, 0},  // vague 8
                 {60, 10, 6, 0}, // vague 9
-                {75, 12, 8, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
+                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
         },
                 {
                         {10, 0, 0, 0},   // vague 1
@@ -68,7 +68,7 @@ public class Vague {
                         {50, 6, 3, 0},  // vague 7
                         {55, 7, 4, 0},  // vague 8
                         {60, 10, 6, 0}, // vague 9
-                        {75, 12, 8, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
+                        {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
                 }
 
         };
