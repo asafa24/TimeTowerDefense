@@ -73,7 +73,7 @@ public class Vague {
 
         };
 
-        vague = new SimpleIntegerProperty(9);
+        vague = new SimpleIntegerProperty(0);
         queue = new Queue[level1[level].length];
         for (int i = 0; i < level1[level].length; i++) {
             queue[i] = laQueue(level1[level][i]);
