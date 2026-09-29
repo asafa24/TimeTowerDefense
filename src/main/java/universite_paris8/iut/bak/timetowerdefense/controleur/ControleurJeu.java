@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.Application;
@@ -49,7 +50,6 @@ import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
 
-
 import java.io.IOException;
 import java.net.URL;
 import javafx.util.Duration;
@@ -60,7 +60,7 @@ import java.util.ResourceBundle;
 
 public class ControleurJeu implements Initializable {
     @FXML
-    private StackPane paneMain ;
+    private StackPane paneMain;
 
     @FXML
     private Pane backgroundPane;
@@ -113,28 +113,40 @@ public class ControleurJeu implements Initializable {
     private Pane zoneStats;
     @FXML
     private Label tourUnArgent;
-    @FXML private Label tourDeuxArgent;
-    @FXML private Label tourTroisArgent;
-    @FXML private Label tourQuatreArgent;
-    @FXML private Label labelMessageSys;
+    @FXML
+    private Label tourDeuxArgent;
+    @FXML
+    private Label tourTroisArgent;
+    @FXML
+    private Label tourQuatreArgent;
+    @FXML
+    private Label labelMessageSys;
 
-    @FXML private ScrollPane paneGlossaire;
-    @FXML private VBox contenuGlossaire;
+    @FXML
+    private ScrollPane paneGlossaire;
+    @FXML
+    private VBox contenuGlossaire;
 
-    @FXML private VBox panePause;
-    @FXML private VBox paneGameOver;
-    @FXML private Label labelDetailGameOver;
+    @FXML
+    private VBox panePause;
+    @FXML
+    private VBox paneGameOver;
+    @FXML
+    private Label labelDetailGameOver;
 
     private MediaPlayer musiqueAmbiance;
-    @FXML private Slider sliderMusique;
-    @FXML private Slider sliderSfx;
-    @FXML private Button btnMusique;
-    @FXML private Button btnSfx;
+    @FXML
+    private Slider sliderMusique;
+    @FXML
+    private Slider sliderSfx;
+    @FXML
+    private Button btnMusique;
+    @FXML
+    private Button btnSfx;
     private GestionnaireAudio gestionnaireAudio;
     private boolean muteSfx = false;
 
     private boolean enPause = false;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -142,7 +154,7 @@ public class ControleurJeu implements Initializable {
         this.vueTerrain = new TerrainVue(backgroundPane);
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
-        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
+        this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), jeu.getEpoqueActuel());
         this.gestionnaireAudio = new GestionnaireAudio();
         EcouteEntite ecouteEntite = new EcouteEntite(vueEntite, gestionnaireAudio);
         this.uiVue = new UIVue();
@@ -163,12 +175,11 @@ public class ControleurJeu implements Initializable {
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
-
         this.afficherPrix(jeu.getEpoqueActuel());
 
         labelMessageSys.setVisible(false);
-        jeu.getVague().getVagueProperty().addListener((obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue()+1) + " en approche", Color.GOLD, 3));
-
+        jeu.getVague().getVagueProperty().addListener(
+                (obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue() + 1) + " en approche", Color.GOLD, 3));
 
         ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
@@ -201,20 +212,18 @@ public class ControleurJeu implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),
                 (ev -> {
-                    if (!jeu.tick()){
+                    if (!jeu.tick()) {
                         gererGameOver();
                     }
-                    if (typeDefenseSelectionnee != 0){
-                        jeu.preview(mouseX,mouseY);
+                    if (typeDefenseSelectionnee != 0) {
+                        jeu.preview(mouseX, mouseY);
                     }
 
                     temps++;
-                })
-        );
+                }));
         gameLoop.getKeyFrames().add(kf);
     }
 
@@ -224,15 +233,16 @@ public class ControleurJeu implements Initializable {
         tourTrois.setGraphic(uiVue.setImageT1(epoque, 2));
         tourQuatre.setGraphic(uiVue.setImageT1(epoque, 3));
     }
-    public void afficherPrix(int epoque ){
-        tourUnArgent.textProperty().bind(uiVue.setPrixT1(epoque,0));
-        tourDeuxArgent.textProperty().bind(uiVue.setPrixT1(epoque,1));
-        tourTroisArgent.textProperty().bind(uiVue.setPrixT1(epoque,2));
-        tourQuatreArgent.textProperty().bind(uiVue.setPrixT1(epoque,3));
+
+    public void afficherPrix(int epoque) {
+        tourUnArgent.textProperty().bind(uiVue.setPrixT1(epoque, 0));
+        tourDeuxArgent.textProperty().bind(uiVue.setPrixT1(epoque, 1));
+        tourTroisArgent.textProperty().bind(uiVue.setPrixT1(epoque, 2));
+        tourQuatreArgent.textProperty().bind(uiVue.setPrixT1(epoque, 3));
 
     }
 
-    public void recupererPosition(MouseEvent e){
+    public void recupererPosition(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
     }
@@ -246,31 +256,35 @@ public class ControleurJeu implements Initializable {
             case DIGIT2, NUMPAD2, UNDEFINED -> {
                 selectionnerTour(2);
             }
-            case DIGIT3, NUMPAD3, QUOTEDBL-> {
+            case DIGIT3, NUMPAD3, QUOTEDBL -> {
                 selectionnerTour(3);
             }
-            case DIGIT4, NUMPAD4, QUOTE-> {
+            case DIGIT4, NUMPAD4, QUOTE -> {
                 selectionnerTour(4);
             }
             case ESCAPE -> {
-                if(this.typeDefenseSelectionnee != 0) {
+                if (this.typeDefenseSelectionnee != 0) {
                     vuePreview.remove();
                     this.typeDefenseSelectionnee = 0;
                     System.out.println("Selection annulée");
                     toggleUI();
-                } else if (paneGlossaire.isVisible()) toggleGlossaire();
-                else togglePause();
+                } else if (paneGlossaire.isVisible())
+                    toggleGlossaire();
+                else
+                    togglePause();
             }
             case L -> {
-                if(jeu.getEpoqueActuel() > 0) changerNiveauForcing(jeu.getEpoqueActuel()-1);
+                if (jeu.getEpoqueActuel() > 0)
+                    changerNiveauForcing(jeu.getEpoqueActuel() - 1);
             }
             case M -> {
-                if (jeu.getEpoqueActuel() < 5)changerNiveauForcing(jeu.getEpoqueActuel()+1);
+                if (jeu.getEpoqueActuel() < 5)
+                    changerNiveauForcing(jeu.getEpoqueActuel() + 1);
             }
-            case O ->{
+            case O -> {
                 skipVague();
             }
-            case I ->{
+            case I -> {
                 motherload();
             }
             case H -> {
@@ -286,21 +300,24 @@ public class ControleurJeu implements Initializable {
                 togglePause();
             }
             case K -> {
-                jeu.getCompteurKillProperty().set(jeu.getCompteurKillProperty().get()+10);
+                jeu.getCompteurKillProperty().set(jeu.getCompteurKillProperty().get() + 10);
             }
             case T -> {
                 toggleSpeedBoost();
-                if(gameLoop.getRate() > 1) afficherMessage("Vitesse x2.5", Color.GOLD, 1);
-                else afficherMessage("Vitesse x1", Color.WHITE, 1);
+                if (gameLoop.getRate() > 1)
+                    afficherMessage("Vitesse x2.5", Color.GOLD, 1);
+                else
+                    afficherMessage("Vitesse x1", Color.WHITE, 1);
             }
         }
     }
 
-    public void toggleSpeedBoost(){
-        if (gameLoop.getRate() == 1) gameLoop.setRate(2.5);
-        else gameLoop.setRate(1);
+    public void toggleSpeedBoost() {
+        if (gameLoop.getRate() == 1)
+            gameLoop.setRate(2.5);
+        else
+            gameLoop.setRate(1);
     }
-
 
     @FXML
     public void handleMouseClick(MouseEvent mouseEvent) throws IOException {
@@ -319,9 +336,10 @@ public class ControleurJeu implements Initializable {
                     if ((int) d.getX() == xGrille && (int) d.getY() == yGrille) {
                         d.setSelectionnee(true);
                         tourTrouvee = true;
-                        System.out.println("Tu as sélectionné la tour en position x : "+ d.getX() +" y : "+ d.getY());
+                        System.out
+                                .println("Tu as sélectionné la tour en position x : " + d.getX() + " y : " + d.getY());
                         this.afficherMenuTour((Tour) d);
-                        vueEntite.afficherCerclePortee((Tour)d);
+                        vueEntite.afficherCerclePortee((Tour) d);
                     } else {
                         d.setSelectionnee(false);
                     }
@@ -357,7 +375,7 @@ public class ControleurJeu implements Initializable {
         vuePreview.setId(-1);
         jeu.setId(-1);
         vuePreview.remove();
-        this.typeDefenseSelectionnee= 0;
+        this.typeDefenseSelectionnee = 0;
     }
 
     private void selectionsPrehistoire(int xGrille, int yGrille) {
@@ -420,23 +438,28 @@ public class ControleurJeu implements Initializable {
             }
         }
     }
+
     private void selectionsMoyenAge(int xGrille, int yGrille) {
         switch (typeDefenseSelectionnee) {
             case 1 -> {
                 this.piegeSelectione = new ElPrimo(xGrille, yGrille);
-                if (!jeu.poserPiege(piegeSelectione)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserPiege(piegeSelectione))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 2 -> {
                 this.tourSelectionne = new Archer(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 3 -> {
                 this.tourSelectionne = new LanceBuche(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 4 -> {
                 this.tourSelectionne = new TourMage(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
         }
     }
@@ -445,19 +468,23 @@ public class ControleurJeu implements Initializable {
         switch (typeDefenseSelectionnee) {
             case 1 -> {
                 this.piegeSelectione = new Mine(xGrille, yGrille);
-                if (!jeu.poserPiege(piegeSelectione)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserPiege(piegeSelectione))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 2 -> {
                 this.tourSelectionne = new SoldatBleu(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 3 -> {
                 this.tourSelectionne = new Sniper(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 4 -> {
                 this.tourSelectionne = new LanceRocket(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
         }
     }
@@ -466,88 +493,94 @@ public class ControleurJeu implements Initializable {
         switch (typeDefenseSelectionnee) {
             case 1 -> {
                 this.tourSelectionne = new PistoletLaser(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 2 -> {
                 this.tourSelectionne = new PistoletLazerMk2(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 3 -> {
                 this.tourSelectionne = new Tesla(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
             case 4 -> {
                 this.tourSelectionne = new TourDuTemps(xGrille, yGrille);
-                if (!jeu.poserTour(tourSelectionne)) afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+                if (!jeu.poserTour(tourSelectionne))
+                    afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
             }
         }
     }
-
 
     public void masquerStatsTour(Pane zoneStats) {
         zoneStats.getChildren().clear();
         zoneStats.setVisible(false);
     }
+
     @FXML
-    public void poseTour(ActionEvent event){
+    public void poseTour(ActionEvent event) {
         Node button = (Button) event.getSource();
         this.typeDefenseSelectionnee = Integer.parseInt(button.getUserData().toString());
         modeSelectionTour();
     }
 
-    public void modeSelectionTour(){
+    public void modeSelectionTour() {
         boutonBox.setVisible(false);
-        System.out.println("Défense numéro " + this.typeDefenseSelectionnee +" sélectionnée.");
+        System.out.println("Défense numéro " + this.typeDefenseSelectionnee + " sélectionnée.");
         vuePreview.setId(this.typeDefenseSelectionnee);
         jeu.setId(this.typeDefenseSelectionnee);
         vuePreview.preview();
     }
 
-    public void selectionnerTour(int tour){
-        if (!enPause){
+    public void selectionnerTour(int tour) {
+        if (!enPause) {
             vuePreview.remove();
             typeDefenseSelectionnee = tour;
             modeSelectionTour();
         }
     }
-    // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ??? c'est kevin qui a écrit
+    // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
+    // c'est kevin qui a écrit
 
-    public void lancerUltime(){
+    public void lancerUltime() {
         jeu.activerUltime();
-        if(jeu.getEpoqueActuel() == 0){
+        if (jeu.getEpoqueActuel() == 0) {
             gestionnaireAudio.jouerSonSpecial("meteore");
-        } else if (jeu.getEpoqueActuel() == 1){
+        } else if (jeu.getEpoqueActuel() == 1) {
             gestionnaireAudio.jouerSonSpecial("tornado");
         }
     }
 
     @FXML
-    public void toggleUI(){
-        if(boutonBox.isDisabled() || !boutonBox.isVisible()){
+    public void toggleUI() {
+        if (boutonBox.isDisabled() || !boutonBox.isVisible()) {
             boutonBox.setVisible(true);
-        }
-        else{
+        } else {
             boutonBox.setVisible(false);
         }
     }
+
     private void afficherMenuTour(Tour tour) throws IOException {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));
-            Pane carteState = fxmlLoader.load();
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("properties.fxml"));
+        Pane carteState = fxmlLoader.load();
 
-            ControleurStatsTour controller = fxmlLoader.getController();
-            controller.updateStats(tour, this.jeu,this);
+        ControleurStatsTour controller = fxmlLoader.getController();
+        controller.updateStats(tour, this.jeu, this);
 
-            zoneStats.getChildren().setAll(carteState);
-            zoneStats.setVisible(true);
+        zoneStats.getChildren().setAll(carteState);
+        zoneStats.setVisible(true);
     }
+
     public void fermerMenuTour() {
         masquerStatsTour(zoneStats);
         vueEntite.deselectionnerCerclePortee();
     }
 
-    public void afficherMessage(String texte, Color color, int duree){
-        uiVue.afficherMessage(texte , color , duree , labelMessageSys );
+    public void afficherMessage(String texte, Color color, int duree) {
+        uiVue.afficherMessage(texte, color, duree, labelMessageSys);
     }
 
     public void setDifficulteExtreme(boolean extreme) {
@@ -558,7 +591,7 @@ public class ControleurJeu implements Initializable {
         }
     }
 
-    public void changerNiveau(int nb){
+    public void changerNiveau(int nb) {
         int[][] donneesMap = level.loadLevel(nb);
         jeu.nuke();
         jeu.newRoute();
@@ -569,7 +602,8 @@ public class ControleurJeu implements Initializable {
         afficherButton(nb);
         afficherPrix(nb);
     }
-    public void changerNiveauForcing(int nb){
+
+    public void changerNiveauForcing(int nb) {
         int[][] donneesMap = level.loadLevel(nb);
         jeu.setEpoqueActuel(nb);
         jeu.nuke();
@@ -578,7 +612,7 @@ public class ControleurJeu implements Initializable {
         jeu.resetTimersEtVague();
 
         vueTerrain.drawMap(donneesMap, nb);
-        this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), nb);
+        this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), nb);
         afficherButton(nb);
         afficherPrix(nb);
     }
@@ -605,62 +639,78 @@ public class ControleurJeu implements Initializable {
         switch (epoque) {
             case 0:
                 ajouterEntreeGlossaire("Arbre Rustique", "Tour basique infligeant des dégâts modérés.", Color.WHITE);
-                ajouterEntreeGlossaire("Mini Volcan", "Piège infligeant des dégâts de zone et brûlant les ennemis.", Color.WHITE);
-                ajouterEntreeGlossaire("Catapulte", "Lance de lourds cailloux pour des dégâts massifs à l'impact.", Color.WHITE);
-                ajouterEntreeGlossaire("Lance-Filet", "Entrave (stun) les ennemis, réduisant considérablement leur vitesse.", Color.WHITE);
+                ajouterEntreeGlossaire("Mini Volcan", "Piège infligeant des dégâts de zone et brûlant les ennemis.",
+                        Color.WHITE);
+                ajouterEntreeGlossaire("Catapulte", "Lance de lourds cailloux pour des dégâts massifs à l'impact.",
+                        Color.WHITE);
+                ajouterEntreeGlossaire("Lance-Filet",
+                        "Entrave (stun) les ennemis, réduisant considérablement leur vitesse.", Color.WHITE);
 
-                ajouterEntreeGlossaire("Compsognathus", "Petit dinosaure fragile mais qui se déplace en nombre.", Color.LIGHTCORAL);
+                ajouterEntreeGlossaire("Compsognathus", "Petit dinosaure fragile mais qui se déplace en nombre.",
+                        Color.LIGHTCORAL);
                 ajouterEntreeGlossaire("Vélociraptor", "Rapide et féroce, il fonce vers la base.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Tricératops", "Protège la horde en appliquant un bouclier aux alliés proches.", Color.ORANGE);
+                ajouterEntreeGlossaire("Tricératops", "Protège la horde en appliquant un bouclier aux alliés proches.",
+                        Color.ORANGE);
                 ajouterEntreeGlossaire("T-Rex (Boss)", "Étourdit vos défenses avec son rugissement !", Color.RED);
                 break;
 
             case 1:
-                ajouterEntreeGlossaire("Mur de Sable", "Piège bloquant les ennemis jusqu'à sa destruction.", Color.WHITE);
-                ajouterEntreeGlossaire("Totem à Fléchettes", "Cadence de tir élevée, applique du poison sur la durée.", Color.WHITE);
-                ajouterEntreeGlossaire("Catapulte à Jarres", "Fait pleuvoir des jarres explosives causant des effets sur les ennemis.", Color.WHITE);
-                ajouterEntreeGlossaire("Pyramide Shooteuse", "Dégâts continus sous forme de rayon qui augmentent sur une même cible.", Color.WHITE);
+                ajouterEntreeGlossaire("Mur de Sable", "Piège bloquant les ennemis jusqu'à sa destruction.",
+                        Color.WHITE);
+                ajouterEntreeGlossaire("Totem à Fléchettes", "Cadence de tir élevée, applique du poison sur la durée.",
+                        Color.WHITE);
+                ajouterEntreeGlossaire("Catapulte à Jarres",
+                        "Fait pleuvoir des jarres explosives causant des effets sur les ennemis.", Color.WHITE);
+                ajouterEntreeGlossaire("Pyramide Shooteuse",
+                        "Dégâts continus sous forme de rayon qui augmentent sur une même cible.", Color.WHITE);
 
                 ajouterEntreeGlossaire("Momie", "Lente mais résistante aux attaques.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Golem de Sable", "Créature massive. Se divise en deux Golimes à sa mort.", Color.ORANGE);
+                ajouterEntreeGlossaire("Golem de Sable", "Créature massive. Se divise en deux Golimes à sa mort.",
+                        Color.ORANGE);
                 ajouterEntreeGlossaire("Golime", "Petit fragment issu de la destruction d'un Golem.", Color.LIGHTCORAL);
                 ajouterEntreeGlossaire("Boss", "(Ca arrive fort)", Color.RED);
                 break;
         }
     }
+
     private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
         uiVue.ajouterEntreeGlossaire(nom, description, couleurTitre, contenuGlossaire);
     }
 
-    public void lancerMusique(int epoque){
-        if(musiqueAmbiance != null){
+    public void lancerMusique(int epoque) {
+        if (musiqueAmbiance != null) {
             musiqueAmbiance.stop();
         }
         String cheminMusique = "";
-        switch (epoque){
+        switch (epoque) {
             case 1 -> cheminMusique = "media/antiquite.mp3";
             default -> cheminMusique = "media/prehistoire.mp3";
         }
 
         URL url = Application.class.getResource(cheminMusique);
-        if(url != null){
-            musiqueAmbiance = new MediaPlayer(new Media(url.toExternalForm()));
-            musiqueAmbiance.setVolume(0.2);
-            musiqueAmbiance.setCycleCount(MediaPlayer.INDEFINITE);
-            musiqueAmbiance.play();
+        if (url != null) {
+            try {
+                musiqueAmbiance = new MediaPlayer(new Media(url.toExternalForm()));
+                musiqueAmbiance.setVolume(0.2);
+                musiqueAmbiance.setCycleCount(MediaPlayer.INDEFINITE);
+                musiqueAmbiance.play();
+            } catch (MediaException e) {
+                System.err.println("Musique indisponible : " + e.getMessage());
+                musiqueAmbiance = null;
+            }
         }
     }
 
-        @FXML
+    @FXML
     public void togglePause() {
-        if(paneGameOver.isVisible()) return;
+        if (paneGameOver.isVisible())
+            return;
 
         enPause = !enPause;
-        if(enPause){
+        if (enPause) {
             gameLoop.pause();
             panePause.setVisible(true);
-        }
-        else{
+        } else {
             gameLoop.play();
             panePause.setVisible(false);
         }
@@ -692,6 +742,7 @@ public class ControleurJeu implements Initializable {
 
         gameLoop.play();
     }
+
     private void resetPrixTours() {
         // époque 0
         MiniVolcan.coutPropertyMiniVolcan().set(25);
@@ -699,7 +750,7 @@ public class ControleurJeu implements Initializable {
         CatapulteCaillou.coutPropertyCatapulteCaillou().set(130);
         LanceFilet.coutPropertyLanceFilet().set(125);
 
-        //  époque 1
+        // époque 1
         PorteDeSable.coutPropertyPorteSable().set(40);
         TotemFlechette.coutPropertyTotemFlechette().set(50);
         CatapulteJAR.coutPropertyCatapulteJar().set(130);
@@ -718,6 +769,7 @@ public class ControleurJeu implements Initializable {
             labelDetailGameOver.setText("Mode Normal : Vous pouvez retenter cette époque.");
         }
     }
+
     @FXML
     public void toggleMuteMusique() {
         if (musiqueAmbiance != null) {
@@ -733,10 +785,12 @@ public class ControleurJeu implements Initializable {
         gestionnaireAudio.setMute(muteSfx);
         btnSfx.setText(muteSfx ? "🔇 désactiver" : "🔊 activer");
     }
-    public void skipVague(){
+
+    public void skipVague() {
         jeu.getVague().vagueSuivante();
     }
-    public void motherload(){
+
+    public void motherload() {
         jeu.ajouterArgent(200);
     }
 }

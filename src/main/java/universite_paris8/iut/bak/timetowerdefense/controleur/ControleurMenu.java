@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -19,8 +20,10 @@ import java.net.URL;
 
 public class ControleurMenu {
 
-    @FXML private RadioButton radioExtreme;
-    @FXML private StackPane rootPane;
+    @FXML
+    private RadioButton radioExtreme;
+    @FXML
+    private StackPane rootPane;
 
     @FXML
     public void lancerJeu(ActionEvent event) {
@@ -33,21 +36,26 @@ public class ControleurMenu {
             return;
         }
 
-        Media media = new Media(url.toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
+        try {
+            Media media = new Media(url.toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView mediaView = new MediaView(mediaPlayer);
 
-        mediaView.fitWidthProperty().bind(rootPane.widthProperty());
-        mediaView.fitHeightProperty().bind(rootPane.heightProperty());
-        mediaView.setPreserveRatio(true);
+            mediaView.fitWidthProperty().bind(rootPane.widthProperty());
+            mediaView.fitHeightProperty().bind(rootPane.heightProperty());
+            mediaView.setPreserveRatio(true);
 
-        rootPane.getChildren().add(mediaView);
+            rootPane.getChildren().add(mediaView);
 
-        mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.setOnEndOfMedia(() -> {
+                chargerFenetreJeu(event, isModeExtreme);
+            });
+
+            mediaPlayer.play();
+        } catch (MediaException e) {
+            System.err.println("Lecteur média indisponible, lancement direct : " + e.getMessage());
             chargerFenetreJeu(event, isModeExtreme);
-        });
-
-        mediaPlayer.play();
+        }
     }
 
     private void chargerFenetreJeu(ActionEvent event, boolean isModeExtreme) {
