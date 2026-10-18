@@ -17,8 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
@@ -45,6 +43,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehi
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
+import universite_paris8.iut.bak.timetowerdefense.modele.glossaire.Glossaire;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
@@ -125,13 +124,11 @@ public class ControleurJeu implements Initializable {
     @FXML private VBox paneGameOver;
     @FXML private Label labelDetailGameOver;
 
-    private MediaPlayer musiqueAmbiance;
     @FXML private Slider sliderMusique;
     @FXML private Slider sliderSfx;
     @FXML private Button btnMusique;
     @FXML private Button btnSfx;
-    private GestionnaireAudio gestionnaireAudio;
-    private boolean muteSfx = false;
+    private ControleurMusique controleurMusique;
 
     private boolean enPause = false;
 
@@ -143,14 +140,15 @@ public class ControleurJeu implements Initializable {
         this.jeu = new Jeu();
         this.vueEntite = new EntiteVue(entityPane);
         this.vuePreview = new PreviewVue(entityPane, -1,jeu.getPreview(), jeu.getEpoqueActuel());
-        this.gestionnaireAudio = new GestionnaireAudio();
-        EcouteEntite ecouteEntite = new EcouteEntite(vueEntite, gestionnaireAudio);
+        this.controleurMusique = new ControleurMusique(new GestionnaireAudio(), sliderMusique, sliderSfx,
+                btnMusique, btnSfx);
+        EcouteEntite ecouteEntite = new EcouteEntite(vueEntite, controleurMusique.getGestionnaireAudio());
         this.uiVue = new UIVue();
         afficherButton(jeu.getEpoqueActuel());
 
         jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
             this.changerNiveau(nouvelleEpoque.intValue());
-            lancerMusique(nouvelleEpoque.intValue());
+            controleurMusique.lancerMusique(nouvelleEpoque.intValue());
             System.out.println("oui");
         });
 
@@ -172,19 +170,8 @@ public class ControleurJeu implements Initializable {
 
         ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
-        // Musique
-        sliderMusique.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (musiqueAmbiance != null) {
-                musiqueAmbiance.setVolume(newVal.doubleValue());
-            }
-        });
-        // Sons
-        sliderSfx.valueProperty().addListener((obs, oldVal, newVal) -> {
-            gestionnaireAudio.setVolume(newVal.doubleValue());
-        });
-
         initAnimation();
-        lancerMusique(jeu.getEpoqueActuel());
+        controleurMusique.lancerMusique(jeu.getEpoqueActuel());
         gameLoop.play();
 
         int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
@@ -515,9 +502,9 @@ public class ControleurJeu implements Initializable {
     public void lancerUltime(){
         jeu.activerUltime();
         if(jeu.getEpoqueActuel() == 0){
-            gestionnaireAudio.jouerSonSpecial("meteore");
+            controleurMusique.jouerSonSpecial("meteore");
         } else if (jeu.getEpoqueActuel() == 1){
-            gestionnaireAudio.jouerSonSpecial("tornado");
+            controleurMusique.jouerSonSpecial("tornado");
         }
     }
 
@@ -594,62 +581,10 @@ public class ControleurJeu implements Initializable {
     }
 
     private void actualiserGlossaire() {
-        contenuGlossaire.getChildren().clear();
-        int epoque = jeu.getEpoqueActuel();
-
-        Label titre = new Label("GLOSSAIRE - ÉPOQUE " + epoque);
-        titre.setTextFill(Color.GOLD);
-        titre.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
-        contenuGlossaire.getChildren().add(titre);
-
-        switch (epoque) {
-            case 0:
-                ajouterEntreeGlossaire("Arbre Rustique", "Tour basique infligeant des dégâts modérés.", Color.WHITE);
-                ajouterEntreeGlossaire("Mini Volcan", "Piège infligeant des dégâts de zone et brûlant les ennemis.", Color.WHITE);
-                ajouterEntreeGlossaire("Catapulte", "Lance de lourds cailloux pour des dégâts massifs à l'impact.", Color.WHITE);
-                ajouterEntreeGlossaire("Lance-Filet", "Entrave (stun) les ennemis, réduisant considérablement leur vitesse.", Color.WHITE);
-
-                ajouterEntreeGlossaire("Compsognathus", "Petit dinosaure fragile mais qui se déplace en nombre.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Vélociraptor", "Rapide et féroce, il fonce vers la base.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Tricératops", "Protège la horde en appliquant un bouclier aux alliés proches.", Color.ORANGE);
-                ajouterEntreeGlossaire("T-Rex (Boss)", "Étourdit vos défenses avec son rugissement !", Color.RED);
-                break;
-
-            case 1:
-                ajouterEntreeGlossaire("Mur de Sable", "Piège bloquant les ennemis jusqu'à sa destruction.", Color.WHITE);
-                ajouterEntreeGlossaire("Totem à Fléchettes", "Cadence de tir élevée, applique du poison sur la durée.", Color.WHITE);
-                ajouterEntreeGlossaire("Catapulte à Jarres", "Fait pleuvoir des jarres explosives causant des effets sur les ennemis.", Color.WHITE);
-                ajouterEntreeGlossaire("Pyramide Shooteuse", "Dégâts continus sous forme de rayon qui augmentent sur une même cible.", Color.WHITE);
-
-                ajouterEntreeGlossaire("Momie", "Lente mais résistante aux attaques.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Golem de Sable", "Créature massive. Se divise en deux Golimes à sa mort.", Color.ORANGE);
-                ajouterEntreeGlossaire("Golime", "Petit fragment issu de la destruction d'un Golem.", Color.LIGHTCORAL);
-                ajouterEntreeGlossaire("Boss", "(Ca arrive fort)", Color.RED);
-                break;
-        }
-    }
-    private void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre) {
-        uiVue.ajouterEntreeGlossaire(nom, description, couleurTitre, contenuGlossaire);
+        uiVue.afficherGlossaire(Glossaire.pourEpoque(jeu.getEpoqueActuel()), contenuGlossaire);
     }
 
-    public void lancerMusique(int epoque){
-        if(musiqueAmbiance != null){
-            musiqueAmbiance.stop();
-        }
-        String cheminMusique = "";
-        switch (epoque){
-            case 1 -> cheminMusique = "media/antiquite.mp3";
-            default -> cheminMusique = "media/prehistoire.mp3";
-        }
 
-        URL url = Application.class.getResource(cheminMusique);
-        if(url != null){
-            musiqueAmbiance = new MediaPlayer(new Media(url.toExternalForm()));
-            musiqueAmbiance.setVolume(0.2);
-            musiqueAmbiance.setCycleCount(MediaPlayer.INDEFINITE);
-            musiqueAmbiance.play();
-        }
-    }
 
         @FXML
     public void togglePause() {
@@ -720,18 +655,12 @@ public class ControleurJeu implements Initializable {
     }
     @FXML
     public void toggleMuteMusique() {
-        if (musiqueAmbiance != null) {
-            boolean estMuet = !musiqueAmbiance.isMute();
-            musiqueAmbiance.setMute(estMuet);
-            btnMusique.setText(estMuet ? "🔇 désactiver" : "🔊 activer");
-        }
+        controleurMusique.toggleMuteMusique();
     }
 
     @FXML
     public void toggleMuteSfx() {
-        muteSfx = !muteSfx;
-        gestionnaireAudio.setMute(muteSfx);
-        btnSfx.setText(muteSfx ? "🔇 désactiver" : "🔊 activer");
+        controleurMusique.toggleMuteSfx();
     }
     public void skipVague(){
         jeu.getVague().vagueSuivante();

@@ -84,3 +84,54 @@
 .btn-audio:hover {
     -fx-text-fill: #f1c40f;
 }
+/* Glossaire */
+.glossary-panel {
+    -fx-background-color: #080b18;
+    -fx-background: #080b18;
+    -fx-background-radius: 18;
+    -fx-border-color: rgba(122, 89, 255, 0.72);
+    -fx-border-radius: 18;
+    -fx-border-width: 1.5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 24, 0.25, 0, 8);
+}
+.glossary-panel > .viewport {
+    -fx-background-color: transparent;
+}
+.glossary-content {
+    -fx-padding: 20;
+}
+.glossary-title {
+    -fx-text-fill: #f4f1ff;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+.glossary-subtitle {
+    -fx-text-fill: #9da6bd;
+    -fx-font-size: 12px;
+}
+.glossary-card {
+    -fx-background-color: #171c2b;
+    -fx-background-radius: 11;
+    -fx-border-color: rgba(255, 255, 255, 0.09);
+    -fx-border-radius: 11;
+    -fx-padding: 11 13 11 13;
+}
+.glossary-entry-name {
+    -fx-text-fill: #f7f7fb;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.glossary-entry-description {
+    -fx-text-fill: #c2c8d6;
+    -fx-font-size: 12px;
+}
+.glossary-category {
+    -fx-background-radius: 12;
+    -fx-padding: 4 8 4 8;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+.category-defense { -fx-background-color: rgba(50, 170, 255, 0.18); -fx-text-fill: #7bc8ff; }
+.category-enemy { -fx-background-color: rgba(255, 105, 105, 0.18); -fx-text-fill: #ff9999; }
+.category-resistant { -fx-background-color: rgba(255, 170, 55, 0.18); -fx-text-fill: #ffc477; }
+.category-boss { -fx-background-color: rgba(210, 75, 255, 0.2); -fx-text-fill: #e5a3ff; }
