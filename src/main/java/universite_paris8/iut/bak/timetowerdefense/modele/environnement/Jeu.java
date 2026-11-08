@@ -10,23 +10,12 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.TempeteDeSa
 import universite_paris8.iut.bak.timetowerdefense.modele.competences.Ultime;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.CharAssaut;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Dictateur;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.SoldatRouge;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.AraigneeRobot;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Generateur;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.IA;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Robot;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Cavalier;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Roi;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Compsognathus;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Velociraptor;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiAntiquite;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiContemporain;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiFutur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiMoyenAge;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiPrehistoire;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
@@ -42,6 +31,7 @@ public class Jeu {
     private ObservableList<Projectile> projectiles;
     private int frame;
     private List<List<Point2D>> routes;
+    private final List<FabriqueEnnemi> fabriquesEnnemis;
 
     private final Level level;
     private IntegerProperty epoqueActuel;
@@ -71,6 +61,14 @@ public class Jeu {
         this.epoqueActuel = new SimpleIntegerProperty(0);
         this.frame = 0;
         this.routes = new ArrayList<>();
+
+        this.fabriquesEnnemis = List.of(
+                new FabriqueEnnemiPrehistoire(),
+                new FabriqueEnnemiAntiquite(),
+                new FabriqueEnnemiMoyenAge(),
+                new FabriqueEnnemiContemporain(),
+                new FabriqueEnnemiFutur());
+
         newRoute();
         this.vague = new Vague();
         this.delay = 0;
@@ -84,76 +82,84 @@ public class Jeu {
 //      et le déclenchement des vagues.
 
     public boolean tick() {
-        if (!perdu()) {
-            ultimeActuelle.tick(ennemis);
-
-            // Itération inversée pour éviter les problèmes de concurrence lors de la suppression
-            for (int i = defenses.size() - 1; i >= 0; i--) {
-                Defense d = defenses.get(i);
-                d.agir(ennemis, projectiles);
-                if (d instanceof Destructible && ((Destructible) d).estMort()) {
-                    defenses.remove(i);
-                }
-            }
-
-            for (int i = projectiles.size() - 1; i >= 0; i--) {
-                Projectile p = projectiles.get(i);
-                if (p.aAtteintCible()) {
-                    p.appliquerImpact(ennemis);
-                    projectiles.remove(i);
-                    continue;
-                }
-                p.deplacer();
-            }
-
-            for (int i = ennemis.size() - 1; i >= 0; i--) {
-                Ennemi e = ennemis.get(i);
-                if (e.estMort()) {
-                    ajouterArgent(e.getRecompense());
-                    this.compteurKill.set(this.compteurKill.get() + 1);
-
-                    // Gère les ennemis qui apparaissent à la mort d'un autre (ex: Golem -> Golimes)
-                    List<Ennemi> nouveauxEnnemis = e.onDeath();
-                    if (!nouveauxEnnemis.isEmpty()) {
-                        ennemis.addAll(nouveauxEnnemis);
-                    }
-
-                    ennemis.remove(i);
-                    if (e instanceof Boss){
-                        vague.levelSuiv();
-                        prochaineEpoque();
-                    }
-                    continue;
-                }
-
-                if (e.aAtteintLaBase()) {
-                    ennemis.remove(i);
-                    pvBase.set(pvBase.get() - e.getPv());
-                    continue;
-                }
-                e.agir(ennemis, defenses);
-                e.avancer();
-            }
-
-            // Gestion de l'apparition des ennemis et de la transition entre les vagues
-            if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
-                addEnnemi(creerEnnemi(vague.defiler()));
-            } else {
-                // Si la vague est terminée, lance un délai avant la prochaine
-                if (delay > 600) {
-                    delay = 0;
-                    vague.vagueSuivante();
-                    if (delaySpawnMob > 16) delaySpawnMob -= 8; // Les vagues deviennent plus denses
-                } else {
-                    if (vague.getQueue().isEmpty()) {
-                        delay++;
-                    }
-                }
-            }
-            frame++;
-            return true;
+        if (perdu()) {
+            return false;
         }
-        return false;
+
+        ultimeActuelle.tick(ennemis);
+        mettreAJourDefenses();
+        mettreAJourProjectiles();
+        mettreAJourEnnemis();
+        gererApparitionEtTransitionVague();
+        frame++;
+        return true;
+    }
+
+    private void mettreAJourDefenses() {
+        for (int i = defenses.size() - 1; i >= 0; i--) {
+            Defense defense = defenses.get(i);
+            defense.agir(ennemis, projectiles);
+            if (defense instanceof Destructible && ((Destructible) defense).estMort()) {
+                defenses.remove(i);
+            }
+        }
+    }
+
+    private void mettreAJourProjectiles() {
+        for (int i = projectiles.size() - 1; i >= 0; i--) {
+            Projectile projectile = projectiles.get(i);
+            if (projectile.aAtteintCible()) {
+                projectile.appliquerImpact(ennemis);
+                projectiles.remove(i);
+                continue;
+            }
+            projectile.deplacer();
+        }
+    }
+
+    private void mettreAJourEnnemis() {
+        for (int i = ennemis.size() - 1; i >= 0; i--) {
+            Ennemi ennemi = ennemis.get(i);
+            if (ennemi.estMort()) {
+                ajouterArgent(ennemi.getRecompense());
+                compteurKill.set(compteurKill.get() + 1);
+
+                // Certains ennemis font apparaître d'autres ennemis à leur mort
+                List<Ennemi> nouveauxEnnemis = ennemi.onDeath();
+                if (!nouveauxEnnemis.isEmpty()) {
+                    ennemis.addAll(nouveauxEnnemis);
+                }
+
+                ennemis.remove(i);
+                if (ennemi instanceof Boss) {
+                    vague.levelSuiv();
+                    prochaineEpoque();
+                }
+                continue;
+            }
+
+            if (ennemi.aAtteintLaBase()) {
+                ennemis.remove(i);
+                pvBase.set(pvBase.get() - ennemi.getPv());
+                continue;
+            }
+            ennemi.agir(ennemis, defenses);
+            ennemi.avancer();
+        }
+    }
+
+    private void gererApparitionEtTransitionVague() {
+        if (frame % delaySpawnMob == 0 && !vague.getQueue().isEmpty() && frame > TEMPS_ENTRE_VAGUE) {
+            addEnnemi(creerEnnemi(vague.defiler()));
+        } else if (delay > 600) {
+            delay = 0;
+            vague.vagueSuivante();
+            if (delaySpawnMob > 16) {
+                delaySpawnMob -= 8;
+            }
+        } else if (vague.getQueue().isEmpty()) {
+            delay++;
+        }
     }
 
     public void activerUltime(){
@@ -163,52 +169,14 @@ public class Jeu {
         }
     }
 
-    private Ennemi creerEnnemi(int id ) {
+    private Ennemi creerEnnemi(int id) {
         Random rand = new Random();
         List<Point2D> route = routes.get(rand.nextInt(routes.size()));
-
-        switch (this.epoqueActuel.get()){
-            case 0 -> {
-                switch (id) {
-                    case 0: return new Compsognathus(route);
-                    case 1: return new Velociraptor(route);
-                    case 2: return new Triceratops(route);
-                    default: return new Tyrannosaurus(route);
-                }
-            }
-            case 1 -> {
-                switch (id) {
-                    case 0: return new Momie(route);
-                    case 1: return new Chacal(route);
-                    case 2: return new GolemSable(route);
-                    default: return new Sarko(route,this);
-                }
-            }
-            case 2 -> {
-                switch (id){
-                    case 0: return new Moine(route);
-                    case 1: return new Chevalier(route);
-                    case 2: return new Cavalier(route);
-                    default: return new Roi(route);
-                }
-            }
-            case 3 -> {
-                switch (id){
-                    case 0: return new SoldatRouge(route);
-                    case 1: return new Vehicule(route);
-                    case 2: return new CharAssaut(route);
-                    default: return new Dictateur(route);
-                }
-            }
-            default -> {
-                switch (id){
-                    case 0: return new Robot(route);
-                    case 1: return new AraigneeRobot(route);
-                    case 2: return new Generateur(route);
-                    default: return new IA(route);
-                }
-            }
-        }
+        int epoque = epoqueActuel.get();
+        int indexFabrique = epoque >= 0 && epoque < fabriquesEnnemis.size()
+                ? epoque
+                : 0;
+        return fabriquesEnnemis.get(indexFabrique).creerEnnemi(id, route, this);
     }
 
     public void newRoute() {
@@ -297,58 +265,63 @@ public class Jeu {
         return false;
     }
 
-    public boolean peuxPoserTour(int epoque, Tour tour ) {
+    public boolean peuxPoserTour(int epoque, Tour tour) {
         int[][] grille = level.loadLevel(epoque);
         int caseX = (int) tour.getX();
         int caseY = (int) tour.getY();
-
-        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
-        if (grille[caseY][caseX] != 0) return false;
-
-        for (Defense d : defenses) {
-            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
-        }
-        return this.solde.get() >= tour.getCout();
+        return caseValidePourTour(grille, caseX, caseY)
+                && solde.get() >= tour.getCout();
     }
 
-    public boolean peuxPoserPiege(int epoque, Piege piege){
-        int[][] test = level.loadLevel(epoque);
+    public boolean peuxPoserPiege(int epoque, Piege piege) {
+        int[][] grille = level.loadLevel(epoque);
         int x = (int) piege.getX();
         int y = (int) piege.getY();
-
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
-
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
-        }
-        return (test[y][x] > 0 && test[y][x] <= 9 && this.solde.get() >= piege.getCout());
+        return caseValidePourPiege(grille, x, y)
+                && solde.get() >= piege.getCout();
     }
 
     public void preview(double x, double y) {
-        preview.update(x,y,id);
+        preview.update(x, y, id);
     }
 
-    public boolean peuxPoserTourCoord( int caseX, int caseY) {
+    public boolean peuxPoserTourCoord(int caseX, int caseY) {
         int[][] grille = level.loadLevel(epoqueActuel.get());
+        return caseValidePourTour(grille, caseX, caseY);
+    }
 
-        if (caseY < 0 || caseY >= grille.length || caseX < 0 || caseX >= grille[caseY].length) return false;
-        if (grille[caseY][caseX] != 0) return false;
+    public boolean peuxPoserPiegeCoord(int x, int y) {
+        int[][] grille = level.loadLevel(epoqueActuel.get());
+        return caseValidePourPiege(grille, x, y);
+    }
 
-        for (Defense d : defenses) {
-            if ((int)d.getX() == caseX && (int)d.getY() == caseY) return false;
+    private boolean coordonneesDansGrille(int[][] grille, int x, int y) {
+        return y >= 0 && y < grille.length && x >= 0 && x < grille[y].length;
+    }
+
+    private boolean caseValidePourTour(int[][] grille, int x, int y) {
+        if (!coordonneesDansGrille(grille, x, y) || grille[y][x] != 0) {
+            return false;
+        }
+        for (Defense defense : defenses) {
+            if ((int) defense.getX() == x && (int) defense.getY() == y) {
+                return false;
+            }
         }
         return true;
     }
 
-    public boolean peuxPoserPiegeCoord(int x, int y){
-        int[][] test = level.loadLevel(epoqueActuel.get());
-
-        if (y < 0 || y >= test.length || x < 0 || x >= test[y].length) return false;
-
-        for (int i = 0; i < defenses.size(); i++) {
-            if (defenses.get(i).getX() == x && defenses.get(i).getY() == y) return false;
+    private boolean caseValidePourPiege(int[][] grille, int x, int y) {
+        if (!coordonneesDansGrille(grille, x, y)) {
+            return false;
         }
-        return (test[y][x] > 0 && test[y][x] <= 9 );
+        for (Defense defense : defenses) {
+            if (defense.getX() == x && defense.getY() == y) {
+                return false;
+            }
+        }
+        // La valeur 7 représente la base dans les cartes : un piège ne peut pas y être posé.
+        return grille[y][x] > 0 && grille[y][x] <= 9 && grille[y][x] != 7;
     }
 
     public void addEnnemi(Ennemi ennemi) {
