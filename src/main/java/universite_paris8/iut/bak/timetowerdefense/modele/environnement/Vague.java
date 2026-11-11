@@ -11,8 +11,10 @@ public class Vague {
     private int level = 0;
     private IntegerProperty vague;
     Queue<Integer>[] queue;
+    private StrategieVague strategieVague;
 
     public Vague() {
+        strategieVague = new VagueEscalier();
         level1 = new int[][][]{{
                 {5, 0, 0, 0},   // vague 1
                 {10, 0, 0, 0},  // vague 2
@@ -73,10 +75,13 @@ public class Vague {
 
         };
 
-        vague = new SimpleIntegerProperty(0);
-        queue = new Queue[level1[level].length];
-        for (int i = 0; i < level1[level].length; i++) {
-            queue[i] = laQueue(level1[level][i]);
+        this.vague = new SimpleIntegerProperty(0);
+        chargerNiveau(this.level);
+    }
+    private void chargerNiveau(int niveauChoisi) {
+        queue = new Queue[level1[niveauChoisi].length];
+        for (int i = 0; i < level1[niveauChoisi].length; i++) {
+            queue[i] = strategieVague.genererFile(level1[niveauChoisi][i]);
         }
     }
     public boolean vagueSuivante(){
