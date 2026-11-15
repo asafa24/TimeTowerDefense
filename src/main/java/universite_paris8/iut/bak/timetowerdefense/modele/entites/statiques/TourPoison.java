@@ -39,11 +39,36 @@ public abstract class TourPoison extends Tour {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public int getDureePoison() {
         return dureePoison;
     }
+
     protected abstract Projectile creerProjectile(double x, double y, Ennemi cible, int degats, int dureePoison);
-
-
-    public abstract void inflation();
 }

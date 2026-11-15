@@ -15,6 +15,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.*;
@@ -25,62 +27,58 @@ public class UIVue {
     }
 
     public StringBinding setPrixT1(int epoque, int id) {
+        int prix = 0;
         switch (epoque) {
-            case 0: // Prehistoire
+            case 0: // Préhistoire
                 switch (id) {
-                    case 0: return MiniVolcan.coutPropertyMiniVolcan().asString();
-                    case 1: return ArbreRuste.coutPropertyArbre().asString();
-                    case 2: return CatapulteCaillou.coutPropertyCatapulteCaillou().asString();
-                    case 3: return LanceFilet.coutPropertyLanceFilet().asString();
+                    case 0: prix = MiniVolcan.getPrixBase(); break;
+                    case 1: prix = ArbreRuste.getPrixBase(); break;
+                    case 2: prix = CatapulteCaillou.getPrixBase(); break;
+                    case 3: prix = LanceFilet.getPrixBase(); break;
                 }
                 break;
 
             case 1: // Antiquité
                 switch (id) {
-                    case 0: return PorteDeSable.coutPropertyPorteSable().asString();
-                    case 1: return TotemFlechette.coutPropertyTotemFlechette().asString();
-                    case 2: return CatapulteJAR.coutPropertyCatapulteJar().asString();
-                    case 3: return PyramideShooteuse.coutPropertyPyramideShooteuse().asString();
+                    case 0: prix = PorteDeSable.getPrixBase(); break;
+                    case 1: prix = TotemFlechette.getPrixBase(); break;
+                    case 2: prix = CatapulteJAR.getPrixBase(); break;
+                    case 3: prix = PyramideShooteuse.getPrixBase(); break;
                 }
                 break;
 
-            case 2: // Moyen-Âge (Prix factices pour compiler direct)
+            case 2: // Moyen-Âge
                 switch (id) {
-                    case 0: return  ElPrimo.coutPropertyPrimo().asString(); // El Primo
-                    case 1: return  Archer.coutPropertyArcher().asString(); // Archer
-                    case 2: return  LanceBuche.coutPropertyLanceBiuche().asString();// LanceBuche
-                    case 3: return  TourMage.coutPropertyPorteSable().asString(); // TourMage
+                    case 0: prix = ElPrimo.getPrixBase(); break;
+                    case 1: prix = Archer.getPrixBase(); break;
+                    case 2: prix = LanceBuche.getPrixBase(); break;
+                    case 3: prix = TourMage.getPrixBase(); break;
                 }
                 break;
 
-            case 3: // Contemporain (Prix factices)
+            case 3: // Contemporain
                 switch (id) {
-                    case 0: return Mine.coutMine().asString(); // Mine
-                    case 1: return Sniper.cout.asString(); // Sniper/Soldat
-                    case 2: return LanceRocket.coutRocket().asString(); // LanceRocket
-                    case 3: return new SimpleIntegerProperty(250).asString();
+                    case 0: prix = Mine.getPrixBase(); break;
+                    case 1: prix = Sniper.getPrixBase(); break;
+                    case 2: prix = LanceRocket.getPrixBase(); break;
+                    case 3: prix = SoldatBleu.getPrixBase(); break;
                 }
                 break;
 
-            case 4: // Futur (Prix factices)
+            case 4: // Futur
                 switch (id) {
-                    case 0: return PistoletLaser.cout.asString(); // Laser
-                    case 1: return PistoletLazerMk2.getCoutPropertymk2().asString(); // MK2
-                    case 2: return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla.getCoutPropertyTesla().asString(); // Tesla
-                    case 3: return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps.getCoutPropertyTourTemp().asString(); // Temps
+                    case 0: prix = PistoletLaser.getPrixBase(); break;
+                    case 1: prix = PistoletLazerMk2.getPrixBase(); break;
+                    case 2: prix = Tesla.getPrixBase(); break;
+                    case 3: prix = TourDuTemps.getPrixBase(); break;
                 }
                 break;
 
-            default: // Fallback Epoque 0
-                switch (id) {
-                    case 0: return MiniVolcan.coutPropertyMiniVolcan().asString();
-                    case 1: return ArbreRuste.coutPropertyArbre().asString();
-                    case 2: return CatapulteCaillou.coutPropertyCatapulteCaillou().asString();
-                    case 3: return LanceFilet.coutPropertyLanceFilet().asString();
-                }
+            default:
+                prix = 999;
                 break;
         }
-        return new SimpleIntegerProperty(999).asString();
+        return new SimpleIntegerProperty(prix).asString();
     }
 
     public ImageView setImageT1(int epoque, int button) {
@@ -162,10 +160,10 @@ public class UIVue {
                 } else if (tour instanceof PistoletLazerMk2) {
                     p_nom.setText("Laser MK2");
                     p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/blaster.png"))));
-                } else if (tour instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla) {
+                } else if (tour instanceof Tesla) {
                     p_nom.setText("Tour Tesla");
                     p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/tesla.png"))));
-                } else if (tour instanceof universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps) {
+                } else if (tour instanceof TourDuTemps) {
                     p_nom.setText("Tour du Temps");
                     p_image.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/temps.png"))));
                 }
@@ -194,7 +192,7 @@ public class UIVue {
         pause.play();
     }
 
-    public void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre ,VBox contenuGlossaire){
+    public void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre, VBox contenuGlossaire) {
         Label lblNom = new Label("• " + nom);
         lblNom.setTextFill(couleurTitre);
         lblNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");

@@ -1,7 +1,5 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
@@ -9,18 +7,21 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege
 import java.util.List;
 
 public class Mine extends Piege {
-    public static IntegerProperty cout = new SimpleIntegerProperty(30);
-
+    private static final int PRIX_BASE = 30;
 
     private int degats;
     private double rayonExplosion;
     private boolean aExplose;
 
     public Mine(double x, double y) {
-        super(cout.get(), x, y, 1);
+        super(PRIX_BASE, x, y, 1);
         this.degats = 200;
         this.rayonExplosion = 196;
         this.aExplose = false;
+    }
+
+    public static int getPrixBase() {
+        return prixActuel(Mine.class, PRIX_BASE);
     }
 
     @Override
@@ -50,20 +51,11 @@ public class Mine extends Piege {
         this.recevoirDegats(this.getPv());
     }
 
-    @Override
-    public void inflation() {
-        this.setCout((int) (this.getCout() * 1.5));
-    }
-
     public boolean aExplose() {
         return aExplose;
-    }
-    public static IntegerProperty coutMine() {
-        return cout;
     }
 
     public double getRayonExplosion() {
         return rayonExplosion;
     }
-
 }

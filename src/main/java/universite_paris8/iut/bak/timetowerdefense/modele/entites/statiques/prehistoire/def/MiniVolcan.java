@@ -1,7 +1,5 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
@@ -10,14 +8,17 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege
 import java.util.List;
 
 public class MiniVolcan extends Piege {
+    private static final int PRIX_BASE = 25;
     private int degats;
-    public static IntegerProperty cout = new SimpleIntegerProperty(25);
-
     private int cooldownDegats = 0;
 
     public MiniVolcan(double x, double y) {
-        super(cout.get(), x, y, 5);
+        super(PRIX_BASE, x, y, 5);
         this.degats = 5;
+    }
+
+    public static int getPrixBase() {
+        return prixActuel(MiniVolcan.class, PRIX_BASE);
     }
 
     @Override
@@ -40,15 +41,5 @@ public class MiniVolcan extends Piege {
                 }
             }
         }
-    }
-
-    @Override
-    public void inflation(){
-        cout.set((int) Math.floor(cout.get() * 1.1));
-        super.setCout(cout.get());
-    }
-
-    public static IntegerProperty coutPropertyMiniVolcan() {
-        return cout;
     }
 }

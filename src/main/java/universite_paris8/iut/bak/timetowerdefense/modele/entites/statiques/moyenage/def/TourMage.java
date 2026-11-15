@@ -8,23 +8,38 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenag
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourStun;
 
 public class TourMage extends TourStun {
-    public static IntegerProperty cout = new SimpleIntegerProperty(130);
-
+    private static final int PRIX_BASE = 130 ;
     public TourMage(double x, double y) {
-        super(cout.get(), x, y, 15, 150, 150, 50);
+        super(PRIX_BASE, x, y, 15, 150, 150, 50);
     }
     @Override
     protected Projectile creerProjectile(double x, double y, Ennemi cible, int degats, int dureeStun) {
         return new Sort(x, y, cible, degats, dureeStun);
     }
+    public static int getPrixBase() {
+        return prixActuel(TourMage.class, PRIX_BASE);
+    }
 
-    @Override
-    public void inflation() {
-        cout.set((int) Math.floor(cout.get() * 1.1));
-        super.setCout(cout.get());
-    }
-    public static IntegerProperty coutPropertyPorteSable() {
-        return cout;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

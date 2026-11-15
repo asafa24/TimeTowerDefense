@@ -8,15 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class ControleurMenu {
 
@@ -24,40 +19,11 @@ public class ControleurMenu {
     private RadioButton radioExtreme;
     @FXML
     private StackPane rootPane;
-
     @FXML
     public void lancerJeu(ActionEvent event) {
         boolean isModeExtreme = radioExtreme.isSelected();
-
-        URL url = Application.class.getResource("media/transition.mp4");
-        if (url == null) {
-            System.err.println("Vidéo introuvable, lancement direct.");
-            chargerFenetreJeu(event, isModeExtreme);
-            return;
-        }
-
-        try {
-            Media media = new Media(url.toExternalForm());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            MediaView mediaView = new MediaView(mediaPlayer);
-
-            mediaView.fitWidthProperty().bind(rootPane.widthProperty());
-            mediaView.fitHeightProperty().bind(rootPane.heightProperty());
-            mediaView.setPreserveRatio(true);
-
-            rootPane.getChildren().add(mediaView);
-
-            mediaPlayer.setOnEndOfMedia(() -> {
-                chargerFenetreJeu(event, isModeExtreme);
-            });
-
-            mediaPlayer.play();
-        } catch (MediaException e) {
-            System.err.println("Lecteur média indisponible, lancement direct : " + e.getMessage());
-            chargerFenetreJeu(event, isModeExtreme);
-        }
+        chargerFenetreJeu(event, isModeExtreme);
     }
-
     private void chargerFenetreJeu(ActionEvent event, boolean isModeExtreme) {
         try {
             FXMLLoader loader = new FXMLLoader(Application.class.getResource("main.fxml"));

@@ -28,7 +28,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehist
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Velociraptor;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
 import java.util.ArrayList;
@@ -417,4 +417,5 @@ public class Jeu {
     public boolean isModeExtreme() {
         return this.modeExtreme;
     }
+
 }

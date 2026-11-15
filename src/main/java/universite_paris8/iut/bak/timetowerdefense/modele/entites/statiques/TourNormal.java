@@ -11,8 +11,6 @@ public abstract class TourNormal extends Tour {
         super(cout, x, y, degats, portee, cadence);
     }
 
-    @Override
-    public abstract void inflation();
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){
         if(!getActif()) return;
