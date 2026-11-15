@@ -1,0 +1,54 @@
+package universite_paris8.iut.bak.timetowerdefense.controleur;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
+import universite_paris8.iut.bak.timetowerdefense.Application;
+
+import java.net.URL;
+import java.util.Map;
+
+// Gère la musique d'ambiance : choix du morceau selon l'époque, volume et mute.
+public class ControleurMusique {
+    private static final double VOLUME_PAR_DEFAUT = 0.2;
+    private static final String MUSIQUE_PAR_DEFAUT = "media/prehistoire.mp3";
+    private static final Map<Integer, String> MUSIQUES = Map.of(1, "media/antiquite.mp3");
+
+    private MediaPlayer musiqueAmbiance;
+
+    public void lancer(int epoque) {
+        if (musiqueAmbiance != null) {
+            musiqueAmbiance.stop();
+        }
+        URL url = Application.class.getResource(MUSIQUES.getOrDefault(epoque, MUSIQUE_PAR_DEFAUT));
+        if (url == null) {
+            return;
+        }
+        try {
+            musiqueAmbiance = new MediaPlayer(new Media(url.toExternalForm()));
+            musiqueAmbiance.setVolume(VOLUME_PAR_DEFAUT);
+            musiqueAmbiance.setCycleCount(MediaPlayer.INDEFINITE);
+            musiqueAmbiance.play();
+        } catch (MediaException e) {
+            System.err.println("Musique indisponible : " + e.getMessage());
+            musiqueAmbiance = null;
+        }
+    }
+
+    public void setVolume(double volume) {
+        if (musiqueAmbiance != null) {
+            musiqueAmbiance.setVolume(volume);
+        }
+    }
+
+    public boolean estDisponible() {
+        return musiqueAmbiance != null;
+    }
+
+    // Inverse l'état muet et renvoie le nouvel état.
+    public boolean basculerMute() {
+        boolean estMuet = !musiqueAmbiance.isMute();
+        musiqueAmbiance.setMute(estMuet);
+        return estMuet;
+    }
+}

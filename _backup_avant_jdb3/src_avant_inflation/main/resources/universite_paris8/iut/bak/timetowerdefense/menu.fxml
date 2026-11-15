@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPane" prefHeight="500.0" prefWidth="700.0" stylesheets="@menu.css" styleClass="menu-root" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.bak.timetowerdefense.controleur.ControleurMenu">
+    <children>
+        <Circle fill="#8e2de2" radius="180.0" translateX="-200.0" translateY="-100.0" opacity="0.2">
+            <effect><GaussianBlur radius="120.0" /></effect>
+        </Circle>
+        <Circle fill="#00c6ff" radius="250.0" translateX="250.0" translateY="150.0" opacity="0.15">
+            <effect><GaussianBlur radius="150.0" /></effect>
+        </Circle>
+
+        <Label text="⏳" textFill="#ffffff" opacity="0.04" translateY="-50.0">
+            <font><Font size="350.0" /></font>
+        </Label>
+        <Label text="🌀" textFill="#00c6ff" opacity="0.06" translateX="250.0" translateY="120.0">
+            <font><Font size="250.0" /></font>
+        </Label>
+
+        <VBox alignment="CENTER" spacing="45.0">
+            <children>
+                <VBox alignment="CENTER" spacing="-15.0">
+                    <children>
+                        <Label text="TIME" styleClass="titre-time" />
+                        <Label text="TOWER DEFENSE" styleClass="titre-td" />
+                    </children>
+                </VBox>
+
+                <VBox alignment="CENTER" maxWidth="420.0" spacing="20.0" styleClass="box-difficulte">
+                    <padding>
+                        <Insets bottom="25.0" left="20.0" right="20.0" top="25.0" />
+                    </padding>
+                    <children>
+                        <Label text="SÉLECTION DE LA LIGNE TEMPORELLE" styleClass="label-sous-titre" />
+                        <HBox alignment="CENTER" spacing="35.0">
+                            <children>
+                                <RadioButton fx:id="radioNormal" focusTraversable="false" mnemonicParsing="false" selected="true" text="NORMAL" styleClass="radio-btn">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="groupeDifficulte" />
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton fx:id="radioExtreme" focusTraversable="false" mnemonicParsing="false" text="EXTRÊME" toggleGroup="$groupeDifficulte" styleClass="radio-btn-extreme" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <Button focusTraversable="false" mnemonicParsing="false" onAction="#lancerJeu" prefHeight="60.0" prefWidth="300.0" styleClass="btn-lancer" text="OUVRIR LE PORTAIL" />
+            </children>
+        </VBox>
+    </children>
+</StackPane>

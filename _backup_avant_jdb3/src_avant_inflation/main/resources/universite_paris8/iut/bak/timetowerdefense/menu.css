@@ -1,0 +1,69 @@
+.menu-root {
+    -fx-background-color: #05020a; /* Noir très profond, légèrement violet (L'espace temps) */
+}
+
+/* --- Typographie du Titre --- */
+.titre-time {
+    -fx-font-family: "System";
+    -fx-font-weight: 900;
+    -fx-font-size: 75px;
+    -fx-text-fill: linear-gradient(to right, #00c6ff, #0072ff); /* Bleu Néon */
+}
+
+.titre-td {
+    -fx-font-family: "System";
+    -fx-font-weight: 900;
+    -fx-font-size: 38px;
+    -fx-text-fill: #f1c40f; /* Or */
+    -fx-effect: dropshadow(gaussian, rgba(241, 196, 15, 0.3), 15, 0.4, 0, 0);
+}
+
+/* --- Panneau de sélection --- */
+.box-difficulte {
+    -fx-background-color: rgba(255, 255, 255, 0.03);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.08);
+    -fx-border-radius: 15;
+}
+
+.label-sous-titre {
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #878c94;
+}
+
+/* On enlève le fond bleu de sélection par défaut de JavaFX qui cause les bugs */
+.radio-btn {
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #ecf0f1;
+    -fx-cursor: hand;
+}
+
+.radio-btn-extreme {
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #ff416c;
+    -fx-cursor: hand;
+}
+
+/* --- Le Bouton "Portail" --- */
+.btn-lancer {
+    -fx-background-color: linear-gradient(to right, #8e2de2, #4a00e0);
+    -fx-text-fill: white;
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-background-radius: 35;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(142, 45, 226, 0.4), 20, 0.5, 0, 5);
+}
+
+/* Hover maîtrisé via CSS (ne modifie pas la taille du bouton) */
+.btn-lancer:hover {
+    -fx-background-color: linear-gradient(to right, #9b4dff, #5900ff);
+    -fx-effect: dropshadow(gaussian, rgba(155, 77, 255, 0.6), 25, 0.6, 0, 5);
+}
