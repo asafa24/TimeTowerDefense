@@ -1,8 +1,14 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.environnement;
 
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteorites;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.AraigneeRobot;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Generateur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.IA;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Robot;
 
-public class Futur extends Epoque {
+public class Futur extends EpoqueSimple {
 
     public Futur() {
         super(
@@ -20,9 +26,44 @@ public class Futur extends Epoque {
                         { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 }
                 },
                 new Point2D[] { new Point2D(2, 10), new Point2D(10, 10)/* , new Point2D(2, 10) */ },
-                new Point2D(6, 0)
+                new Point2D(6, 0),
+                new int[][] {
+                        { 10, 0, 0, 0 }, // vague 1
+                        { 12, 1, 0, 0 }, // vague 2
+                        { 15, 2, 0, 0 }, // vague 3
+                        { 34, 4, 1, 0 }, // vague 4
+                        { 40, 4, 2, 0 }, // vague 5
+                        { 45, 5, 3, 0 }, // vague 6
+                        { 50, 6, 3, 0 }, // vague 7
+                        { 55, 7, 4, 0 }, // vague 8
+                        { 60, 10, 6, 0 }, // vague 9
+                        { 10, 4, 3, 1 } // vague 10 avec le boss (nn c'est toi tié le boss)
+                },
+                new PluieMeteorites());
+    }
 
-        );
+    @Override
+    public Ennemi ennemi1() {
+        return new Robot(cheminDepartArrivee());
+
+    }
+
+    @Override
+    public Ennemi ennemi2() {
+        return new AraigneeRobot(cheminDepartArrivee());
+
+    }
+
+    @Override
+    public Ennemi ennemi3() {
+        return new Generateur(cheminDepartArrivee());
+
+    }
+
+    @Override
+    public Ennemi ennemi4() {
+        return new IA(cheminDepartArrivee());
+
     }
 
     @Override

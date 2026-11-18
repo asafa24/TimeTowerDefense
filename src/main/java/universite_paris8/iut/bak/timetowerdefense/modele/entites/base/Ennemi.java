@@ -5,7 +5,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Ennemi extends Entite implements Destructible {
         this.direction = new SimpleIntegerProperty(-1);
     }
 
-    public Ennemi(int x , int y, List<Point2D> chemin) {
+    public Ennemi(int x, int y, List<Point2D> chemin) {
         super();
         super.setX(x);
         super.setY(y);
@@ -78,10 +79,10 @@ public class Ennemi extends Entite implements Destructible {
         this.direction = new SimpleIntegerProperty(-1);
     }
 
-
-//     Fait avancer l'ennemi le long de son chemin.
-//     Gère également l'application des altérations d'état (brûlure, étourdissement, ralentissement)
-//     et l'arrêt s'il rencontre un obstacle.
+    // Fait avancer l'ennemi le long de son chemin.
+    // Gère également l'application des altérations d'état (brûlure, étourdissement,
+    // ralentissement)
+    // et l'arrêt s'il rencontre un obstacle.
     public void avancer() {
         if (this.dureeBrulageRestante > 0) {
             this.dureeBrulageRestante--;
@@ -114,7 +115,8 @@ public class Ennemi extends Entite implements Destructible {
         }
 
         // 5. Déplacement physique
-        if (chemin == null || etapeActuelle >= chemin.size()) return;
+        if (chemin == null || etapeActuelle >= chemin.size())
+            return;
 
         Point2D caseCible = chemin.get(etapeActuelle);
         double cibleX = caseCible.getX() * TILE_SIZE;
@@ -130,8 +132,10 @@ public class Ennemi extends Entite implements Destructible {
             this.direction.set(1);
         }
 
-        if (distanceY > 0) this.setY(this.getY() + vitesseActuelle);
-        else if (distanceY < 0) this.setY(this.getY() - vitesseActuelle);
+        if (distanceY > 0)
+            this.setY(this.getY() + vitesseActuelle);
+        else if (distanceY < 0)
+            this.setY(this.getY() - vitesseActuelle);
 
         if (vitesseActuelle > 0 && Math.abs(distanceX) <= vitesseActuelle && Math.abs(distanceY) <= vitesseActuelle) {
             this.setX(cibleX);
@@ -140,7 +144,7 @@ public class Ennemi extends Entite implements Destructible {
         }
     }
 
-    public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
+    public void agir(AffecteEnnemi epoque1, AffecteDefense epoque2) {
     }
 
     public void seHeurterA(Destructible mur) {
@@ -157,7 +161,8 @@ public class Ennemi extends Entite implements Destructible {
 
     public void recevoirDegats(int dgt) {
         this.pv -= dgt;
-        if (this.pv < 0) this.pv = 0;
+        if (this.pv < 0)
+            this.pv = 0;
         this.pvProp.set(pv);
     }
 
@@ -168,9 +173,9 @@ public class Ennemi extends Entite implements Destructible {
     public boolean aAtteintLaBase() {
         return chemin != null && etapeActuelle >= chemin.size();
     }
-    
-//     Méthode appelée à la mort de l'ennemi.
-//     À Override pour les ennemis qui génèrent d'autres entités en mourant.
+
+    // Méthode appelée à la mort de l'ennemi.
+    // À Override pour les ennemis qui génèrent d'autres entités en mourant.
 
     public List<Ennemi> onDeath() {
         return Collections.emptyList();
@@ -240,8 +245,8 @@ public class Ennemi extends Entite implements Destructible {
         this.recompense = recompense;
     }
 
-//     Applique un effet de statut à cet ennemi pour une durée donnée.
-//     Renouvelle la durée si l'effet est déjà actif.
+    // Applique un effet de statut à cet ennemi pour une durée donnée.
+    // Renouvelle la durée si l'effet est déjà actif.
     public void appliqueEffet(Effet effet) {
         switch (effet) {
             case STUN -> {
@@ -265,4 +270,5 @@ public class Ennemi extends Entite implements Destructible {
             }
         }
     }
+
 }
