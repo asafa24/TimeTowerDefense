@@ -1,10 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.vue;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Epoque;
 
@@ -23,25 +20,7 @@ public class TerrainVue {
         this.nomRepertoire = this.epoque.toString().toLowerCase() + "/";
     }
 
-    public void drawMap(/* int[][] map, int epoque */) {
-
-        // switch (epoque) {
-        // case 1 -> {
-        // this.epoque = "antiquite/";
-        // }
-        // case 2 -> {
-        // this.epoque = "moyen-age/";
-        // }
-        // case 3 -> {
-        // this.epoque = "contemporain/";
-        // }
-        // case 4 -> {
-        // this.epoque = "future/";
-        // }
-        // default -> {
-        // this.epoque = "prehistoire/";
-        // }
-        // }
+    public void drawMap() {
 
         backgroundPane.getChildren().clear();
         for (int y = 0; y < this.epoque.hauteurMap(); y++) {

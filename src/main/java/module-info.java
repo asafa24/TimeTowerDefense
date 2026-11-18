@@ -4,9 +4,12 @@ module universite_paris8.iut.bak.timetowerdefense {
     requires javafx.media;
 
     requires org.controlsfx.controls;
+    requires javafx.base;
 
     opens universite_paris8.iut.bak.timetowerdefense to javafx.fxml;
+
     exports universite_paris8.iut.bak.timetowerdefense;
     exports universite_paris8.iut.bak.timetowerdefense.controleur;
+
     opens universite_paris8.iut.bak.timetowerdefense.controleur to javafx.fxml;
 }

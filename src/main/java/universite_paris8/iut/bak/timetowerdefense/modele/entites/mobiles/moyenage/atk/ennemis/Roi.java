@@ -1,27 +1,25 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetSpeedBoost;
-
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 import java.util.List;
 
 public class Roi extends Boss {
     public Roi(List<Point2D> chemin) {
         super(1500, 1, 200, 180, chemin);
-        setX(6*64);
-        setY(10*64);
+        setX(6 * 64);
+        setY(10 * 64);
     }
 
     @Override
-    public void competence(List<Ennemi> ennemis, List<Defense> defenses) {
-        for(Ennemi e : ennemis){
-            e.ajouterEffet(new EffetSpeedBoost());
-        }
+    public void competence(AffecteEnnemi epoque1, AffecteDefense epoque2) {
+        epoque1.affecterEnnemis(e -> {
+            e.appliqueEffet(Effet.SPEED_BOOST);
+        });
         System.out.println("Speed Boost activéw");
     }
 }

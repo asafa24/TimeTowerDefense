@@ -2,6 +2,7 @@ package universite_paris8.iut.bak.timetowerdefense.controleur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +47,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehi
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Epoque;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.EpoqueSimple;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
@@ -97,7 +99,6 @@ public class ControleurJeu implements Initializable {
     private int temps, delay;
     private double mouseX, mouseY;
 
-    // private Epoque epoque;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
     private PreviewVue vuePreview;
@@ -162,35 +163,26 @@ public class ControleurJeu implements Initializable {
         this.uiVue = new UIVue();
         afficherButton(jeu.getEpoqueActuel());
 
-        // jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque,
-        // nouvelleEpoque) -> {
-        // this.changerNiveau(nouvelleEpoque.intValue());
-        // lancerMusique(nouvelleEpoque.intValue());
-        // System.out.println("oui");
-        // });
-
-        jeu.getEpoqueProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
-            this.changerNiveau(
-                    this.jeu.getEpoqueActuel());
-            lancerMusique(
-                    this.jeu.getEpoqueActuel());
-            System.out.println("oui");
+        jeu.getEpoqueProperty().addListener((obs, ancienne, nouvelle) -> {
+            suivreVague(ancienne, nouvelle);
+            changerNiveau(jeu.getEpoqueActuel());
+            lancerMusique(jeu.getEpoqueActuel());
         });
 
         jeu.getEnnemi().addListener(ecouteEntite);
         jeu.getDefenses().addListener(ecouteEntite);
         jeu.getProjectiles().addListener(ecouteEntite);
 
+        suivreVague(null, jeu.getEpoqueProperty().getValue());
+
         labelArgent.textProperty().bind(jeu.getSoldeProperty().asString("Solde : %d"));
-        labelVague.textProperty().bind(jeu.getVague().getVagueProperty().add(1).asString("Vague : %d"));
+
         labelPvBase.textProperty().bind(jeu.getPvBaseProperty().asString("PV : %d"));
         labelCompteurKill.textProperty().bind(jeu.getCompteurKillProperty().asString("Kill : %d"));
 
         this.afficherPrix(jeu.getEpoqueActuel());
 
         labelMessageSys.setVisible(false);
-        jeu.getVague().getVagueProperty().addListener(
-                (obs, old, nouv) -> afficherMessage("Vague " + (nouv.intValue() + 1) + " en approche", Color.GOLD, 3));
 
         ultButton.disableProperty().bind(jeu.getCompteurKillProperty().lessThan(100));
 
@@ -216,6 +208,17 @@ public class ControleurJeu implements Initializable {
         paneMain.setOnMouseMoved(event -> {
             recupererPosition(event);
         });
+    }
+
+    private ChangeListener<Number> ecouteVague = (o, ancien,
+            nouv) -> afficherMessage("Vague " + (nouv.intValue() + 1) + " en approche", Color.GOLD, 3);
+
+    private void suivreVague(Epoque ancienne, Epoque nouvelle) {
+        if (ancienne != null)
+            ancienne.getVague().getVagueProperty().removeListener(ecouteVague);
+        nouvelle.getVague().getVagueProperty().addListener(ecouteVague);
+        labelVague.textProperty().bind(
+                nouvelle.getVague().getVagueProperty().add(1).asString("Vague : %d"));
     }
 
     private void initAnimation() {
@@ -287,12 +290,10 @@ public class ControleurJeu implements Initializable {
             }
             case L -> {
                 if (jeu.getEpoqueActuel() > 0)
-                    // changerNiveauForcing(jeu.getEpoqueActuel() - 1);
                     jeu.epoquePrecedente();
             }
             case M -> {
-                if (jeu.getEpoqueActuel() < 4)
-                    // changerNiveauForcing(jeu.getEpoqueActuel() + 1);
+                if (jeu.getEpoqueActuel() < jeu.getNombreEpoques() - 1)
                     jeu.epoqueSuivante();
             }
             case O -> {
@@ -749,7 +750,6 @@ public class ControleurJeu implements Initializable {
 
         if (jeu.isModeExtreme()) {
             jeu.getCompteurKillProperty().set(0);
-            jeu.actualiserUltime();
 
             if (jeu.getEpoqueActuel() != 0) {
                 jeu.setEpoqueActuel(0);

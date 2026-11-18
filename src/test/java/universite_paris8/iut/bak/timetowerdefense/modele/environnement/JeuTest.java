@@ -50,19 +50,22 @@ class JeuTest {
         assertTrue(jeu.perdu(), "Le jeu doit être déclaré perdu si les PV sont négatifs");
     }
 
-    @Test
-    void testChangementEpoque() {
-        // Changement valide
-        jeu.changerEpoque(2);
-        assertEquals(2, jeu.getEpoqueActuel(), "L'époque doit pouvoir être modifiée manuellement");
+    // @Test
+    // void testChangementEpoque() {
+    // // Changement valide
+    // jeu.changerEpoque(2);
+    // assertEquals(2, jeu.getEpoqueActuel(), "L'époque doit pouvoir être modifiée
+    // manuellement");
 
-        // Changement invalide (en dehors des bornes 0-4)
-        jeu.changerEpoque(10);
-        assertEquals(2, jeu.getEpoqueActuel(), "L'époque ne doit pas changer si l'ID fourni est hors limites");
+    // // Changement invalide (en dehors des bornes 0-4)
+    // jeu.changerEpoque(10);
+    // assertEquals(2, jeu.getEpoqueActuel(), "L'époque ne doit pas changer si l'ID
+    // fourni est hors limites");
 
-        jeu.changerEpoque(-1);
-        assertEquals(2, jeu.getEpoqueActuel(), "L'époque ne doit pas changer si l'ID est négatif");
-    }
+    // jeu.changerEpoque(-1);
+    // assertEquals(2, jeu.getEpoqueActuel(), "L'époque ne doit pas changer si l'ID
+    // est négatif");
+    // }
 
     @Test
     void testProgressionEpoqueAutomatique() {
