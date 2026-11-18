@@ -25,11 +25,13 @@ public class ControleurMenu {
     @FXML private StackPane rootPane;
 
     private boolean lancementEnCours;
+    private boolean transitionEnCours;
     private MediaPlayer lecteurTransition;
+    private PauseTransition surveillanceTransition;
 
     @FXML
     public void lancerJeu(ActionEvent event) {
-        if (lancementEnCours) {
+        if (lancementEnCours || transitionEnCours) {
             return;
         }
 
@@ -37,7 +39,7 @@ public class ControleurMenu {
         URL url = Application.class.getResource("media/transition.mp4");
         if (url == null) {
             System.err.println("Vidéo introuvable, lancement direct.");
-            chargerFenetreJeu(event, isModeExtreme);
+            ouvrirJeu(event, isModeExtreme);
             return;
         }
 
@@ -56,16 +58,21 @@ public class ControleurMenu {
                 System.err.println("Erreur pendant la transition vidéo, lancement direct.");
                 ouvrirJeu(event, isModeExtreme);
             });
+            media.setOnError(() -> {
+                System.err.println("Erreur de chargement de la transition vidéo, lancement direct.");
+                ouvrirJeu(event, isModeExtreme);
+            });
 
-            // Certaines erreurs de lecture ne déclenchent pas toujours le callback d'erreur.
-            PauseTransition surveillance = new PauseTransition(Duration.seconds(10));
-            surveillance.setOnFinished(e -> {
-                if (!lancementEnCours && lecteurTransition.getStatus() != MediaPlayer.Status.PLAYING) {
-                    System.err.println("La transition vidéo ne démarre pas, lancement direct.");
+            // Le délai est toujours actif : le lecteur peut rester bloqué en état PLAYING.
+            transitionEnCours = true;
+            surveillanceTransition = new PauseTransition(Duration.seconds(6));
+            surveillanceTransition.setOnFinished(e -> {
+                if (!lancementEnCours) {
+                    System.err.println("La transition vidéo a dépassé le délai, lancement direct.");
                     ouvrirJeu(event, isModeExtreme);
                 }
             });
-            surveillance.play();
+            surveillanceTransition.play();
 
             lecteurTransition.play();
         } catch (RuntimeException e) {
@@ -80,6 +87,10 @@ public class ControleurMenu {
             return;
         }
         lancementEnCours = true;
+        transitionEnCours = false;
+        if (surveillanceTransition != null) {
+            surveillanceTransition.stop();
+        }
         if (lecteurTransition != null) {
             lecteurTransition.stop();
             lecteurTransition.dispose();
