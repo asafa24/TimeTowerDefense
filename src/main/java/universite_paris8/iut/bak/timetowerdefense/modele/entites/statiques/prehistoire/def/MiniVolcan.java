@@ -1,8 +1,10 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBrulure;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetSlow;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
@@ -29,8 +31,8 @@ public class MiniVolcan extends Piege {
         for (int i = ennemis.size() - 1; i >= 0; i--) {
             Ennemi e = ennemis.get(i);
             if (aAtteintPiege(e)) {
-                e.appliqueEffet(Effet.SLOW);
-                e.appliqueEffet(Effet.BURN);
+                e.ajouterEffet(new EffetSlow());
+                e.ajouterEffet(new EffetBrulure());
 
                 if (getPv() > 0 && cooldownDegats <= 0) {
                     recevoirDegats(1);

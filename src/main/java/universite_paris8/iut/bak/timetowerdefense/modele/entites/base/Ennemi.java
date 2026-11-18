@@ -5,8 +5,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,12 +19,10 @@ public class Ennemi extends Entite implements Destructible {
     private double vitesseBase;
     private double vitesseActuelle;
     private int recompense;
+    // Retrait du premier 'estBloque' dupliqué
+    private boolean possedeBouclier = false;
 
-    private int dureeStunRestante = 0;
-    private int dureeSlowRestante = 0;
-    private int dureeBrulageRestante = 0;
-    private int dureeSpeedBoostRestante = 0;
-    private boolean shield = false;
+    private final List<Effets> effetsActifs = new ArrayList<>();
 
     private List<Point2D> chemin;
     private int etapeActuelle;
@@ -33,114 +33,94 @@ public class Ennemi extends Entite implements Destructible {
     private int compteurAttaque = 0;
     private boolean estBloque = false;
 
-    public Ennemi(double x, double y, int pv, int vitesseBase, int recompense, List<Point2D> chemin) {
+    public Ennemi(double x, double y, int pv, double vitesseBase, int recompense, List<Point2D> chemin) {
         super(x, y);
         this.pv = pv;
+        this.pvMax = pv;
         this.vitesseBase = vitesseBase;
         this.vitesseActuelle = vitesseBase;
         this.recompense = recompense;
 
         this.chemin = chemin;
-        etapeActuelle = 0;
-        this.pvMax = pv;
+        this.etapeActuelle = 0;
         this.pvProp = new SimpleDoubleProperty(pv);
         this.direction = new SimpleIntegerProperty(-1);
     }
 
     public Ennemi(int pv, double vitesseBase, int recompense, List<Point2D> chemin) {
-        super();
-        super.setX(0);
-        super.setY(64 * 9);
-        this.pv = pv;
-        this.vitesseBase = vitesseBase;
-        this.vitesseActuelle = vitesseBase;
-        this.recompense = recompense;
-
-        this.chemin = chemin;
-        etapeActuelle = 0;
-        this.pvMax = pv;
-        this.pvProp = new SimpleDoubleProperty(pv);
-        this.direction = new SimpleIntegerProperty(-1);
+        this(0.0, 0.0, pv, vitesseBase, recompense, chemin);
     }
 
-    public Ennemi(int x , int y, List<Point2D> chemin) {
-        super();
-        super.setX(x);
-        super.setY(y);
-        this.pv = 25;
-        this.vitesseBase = 2;
-        this.vitesseActuelle = 2;
-        this.recompense = 5;
-        this.chemin = chemin;
-        etapeActuelle = 0;
-        this.pvMax = pv;
-        this.pvProp = new SimpleDoubleProperty(pv);
-        this.direction = new SimpleIntegerProperty(-1);
+    public Ennemi(int x, int y, List<Point2D> chemin) {
+        this(x, y, 25, 2.0, 5, chemin);
     }
 
-
-//     Fait avancer l'ennemi le long de son chemin.
-//     Gère également l'application des altérations d'état (brûlure, étourdissement, ralentissement)
-//     et l'arrêt s'il rencontre un obstacle.
     public void avancer() {
-        if (this.dureeBrulageRestante > 0) {
-            this.dureeBrulageRestante--;
-            if (this.dureeBrulageRestante % 10 == 0) {
-                this.recevoirDegats(1);
-            }
-        }
+        actualiserEffets();
 
-        if (this.dureeStunRestante > 0) {
-            this.dureeStunRestante--;
-            this.vitesseActuelle = 0;
-            return; // Bloque le mouvement tant qu'étourdi
-        }
-
-        this.vitesseActuelle = this.vitesseBase;
-
-        if (this.dureeSlowRestante > 0) {
-            this.dureeSlowRestante--;
-            this.vitesseActuelle *= 0.5;
-        }
-
-        if (this.dureeSpeedBoostRestante > 0) {
-            this.dureeSpeedBoostRestante--;
-            this.vitesseActuelle *= 1.3;
-        }
-
-        if (this.estBloque) {
+        if (this.vitesseActuelle <= 0 || this.estBloque) {
             this.estBloque = false;
             return;
         }
 
-        // 5. Déplacement physique
-        if (chemin == null || etapeActuelle >= chemin.size()) return;
+        deplacerVersProchaineEtape();
+    }
 
+    private void deplacerVersProchaineEtape() {
+        if (aAtteintLaBase()) {
+            return;
+        }
         Point2D caseCible = chemin.get(etapeActuelle);
         double cibleX = caseCible.getX() * TILE_SIZE;
         double cibleY = caseCible.getY() * TILE_SIZE;
         double distanceX = cibleX - this.getX();
         double distanceY = cibleY - this.getY();
 
-        if (distanceX > 0) {
-            this.setX(this.getX() + vitesseActuelle);
-            this.direction.set(-1);
-        } else if (distanceX < 0) {
-            this.setX(this.getX() - vitesseActuelle);
-            this.direction.set(1);
-        }
+        mettreAJourPosition(distanceX, distanceY);
+        verifierArriveeEtape(cibleX, cibleY, distanceX, distanceY);
+    }
 
-        if (distanceY > 0) this.setY(this.getY() + vitesseActuelle);
-        else if (distanceY < 0) this.setY(this.getY() - vitesseActuelle);
+    private void mettreAJourPosition(double distanceX, double distanceY) {
+        deplacerX(distanceX);
+        deplacerY(distanceY);
+        mettreAJourDirection(distanceX);
+    }
 
-        if (vitesseActuelle > 0 && Math.abs(distanceX) <= vitesseActuelle && Math.abs(distanceY) <= vitesseActuelle) {
-            this.setX(cibleX);
-            this.setY(cibleY);
-            etapeActuelle++;
+    private void deplacerX(double dx) {
+        if (dx > 0) this.setX(this.getX() + this.vitesseActuelle);
+        else if (dx < 0) this.setX(this.getX() - this.vitesseActuelle);
+    }
+
+    private void deplacerY(double dy) {
+        if (dy > 0) this.setY(this.getY() + this.vitesseActuelle);
+        else if (dy < 0) this.setY(this.getY() - this.vitesseActuelle);
+    }
+
+    private void mettreAJourDirection(double dx) {
+        if (dx > 0) this.direction.set(-1);
+        else if (dx < 0) this.direction.set(1);
+    }
+
+    private void verifierArriveeEtape(double cibleX, double cibleY, double dx, double dy) {
+        if (estSurCible(dx, dy)) {
+            atteindreEtape(cibleX, cibleY);
         }
     }
 
-    public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
+    private boolean estSurCible(double dx, double dy) {
+
+        return this.vitesseActuelle > 0
+                && Math.abs(dx) <= this.vitesseActuelle
+                && Math.abs(dy) <= this.vitesseActuelle;
+    }
+
+    private void atteindreEtape(double cibleX, double cibleY) {
+        this.setX(cibleX);
+        this.setY(cibleY);
+        this.etapeActuelle++;
+    }
+
+    public void agir(AffecteEnnemi epoque1, AffecteDefense epoque2) {
     }
 
     public void seHeurterA(Destructible mur) {
@@ -168,9 +148,6 @@ public class Ennemi extends Entite implements Destructible {
     public boolean aAtteintLaBase() {
         return chemin != null && etapeActuelle >= chemin.size();
     }
-    
-//     Méthode appelée à la mort de l'ennemi.
-//     À Override pour les ennemis qui génèrent d'autres entités en mourant.
 
     public List<Ennemi> onDeath() {
         return Collections.emptyList();
@@ -208,12 +185,16 @@ public class Ennemi extends Entite implements Destructible {
         this.etapeActuelle = etapeActuelle;
     }
 
+    private double calculerDemiTuile() {
+        return TILE_SIZE / 2.0;
+    }
+
     public double getCentreX() {
-        return this.getX() + TILE_SIZE / 2.0;
+        return this.getX() + calculerDemiTuile();
     }
 
     public double getCentreY() {
-        return this.getY() + TILE_SIZE / 2.0;
+        return this.getY() + calculerDemiTuile();
     }
 
     public List<Point2D> getChemin() {
@@ -240,29 +221,32 @@ public class Ennemi extends Entite implements Destructible {
         this.recompense = recompense;
     }
 
-//     Applique un effet de statut à cet ennemi pour une durée donnée.
-//     Renouvelle la durée si l'effet est déjà actif.
-    public void appliqueEffet(Effet effet) {
-        switch (effet) {
-            case STUN -> {
-                this.dureeStunRestante = Math.max(this.dureeStunRestante, 120);
-                this.vitesseActuelle = 0;
-            }
-            case SLOW -> {
-                this.dureeSlowRestante = Math.max(this.dureeSlowRestante, 120);
-            }
-            case BURN -> {
-                this.dureeBrulageRestante = Math.max(this.dureeBrulageRestante, 60);
-            }
-            case SHIELD -> {
-                if (!shield) {
-                    this.ajouterPv(((int) Math.floor(this.getPv() * 1.2)));
-                    shield = true;
-                }
-            }
-            case SPEED_BOOST -> {
-                this.dureeSpeedBoostRestante = Math.max(this.dureeSpeedBoostRestante, 150);
+    public void ajouterEffet(Effets nouvelEffet) {
+        nouvelEffet.effetAplication(this);
+        this.effetsActifs.add(nouvelEffet);
+    }
+
+    private void actualiserEffets() {
+        this.vitesseActuelle = this.vitesseBase;
+
+        for (int i = effetsActifs.size() - 1; i >= 0; i--) {
+            Effets effet = effetsActifs.get(i);
+            effet.tick(this);
+            if (effet.estFini()) {
+                effetsActifs.remove(i);
             }
         }
+    }
+
+    public double getVitesseActuelle() {
+        return vitesseActuelle;
+    }
+
+    public boolean possedeBouclier() {
+        return possedeBouclier;
+    }
+
+    public void setPossedeBouclier(boolean possede) {
+        this.possedeBouclier = possede;
     }
 }
