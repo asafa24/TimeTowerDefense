@@ -7,10 +7,15 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.Application;
+import universite_paris8.iut.bak.timetowerdefense.modele.glossaire.CategorieGlossaire;
+import universite_paris8.iut.bak.timetowerdefense.modele.glossaire.EpoqueGlossaire;
+import universite_paris8.iut.bak.timetowerdefense.modele.glossaire.EntreeGlossaire;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
@@ -194,16 +199,65 @@ public class UIVue {
         pause.play();
     }
 
-    public void ajouterEntreeGlossaire(String nom, String description, Color couleurTitre ,VBox contenuGlossaire){
-        Label lblNom = new Label("• " + nom);
-        lblNom.setTextFill(couleurTitre);
-        lblNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+    public void afficherGlossaire(EpoqueGlossaire epoque, VBox contenuGlossaire) {
+        contenuGlossaire.getChildren().clear();
 
-        Label lblDesc = new Label(description);
-        lblDesc.setTextFill(Color.LIGHTGRAY);
-        lblDesc.setWrapText(true);
+        Label titre = new Label(epoque.getNom());
+        titre.getStyleClass().add("glossary-title");
+        Label sousTitre = new Label("GLOSSAIRE  ·  " + epoque.getEntrees().size() + " unités répertoriées");
+        sousTitre.getStyleClass().add("glossary-subtitle");
+        contenuGlossaire.getChildren().addAll(titre, sousTitre);
 
-        VBox entree = new VBox(2, lblNom, lblDesc);
-        contenuGlossaire.getChildren().add(entree);
+        for (EntreeGlossaire entree : epoque.getEntrees()) {
+            ajouterEntreeGlossaire(entree, contenuGlossaire);
+        }
+    }
+
+    private void ajouterEntreeGlossaire(EntreeGlossaire entree, VBox contenuGlossaire) {
+        Label lblNom = new Label(entree.getNom());
+        lblNom.getStyleClass().add("glossary-entry-name");
+        lblNom.setWrapText(true);
+
+        Label categorie = new Label(nomCategorie(entree.getCategorie()));
+        categorie.getStyleClass().addAll("glossary-category", classeCategorie(entree.getCategorie()));
+
+        HBox entete = new HBox(8, lblNom, categorie);
+        entete.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        HBox.setHgrow(lblNom, Priority.ALWAYS);
+
+        Label description = new Label(entree.getDescription());
+        description.getStyleClass().add("glossary-entry-description");
+        description.setWrapText(true);
+        description.setMaxWidth(Double.MAX_VALUE);
+
+        VBox carte = new VBox(7, entete, description);
+        carte.getStyleClass().add("glossary-card");
+        contenuGlossaire.getChildren().add(carte);
+    }
+
+    private String nomCategorie(CategorieGlossaire categorie) {
+        return switch (categorie) {
+            case DEFENSE -> "DÉFENSE";
+            case ENNEMI -> "ENNEMI";
+            case ENNEMI_RESISTANT -> "RÉSISTANT";
+            case BOSS -> "BOSS";
+        };
+    }
+
+    private String classeCategorie(CategorieGlossaire categorie) {
+        return switch (categorie) {
+            case DEFENSE -> "category-defense";
+            case ENNEMI -> "category-enemy";
+            case ENNEMI_RESISTANT -> "category-resistant";
+            case BOSS -> "category-boss";
+        };
+    }
+    private Color couleurPour(CategorieGlossaire categorie) {
+        return switch (categorie) {
+            case DEFENSE -> Color.WHITE;
+            case ENNEMI -> Color.LIGHTCORAL;
+            case ENNEMI_RESISTANT -> Color.ORANGE;
+            case BOSS -> Color.RED;
+        };
     }
 }

@@ -112,8 +112,8 @@
          </font>
       </Label>
 
-      <ScrollPane fx:id="paneGlossaire" maxHeight="350.0" maxWidth="450.0" visible="false">
-         <VBox fx:id="contenuGlossaire" alignment="TOP_LEFT" spacing="15.0">
+      <ScrollPane fx:id="paneGlossaire" fitToWidth="true" maxHeight="440.0" maxWidth="470.0" pannable="true" styleClass="glossary-panel" visible="false">
+         <VBox fx:id="contenuGlossaire" alignment="TOP_LEFT" spacing="11.0" styleClass="glossary-content">
          </VBox>
       </ScrollPane>
 
@@ -141,7 +141,7 @@
                      </VBox.margin>
                   </Label>
                   <HBox alignment="CENTER" spacing="15.0">
-                     <Button fx:id="btnSfx" onAction="#toggleMuteSfx" styleClass="btn-audio" text="🔊🔊" />
+                     <Button fx:id="btnSfx" onAction="#toggleMuteSfx" styleClass="btn-audio" text="🔊" />
                      <Slider fx:id="sliderSfx" max="1.0" min="0.0" prefWidth="200.0" value="0.4" />
                   </HBox>
                </children>
