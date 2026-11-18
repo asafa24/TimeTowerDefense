@@ -35,10 +35,10 @@ public class UIVue {
         int prix;
         switch (epoque) {
             case 0 -> prix = switch (id) {
-                case 0 -> MiniVolcan.getPrixBase();
+                case 0 -> MiniVolcan.cout.get();
                 case 1 -> ArbreRuste.getPrixBase();
                 case 2 -> CatapulteCaillou.getPrixBase();
-                case 3 -> LanceFilet.getPrixBase();
+                case 3 -> LanceFilet.cout.get();
                 default -> 999;
             };
             case 1 -> prix = switch (id) {
@@ -247,3 +247,4 @@ public class UIVue {
         };
     }
 }
+

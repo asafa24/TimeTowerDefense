@@ -17,7 +17,7 @@ public class FabriqueEnnemiAntiquite extends FabriqueEnnemi {
             case 0 -> new Momie(route);
             case 1 -> new Chacal(route);
             case 2 -> new GolemSable(route);
-            default -> new Sarko(route, jeu);
+            default -> new Sarko(route);
         };
     }
 }

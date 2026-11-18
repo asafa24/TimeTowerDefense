@@ -27,8 +27,6 @@ public class Triche {
         if (nouvelleEpoque >= 0 && nouvelleEpoque <= 5) {
             jeu.setEpoqueActuel(nouvelleEpoque);
             jeu.nuke();
-            jeu.newRoute();
-            jeu.actualiserUltime();
             jeu.resetTimersEtVague();
             System.out.println("[TRICHE] Époque changé à : " + nouvelleEpoque);
         }

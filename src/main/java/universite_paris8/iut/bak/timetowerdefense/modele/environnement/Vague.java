@@ -4,193 +4,83 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Queue;
-import java.util.LinkedList;
+import java.util.Random;
 
 public class Vague {
-    private int[][][] level1,level2;
-    private int level = 0;
-    private IntegerProperty vague;
+    // Vagues (numérotées à partir de 1) pour lesquelles la stratégie est tirée au hasard
+    private static final int PREMIERE_VAGUE_ALEATOIRE = 3;
+    private static final int DERNIERE_VAGUE_ALEATOIRE = 8;
+
+    private final int[][] effectifs;
+    private final IntegerProperty vague;
+    private final Random random = new Random();
+    private final StrategieVague strategieParDefaut = new VagueEscalier();
+    private final StrategieVague[] strategiesPossibles = {
+            new VagueSimple(),
+            new VagueEscalier(),
+            new VagueAlterne(),
+            new VagueShuffle()
+    };
     Queue<Integer>[] queue;
 
-    public Vague() {
-        level1 = new int[][][]{{
-                {5, 0, 0, 0},   // vague 1
-                {10, 0, 0, 0},  // vague 2
-                {20, 2, 0, 0},  // vague 3
-                {30, 3, 1, 0},  // vague 4
-                {40, 4, 2, 0},  // vague 5
-                {45, 5, 3, 0},  // vague 6
-                {50, 6, 3, 0},  // vague 7
-                {55, 7, 4, 0},  // vague 8
-                {60, 10, 6, 0}, // vague 9
-                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
-        }, {
-                {7, 0, 0, 0},   // vague 1
-                {12, 1, 0, 0},  // vague 2
-                {14, 2, 0, 0},  // vague 3
-                {34, 4, 1, 0},  // vague 4
-                {40, 4, 2, 0},  // vague 5
-                {45, 5, 3, 0},  // vague 6
-                {50, 6, 3, 0},  // vague 7
-                {55, 7, 4, 0},  // vague 8
-                {60, 10, 6, 0}, // vague 9
-                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
-            }, {
-                {10, 0, 0, 0},   // vague 1
-                {12, 1, 0, 0},  // vague 2
-                {15, 2, 0, 0},  // vague 3
-                {34, 4, 1, 0},  // vague 4
-                {40, 4, 2, 0},  // vague 5
-                {45, 5, 3, 0},  // vague 6
-                {50, 6, 3, 0},  // vague 7
-                {55, 7, 4, 0},  // vague 8
-                {60, 10, 6, 0}, // vague 9
-                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
-        }, {
-                {10, 0, 0, 0},   // vague 1
-                {12, 1, 0, 0},  // vague 2
-                {15, 2, 0, 0},  // vague 3
-                {34, 4, 1, 0},  // vague 4
-                {40, 4, 2, 0},  // vague 5
-                {45, 5, 3, 0},  // vague 6
-                {50, 6, 3, 0},  // vague 7
-                {55, 7, 4, 0},  // vague 8
-                {60, 10, 6, 0}, // vague 9
-                {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
-        },
-                {
-                        {10, 0, 0, 0},   // vague 1
-                        {12, 1, 0, 0},  // vague 2
-                        {15, 2, 0, 0},  // vague 3
-                        {34, 4, 1, 0},  // vague 4
-                        {40, 4, 2, 0},  // vague 5
-                        {45, 5, 3, 0},  // vague 6
-                        {50, 6, 3, 0},  // vague 7
-                        {55, 7, 4, 0},  // vague 8
-                        {60, 10, 6, 0}, // vague 9
-                        {10, 4, 3, 1}  // vague 10 avec le boss (nn c'est toi tié le boss)
-                }
+    public Vague(int[][] effectifs) {
+        this.effectifs = effectifs;
+        this.vague = new SimpleIntegerProperty(0);
+        genererQueues();
+    }
 
-        };
+    private StrategieVague choisirStrategie(int indexVague) {
+        int numeroVague = indexVague + 1;
+        if (numeroVague >= PREMIERE_VAGUE_ALEATOIRE && numeroVague <= DERNIERE_VAGUE_ALEATOIRE) {
+            return strategiesPossibles[random.nextInt(strategiesPossibles.length)];
+        }
+        return strategieParDefaut;
+    }
 
-        vague = new SimpleIntegerProperty(0);
-        queue = new Queue[level1[level].length];
-        for (int i = 0; i < level1[level].length; i++) {
-            queue[i] = laQueue(level1[level][i]);
+    @SuppressWarnings("unchecked")
+    private void genererQueues() {
+        this.queue = new Queue[effectifs.length];
+        for (int i = 0; i < effectifs.length; i++) {
+            this.queue[i] = choisirStrategie(i).genererFile(effectifs[i]);
         }
     }
-    public boolean vagueSuivante(){
-        if (vague.get() < 9){
+
+    public boolean vagueSuivante() {
+        if (vague.get() < effectifs.length - 1) {
             vague.set(vague.get() + 1);
             return true;
         }
         return false;
     }
 
-    public int getLevel() {
-        return level;
-    }
-    public void levelSuiv(){
-        this.level++;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     public void test() {
         for (int i = 0; i < queue.length; i++) {
-
-
-            System.out.println("Test vague : " + i +  queue[i].toString() );
+            System.out.println("Test vague : " + i + queue[i].toString());
         }
     }
-    public int defiler(){
+
+    public int defiler() {
         System.out.println(queue[vague.get()].toString());
-        if (queue[vague.get()].size() == 0){
+        if (queue[vague.get()].size() == 0) {
             return -1;
         }
         return queue[vague.get()].remove();
     }
 
-    public Queue<Integer> getQueue(){
+    public Queue<Integer> getQueue() {
         return queue[vague.get()];
     }
 
-    public int somme(int[] tab) {
-        int somme = 0;
-        for (int nb : tab) {
-            somme += nb;
-        }
-        return somme;
-    }
-
-    public Queue<Integer> laQueue(int[] tabOriginal) {
-
-        int[] tab = tabOriginal.clone();
-
-
-        Queue<Integer> queue = new LinkedList<>();
-
-
-        int compteur0 = 0;
-        int compteur1 = 0;
-
-        while (somme(tab) > 0) {
-
-
-            if (compteur1 >= 2 && tab[2] > 0) {
-                queue.add(2);
-                tab[2]--;
-                compteur1 = 0;
-            }
-
-            else if (compteur0 >= 10 && tab[1] > 0) {
-                queue.add(1);
-                tab[1]--;
-                compteur0 = 0;
-                compteur1++;
-            }
-
-            else if (tab[0] > 0) {
-                queue.add(0);
-                tab[0]--;
-                compteur0++;
-            }
-
-            else {
-                if (tab[3] > 0){
-                    queue.add(3);
-                    tab[3]--;
-                }
-                else if (tab[1] > 0) {
-                    queue.add(1);
-                    tab[1]--;
-                    compteur1++;
-                } else if (tab[2] > 0) {
-                    queue.add(2);
-                    tab[2]--;
-                    compteur1 = 0;
-                }
-            }
-        }
-
-        return queue;
-    }
-
-    public void reinitialiser(int nouveauLevel) {
-        this.level = nouveauLevel;
+    public void reinitialiser() {
         this.vague.set(0);
-        this.queue = new Queue[level1[level].length];
-
-        for (int i = 0; i < level1[level].length; i++) {
-            this.queue[i] = laQueue(level1[level][i]);
-        }
+        genererQueues();
     }
+
     public int getVague() {
         return vague.get();
     }
-    public IntegerProperty getVagueProperty(){
+
+    public IntegerProperty getVagueProperty() {
         return vague;
     }
 }
