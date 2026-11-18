@@ -6,6 +6,8 @@ import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 import java.util.List;
 
@@ -30,26 +32,26 @@ public class Triceratops extends Ennemi {
     }
 
     @Override
-    public void agir(List<Ennemi> allies, List<Defense> defenses) {
+    public void agir(AffecteEnnemi epoque1, AffecteDefense epoque2) {
         if (tick % 5 == 0) {
-            boolean aProtegeQuelquUn = false;
+            // boolean aProtegeQuelquUn = false;
 
-            for (Ennemi allie : allies) {
+            epoque1.affecterEnnemis(e -> {
                 // On évite de se protéger soi-même ou un autre Tricératops
-                if (!(allie instanceof Triceratops)) {
-                    double dx = allie.getX() - this.getX();
-                    double dy = allie.getY() - this.getY();
+                if (!(e instanceof Triceratops)) {
+                    double dx = e.getX() - this.getX();
+                    double dy = e.getY() - this.getY();
                     double distance = Math.hypot(dx, dy);
 
                     if (distance <= PORTEE) {
-                        allie.appliqueEffet(Effet.SHIELD);
-                        aProtegeQuelquUn = true;
+                        e.appliqueEffet(Effet.SHIELD);
+                        // aProtegeQuelquUn = true;
                     }
                 }
-            }
-
-            // Met à jour la propriété pour la vue (si vrai, on affiche un effet visuel sur le Tricératops)
-            this.shield.set(aProtegeQuelquUn);
+            });
+            // Met à jour la propriété pour la vue (si vrai, on affiche un effet visuel sur
+            // le Tricératops)
+            // this.shield.set(aProtegeQuelquUn);
         }
         tick++;
     }
