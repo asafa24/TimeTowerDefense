@@ -5,7 +5,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -119,7 +120,7 @@ public class Ennemi extends Entite implements Destructible {
         this.etapeActuelle++;
     }
 
-    public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
+    public void agir(AffecteEnnemi epoque1, AffecteDefense epoque2) {
     }
 
     public void seHeurterA(Destructible mur) {

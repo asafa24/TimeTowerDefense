@@ -3,9 +3,10 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehis
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBouclier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 import java.util.List;
 
@@ -30,11 +31,11 @@ public class Triceratops extends Ennemi {
     }
 
     @Override
-    public void agir(List<Ennemi> allies, List<Defense> defenses) {
+    public void agir(AffecteEnnemi epoque1, AffecteDefense epoque2) {
         if (tick % 5 == 0) {
-            boolean aProtegeQuelquUn = false;
+            boolean[] aProtegeQuelquUn = {false};
 
-            for (Ennemi allie : allies) {
+            epoque1.affecterEnnemis(allie -> {
                 // On évite de se protéger soi-même ou un autre Tricératops
                 if (!(allie instanceof Triceratops)) {
                     double dx = allie.getX() - this.getX();
@@ -43,13 +44,13 @@ public class Triceratops extends Ennemi {
 
                     if (distance <= PORTEE) {
                         allie.ajouterEffet(new EffetBouclier());
-                        aProtegeQuelquUn = true;
+                        aProtegeQuelquUn[0] = true;
                     }
                 }
-            }
+            });
 
             // Met à jour la propriété pour la vue (si vrai, on affiche un effet visuel sur le Tricératops)
-            this.shield.set(aProtegeQuelquUn);
+            this.shield.set(aProtegeQuelquUn[0]);
         }
         tick++;
     }

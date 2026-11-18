@@ -1,6 +1,6 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.competences;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBrulure;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 public class PluieMeteorites extends Ultime {
@@ -17,6 +17,6 @@ public class PluieMeteorites extends Ultime {
 
     @Override
     public void effetPersistant(AffecteEnnemi epoque) {
-        epoque.affecterEnnemis(e -> e.appliqueEffet(Effet.BURN));
+        epoque.affecterEnnemis(e -> e.ajouterEffet(new EffetBrulure()));
     }
 }
