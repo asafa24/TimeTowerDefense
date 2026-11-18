@@ -10,19 +10,20 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege
 import java.util.List;
 
 public class ElPrimo extends Piege implements Destructible {
-
-    public static IntegerProperty cout = new SimpleIntegerProperty(60);
+    private static final int PRIX_BASE = 60;
 
     private int pvMax;
     private int pv;
     private int cptAttaque;
 
-
     public ElPrimo(double x, double y) {
-        super(cout.get(), x, y,80);
+        super(PRIX_BASE, x, y, 80);
         this.pvMax = 80;
         this.pv = this.pvMax;
         cptAttaque = 30;
+    }
+    public static int getPrixBase() {
+        return prixActuel(ElPrimo.class, PRIX_BASE);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class ElPrimo extends Piege implements Destructible {
 
             if (maCaseX == caseEnnemiX && maCaseY == caseEnnemiY) {
                 e.seHeurterA(this);
-                if (cptAttaque%60 == 0)  e.recevoirDegats(10);
+                if (cptAttaque % 60 == 0) e.recevoirDegats(10);
             }
         }
         cptAttaque++;
@@ -45,24 +46,12 @@ public class ElPrimo extends Piege implements Destructible {
     @Override
     public void recevoirDegats(int degats) {
         this.pv -= degats;
-        System.out.println("La porte de sable prend des dégâts ! PV restants : " + this.pv);
+        System.out.println("El Primo prend des dégâts ! PV restants : " + this.pv);
     }
-
     @Override
     public boolean estMort() {
         return this.pv <= 0;
     }
-
-    @Override
-    public void inflation() {
-        cout.set((int) Math.floor(cout.get() * 1.1));
-        super.setCout(cout.get());
-    }
-
-    public static IntegerProperty coutPropertyPrimo() {
-        return cout;
-    }
-
     public int getPv() {
         return pv;
     }

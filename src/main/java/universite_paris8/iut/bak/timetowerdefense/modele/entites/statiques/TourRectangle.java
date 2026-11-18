@@ -34,7 +34,5 @@ public abstract class TourRectangle extends Tour {
             setCompteurTir(0);
         }
     }
-
-    public abstract void inflation();
     protected abstract Projectile creerProjectile(double x, double y, Ennemi cible ,int degats, int largeur);
 }

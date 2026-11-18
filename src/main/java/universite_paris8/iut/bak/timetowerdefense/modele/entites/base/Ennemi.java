@@ -5,7 +5,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.effets.EffetStatut;
+import java.util.EnumMap;
+import java.util.Map;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,11 +20,7 @@ public class Ennemi extends Entite implements Destructible {
     private double vitesseActuelle;
     private int recompense;
 
-    private int dureeStunRestante = 0;
-    private int dureeSlowRestante = 0;
-    private int dureeBrulageRestante = 0;
-    private int dureeSpeedBoostRestante = 0;
-    private boolean shield = false;
+    private final Map<Effet, Integer> effetsActifs = new EnumMap<>(Effet.class);
 
     private List<Point2D> chemin;
     private int etapeActuelle;
@@ -83,36 +81,13 @@ public class Ennemi extends Entite implements Destructible {
 //     Gère également l'application des altérations d'état (brûlure, étourdissement, ralentissement)
 //     et l'arrêt s'il rencontre un obstacle.
     public void avancer() {
-        if (this.dureeBrulageRestante > 0) {
-            this.dureeBrulageRestante--;
-            if (this.dureeBrulageRestante % 10 == 0) {
-                this.recevoirDegats(1);
-            }
-        }
-
-        if (this.dureeStunRestante > 0) {
-            this.dureeStunRestante--;
-            this.vitesseActuelle = 0;
-            return; // Bloque le mouvement tant qu'étourdi
-        }
-
-        this.vitesseActuelle = this.vitesseBase;
-
-        if (this.dureeSlowRestante > 0) {
-            this.dureeSlowRestante--;
-            this.vitesseActuelle *= 0.5;
-        }
-
-        if (this.dureeSpeedBoostRestante > 0) {
-            this.dureeSpeedBoostRestante--;
-            this.vitesseActuelle *= 1.3;
-        }
+        this.vitesseActuelle = appliquerEffets();
+        if (this.vitesseActuelle == 0) return;
 
         if (this.estBloque) {
             this.estBloque = false;
             return;
         }
-
         // 5. Déplacement physique
         if (chemin == null || etapeActuelle >= chemin.size()) return;
 
@@ -142,6 +117,18 @@ public class Ennemi extends Entite implements Destructible {
 
     public void agir(List<Ennemi> ennemis, List<Defense> defenses) {
     }
+    private double appliquerEffets() {
+        double vitesse = this.vitesseBase;
+        for (Map.Entry<Effet, Integer> entree : effetsActifs.entrySet()) {
+            int restant = entree.getValue() - 1;
+            entree.setValue(restant);
+            EffetStatut strategie = entree.getKey().getStrategie();
+            strategie.tick(this, restant);
+            vitesse = strategie.modifierVitesse(vitesse);
+        }
+        effetsActifs.values().removeIf(duree -> duree <= 0);
+        return vitesse;
+    }
 
     public void seHeurterA(Destructible mur) {
         this.estBloque = true;
@@ -168,9 +155,6 @@ public class Ennemi extends Entite implements Destructible {
     public boolean aAtteintLaBase() {
         return chemin != null && etapeActuelle >= chemin.size();
     }
-    
-//     Méthode appelée à la mort de l'ennemi.
-//     À Override pour les ennemis qui génèrent d'autres entités en mourant.
 
     public List<Ennemi> onDeath() {
         return Collections.emptyList();
@@ -242,27 +226,13 @@ public class Ennemi extends Entite implements Destructible {
 
 //     Applique un effet de statut à cet ennemi pour une durée donnée.
 //     Renouvelle la durée si l'effet est déjà actif.
-    public void appliqueEffet(Effet effet) {
-        switch (effet) {
-            case STUN -> {
-                this.dureeStunRestante = Math.max(this.dureeStunRestante, 120);
-                this.vitesseActuelle = 0;
-            }
-            case SLOW -> {
-                this.dureeSlowRestante = Math.max(this.dureeSlowRestante, 120);
-            }
-            case BURN -> {
-                this.dureeBrulageRestante = Math.max(this.dureeBrulageRestante, 60);
-            }
-            case SHIELD -> {
-                if (!shield) {
-                    this.ajouterPv(((int) Math.floor(this.getPv() * 1.2)));
-                    shield = true;
-                }
-            }
-            case SPEED_BOOST -> {
-                this.dureeSpeedBoostRestante = Math.max(this.dureeSpeedBoostRestante, 150);
-            }
-        }
+public void appliqueEffet(Effet effet) {
+    EffetStatut strategie = effet.getStrategie();
+    if (effetsActifs.containsKey(effet)) {
+        effetsActifs.merge(effet, strategie.getDuree(), Math::max);
+    } else {
+        effetsActifs.put(effet, strategie.getDuree());
+        strategie.surApplication(this);
     }
+}
 }

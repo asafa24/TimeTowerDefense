@@ -3,7 +3,7 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqu
 import javafx.geometry.Point2D;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 import java.util.List;

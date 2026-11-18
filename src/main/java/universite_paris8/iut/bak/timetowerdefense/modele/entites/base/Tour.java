@@ -2,7 +2,6 @@ package universite_paris8.iut.bak.timetowerdefense.modele.entites.base;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
 
 import java.util.List;
 import javafx.beans.property.IntegerProperty;
@@ -68,8 +67,6 @@ public abstract class Tour extends Defense {
         this.portee.set(this.portee.get() + 20);
         super.setCout((int) (this.getCout() * 1.30));
     }
-
-    public abstract void inflation();
 
     public boolean isStunOuPas() {
         if (this.dureeStun > 0) {

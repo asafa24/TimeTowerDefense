@@ -37,8 +37,6 @@ public abstract class TourCercle extends Tour {
             setCompteurTir(0);
         }
     }
-    @Override
-    public abstract void inflation();
     protected abstract Projectile creerProjectile(double x, double y, Ennemi cible ,int degats , int rayonExplosion );
 
 

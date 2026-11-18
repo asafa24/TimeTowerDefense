@@ -17,7 +17,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriqu
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiMoyenAge;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiPrehistoire;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Piege;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense;
 import universite_paris8.iut.bak.timetowerdefense.modele.preview.Preview;
 
 import java.util.ArrayList;

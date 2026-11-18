@@ -1,17 +1,19 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Projectile;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.projectile.ProjectileLazer;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourNormal;
 
 public class PistoletLaser extends TourNormal {
-    public static IntegerProperty cout = new SimpleIntegerProperty(60);
-
+    private static final int PRIX_BASE = 60;
 
     public PistoletLaser(double x, double y) {
-        super(cout.get(), x, y, 35, 150, 60);
+        super(PRIX_BASE, x, y, 35, 150, 60);
+    }
+
+    public static int getPrixBase() {
+        return prixActuel(PistoletLaser.class, PRIX_BASE);
     }
 
     @Override
@@ -20,11 +22,7 @@ public class PistoletLaser extends TourNormal {
     }
 
     @Override
-    public void inflation() {
-        setCout((int) (getCout() * 1.2));
+    protected double getTauxInflation() {
+        return 1.2;
     }
-    public static IntegerProperty pistoLaser() {
-        return cout;
-    }
-
 }

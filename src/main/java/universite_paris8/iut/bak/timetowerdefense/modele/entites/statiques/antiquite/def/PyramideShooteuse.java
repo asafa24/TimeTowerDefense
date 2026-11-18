@@ -12,6 +12,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import java.util.List;
 
 public class PyramideShooteuse extends Tour {
+    private static final int PRIX_BASE = 140;
+
     private Ennemi cibleActuelle;
     private int tempsFocus;
     private int degatsMax;
@@ -21,24 +23,17 @@ public class PyramideShooteuse extends Tour {
     private BooleanProperty atk = new SimpleBooleanProperty(false);
     private javafx.beans.property.DoubleProperty distanceCible = new javafx.beans.property.SimpleDoubleProperty(0);
 
-    public static IntegerProperty cout = new SimpleIntegerProperty(140);
-
-
     public PyramideShooteuse(double x, double y) {
-        super(cout.get() , x, y, 1, 150, 1);
+        super(PRIX_BASE, x, y, 1, 150, 1);
         this.degatsBase = 1;
         this.degatsMax = 30;
         this.tempsFocus = 0;
     }
-//    public PyramideShooteuse(double x, double y) {
-//        super(cout, x, y, 1, 150, 1);
-//        this.degatsBase = 1;
-//        this.degatsMax = 30;
-//        this.tempsFocus = 0;
-//    }
 
+    public static int getPrixBase() {
+        return prixActuel(PyramideShooteuse.class, PRIX_BASE);
+    }
 
-    // 2. Mets à jour la distance dans ta méthode setAngle() (ou crée une méthode dédiée)
     public void setAngle() {
         double tourX = this.getX() * 64 + 32;
         double tourY = this.getY() * 64 + 32;
@@ -48,7 +43,6 @@ public class PyramideShooteuse extends Tour {
         double dx = cibleX - tourX;
         double dy = cibleY - tourY;
 
-        // Calcul de l'angle
         double angleRadians = Math.atan2(dy, dx);
         double angleDegres = Math.toDegrees(angleRadians);
         if (angleDegres < 0){
@@ -56,11 +50,9 @@ public class PyramideShooteuse extends Tour {
         }
         angle.set((int) Math.floor(angleDegres));
 
-        // Calcul et mise à jour de la distance
         distanceCible.set(Math.hypot(dx, dy));
     }
 
-    // 3. Ajoute le getter du Property pour la vue
     public javafx.beans.property.DoubleProperty distanceCibleProperty() {
         return distanceCible;
     }
@@ -87,26 +79,17 @@ public class PyramideShooteuse extends Tour {
 
         if (cibleActuelle != null && tick%10 == 0) {
             tempsFocus++;
-            // 1 dégât toutes les 45 frames
             int degatsCalcules = degatsBase + (tempsFocus / 15);
             if (degatsCalcules > degatsMax) {
                 degatsCalcules = degatsMax;
             }
-            // Dégâts instant (pas de projectile)
             cibleActuelle.recevoirDegats(degatsCalcules);
 
-            //  Si le rayon est chargé au max, il enflamme la cible
             if (degatsCalcules == degatsMax && tempsFocus % 60 == 0) {
                 cibleActuelle.appliqueEffet(Effet.BURN);
             }
         }
         tick++;
-    }
-
-    @Override
-    public void inflation() {
-        cout.set((int) Math.floor(cout.get() * 1.1));
-        super.setCout(cout.get());
     }
 
     private boolean horsDePortee(Ennemi e) {
@@ -118,24 +101,9 @@ public class PyramideShooteuse extends Tour {
         return cibleActuelle;
     }
 
-
     public IntegerProperty angleProperty() {
         return angle;
     }
-    /*
-    public void setAngle() {
-        double dx = cibleActuelle.getX() - this.getX();
-        double dy = cibleActuelle.getY() - this.getY();
-        double angleRadians = Math.atan2(dy,dx);
-        double angleDegres = Math.toDegrees(angleRadians);
-        if (angleDegres < 0){
-            angleDegres += 360;
-        }
-        angle.set((int) Math.floor(angleDegres));
-
-    }
-
-     */
 
     public BooleanProperty atkProperty() {
         return atk;
@@ -144,9 +112,25 @@ public class PyramideShooteuse extends Tour {
     public void setAtk(boolean atk) {
         this.atk.set(atk);
     }
-
-    public static IntegerProperty coutPropertyPyramideShooteuse() {
-        return cout;
-    }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

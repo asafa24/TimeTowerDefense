@@ -8,26 +8,18 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenag
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.TourRectangle;
 
 public class LanceBuche extends TourRectangle {
-    public static IntegerProperty cout = new SimpleIntegerProperty(80);
+    private static final int PRIX_BASE = 80 ;
 
     public LanceBuche(double x, double y) {
-        super(150, x, y, 25, 360, 150, 64);
+        super(PRIX_BASE, x, y, 25, 360, 150, 64);
     }
-
-
-    @Override
-    public void inflation() {
-        cout.set((int) Math.floor(cout.get() * 1.1));
-        super.setCout(cout.get());
-    }
-
     @Override
     public Projectile creerProjectile(double x, double y, Ennemi cible, int degats, int largeur) {
         return new Buche(x, y, cible, degats, largeur);
     }
 
-    public static IntegerProperty coutPropertyLanceBiuche() {
-        return cout;
+    public static int getPrixBase() {
+        return prixActuel(LanceBuche.class, PRIX_BASE);
     }
 
 }
