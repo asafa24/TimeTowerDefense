@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.projectile;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetSlow;
+
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileRectangle;
 
@@ -45,7 +46,7 @@ public class ProjectileTemps extends ProjectileRectangle {
 
             if (projLongueur >= -32 && projLongueur <= longueurAB + 64 && projLargeur <= getLargeurRectangle()) {
                 e.recevoirDegats(getDegats());
-                e.appliqueEffet(Effet.SLOW);
+                e.ajouterEffet(new EffetSlow());
             }
         }
     }

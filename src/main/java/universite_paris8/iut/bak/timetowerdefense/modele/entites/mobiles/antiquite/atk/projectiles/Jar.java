@@ -1,6 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.projectiles;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBrulure;
+
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileCercle;
 
@@ -22,7 +23,7 @@ public class Jar extends ProjectileCercle {
             double distanceExplosion = Math.hypot(epicentreX - e.getCentreX(), epicentreY - e.getCentreY());
 
             if (distanceExplosion <= getRayonExplosion()) {
-                e.appliqueEffet(Effet.BURN);
+                e.ajouterEffet(new EffetBrulure());
             }
         }
     }

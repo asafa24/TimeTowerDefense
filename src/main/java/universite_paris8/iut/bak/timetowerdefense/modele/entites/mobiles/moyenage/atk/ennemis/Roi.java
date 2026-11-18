@@ -1,7 +1,8 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetSpeedBoost;
+
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.Boss;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.Defense;
@@ -19,7 +20,7 @@ public class Roi extends Boss {
     @Override
     public void competence(List<Ennemi> ennemis, List<Defense> defenses) {
         for(Ennemi e : ennemis){
-            e.appliqueEffet(Effet.SPEED_BOOST);
+            e.ajouterEffet(new EffetSpeedBoost());
         }
         System.out.println("Speed Boost activéw");
     }
