@@ -20,6 +20,8 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.*;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.*;
@@ -30,62 +32,46 @@ public class UIVue {
     }
 
     public StringBinding setPrixT1(int epoque, int id) {
+        int prix;
         switch (epoque) {
-            case 0: // Prehistoire
-                switch (id) {
-                    case 0: return MiniVolcan.coutPropertyMiniVolcan().asString();
-                    case 1: return ArbreRuste.coutPropertyArbre().asString();
-                    case 2: return CatapulteCaillou.coutPropertyCatapulteCaillou().asString();
-                    case 3: return LanceFilet.coutPropertyLanceFilet().asString();
-                }
-                break;
-
-            case 1: // Antiquité
-                switch (id) {
-                    case 0: return PorteDeSable.coutPropertyPorteSable().asString();
-                    case 1: return TotemFlechette.coutPropertyTotemFlechette().asString();
-                    case 2: return CatapulteJAR.coutPropertyCatapulteJar().asString();
-                    case 3: return PyramideShooteuse.coutPropertyPyramideShooteuse().asString();
-                }
-                break;
-
-            case 2: // Moyen-Âge (Prix factices pour compiler direct)
-                switch (id) {
-                    case 0: return  ElPrimo.coutPropertyPrimo().asString(); // El Primo
-                    case 1: return  Archer.coutPropertyArcher().asString(); // Archer
-                    case 2: return  LanceBuche.coutPropertyLanceBiuche().asString();// LanceBuche
-                    case 3: return  TourMage.coutPropertyPorteSable().asString(); // TourMage
-                }
-                break;
-
-            case 3: // Contemporain (Prix factices)
-                switch (id) {
-                    case 0: return Mine.coutMine().asString(); // Mine
-                    case 1: return Sniper.cout.asString(); // Sniper/Soldat
-                    case 2: return LanceRocket.coutRocket().asString(); // LanceRocket
-                    case 3: return new SimpleIntegerProperty(250).asString();
-                }
-                break;
-
-            case 4: // Futur (Prix factices)
-                switch (id) {
-                    case 0: return PistoletLaser.cout.asString(); // Laser
-                    case 1: return PistoletLazerMk2.getCoutPropertymk2().asString(); // MK2
-                    case 2: return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla.getCoutPropertyTesla().asString(); // Tesla
-                    case 3: return universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps.getCoutPropertyTourTemp().asString(); // Temps
-                }
-                break;
-
-            default: // Fallback Epoque 0
-                switch (id) {
-                    case 0: return MiniVolcan.coutPropertyMiniVolcan().asString();
-                    case 1: return ArbreRuste.coutPropertyArbre().asString();
-                    case 2: return CatapulteCaillou.coutPropertyCatapulteCaillou().asString();
-                    case 3: return LanceFilet.coutPropertyLanceFilet().asString();
-                }
-                break;
+            case 0 -> prix = switch (id) {
+                case 0 -> MiniVolcan.getPrixBase();
+                case 1 -> ArbreRuste.getPrixBase();
+                case 2 -> CatapulteCaillou.getPrixBase();
+                case 3 -> LanceFilet.getPrixBase();
+                default -> 999;
+            };
+            case 1 -> prix = switch (id) {
+                case 0 -> PorteDeSable.getPrixBase();
+                case 1 -> TotemFlechette.getPrixBase();
+                case 2 -> CatapulteJAR.getPrixBase();
+                case 3 -> PyramideShooteuse.getPrixBase();
+                default -> 999;
+            };
+            case 2 -> prix = switch (id) {
+                case 0 -> ElPrimo.getPrixBase();
+                case 1 -> Archer.getPrixBase();
+                case 2 -> LanceBuche.getPrixBase();
+                case 3 -> TourMage.getPrixBase();
+                default -> 999;
+            };
+            case 3 -> prix = switch (id) {
+                case 0 -> Mine.getPrixBase();
+                case 1 -> SoldatBleu.getPrixBase();
+                case 2 -> Sniper.getPrixBase();
+                case 3 -> LanceRocket.getPrixBase();
+                default -> 999;
+            };
+            case 4 -> prix = switch (id) {
+                case 0 -> PistoletLaser.getPrixBase();
+                case 1 -> PistoletLazerMk2.getPrixBase();
+                case 2 -> Tesla.getPrixBase();
+                case 3 -> TourDuTemps.getPrixBase();
+                default -> 999;
+            };
+            default -> prix = 999;
         }
-        return new SimpleIntegerProperty(999).asString();
+        return new SimpleIntegerProperty(prix).asString();
     }
 
     public ImageView setImageT1(int epoque, int button) {
