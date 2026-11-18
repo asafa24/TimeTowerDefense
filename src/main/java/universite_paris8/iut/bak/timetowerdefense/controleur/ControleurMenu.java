@@ -63,7 +63,6 @@ public class ControleurMenu {
                 ouvrirJeu(event, isModeExtreme);
             });
 
-            // Le délai est toujours actif : le lecteur peut rester bloqué en état PLAYING.
             transitionEnCours = true;
             surveillanceTransition = new PauseTransition(Duration.seconds(6));
             surveillanceTransition.setOnFinished(e -> {

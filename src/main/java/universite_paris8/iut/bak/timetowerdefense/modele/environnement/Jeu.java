@@ -169,7 +169,6 @@ public class Jeu {
         }
     }
 
-    /** @return true si un boss a fait avancer le jeu à l'époque suivante. */
     private boolean mettreAJourEnnemis() {
         for (int i = epoque.getEnnemi().size() - 1; i >= 0; i--) {
             Ennemi ennemi = epoque.getEnnemi().get(i);
