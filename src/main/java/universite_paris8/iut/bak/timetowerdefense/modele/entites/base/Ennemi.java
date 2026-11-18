@@ -48,7 +48,15 @@ public class Ennemi extends Entite implements Destructible {
     }
 
     public Ennemi(int pv, double vitesseBase, int recompense, List<Point2D> chemin) {
-        this(0.0, 0.0, pv, vitesseBase, recompense, chemin);
+        this(positionDepartX(chemin), positionDepartY(chemin), pv, vitesseBase, recompense, chemin);
+    }
+
+    private static double positionDepartX(List<Point2D> chemin) {
+        return chemin == null || chemin.isEmpty() ? 0 : chemin.get(0).getX() * 64;
+    }
+
+    private static double positionDepartY(List<Point2D> chemin) {
+        return chemin == null || chemin.isEmpty() ? 0 : chemin.get(0).getY() * 64;
     }
 
     public Ennemi(int x, int y, List<Point2D> chemin) {
