@@ -45,7 +45,7 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehi
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Level;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Epoque;
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
@@ -97,7 +97,7 @@ public class ControleurJeu implements Initializable {
     private int temps, delay;
     private double mouseX, mouseY;
 
-    private Level level;
+    // private Epoque epoque;
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
     private PreviewVue vuePreview;
@@ -150,19 +150,30 @@ public class ControleurJeu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.level = new Level();
-        this.vueTerrain = new TerrainVue(backgroundPane);
+        // this.level = new Epoque();
         this.jeu = new Jeu();
+        this.vueTerrain = new TerrainVue(backgroundPane,
+                this.jeu.getEpoqueProperty().getValue());
         this.vueEntite = new EntiteVue(entityPane);
-        this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), jeu.getEpoqueActuel());
+        this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(),
+                jeu.getEpoqueActuel());
         this.gestionnaireAudio = new GestionnaireAudio();
         EcouteEntite ecouteEntite = new EcouteEntite(vueEntite, gestionnaireAudio);
         this.uiVue = new UIVue();
         afficherButton(jeu.getEpoqueActuel());
 
-        jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
-            this.changerNiveau(nouvelleEpoque.intValue());
-            lancerMusique(nouvelleEpoque.intValue());
+        // jeu.getEpoqueActuelProperty().addListener((obs, ancienneEpoque,
+        // nouvelleEpoque) -> {
+        // this.changerNiveau(nouvelleEpoque.intValue());
+        // lancerMusique(nouvelleEpoque.intValue());
+        // System.out.println("oui");
+        // });
+
+        jeu.getEpoqueProperty().addListener((obs, ancienneEpoque, nouvelleEpoque) -> {
+            this.changerNiveau(
+                    this.jeu.getEpoqueActuel());
+            lancerMusique(
+                    this.jeu.getEpoqueActuel());
             System.out.println("oui");
         });
 
@@ -198,8 +209,9 @@ public class ControleurJeu implements Initializable {
         lancerMusique(jeu.getEpoqueActuel());
         gameLoop.play();
 
-        int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
-        vueTerrain.drawMap(donneesMap, jeu.getEpoqueActuel());
+        // int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
+        // vueTerrain.drawMap(jeu.getEpoque().getTileMap(), jeu.getEpoqueActuel());
+        vueTerrain.drawMap();
 
         paneMain.setOnMouseMoved(event -> {
             recupererPosition(event);
@@ -275,11 +287,13 @@ public class ControleurJeu implements Initializable {
             }
             case L -> {
                 if (jeu.getEpoqueActuel() > 0)
-                    changerNiveauForcing(jeu.getEpoqueActuel() - 1);
+                    // changerNiveauForcing(jeu.getEpoqueActuel() - 1);
+                    jeu.epoquePrecedente();
             }
             case M -> {
-                if (jeu.getEpoqueActuel() < 5)
-                    changerNiveauForcing(jeu.getEpoqueActuel() + 1);
+                if (jeu.getEpoqueActuel() < 4)
+                    // changerNiveauForcing(jeu.getEpoqueActuel() + 1);
+                    jeu.epoqueSuivante();
             }
             case O -> {
                 skipVague();
@@ -592,30 +606,37 @@ public class ControleurJeu implements Initializable {
     }
 
     public void changerNiveau(int nb) {
-        int[][] donneesMap = level.loadLevel(nb);
+        // int[][] donneesMap = level.loadLevel(nb);
         jeu.nuke();
-        jeu.newRoute();
+        // jeu.newRoute();
         jeu.resetTimersEtVague();
 
-        vueTerrain.drawMap(donneesMap, nb);
+        // vueTerrain.drawMap(jeu.getEpoque().getTileMap(), nb);
+
+        this.vueTerrain = new TerrainVue(backgroundPane,
+                this.jeu.getEpoqueProperty().getValue());
+        vueTerrain.drawMap();
+
         this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), nb);
         afficherButton(nb);
         afficherPrix(nb);
     }
 
-    public void changerNiveauForcing(int nb) {
-        int[][] donneesMap = level.loadLevel(nb);
-        jeu.setEpoqueActuel(nb);
-        jeu.nuke();
-        jeu.newRoute();
-        jeu.actualiserUltime();
-        jeu.resetTimersEtVague();
+    // public void changerNiveauForcing(int nb) {
+    // // int[][] donneesMap = level.loadLevel(nb);
+    // jeu.setEpoqueActuel(nb);
+    // jeu.nuke();
+    // // jeu.newRoute();
+    // jeu.actualiserUltime();
+    // jeu.resetTimersEtVague();
 
-        vueTerrain.drawMap(donneesMap, nb);
-        this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), nb);
-        afficherButton(nb);
-        afficherPrix(nb);
-    }
+    // // vueTerrain.drawMap(jeu.getEpoque().getTileMap(), nb);
+    // vueTerrain.drawMap();
+
+    // this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), nb);
+    // afficherButton(nb);
+    // afficherPrix(nb);
+    // }
 
     @FXML
     public void toggleGlossaire() {

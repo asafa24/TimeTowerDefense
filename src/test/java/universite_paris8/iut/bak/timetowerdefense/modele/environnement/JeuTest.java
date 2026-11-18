@@ -66,7 +66,7 @@ class JeuTest {
 
     @Test
     void testProgressionEpoqueAutomatique() {
-        jeu.prochaineEpoque();
+        jeu.epoqueSuivante();
         assertEquals(1, jeu.getEpoqueActuel(), "prochaineEpoque() doit incrémenter l'époque de 1");
     }
 }

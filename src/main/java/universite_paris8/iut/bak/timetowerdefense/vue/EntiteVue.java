@@ -86,8 +86,7 @@ public class EntiteVue {
     private HashMap<Defense, Node> affichageProj;
     private Circle cerclePortee;
 
-
-    public EntiteVue(Pane entityPane){
+    public EntiteVue(Pane entityPane) {
         this.entityPane = entityPane;
         this.affichageEntite = new HashMap<>();
         this.affichageBarre = new HashMap<>();
@@ -102,10 +101,12 @@ public class EntiteVue {
         this.cerclePortee.setMouseTransparent(false);
         this.entityPane.getChildren().add(cerclePortee);
     }
-    public void deselectionnerCerclePortee(){
+
+    public void deselectionnerCerclePortee() {
         this.cerclePortee.setVisible(false);
     }
-    public void afficherCerclePortee(Tour tour){
+
+    public void afficherCerclePortee(Tour tour) {
         cerclePortee.setCenterX(tour.getX() * 64 + 32);
         cerclePortee.setCenterY(tour.getY() * 64 + 32);
         cerclePortee.radiusProperty().bind(tour.porteeProperty());
@@ -113,7 +114,7 @@ public class EntiteVue {
 
     }
 
-    public void creerSprite(Entite e){
+    public void creerSprite(Entite e) {
         Node sprite = null;
         Node barre_vie = null;
         Node rectangle_vie = null;
@@ -121,355 +122,401 @@ public class EntiteVue {
         Node proj = null;
         ImageView img = null;
 
-        try{
+        try {
 
-        if (e instanceof Ennemi) {
-            DoubleProperty taille = new SimpleDoubleProperty(56);
-            ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
+            if (e instanceof Ennemi) {
+                DoubleProperty taille = new SimpleDoubleProperty(56);
+                ImageView vie = new ImageView(String.valueOf(Application.class.getResource("images/tiles/b_vie.png")));
 
+                // Epoque Prehistoire
+                if (e instanceof Compsognathus) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/ennemi1.png")));
+                }
+                if (e instanceof Triceratops) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d02.png")));
+                    Circle cr = new Circle();
+                    cr.setFill(Color.CYAN);
+                    cr.setOpacity(0.5);
+                    cr.setRadius(128);
+                    cr.translateXProperty().bind(e.xProperty().add(32));
+                    cr.translateYProperty().bind(e.yProperty().add(32));
+                    cr.visibleProperty().bind(((Triceratops) e).getShield());
+                    capacity = cr;
+                }
+                if (e instanceof Velociraptor) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d01.png")));
+                }
+                if (e instanceof Tyrannosaurus) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/trex.png")));
+                }
 
-            // Epoque Prehistoire
-            if (e instanceof Compsognathus) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/ennemi1.png")));
-            }
-            if (e instanceof Triceratops) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d02.png")));
-                Circle cr = new Circle();
-                cr.setFill(Color.CYAN);
-                cr.setOpacity(0.5);
-                cr.setRadius(128);
-                cr.translateXProperty().bind(e.xProperty().add(32));
-                cr.translateYProperty().bind(e.yProperty().add(32));
-                cr.visibleProperty().bind(((Triceratops) e).getShield());
-                capacity = cr;
-            }
-            if (e instanceof Velociraptor) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/d01.png")));
-            }
-            if (e instanceof Tyrannosaurus) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/ennemi/trex.png")));
-            }
+                // Epoque Antiquite
+                if (e instanceof Momie) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/momie6.png")));
+                }
+                if (e instanceof GolemSable) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golem.png")));
+                    img.setFitHeight(80);
+                    img.setFitWidth(80);
+                }
+                if (e instanceof Chacal) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/chakal.png")));
+                }
+                if (e instanceof Golime) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golime.png")));
+                }
+                if (e instanceof Sarko) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/sarko.png")));
+                }
 
-            // Epoque Antiquite
-            if (e instanceof Momie) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/momie6.png")));
-            }
-            if (e instanceof GolemSable) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golem.png")));
-                img.setFitHeight(80);
-                img.setFitWidth(80);
-            }
-            if (e instanceof Chacal){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/chakal.png")));
-            }
-            if (e instanceof Golime){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/golime.png")));
-            }
-            if (e instanceof Sarko){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/ennemi/sarko.png")));
-            }
+                // Epoque Moyen Age
+                if (e instanceof Moine) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/moino.png")));
+                }
+                if (e instanceof Chevalier) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/fantassin.png")));
+                }
+                if (e instanceof Cavalier) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/cavalier.png")));
+                    final ImageView vueCavalier = img;
+                    ((Cavalier) e).getPvPropProperty().addListener((obs, ancienneVie, nouvelleVie) -> {
+                        if (nouvelleVie.intValue() <= 100 && ancienneVie.intValue() > 100) {
+                            vueCavalier.setImage(new Image(String.valueOf(
+                                    Application.class.getResource("images/tiles/moyen-age/ennemi/cavaliersol.png"))));
+                        }
+                    });
+                }
+                if (e instanceof Roi) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/roi.png")));
+                }
 
-            // Epoque Moyen Age
-            if(e instanceof Moine){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/moino.png")));
-            }
-            if(e instanceof Chevalier){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/fantassin.png")));
-            }
-            if (e instanceof Cavalier) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/cavalier.png")));
-                final ImageView vueCavalier = img;
-                ((Cavalier) e).getPvPropProperty().addListener((obs, ancienneVie, nouvelleVie) -> {
-                    if (nouvelleVie.intValue() <= 100 && ancienneVie.intValue() > 100) {
-                        vueCavalier.setImage(new Image(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/cavaliersol.png"))));
-                    }
-                });
-            }
-            if(e instanceof Roi){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/ennemi/roi.png")));
-            }
+                // Epoque Contemporaine
+                if (e instanceof SoldatRouge) {
+                    img = new ImageView(String.valueOf(
+                            Application.class.getResource("images/tiles/contemporain/ennemi/soldatrouge.png")));
+                }
+                if (e instanceof Vehicule) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/voiture.png")));
+                }
+                if (e instanceof CharAssaut) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/tank.png")));
+                }
+                if (e instanceof Dictateur) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/dictateur.png")));
+                }
 
-            // Epoque Contemporaine
-            if (e instanceof SoldatRouge) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/soldatrouge.png")));
-            }
-            if (e instanceof Vehicule) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/voiture.png")));
-            }
-            if (e instanceof CharAssaut) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/tank.png")));
-            }
-            if (e instanceof Dictateur) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/ennemi/dictateur.png")));
-            }
-
-            // Epoque Future
-            if (e instanceof Robot) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/robot.png")));
-            }
-            if (e instanceof Generateur) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/gen.png")));
-            }
-            if (e instanceof AraigneeRobot) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/spider.png")));
-            }
-            if (e instanceof IA) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/ennemi/ai.png")));
-            }
-
-
-            Rectangle rec = new Rectangle();
-            rec.setWidth(56);
-            rec.setHeight(4);
-            rec.setFill(Color.GREEN);
-            rec.translateXProperty().bind(e.xProperty().add(4));
-            rec.translateYProperty().bind(e.yProperty().add(-4));
-            rec.widthProperty().bind(taille.multiply(((Ennemi) e).getPvPropProperty()).divide(((Ennemi) e).getPv()));
-            vie.translateXProperty().bind(e.xProperty());
-            vie.translateYProperty().bind(e.yProperty().add(-20));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            img.scaleXProperty().bind(((Ennemi) e).getDirectionProperty());
-            rectangle_vie = rec;
-            sprite = img;
-            barre_vie = vie;
-
-        }
-        if (e instanceof Tour) {
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
-            if (e instanceof ArbreRuste) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
-            }
-            if (e instanceof CatapulteCaillou) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png")));
-            }
-            if (e instanceof LanceFilet) {
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png")));
-            }
-            if (e instanceof TotemFlechette){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piegeFlechette.png")));
-            }
-            if (e instanceof PyramideShooteuse){
-                PyramideShooteuse pyramide = (PyramideShooteuse) e;
-
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piramidJ.png")));
+                // Epoque Future
+                if (e instanceof Robot) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/ennemi/robot.png")));
+                }
+                if (e instanceof Generateur) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/ennemi/gen.png")));
+                }
+                if (e instanceof AraigneeRobot) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/ennemi/spider.png")));
+                }
+                if (e instanceof IA) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/ennemi/ai.png")));
+                }
 
                 Rectangle rec = new Rectangle();
-                rec.setHeight(6);
-                rec.setFill(Color.RED);
-                rec.setArcWidth(10);
-                rec.setArcHeight(10);
+                rec.setWidth(56);
+                rec.setHeight(4);
+                rec.setFill(Color.GREEN);
+                rec.translateXProperty().bind(e.xProperty().add(4));
+                rec.translateYProperty().bind(e.yProperty().add(-4));
+                rec.widthProperty()
+                        .bind(taille.multiply(((Ennemi) e).getPvPropProperty()).divide(((Ennemi) e).getPv()));
+                vie.translateXProperty().bind(e.xProperty());
+                vie.translateYProperty().bind(e.yProperty().add(-20));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                img.scaleXProperty().bind(((Ennemi) e).getDirectionProperty());
+                rectangle_vie = rec;
+                sprite = img;
+                barre_vie = vie;
 
-                // 1. Positionner le départ du rectangle au centre de la tour
-                // (X de la tour * 64 + 32 pour le centre - la moitié de la hauteur du laser pour le centrer verticalement)
-                rec.translateXProperty().bind(pyramide.xProperty().multiply(64).add(32));
-                rec.translateYProperty().bind(pyramide.yProperty().multiply(64).add(32 - (rec.getHeight() / 2)));
-
-                // 2. Changer le point de pivot de la rotation pour qu'il soit au début à gauche (0, hauteur/2)
-                javafx.scene.transform.Rotate rotation = new javafx.scene.transform.Rotate();
-                rotation.setPivotX(0);
-                rotation.setPivotY(rec.getHeight() / 2);
-
-                // Lier l'angle de la rotation à la propriété du modèle
-                rotation.angleProperty().bind(pyramide.angleProperty());
-                rec.getTransforms().add(rotation);
-
-                // 3. Adapter la largeur du rectangle pour qu'elle suive l'ennemi
-                rec.widthProperty().bind(pyramide.distanceCibleProperty());
-
-                // 4. Visibilité
-                rec.visibleProperty().bind(pyramide.atkProperty());
-
-                proj = rec;
             }
-            if (e instanceof CatapulteJAR){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png")));
-            }
-            if (e instanceof Archer){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/archer.png")));
-            }
-            if (e instanceof TourMage){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/tourmage.png")));
-            }
-            if (e instanceof LanceBuche){
+            if (e instanceof Tour) {
                 img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
-            }
-            if (e instanceof Sniper){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/sniper.png")));
-            }
-            if (e instanceof SoldatBleu){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/soldatbleu.png")));
-            }
-            if (e instanceof LanceRocket){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/lancerocket.png")));
-            }
-            if (e instanceof PistoletLaser){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/temp.png")));
-            }
-            if (e instanceof PistoletLazerMk2){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/blaster.png")));
-            }
-            if (e instanceof TourDuTemps){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/tesla.png")));
-            }
-            if (e instanceof Tesla){
-                img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/future/def/tour/temps.png")));
-            }
-
-
-
-
-            img.setTranslateX(e.getX() * 64);
-            img.setTranslateY(e.getY() * 64);
-
-            ColorAdjust desaturate = new ColorAdjust();
-            desaturate.setSaturation(-1);
-
-            if (!((Tour) e).getActif()) {
-                img.setEffect(desaturate);
-            }
-
-            final ImageView finalImg = img;
-            ((Tour) e).getActifProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal) {
-                    finalImg.setEffect(null);
-                } else {
-                    finalImg.setEffect(desaturate);
+                if (e instanceof ArbreRuste) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/arbre.png")));
                 }
-            });
+                if (e instanceof CatapulteCaillou) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/prehistoire/def/catapulteT2.png")));
+                }
+                if (e instanceof LanceFilet) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/prehistoire/def/LanceFilet.png")));
+                }
+                if (e instanceof TotemFlechette) {
+                    img = new ImageView(String.valueOf(
+                            Application.class.getResource("images/tiles/antiquite/def/tour/piegeFlechette.png")));
+                }
+                if (e instanceof PyramideShooteuse) {
+                    PyramideShooteuse pyramide = (PyramideShooteuse) e;
 
-            sprite = img;
-            actualiserEtoiles((Tour) e);
-            ((Tour) e).niveauProperty().addListener((obs, oldVal, newVal) -> {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/piramidJ.png")));
+
+                    Rectangle rec = new Rectangle();
+                    rec.setHeight(6);
+                    rec.setFill(Color.RED);
+                    rec.setArcWidth(10);
+                    rec.setArcHeight(10);
+
+                    // 1. Positionner le départ du rectangle au centre de la tour
+                    // (X de la tour * 64 + 32 pour le centre - la moitié de la hauteur du laser
+                    // pour le centrer verticalement)
+                    rec.translateXProperty().bind(pyramide.xProperty().multiply(64).add(32));
+                    rec.translateYProperty().bind(pyramide.yProperty().multiply(64).add(32 - (rec.getHeight() / 2)));
+
+                    // 2. Changer le point de pivot de la rotation pour qu'il soit au début à gauche
+                    // (0, hauteur/2)
+                    javafx.scene.transform.Rotate rotation = new javafx.scene.transform.Rotate();
+                    rotation.setPivotX(0);
+                    rotation.setPivotY(rec.getHeight() / 2);
+
+                    // Lier l'angle de la rotation à la propriété du modèle
+                    rotation.angleProperty().bind(pyramide.angleProperty());
+                    rec.getTransforms().add(rotation);
+
+                    // 3. Adapter la largeur du rectangle pour qu'elle suive l'ennemi
+                    rec.widthProperty().bind(pyramide.distanceCibleProperty());
+
+                    // 4. Visibilité
+                    rec.visibleProperty().bind(pyramide.atkProperty());
+
+                    proj = rec;
+                }
+                if (e instanceof CatapulteJAR) {
+                    img = new ImageView(String.valueOf(
+                            Application.class.getResource("images/tiles/antiquite/def/tour/catapulteJar.png")));
+                }
+                if (e instanceof Archer) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/archer.png")));
+                }
+                if (e instanceof TourMage) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/tourmage.png")));
+                }
+                if (e instanceof LanceBuche) {
+                    img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
+                }
+                if (e instanceof Sniper) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/contemporain/def/sniper.png")));
+                }
+                if (e instanceof SoldatBleu) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/contemporain/def/soldatbleu.png")));
+                }
+                if (e instanceof LanceRocket) {
+                    img = new ImageView(String
+                            .valueOf(Application.class.getResource("images/tiles/contemporain/def/lancerocket.png")));
+                }
+                if (e instanceof PistoletLaser) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/def/tour/temp.png")));
+                }
+                if (e instanceof PistoletLazerMk2) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/def/tour/blaster.png")));
+                }
+                if (e instanceof TourDuTemps) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/def/tour/tesla.png")));
+                }
+                if (e instanceof Tesla) {
+                    img = new ImageView(
+                            String.valueOf(Application.class.getResource("images/tiles/futur/def/tour/temps.png")));
+                }
+
+                img.setTranslateX(e.getX() * 64);
+                img.setTranslateY(e.getY() * 64);
+
+                ColorAdjust desaturate = new ColorAdjust();
+                desaturate.setSaturation(-1);
+
+                if (!((Tour) e).getActif()) {
+                    img.setEffect(desaturate);
+                }
+
+                final ImageView finalImg = img;
+                ((Tour) e).getActifProperty().addListener((obs, oldVal, newVal) -> {
+                    if (newVal) {
+                        finalImg.setEffect(null);
+                    } else {
+                        finalImg.setEffect(desaturate);
+                    }
+                });
+
+                sprite = img;
                 actualiserEtoiles((Tour) e);
-            });
-        }
-        if (e instanceof Fleche) {
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            img.rotateProperty().bind(((Projectile) e).getRotation());
-            //img.setScaleX(-1);
-            sprite = img;
-        }
-        if (e instanceof Caillou) {
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            //img.setScaleX(-1);
-            sprite = img;
-        }
-        if (e instanceof Rocket) {
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/rocket.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            //img.setScaleX(-1);
-            sprite = img;
-        }
-        if (e instanceof Jar){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/jar.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            //img.setScaleX(-1);
-            sprite = img;
-        }
-        if(e instanceof FlechetteEmpoisonne){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/flechette.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            img.rotateProperty().bind(((Projectile) e).getRotation());
-            //img.setScaleX(-1);
-            sprite = img;
-        }
-        if(e instanceof Filet){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            //img.setScaleX(-1);
-            sprite = img;
-        }
-        if(e instanceof Buche){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/buche1.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            sprite = img;
-        }
-        if(e instanceof Sort){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/sort.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            sprite = img;
-        }
-        if(e instanceof BalleSniper){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/ballesniper.png")));
-            img.translateXProperty().bind(e.xProperty());
-            img.translateYProperty().bind(e.yProperty());
-            sprite = img;
-        }
+                ((Tour) e).niveauProperty().addListener((obs, oldVal, newVal) -> {
+                    actualiserEtoiles((Tour) e);
+                });
+            }
+            if (e instanceof Fleche) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/prehistoire/fleche.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                img.rotateProperty().bind(((Projectile) e).getRotation());
+                // img.setScaleX(-1);
+                sprite = img;
+            }
+            if (e instanceof Caillou) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/prehistoire/pierreT2.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                // img.setScaleX(-1);
+                sprite = img;
+            }
+            if (e instanceof Rocket) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/contemporain/def/rocket.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                // img.setScaleX(-1);
+                sprite = img;
+            }
+            if (e instanceof Jar) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/jar.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                // img.setScaleX(-1);
+                sprite = img;
+            }
+            if (e instanceof FlechetteEmpoisonne) {
+                img = new ImageView(String
+                        .valueOf(Application.class.getResource("images/tiles/antiquite/def/projectile/flechette.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                img.rotateProperty().bind(((Projectile) e).getRotation());
+                // img.setScaleX(-1);
+                sprite = img;
+            }
+            if (e instanceof Filet) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/prehistoire/filet.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                // img.setScaleX(-1);
+                sprite = img;
+            }
+            if (e instanceof Buche) {
+                img = new ImageView(String
+                        .valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/buche1.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                sprite = img;
+            }
+            if (e instanceof Sort) {
+                img = new ImageView(String
+                        .valueOf(Application.class.getResource("images/tiles/moyen-age/def/projectile/sort.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                sprite = img;
+            }
+            if (e instanceof BalleSniper) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/contemporain/def/ballesniper.png")));
+                img.translateXProperty().bind(e.xProperty());
+                img.translateYProperty().bind(e.yProperty());
+                sprite = img;
+            }
 
-        if (e instanceof MiniVolcan){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
+            if (e instanceof MiniVolcan) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/prehistoire/def/volcan.png")));
+                img.setTranslateX(e.getX() * 64);
+                img.setTranslateY(e.getY() * 64);
+                sprite = img;
+            }
+            if (e instanceof PorteDeSable) {
+                img = new ImageView(String
+                        .valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
+                img.setTranslateX(e.getX() * 64);
+                img.setTranslateY(e.getY() * 64);
+                img.setFitWidth(64);
+                img.setFitHeight(64);
+                sprite = img;
+            }
+            if (e instanceof ElPrimo) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/ElPrimo.png")));
+                img.setTranslateX(e.getX() * 64);
+                img.setTranslateY(e.getY() * 64);
+                img.setFitWidth(64);
+                img.setFitHeight(64);
+                sprite = img;
+            }
+            if (e instanceof Mine) {
+                img = new ImageView(
+                        String.valueOf(Application.class.getResource("images/tiles/contemporain/def/mine.png")));
+                img.setTranslateX(e.getX() * 64);
+                img.setTranslateY(e.getY() * 64);
+                img.setFitWidth(64);
+                img.setFitHeight(64);
+                sprite = img;
+            }
+        } catch (Exception v) {
+            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
             img.setTranslateX(e.getX() * 64);
             img.setTranslateY(e.getY() * 64);
             sprite = img;
-        }
-        if (e instanceof PorteDeSable){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/antiquite/def/tour/murDeSable.png")));
-            img.setTranslateX(e.getX() * 64);
-            img.setTranslateY(e.getY() * 64);
-            img.setFitWidth(64);
-            img.setFitHeight(64);
-            sprite = img;
-        }
-        if (e instanceof ElPrimo){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/moyen-age/def/tour/ElPrimo.png")));
-            img.setTranslateX(e.getX() * 64);
-            img.setTranslateY(e.getY() * 64);
-            img.setFitWidth(64);
-            img.setFitHeight(64);
-            sprite = img;
-        }
-        if (e instanceof Mine){
-            img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/contemporain/def/mine.png")));
-            img.setTranslateX(e.getX() * 64);
-            img.setTranslateY(e.getY() * 64);
-            img.setFitWidth(64);
-            img.setFitHeight(64);
-            sprite = img;
-        }
-    }
-    catch (Exception v){
-        img = new ImageView(String.valueOf(Application.class.getResource("images/tiles/noTexture.png")));
-        img.setTranslateX(e.getX() * 64);
-        img.setTranslateY(e.getY() * 64);
-        sprite = img;
 
         }
-        if (capacity != null){
+        if (capacity != null) {
             entityPane.getChildren().add(capacity);
             affichageCapacity.put((Ennemi) e, capacity);
         }
-        if (sprite != null){
+        if (sprite != null) {
             entityPane.getChildren().add(sprite);
             affichageEntite.put(e, sprite);
         }
-        if (proj != null){
+        if (proj != null) {
             entityPane.getChildren().add(proj);
             affichageProj.put((Defense) e, proj);
         }
-        if (barre_vie != null){
+        if (barre_vie != null) {
             entityPane.getChildren().add(barre_vie);
             affichageBarre.put((Ennemi) e, barre_vie);
         }
-        if (rectangle_vie != null){
+        if (rectangle_vie != null) {
             entityPane.getChildren().add(rectangle_vie);
             affichageRectangle.put((Ennemi) e, rectangle_vie);
         }
 
-
     }
 
-    public void supprimerSprite(Entite e){
+    public void supprimerSprite(Entite e) {
         Node sprite = affichageEntite.get(e);
         Node barre_vie = affichageBarre.get(e);
         Node rectangle_vie = affichageRectangle.get(e);
@@ -481,10 +528,10 @@ public class EntiteVue {
 
             Circle rayonExplosion = new Circle(projCercle.getX(), projCercle.getY(), projCercle.getRayonExplosion());
 
-            if (e instanceof Jar){
+            if (e instanceof Jar) {
                 rayonExplosion.setFill(Color.rgb(50, 205, 50, 0.4));
                 rayonExplosion.setStroke(Color.rgb(50, 205, 50, 0.8));
-            } else if(e instanceof Caillou){
+            } else if (e instanceof Caillou) {
                 rayonExplosion.setFill(Color.rgb(128, 128, 128, 0.4));
                 rayonExplosion.setStroke(Color.rgb(128, 128, 128, 0.8));
             } else {
@@ -508,8 +555,8 @@ public class EntiteVue {
             ondeDeChoc.play();
         }
 
-        if(sprite != null){
-            if(!(e instanceof Projectile)) {
+        if (sprite != null) {
+            if (!(e instanceof Projectile)) {
                 FadeTransition fadeout = new FadeTransition(Duration.seconds(1), sprite);
                 fadeout.setToValue(0.0);
                 fadeout.setOnFinished(event -> entityPane.getChildren().remove(sprite));
@@ -518,31 +565,32 @@ public class EntiteVue {
                 entityPane.getChildren().remove(sprite);
             }
         }
-        if (barre_vie != null){
+        if (barre_vie != null) {
             entityPane.getChildren().remove(barre_vie);
         }
-        if (rectangle_vie != null){
+        if (rectangle_vie != null) {
             entityPane.getChildren().remove(rectangle_vie);
         }
-        if (capacity !=null){
+        if (capacity != null) {
             entityPane.getChildren().remove(capacity);
         }
-        if (proj !=null){
+        if (proj != null) {
             entityPane.getChildren().remove(proj);
         }
         if (e instanceof Tour) {
             HBox etoiles = affichageEtoiles.remove((Tour) e);
-            if (etoiles != null) entityPane.getChildren().remove(etoiles);
+            if (etoiles != null)
+                entityPane.getChildren().remove(etoiles);
         }
     }
+
     public void actualiserEtoiles(Tour tour) {
         HBox boiteEtoiles;
 
         if (affichageEtoiles.containsKey(tour)) {
             boiteEtoiles = affichageEtoiles.get(tour);
             boiteEtoiles.getChildren().clear();
-        }
-        else {
+        } else {
             boiteEtoiles = new HBox(2);
             boiteEtoiles.setTranslateX((tour.getX() * 64) + 8);
             boiteEtoiles.setTranslateY((tour.getY() * 64) - 10);
@@ -553,7 +601,8 @@ public class EntiteVue {
         if (tour.getNiveau() > 0) {
             for (int i = 0; i < tour.getNiveau(); i++) {
                 try {
-                    Image imgEtoile = new Image(String.valueOf(Application.class.getResource("images/tiles/prehistoire/etoiles.png")));
+                    Image imgEtoile = new Image(
+                            String.valueOf(Application.class.getResource("images/tiles/prehistoire/etoiles.png")));
                     ImageView etoileVue = new ImageView(imgEtoile);
                     etoileVue.setFitWidth(16);
                     etoileVue.setFitHeight(16);
