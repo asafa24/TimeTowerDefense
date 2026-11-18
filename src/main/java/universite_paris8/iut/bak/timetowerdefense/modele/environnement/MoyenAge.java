@@ -7,8 +7,11 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenag
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Roi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiMoyenAge;
 
 public class MoyenAge extends EpoqueSimple {
+    private final FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemiMoyenAge();
 
     public MoyenAge() {
         super(
@@ -44,25 +47,25 @@ public class MoyenAge extends EpoqueSimple {
 
     @Override
     public Ennemi ennemi1() {
-        return new Moine(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(0, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi2() {
-        return new Chevalier(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(1, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi3() {
-        return new Cavalier(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(2, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi4() {
-        return new Roi(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(3, cheminDepartArrivee());
 
     }
 

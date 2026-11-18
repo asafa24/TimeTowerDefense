@@ -7,8 +7,11 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehist
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Triceratops;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Tyrannosaurus;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis.Velociraptor;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiPrehistoire;
 
 public class Prehistoire extends EpoqueSimple {
+    private final FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemiPrehistoire();
 
     public Prehistoire() {
         super(
@@ -44,22 +47,22 @@ public class Prehistoire extends EpoqueSimple {
 
     @Override
     public Ennemi ennemi1() {
-        return new Compsognathus(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(0, cheminDepartArrivee());
     }
 
     @Override
     public Ennemi ennemi2() {
-        return new Velociraptor(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(1, cheminDepartArrivee());
     }
 
     @Override
     public Ennemi ennemi3() {
-        return new Triceratops(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(2, cheminDepartArrivee());
     }
 
     @Override
     public Ennemi ennemi4() {
-        return new Tyrannosaurus(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(3, cheminDepartArrivee());
     }
 
     @Override

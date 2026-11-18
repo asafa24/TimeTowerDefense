@@ -132,83 +132,92 @@ public class Jeu {
     // et le déclenchement des vagues.
 
     public boolean tick() {
+        if (perdu()) {
+            return false;
+        }
 
-        if (!perdu()) {
-
-            epoque.actionUltime();
-
-            // Itération inversée pour éviter les problèmes de concurrence lors de la
-            // suppression
-            for (int i = epoque.getDefenses().size() - 1; i >= 0; i--) {
-                Defense d = epoque.getDefenses().get(i);
-                d.agir(epoque.getEnnemi(),
-                        epoque.getProjectiles());
-                if (d instanceof Destructible && ((Destructible) d).estMort()) {
-                    epoque.getDefenses().remove(i);
-                }
-            }
-
-            for (int i = epoque.getProjectiles().size() - 1; i >= 0; i--) {
-                Projectile p = epoque.getProjectiles().get(i);
-                if (p.aAtteintCible()) {
-                    p.appliquerImpact(epoque.getEnnemi());
-                    epoque.getProjectiles().remove(i);
-                    continue;
-                }
-                p.deplacer();
-            }
-
-            for (int i = epoque.getEnnemi().size() - 1; i >= 0; i--) {
-                Ennemi e = epoque.getEnnemi().get(i);
-                if (e.estMort()) {
-                    ajouterArgent(e.getRecompense());
-                    this.compteurKill.set(this.compteurKill.get() + 1);
-
-                    // Gère les ennemis qui apparaissent à la mort d'un autre (ex: Golem -> Golimes)
-                    List<Ennemi> nouveauxEnnemis = e.onDeath();
-                    if (!nouveauxEnnemis.isEmpty()) {
-                        epoque.getEnnemi().addAll(nouveauxEnnemis);
-                    }
-
-                    epoque.getEnnemi().remove(i);
-                    if (e instanceof Boss) {
-                        epoqueSuivante();
-                        return true;
-                    }
-                    continue;
-                }
-
-                if (e.aAtteintLaBase()) {
-                    epoque.getEnnemi().remove(i);
-                    pvBase.set(pvBase.get() - e.getPv());
-                    continue;
-                }
-                e.agir(epoque, epoque);
-                e.avancer();
-            }
-
-            // Gestion de l'apparition des ennemis et de la transition entre les vagues
-            if (frame % delaySpawnMob == 0
-                    && !epoque.getVague().getQueue().isEmpty()
-                    && frame > TEMPS_ENTRE_VAGUE) {
-                epoque.creerEnnemi(epoque.getVague().defiler());
-            } else {
-                // Si la vague est terminée, lance un délai avant la prochaine
-                if (delay > 600) {
-                    delay = 0;
-                    epoque.getVague().vagueSuivante();
-                    if (delaySpawnMob > 16)
-                        delaySpawnMob -= 8; // Les vagues deviennent plus denses
-                } else {
-                    if (epoque.getVague().getQueue().isEmpty()) {
-                        delay++;
-                    }
-                }
-            }
-            frame++;
+        epoque.actionUltime();
+        mettreAJourDefenses();
+        mettreAJourProjectiles();
+        if (mettreAJourEnnemis()) {
             return true;
         }
+        gererApparitionEtTransitionVague();
+        frame++;
+        return true;
+    }
+
+    private void mettreAJourDefenses() {
+        for (int i = epoque.getDefenses().size() - 1; i >= 0; i--) {
+            Defense defense = epoque.getDefenses().get(i);
+            defense.agir(epoque.getEnnemi(), epoque.getProjectiles());
+            if (defense instanceof Destructible && ((Destructible) defense).estMort()) {
+                epoque.getDefenses().remove(i);
+            }
+        }
+    }
+
+    private void mettreAJourProjectiles() {
+        for (int i = epoque.getProjectiles().size() - 1; i >= 0; i--) {
+            Projectile projectile = epoque.getProjectiles().get(i);
+            if (projectile.aAtteintCible()) {
+                projectile.appliquerImpact(epoque.getEnnemi());
+                epoque.getProjectiles().remove(i);
+                continue;
+            }
+            projectile.deplacer();
+        }
+    }
+
+    /** @return true si un boss a fait avancer le jeu à l'époque suivante. */
+    private boolean mettreAJourEnnemis() {
+        for (int i = epoque.getEnnemi().size() - 1; i >= 0; i--) {
+            Ennemi ennemi = epoque.getEnnemi().get(i);
+            if (ennemi.estMort()) {
+                traiterMortEnnemi(ennemi);
+                epoque.getEnnemi().remove(i);
+                if (ennemi instanceof Boss) {
+                    epoqueSuivante();
+                    return true;
+                }
+                continue;
+            }
+
+            if (ennemi.aAtteintLaBase()) {
+                epoque.getEnnemi().remove(i);
+                pvBase.set(pvBase.get() - ennemi.getPv());
+                continue;
+            }
+            ennemi.agir(epoque, epoque);
+            ennemi.avancer();
+        }
         return false;
+    }
+
+    private void traiterMortEnnemi(Ennemi ennemi) {
+        ajouterArgent(ennemi.getRecompense());
+        compteurKill.set(compteurKill.get() + 1);
+
+        List<Ennemi> nouveauxEnnemis = ennemi.onDeath();
+        if (!nouveauxEnnemis.isEmpty()) {
+            epoque.getEnnemi().addAll(nouveauxEnnemis);
+        }
+    }
+
+    private void gererApparitionEtTransitionVague() {
+        if (frame % delaySpawnMob == 0
+                && !epoque.getVague().getQueue().isEmpty()
+                && frame > TEMPS_ENTRE_VAGUE) {
+            epoque.creerEnnemi(epoque.getVague().defiler());
+        } else if (delay > 600) {
+            delay = 0;
+            epoque.getVague().vagueSuivante();
+            if (delaySpawnMob > 16) {
+                delaySpawnMob -= 8;
+            }
+        } else if (epoque.getVague().getQueue().isEmpty()) {
+            delay++;
+        }
     }
 
     public void activerUltime() {

@@ -6,13 +6,12 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenag
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Chevalier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Moine;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.ennemis.Roi;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 import java.util.List;
 
 public class FabriqueEnnemiMoyenAge extends FabriqueEnnemi {
     @Override
-    public Ennemi creerEnnemi(int type, List<Point2D> route, Jeu jeu) {
+    public Ennemi creerEnnemi(int type, List<Point2D> route) {
         return switch (type) {
             case 0 -> new Moine(route);
             case 1 -> new Chevalier(route);

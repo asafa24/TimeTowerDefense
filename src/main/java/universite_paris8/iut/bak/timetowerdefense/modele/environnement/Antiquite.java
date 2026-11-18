@@ -7,8 +7,11 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiqui
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.GolemSable;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Momie;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.antiquite.atk.ennemis.Sarko;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiAntiquite;
 
 public class Antiquite extends EpoqueSimple {
+    private final FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemiAntiquite();
 
     public Antiquite() {
         super(
@@ -44,22 +47,22 @@ public class Antiquite extends EpoqueSimple {
 
     @Override
     public Ennemi ennemi1() {
-        return new Momie(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(0, cheminDepartArrivee());
     }
 
     @Override
     public Ennemi ennemi2() {
-        return new Chacal(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(1, cheminDepartArrivee());
     }
 
     @Override
     public Ennemi ennemi3() {
-        return new GolemSable(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(2, cheminDepartArrivee());
     }
 
     @Override
     public Ennemi ennemi4() {
-        return new Sarko(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(3, cheminDepartArrivee());
 
     }
 

@@ -5,10 +5,13 @@ import universite_paris8.iut.bak.timetowerdefense.modele.competences.PluieMeteor
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.CharAssaut;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Dictateur;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiContemporain;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.SoldatRouge;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.contemporain.atk.ennemis.Vehicule;
 
 public class Contemporain extends EpoqueSimple {
+    private final FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemiContemporain();
 
     public Contemporain() {
         super(
@@ -46,25 +49,25 @@ public class Contemporain extends EpoqueSimple {
 
     @Override
     public Ennemi ennemi1() {
-        return new SoldatRouge(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(0, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi2() {
-        return new Vehicule(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(1, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi3() {
-        return new CharAssaut(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(2, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi4() {
-        return new Dictateur(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(3, cheminDepartArrivee());
 
     }
 

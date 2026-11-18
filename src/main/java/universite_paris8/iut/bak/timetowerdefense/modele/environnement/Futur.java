@@ -6,9 +6,12 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.AraigneeRobot;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Generateur;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.IA;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemi;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.fabriques.FabriqueEnnemiFutur;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Robot;
 
 public class Futur extends EpoqueSimple {
+    private final FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemiFutur();
 
     public Futur() {
         super(
@@ -44,25 +47,25 @@ public class Futur extends EpoqueSimple {
 
     @Override
     public Ennemi ennemi1() {
-        return new Robot(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(0, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi2() {
-        return new AraigneeRobot(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(1, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi3() {
-        return new Generateur(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(2, cheminDepartArrivee());
 
     }
 
     @Override
     public Ennemi ennemi4() {
-        return new IA(cheminDepartArrivee());
+        return fabriqueEnnemi.creerEnnemi(3, cheminDepartArrivee());
 
     }
 

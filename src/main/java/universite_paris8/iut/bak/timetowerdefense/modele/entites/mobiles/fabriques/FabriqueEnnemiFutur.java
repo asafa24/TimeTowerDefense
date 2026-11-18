@@ -6,13 +6,12 @@ import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Generateur;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.IA;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.future.atk.ennemis.Robot;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 
 import java.util.List;
 
 public class FabriqueEnnemiFutur extends FabriqueEnnemi {
     @Override
-    public Ennemi creerEnnemi(int type, List<Point2D> route, Jeu jeu) {
+    public Ennemi creerEnnemi(int type, List<Point2D> route) {
         return switch (type) {
             case 0 -> new Robot(route);
             case 1 -> new AraigneeRobot(route);
