@@ -91,6 +91,8 @@ public class ControleurJeu implements Initializable {
     @FXML
     private Button ultButton;
     @FXML
+    private Button btnVitesse;
+    @FXML
     private Label labelCompteurKill;
 
     private Timeline gameLoop;
@@ -320,6 +322,12 @@ public class ControleurJeu implements Initializable {
             gameLoop.setRate(2.5);
         else
             gameLoop.setRate(1);
+    }
+
+    @FXML
+    public void changerVitesseJeu() {
+        toggleSpeedBoost();
+        btnVitesse.setText(gameLoop.getRate() > 1 ? "VITESSE : x2.5" : "VITESSE : x1");
     }
 
     @FXML
