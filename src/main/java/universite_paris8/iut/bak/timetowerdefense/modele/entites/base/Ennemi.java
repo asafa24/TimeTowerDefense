@@ -22,10 +22,9 @@ public class Ennemi extends Entite implements Destructible {
     private double vitesseBase;
     private double vitesseActuelle;
     private int recompense;
-    // Retrait du premier 'estBloque' dupliqué
     private boolean possedeBouclier = false;
 
-    // Effets de statut (Strategy + Decorateur) : duree restante par effet
+
     private final Map<Effet, Integer> effetsActifs = new EnumMap<>(Effet.class);
 
     private List<Point2D> chemin;
@@ -233,7 +232,7 @@ public class Ennemi extends Entite implements Destructible {
         this.recompense = recompense;
     }
 
-    // Applique un effet de statut. Renouvelle la duree si l'effet est deja actif.
+
     public void appliqueEffet(Effet effet) {
         EffetStatut strategie = effet.getStrategie();
         if (effetsActifs.containsKey(effet)) {
