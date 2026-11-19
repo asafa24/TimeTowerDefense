@@ -5,12 +5,15 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.effets.EffetStatut;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Ennemi extends Entite implements Destructible {
     private int pv, pvMax;
@@ -22,7 +25,8 @@ public class Ennemi extends Entite implements Destructible {
     // Retrait du premier 'estBloque' dupliqué
     private boolean possedeBouclier = false;
 
-    private final List<Effets> effetsActifs = new ArrayList<>();
+    // Effets de statut (Strategy + Decorateur) : duree restante par effet
+    private final Map<Effet, Integer> effetsActifs = new EnumMap<>(Effet.class);
 
     private List<Point2D> chemin;
     private int etapeActuelle;
@@ -229,21 +233,32 @@ public class Ennemi extends Entite implements Destructible {
         this.recompense = recompense;
     }
 
-    public void ajouterEffet(Effets nouvelEffet) {
-        nouvelEffet.effetAplication(this);
-        this.effetsActifs.add(nouvelEffet);
+    // Applique un effet de statut. Renouvelle la duree si l'effet est deja actif.
+    public void appliqueEffet(Effet effet) {
+        EffetStatut strategie = effet.getStrategie();
+        if (effetsActifs.containsKey(effet)) {
+            effetsActifs.merge(effet, strategie.getDuree(), Math::max);
+        } else {
+            effetsActifs.put(effet, strategie.getDuree());
+            strategie.surApplication(this);
+        }
+    }
+
+    private double appliquerEffets() {
+        double vitesse = this.vitesseBase;
+        for (Map.Entry<Effet, Integer> entree : effetsActifs.entrySet()) {
+            int restant = entree.getValue() - 1;
+            entree.setValue(restant);
+            EffetStatut strategie = entree.getKey().getStrategie();
+            strategie.tick(this, restant);
+            vitesse = strategie.modifierVitesse(vitesse);
+        }
+        effetsActifs.values().removeIf(duree -> duree <= 0);
+        return vitesse;
     }
 
     private void actualiserEffets() {
-        this.vitesseActuelle = this.vitesseBase;
-
-        for (int i = effetsActifs.size() - 1; i >= 0; i--) {
-            Effets effet = effetsActifs.get(i);
-            effet.tick(this);
-            if (effet.estFini()) {
-                effetsActifs.remove(i);
-            }
-        }
+        this.vitesseActuelle = appliquerEffets();
     }
 
     public double getVitesseActuelle() {
