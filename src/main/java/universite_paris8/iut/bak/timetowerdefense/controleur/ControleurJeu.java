@@ -22,29 +22,9 @@ import javafx.scene.paint.Color;
 import universite_paris8.iut.bak.timetowerdefense.Application;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Tour;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.*;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PyramideShooteuse;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.CatapulteJAR;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.TotemFlechette;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def.PorteDeSable;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.LanceRocket;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Mine;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.Sniper;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.contemporain.def.SoldatBleu;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLaser;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.PistoletLazerMk2;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.Tesla;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.future.def.TourDuTemps;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.Archer;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.ElPrimo;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.LanceBuche;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.moyenage.def.TourMage;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.ArbreRuste;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.CatapulteCaillou;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.LanceFilet;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.prehistoire.def.MiniVolcan;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Jeu;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Epoque;
-import universite_paris8.iut.bak.timetowerdefense.modele.environnement.EpoqueSimple;
+import universite_paris8.iut.bak.timetowerdefense.modele.environnement.Triche;
 import universite_paris8.iut.bak.timetowerdefense.modele.glossaire.Glossaire;
 import universite_paris8.iut.bak.timetowerdefense.modele.fabriques.FabriqueAntiquite;
 import universite_paris8.iut.bak.timetowerdefense.modele.fabriques.FabriqueContemporain;
@@ -55,18 +35,18 @@ import universite_paris8.iut.bak.timetowerdefense.modele.fabriques.FabriquePrehi
 import universite_paris8.iut.bak.timetowerdefense.vue.EntiteVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.PreviewVue;
 import universite_paris8.iut.bak.timetowerdefense.vue.TerrainVue;
+import  universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import javafx.util.Duration;
 import universite_paris8.iut.bak.timetowerdefense.vue.UIVue;
-import universite_paris8.iut.bak.timetowerdefense.vue.effets.ExplosionVue;
 
 import java.util.ResourceBundle;
 
 public class ControleurJeu implements Initializable {
-    private final List<FabriqueDefense> fabriquesDefense = List.of(
+    private final List<FabriqueDefense> fabriques = List.of(
             new FabriquePrehistoire(),
             new FabriqueAntiquite(),
             new FabriqueMoyenAge(),
@@ -110,17 +90,17 @@ public class ControleurJeu implements Initializable {
     private Label labelCompteurKill;
 
     private Timeline gameLoop;
-    private int temps, delay;
+    private int temps;
     private double mouseX, mouseY;
 
     private TerrainVue vueTerrain;
     private EntiteVue vueEntite;
     private PreviewVue vuePreview;
-    private ExplosionVue vueExplosion;
     private UIVue uiVue;
     private Jeu jeu;
-    private Tour tourSelectionne;
-    private Piege piegeSelectione;
+    private Triche triche;
+    private List<Button> boutonsTour;
+    private List<Label> labelsPrix;
 
     private int typeDefenseSelectionnee = 0;
 
@@ -164,8 +144,10 @@ public class ControleurJeu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // this.level = new Epoque();
         this.jeu = new Jeu();
+        this.triche = new Triche(jeu);
+        this.boutonsTour = List.of(tourUn, tourDeux, tourTrois, tourQuatre);
+        this.labelsPrix = List.of(tourUnArgent, tourDeuxArgent, tourTroisArgent, tourQuatreArgent);
         this.vueTerrain = new TerrainVue(backgroundPane,
                 this.jeu.getEpoqueProperty().getValue());
         this.vueEntite = new EntiteVue(entityPane);
@@ -205,8 +187,6 @@ public class ControleurJeu implements Initializable {
         lancerMusique(jeu.getEpoqueActuel());
         gameLoop.play();
 
-        // int[][] donneesMap = level.loadLevel(jeu.getEpoqueActuel());
-        // vueTerrain.drawMap(jeu.getEpoque().getTileMap(), jeu.getEpoqueActuel());
         vueTerrain.drawMap();
 
         paneMain.setOnMouseMoved(event -> {
@@ -247,18 +227,15 @@ public class ControleurJeu implements Initializable {
     }
 
     public void afficherButton(int epoque) {
-        tourUn.setGraphic(uiVue.setImageT1(epoque, 0));
-        tourDeux.setGraphic(uiVue.setImageT1(epoque, 1));
-        tourTrois.setGraphic(uiVue.setImageT1(epoque, 2));
-        tourQuatre.setGraphic(uiVue.setImageT1(epoque, 3));
+        for (int i = 0; i < boutonsTour.size(); i++) {
+            boutonsTour.get(i).setGraphic(uiVue.setImageT1(epoque, i));
+        }
     }
 
     public void afficherPrix(int epoque) {
-        tourUnArgent.textProperty().bind(uiVue.setPrixT1(epoque, 0));
-        tourDeuxArgent.textProperty().bind(uiVue.setPrixT1(epoque, 1));
-        tourTroisArgent.textProperty().bind(uiVue.setPrixT1(epoque, 2));
-        tourQuatreArgent.textProperty().bind(uiVue.setPrixT1(epoque, 3));
-
+        for (int i = 0; i < labelsPrix.size(); i++) {
+            labelsPrix.get(i).textProperty().bind(uiVue.setPrixT1(epoque, i));
+        }
     }
 
     public void recupererPosition(MouseEvent e) {
@@ -268,6 +245,9 @@ public class ControleurJeu implements Initializable {
 
     @FXML
     public void gererTouches(KeyEvent event) {
+        if (gererTouchesTriche(event)) {
+            return;
+        }
         switch (event.getCode()) {
             case DIGIT1, NUMPAD1, AMPERSAND -> {
                 selectionnerTour(1);
@@ -285,26 +265,11 @@ public class ControleurJeu implements Initializable {
                 if (this.typeDefenseSelectionnee != 0) {
                     vuePreview.remove();
                     this.typeDefenseSelectionnee = 0;
-                    System.out.println("Selection annulée");
                     toggleUI();
                 } else if (paneGlossaire.isVisible())
                     toggleGlossaire();
                 else
                     togglePause();
-            }
-            case L -> {
-                if (jeu.getEpoqueActuel() > 0)
-                    jeu.epoquePrecedente();
-            }
-            case M -> {
-                if (jeu.getEpoqueActuel() < jeu.getNombreEpoques() - 1)
-                    jeu.epoqueSuivante();
-            }
-            case O -> {
-                skipVague();
-            }
-            case I -> {
-                motherload();
             }
             case H -> {
                 toggleUI();
@@ -318,30 +283,48 @@ public class ControleurJeu implements Initializable {
             case P -> {
                 togglePause();
             }
-            case K -> {
-                jeu.getCompteurKillProperty().set(jeu.getCompteurKillProperty().get() + 10);
-            }
-            case T -> {
-                toggleSpeedBoost();
-                if (gameLoop.getRate() > 1)
-                    afficherMessage("Vitesse x2.5", Color.GOLD, 1);
-                else
-                    afficherMessage("Vitesse x1", Color.WHITE, 1);
-            }
         }
     }
 
-    public void toggleSpeedBoost() {
-        if (gameLoop.getRate() == 1)
-            gameLoop.setRate(2.5);
-        else
-            gameLoop.setRate(1);
+
+    private boolean gererTouchesTriche(KeyEvent event) {
+        switch (event.getCode()) {
+            case L -> {
+                if (jeu.getEpoqueActuel() > 0)
+                    triche.tricheChangeEpoque(jeu.getEpoqueActuel() - 1);
+                return true;
+            }
+            case M -> {
+                if (jeu.getEpoqueActuel() < jeu.getNombreEpoques() - 1)
+                    triche.tricheChangeEpoque(jeu.getEpoqueActuel() + 1);;
+                return true;
+            }
+            case O -> { triche.tricheVague(); return true; }
+            case I -> { triche.tricheArgent(200); return true; }
+            case K -> { triche.tricheKills(10); return true; }
+            case T -> {
+                boolean estAccelere = triche.toggleSpeedBoost(gameLoop);
+                if (estAccelere) {
+                    afficherMessage("Vitesse x2.5", Color.GOLD, 1);
+                } else {
+                    afficherMessage("Vitesse x1", Color.WHITE, 1);
+                }
+                return true;
+            }
+            default -> { return false; }
+        }
     }
 
     @FXML
     public void changerVitesseJeu() {
-        toggleSpeedBoost();
-        btnVitesse.setText(gameLoop.getRate() > 1 ? "VITESSE : x2.5" : "VITESSE : x1");
+        boolean estAccelere = triche.toggleSpeedBoost(gameLoop);
+        if (estAccelere) {
+            btnVitesse.setText("VITESSE : x2.5");
+            afficherMessage("Vitesse x2.5", Color.GOLD, 1);
+        } else {
+            btnVitesse.setText("VITESSE : x1");
+            afficherMessage("Vitesse x1", Color.WHITE, 1);
+        }
     }
 
     @FXML
@@ -354,65 +337,55 @@ public class ControleurJeu implements Initializable {
         int yGrille = (int) (mouseEvent.getY() / 64);
 
         if (this.typeDefenseSelectionnee == 0) {
-            boolean tourTrouvee = false;
-
-            for (universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense d : jeu.getDefenses()) {
-                if (d instanceof Tour) {
-                    if ((int) d.getX() == xGrille && (int) d.getY() == yGrille) {
-                        d.setSelectionnee(true);
-                        tourTrouvee = true;
-                        System.out
-                                .println("Tu as sélectionné la tour en position x : " + d.getX() + " y : " + d.getY());
-                        this.afficherMenuTour((Tour) d);
-                        vueEntite.afficherCerclePortee((Tour) d);
-                    } else {
-                        d.setSelectionnee(false);
-                    }
-                }
-            }
-            if (!tourTrouvee) {
-                this.masquerStatsTour(zoneStats);
-                vueEntite.deselectionnerCerclePortee();
-
-                for (universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense d : jeu.getDefenses()) {
-                    if (d instanceof Tour) {
-                        d.setSelectionnee(false);
-                    }
-                }
-            }
-            System.out.println("Veuillez sélectionner une tour d'abord.");
-            vuePreview.setId(-1);
-            vuePreview.remove();
-            return;
+            selectionnerTourSurCase(xGrille, yGrille);
+        } else {
+            poserDefenseSurCase(xGrille, yGrille);
         }
-
-        poserDefense(jeu.getEpoqueActuel(), typeDefenseSelectionnee, xGrille, yGrille);
-
-        this.typeDefenseSelectionnee = 0;
-        vuePreview.setId(-1);
-        jeu.setId(-1);
-        vuePreview.remove();
-        this.typeDefenseSelectionnee = 0;
     }
 
-    private void poserDefense(int epoque, int type, int x, int y) {
-        if (epoque < 0 || epoque >= fabriquesDefense.size()) {
-            return;
+    private void selectionnerTourSurCase(int xGrille, int yGrille) throws IOException {
+        boolean tourTrouvee = false;
+
+        for (Defense d : jeu.getDefenses()) {
+            if (d instanceof Tour) {
+                if ((int) d.getX() == xGrille && (int) d.getY() == yGrille) {
+                    d.setSelectionnee(true);
+                    tourTrouvee = true;
+                    this.afficherMenuTour((Tour) d);
+                    vueEntite.afficherCerclePortee((Tour) d);
+                } else {
+                    d.setSelectionnee(false);
+                }
+            }
+        }
+        if (!tourTrouvee) {
+            this.masquerStatsTour(zoneStats);
+            vueEntite.deselectionnerCerclePortee();
+        }
+    }
+
+    private void poserDefenseSurCase(int xGrille, int yGrille) {
+        int epoque = jeu.getEpoqueActuel();
+        if (epoque >= 0 && epoque < fabriques.size()) {
+            FabriqueDefense fabrique = fabriques.get(epoque);
+            tenterPoserDefense(fabrique.creerDefense(typeDefenseSelectionnee, xGrille, yGrille));
         }
 
-        universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense defense =
-                fabriquesDefense.get(epoque).creerDefense(type, x, y);
-        boolean posee;
-        if (defense instanceof Piege) {
-            posee = jeu.poserPiege((Piege) defense);
-        } else if (defense instanceof Tour) {
-            posee = jeu.poserTour((Tour) defense);
-        } else {
-            return;
-        }
+        this.typeDefenseSelectionnee = 0;
+        jeu.setId(-1);
+    }
 
-        if (!posee) {
+    private void tenterPoserDefense(universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Defense defense) {
+        boolean succes = false;
+        if (defense instanceof Tour) {
+            succes = jeu.poserTour((Tour) defense);
+        } else if (defense instanceof Piege) {
+            succes = jeu.poserPiege((Piege) defense);
+        }
+        if (!succes) {
             afficherMessage("Solde insuffisant ou Case invalide", Color.RED, 2);
+        } else {
+            afficherPrix(jeu.getEpoqueActuel());
         }
     }
 
@@ -430,7 +403,6 @@ public class ControleurJeu implements Initializable {
 
     public void modeSelectionTour() {
         boutonBox.setVisible(false);
-        System.out.println("Défense numéro " + this.typeDefenseSelectionnee + " sélectionnée.");
         vuePreview.setId(this.typeDefenseSelectionnee);
         jeu.setId(this.typeDefenseSelectionnee);
         vuePreview.preview();
@@ -443,8 +415,6 @@ public class ControleurJeu implements Initializable {
             modeSelectionTour();
         }
     }
-    // et houi j'ai un passion pour bethoveen étonnant non ? hein bach bach ???
-    // c'est kevin qui a écrit
 
     public void lancerUltime() {
         jeu.activerUltime();
@@ -488,18 +458,14 @@ public class ControleurJeu implements Initializable {
     public void setDifficulteExtreme(boolean extreme) {
         this.jeu.setModeExtreme(extreme);
         if (extreme) {
-            System.out.println("Mode Extrême ! Si vous recommencez, ce sera du tout début hehe");
             afficherMessage("Mode Extrême ! Préparez-vous", Color.DARKRED, 3);
         }
     }
 
     public void changerNiveau(int nb) {
-        // int[][] donneesMap = level.loadLevel(nb);
         jeu.nuke();
-        // jeu.newRoute();
         jeu.resetTimersEtVague();
 
-        // vueTerrain.drawMap(jeu.getEpoque().getTileMap(), nb);
 
         this.vueTerrain = new TerrainVue(backgroundPane,
                 this.jeu.getEpoqueProperty().getValue());
@@ -510,21 +476,6 @@ public class ControleurJeu implements Initializable {
         afficherPrix(nb);
     }
 
-    // public void changerNiveauForcing(int nb) {
-    // // int[][] donneesMap = level.loadLevel(nb);
-    // jeu.setEpoqueActuel(nb);
-    // jeu.nuke();
-    // // jeu.newRoute();
-    // jeu.actualiserUltime();
-    // jeu.resetTimersEtVague();
-
-    // // vueTerrain.drawMap(jeu.getEpoque().getTileMap(), nb);
-    // vueTerrain.drawMap();
-
-    // this.vuePreview = new PreviewVue(entityPane, -1, jeu.getPreview(), nb);
-    // afficherButton(nb);
-    // afficherPrix(nb);
-    // }
 
     @FXML
     public void toggleGlossaire() {
@@ -609,13 +560,5 @@ public class ControleurJeu implements Initializable {
     @FXML
     public void toggleMuteSfx() {
         controleurMusique.toggleMuteSfx();
-    }
-
-    public void skipVague() {
-        jeu.getVague().vagueSuivante();
-    }
-
-    public void motherload() {
-        jeu.ajouterArgent(200);
     }
 }

@@ -23,6 +23,16 @@ public abstract class Defense extends Entite {
         selectionnee = new SimpleBooleanProperty(false);
     }
 
+    protected double getTauxInflation() {
+        return TAUX_INFLATION;
+    }
+
+    public void inflation() {
+        int nouveauPrix = (int) Math.floor(this.getCout() * getTauxInflation());
+        this.setCout(nouveauPrix);
+        prixActuels.put(getClass(), nouveauPrix);
+    }
+
 
     public void agir(List<Ennemi> ennemis, List<Projectile> projectiles){}
 
@@ -44,16 +54,6 @@ public abstract class Defense extends Entite {
 
     public void setCout(int cout) {
         this.cout.set(cout);
-    }
-
-    protected double getTauxInflation() {
-        return TAUX_INFLATION;
-    }
-
-    public void inflation() {
-        int nouveauPrix = (int) Math.floor(this.getCout() * getTauxInflation());
-        this.setCout(nouveauPrix);
-        prixActuels.put(getClass(), nouveauPrix);
     }
 
     public static int prixActuel(Class<? extends Defense> type, int prixBase) {
