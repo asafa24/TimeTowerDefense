@@ -6,9 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-/**
- * Stratégie qui envoie tous les ennemis de la vague dans un ordre aléatoire.
- */
+
 public class VagueShuffle implements StrategieVague {
 
     @Override
