@@ -1,9 +1,9 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.ennemis;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBouclier;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteDefense;
 import universite_paris8.iut.bak.timetowerdefense.modele.environnement.AffecteEnnemi;
@@ -43,7 +43,7 @@ public class Triceratops extends Ennemi {
                     double distance = Math.hypot(dx, dy);
 
                     if (distance <= PORTEE) {
-                        allie.ajouterEffet(new EffetBouclier());
+                        allie.appliqueEffet(Effet.SHIELD);
                         aProtegeQuelquUn[0] = true;
                     }
                 }

@@ -1,7 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.statiques.antiquite.def;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBrulure;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -87,7 +87,7 @@ public class PyramideShooteuse extends Tour {
             cibleActuelle.recevoirDegats(degatsCalcules);
 
             if (degatsCalcules == degatsMax && tempsFocus % 60 == 0) {
-                cibleActuelle.ajouterEffet(new EffetBrulure());
+                cibleActuelle.appliqueEffet(Effet.BURN);
             }
         }
         tick++;

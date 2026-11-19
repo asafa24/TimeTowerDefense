@@ -1,8 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.prehistoire.atk.projectiles;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetStun;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effets;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileAEffet;
 
@@ -14,9 +13,9 @@ public class Filet extends ProjectileAEffet {
     }
 
 
-    private static ArrayList<Effets> initialiserEffets() {
-        ArrayList<Effets> effetsDuProjectile = new ArrayList<>();
-        effetsDuProjectile.add(new EffetStun());
+    private static ArrayList<Effet> initialiserEffets() {
+        ArrayList<Effet> effetsDuProjectile = new ArrayList<>();
+        effetsDuProjectile.add(Effet.STUN);
         return effetsDuProjectile;
     }
 }

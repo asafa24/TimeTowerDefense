@@ -1,9 +1,7 @@
 package universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.moyenage.atk.projectiles;
 
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetBrulure;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.effets.EffetStun;
-import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effets;
 
+import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Effet;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.base.Ennemi;
 import universite_paris8.iut.bak.timetowerdefense.modele.entites.mobiles.ProjectileAEffet;
 
@@ -22,17 +20,17 @@ public class Sort extends ProjectileAEffet {
         for (Ennemi e : ennemis){
             double distanceExplosion = Math.hypot(epicentreX - e.getCentreX(), epicentreY - e.getCentreY());
             if (distanceExplosion <= 76){
-                e.ajouterEffet(new EffetStun());
-                e.ajouterEffet(new EffetBrulure());
+                e.appliqueEffet(Effet.STUN);
+                e.appliqueEffet(Effet.BURN);
                 e.recevoirDegats(getDegats());
             }
         }
     }
 
-    private static ArrayList<Effets> initialiserEffets() {
-        ArrayList<Effets> effetsDuProjectile = new ArrayList<>();
-        effetsDuProjectile.add(new EffetStun());
-        effetsDuProjectile.add(new EffetBrulure());
+    private static ArrayList<Effet> initialiserEffets() {
+        ArrayList<Effet> effetsDuProjectile = new ArrayList<>();
+        effetsDuProjectile.add(Effet.STUN);
+        effetsDuProjectile.add(Effet.BURN);
         return effetsDuProjectile;
     }
 
